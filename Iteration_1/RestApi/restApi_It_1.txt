@@ -3,7 +3,8 @@ We need the following from the server:
 - current bus position
 - bus delay
 - schedule
-- bus information (age, color, bus driver information, maximal amount of seats, route)
+- bus information (age, color, bus driver information, maximal amount of seats, route, additional information)
 
 We submit the following to the server:
 nothing
+
