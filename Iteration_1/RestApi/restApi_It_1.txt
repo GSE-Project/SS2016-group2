@@ -1,0 +1,9 @@
+Iteration 1:
+We need the following from the server:
+- current bus position
+- bus delay
+- schedule
+- bus information (age, color, bus driver information, maximal amount of seats, route)
+
+We submit the following to the server:
+nothing
