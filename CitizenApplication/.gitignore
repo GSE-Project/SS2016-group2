@@ -1,0 +1,17 @@
+# Dependency directories
+node_modules/
+
+# Platforms
+platforms
+
+# Plugins
+plugins
+
+# Build directory
+www/build
+
+# Hooks
+hooks
+
+.DS_Store
+Thumbs.db
