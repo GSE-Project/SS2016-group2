@@ -1,7 +1,7 @@
 // Currently no idea where this files can be found
 import Bus from '../model/Bus.ts';
 import Line from '../model/Line.ts';
-import Stop from 'somewhere';
+import Stop from '../model/Stop.ts';
 import Route from '../model/Route.ts';
 import Point from '../model/geojson/Point.ts';
 

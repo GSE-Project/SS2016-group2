@@ -2,16 +2,19 @@ import CitizenDataServiceInterface from './CitizenDataServiceInterface.ts';
 import {Injectable} from 'angular2/core';
 import {Http} from 'angular2/http';
 
-import Bus from 'somewhere';
-import Line from 'somewhere';
-import Stop from 'somewhere';
-import Route from 'somewhere';
-import Point from 'GeoJSON';
+import Bus from '../model/Bus.ts';
+import Line from '../model/Line.ts';
+import Stop from '../model/Stop.ts';
+import Route from '../model/Route.ts';
+import Point from '../model/geojson/Point.ts';
 
 @Injectable()
+/**
+ * Service class to provide data from the data storage to the app ui
+ */
 export class CitizenDataService implements CitizenDataServiceInterface{
 
-	constrcutor(){}
+	constructor(){}
 
 	/*
 	* Interface methods
@@ -69,6 +72,4 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 		//TODO
 	};
 
-
-
-} 
+}
