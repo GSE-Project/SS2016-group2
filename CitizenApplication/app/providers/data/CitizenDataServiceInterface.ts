@@ -1,9 +1,9 @@
 // Currently no idea where this files can be found
-import Bus from 'somewhere';
-import Line from 'somewhere';
+import Bus from '../model/Bus.ts';
+import Line from '../model/Line.ts';
 import Stop from 'somewhere';
-import Route from 'somewhere';
-import Point from 'GeoJSON';
+import Route from '../model/Route.ts';
+import Point from '../model/geojson/Point.ts';
 
 export default CitizenDataServiceInterface;
 
