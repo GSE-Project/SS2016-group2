@@ -7,6 +7,9 @@ import Line from '../model/Line.ts';
 import Stop from '../model/Stop.ts';
 import Route from '../model/Route.ts';
 import Point from '../model/geojson/Point.ts';
+import {RestApiProviderInterface} from "./RestApiProviderInterface";
+import PersistentDataProviderInterface from "./PersistentDataProviderInterface";
+import {UpdateData} from "../model/UpdateData";
 
 @Injectable()
 /**
@@ -15,6 +18,11 @@ import Point from '../model/geojson/Point.ts';
 export class CitizenDataService implements CitizenDataServiceInterface{
 
 	constructor(){}
+
+	private restApi: RestApiProviderInterface /*TODO initialize*/ ;
+	private storageApi : PersistentDataProviderInterface /*TODO initialize*/;
+	private cache:CitizenDataCache = new CitizenDataCache;
+
 
 	/*
 	* Interface methods
@@ -72,4 +80,24 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 		//TODO
 	};
 
+	/**
+	 * Fetches the data from the storage
+	 * @returns CitizenDataCache with the data from the storage
+     */
+	private populateDataCache():CitizenDataCache{
+		//TODO
+		return undefined;
+	};
+
+}
+
+/**
+ * Structure to hold the cached data
+ */
+class CitizenDataCache{
+	cached_busses : Bus[] = [];
+	cached_lines : Line[]=[];
+	cached_stops: Stop[]=[];
+	cached_routes: Route[]=[];
+	cached_timestamp : UpdateData = new UpdateData;
 }
