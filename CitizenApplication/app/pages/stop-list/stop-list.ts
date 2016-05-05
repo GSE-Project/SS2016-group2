@@ -1,4 +1,51 @@
+/*
+ * Created by skaldo on 5.5.2016, added logic for the UI
+ */
+
 import {Page, NavController} from 'ionic-angular';
+import {Stop} from '../../providers/model/Stop';
+import {Point} from '../../providers/model/geojson/Point';
+
+class ViewStop extends Stop {
+  private lines: Array<number>;
+
+  constructor(stop: Stop) {
+    super();
+
+    this.id = stop.id;
+    this.location = stop.location;
+    this.name = stop.name;
+    this.schedule = stop.schedule;
+
+    this.lines = Array<number>();
+    var linesHelper = [];
+
+    // Do the sorting & get the lines of the stop.
+    this.schedule.sort((a, b) => {
+      linesHelper[a.lineId] = true;
+      linesHelper[b.lineId] = true;
+      return a.time.getTime() - b.time.getTime();
+    });
+
+    linesHelper.forEach((value, index) => {
+      if (value) {
+        this.lines.push(index);
+      }
+    });
+
+    this.lines.sort((a, b) => {
+      return b - a;
+    })
+  }
+
+  getSchedules(first: number) {
+    return this.schedule.slice(0, first);
+  }
+
+  getLines() {
+    return this.lines;
+  }
+}
 
 /*
   Generated class for the StopListPage page.
@@ -10,5 +57,41 @@ import {Page, NavController} from 'ionic-angular';
   templateUrl: 'build/pages/stop-list/stop-list.html',
 })
 export class StopListPage {
-  constructor(public nav: NavController) {}
+  private searchText: String;
+  private stops: Array<ViewStop> = new Array<ViewStop>();
+  constructor(public nav: NavController) {
+    for (var i = 0; i < 50; i++) {
+      var stop = new Stop();
+      stop.id = i;
+      stop.name = "Straße " + i;
+      stop.location = new Point(99, 12);
+
+      stop.schedule = [
+        { lineId: this.getRandomLine(), time: this.getRandomTime() },
+        { lineId: this.getRandomLine(), time: this.getRandomTime() },
+        { lineId: this.getRandomLine(), time: this.getRandomTime() }
+      ]
+
+      this.stops.push(new ViewStop(stop));
+    }
+  }
+
+  onSearch(event) {
+
+  }
+  onSearchCancel(event) {
+
+  }
+
+  getRandomTime() {
+    var time = new Date();
+    var minutes = time.getMinutes();
+    minutes = + Math.floor(Math.random() * (60 - 0));
+    time.setMinutes(minutes);
+    return time;
+  }
+
+  getRandomLine() {
+    return Math.floor(Math.random() * (3 + 1)) + 1;
+  }
 }

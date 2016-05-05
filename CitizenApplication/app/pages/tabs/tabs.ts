@@ -1,6 +1,7 @@
 import {Page} from 'ionic-angular';
 import {HomePage} from '../home/home';
 import {StopListPage} from '../stop-list/stop-list';
+import {MapPage} from '../map/map';
 
 
 @Page({
