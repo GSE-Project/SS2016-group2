@@ -17,7 +17,10 @@ import {UpdateData} from "../model/UpdateData";
  */
 export class CitizenDataService implements CitizenDataServiceInterface{
 
-	constructor(){}
+	constructor(){
+		this.cache = this.populateDataCache();
+		this.update();
+	}
 
 	private restApi: RestApiProviderInterface /*TODO initialize*/ ;
 	private storageApi : PersistentDataProviderInterface /*TODO initialize*/;
@@ -33,8 +36,16 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 	* @return A list of Stop object
 	*/
 	getStopList(filter?: Stop): Stop[]{
-		//TODO
-		return undefined;
+		if(filter == null){
+			return this.cache.cached_stops.slice();
+		}
+		var result : Stop[] = this.cache.cached_stops.slice();
+		for(var i : number  = 0; i < result.length;i++){
+			if(filter.id != result[i].id){
+				result.splice(i,1);
+			}
+		}
+		return result;
 	};
 
 	/**
@@ -42,8 +53,16 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 	* @return A list of Line objects
 	*/
 	getLineList(filter?: Line): Line[] {
-		//TODO
-		return undefined;
+		if(filter == null){
+			return this.cache.cached_lines.slice();
+		}
+		var result : Line[] = this.cache.cached_lines.slice();
+		for(var i : number  = 0; i < result.length;i++){
+			if(filter.id != result[i].id){
+				result.splice(i,1);
+			}
+		}
+		return result;
 	};
 
 	/**
@@ -51,8 +70,16 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 	* @return A list of Bus objects
 	*/
 	getBusList(filter?: Bus): Bus[] {
-		//TODO
-		return undefined;
+		if(filter == null){
+			return this.cache.cached_busses.slice();
+		}
+		var result : Bus[] = this.cache.cached_busses.slice();
+		for(var i : number  = 0; i < result.length;i++){
+			if(filter.id != result[i].id){
+				result.splice(i,1);
+			}
+		}
+		return result;
 	};
 
 	/**
@@ -60,24 +87,46 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 	* @return Object with properties (position:Point) and (delay:number)
 	*/
 	getBusRealTimeData(id: number): { position: Point, delay: number } {
-		//TODO
-		return undefined;
+		return this.restApi.getRealTimeBusData(id);
 	};
 
 	/**
-	* @param filter optional parameter to filter the output list
+	* @param filter optional parameter to filter the output list.
 	* @return A list of Route objects
 	*/
 	getRoutes(filter?: Route): Route[] {
-		//TODO
-		return undefined;
+		if(filter == null){
+			return this.cache.cached_routes.slice();
+		}
+		var result : Route[] = this.cache.cached_routes.slice();
+		for(var i : number  = 0; i < result.length;i++){
+			if(filter.id != result[i].id){
+				result.splice(i,1);
+			}
+		}
+		return result;
 	};
 
 	/**
 	* Requests an update from the data source
 	*/
 	update(): void {
-		//TODO
+		var serverTime : UpdateData = this.restApi.getUpdateDataFromServer();
+		var currentCacheTime : UpdateData = this.cache.cached_timestamp;
+		if(serverTime.busses > currentCacheTime.busses){
+			this.cache.cached_busses = this.restApi.getBussesFromServer();
+		}
+		if(serverTime.lines > currentCacheTime.lines){
+			this.cache.cached_lines = this.restApi.getLinesFromServer();
+		}
+		if(serverTime.routes > currentCacheTime.routes){
+			this.cache.cached_routes = this.restApi.getRoutesFromServer();
+		}
+		if(serverTime.stops > currentCacheTime.stops){
+			this.cache.cached_stops = this.restApi.getStopsFromServer();
+		}
+		this.cache.cached_timestamp = serverTime;
+		this.putDataToStorage(this.cache);
 	};
 
 	/**
@@ -85,9 +134,22 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 	 * @returns CitizenDataCache with the data from the storage
      */
 	private populateDataCache():CitizenDataCache{
-		//TODO
-		return undefined;
+		var cache : UpdateData = new CitizenDataCache;
+		cache.cached_timestamp = this.storageApi.getLastUpdateTimes();
+		cache.cached_busses = this.storageApi.getBusses();
+		cache.cached_lines = this.storageApi.getLines();
+		cache.cached_routes = this.storageApi.getRoutes();
+		cache.cached_stops = this.storageApi.getStops();
+		return cache;
 	};
+
+	private putDataToStorage(data:CitizenDataCache):void{
+		this.storageApi.putBusses(data.cached_busses);
+		this.storageApi.putLines(data.cached_lines);
+		this.storageApi.putRoutes(data.cached_routes);
+		this.storageApi.putStops(data.cached_stops);
+		this.storageApi.putLastUpdateTimes(data.cached_timestamp);
+	}
 
 }
 

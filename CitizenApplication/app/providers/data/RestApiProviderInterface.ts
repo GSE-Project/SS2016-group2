@@ -35,4 +35,11 @@ export interface RestApiProviderInterface{
      */
     getRoutesFromServer():Route[];
 
+    /**
+     * Return the position and delay of a given bus
+     * @param id :number of the bus
+     * @return object {position:number, delay:number}
+     */
+    getRealTimeBusData(id:number):{ position: Point, delay: number };
+
 }
