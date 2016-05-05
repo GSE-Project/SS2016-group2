@@ -5,15 +5,13 @@
   Ionic pages and navigation.
 -->
 <ion-navbar *navbar>
-  <ion-nav-bar>
-    <ion-nav-back-button class="button-clear">
-      <i class="ion-arrow-left-c"></i> Back
-    </ion-nav-back-button>
-  </ion-nav-bar>
   <ion-title>Karte</ion-title>
-
+  <ion-nav-items secondary>
+    <button (click) ="addMarker()"><icon add></icon>Marker</button>
+  </ion-nav-items>
 </ion-navbar>
 
-<ion-content padding class="map">
 
+<ion-content>
+  <div id="map"></div>
 </ion-content>
