@@ -33,6 +33,16 @@ var copyHTML = require('ionic-gulp-html-copy');
 var copyFonts = require('ionic-gulp-fonts-copy');
 var copyScripts = require('ionic-gulp-scripts-copy');
 
+// This function copies our fonts to the build folder.
+// Author: Dominik Skalnik, 5.5.2016
+var copyDigitaleDoerferFonts = function(options) {
+  options.src = options.src || 'resources/fonts/**/*.+(ttf|woff|woff2)';
+  options.dest = options.dest || 'www/build/fonts';
+
+  return gulp.src(options.src)
+    .pipe(gulp.dest(options.dest));
+};
+
 var isRelease = argv.indexOf('--release') > -1;
 
 gulp.task('watch', ['clean'], function(done){
@@ -65,7 +75,9 @@ gulp.task('build', ['clean'], function(done){
 
 gulp.task('sass', buildSass);
 gulp.task('html', copyHTML);
-gulp.task('fonts', copyFonts);
+gulp.task('ionicFonts', copyFonts);
+gulp.task('digitaleDoerferFonts', copyDigitaleDoerferFonts);
+gulp.task('fonts', ['ionicFonts', 'digitaleDoerferFonts']);
 gulp.task('scripts', copyScripts);
 gulp.task('clean', function(){
   return del('www/build');
