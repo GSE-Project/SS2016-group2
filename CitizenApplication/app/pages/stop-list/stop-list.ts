@@ -5,6 +5,7 @@
 import {Page, NavController} from 'ionic-angular';
 import {Stop} from '../../providers/model/Stop';
 import {Point} from '../../providers/model/geojson/Point';
+import {StopDetailPage} from '../stop-detail/stop-detail';
 
 class ViewStop extends Stop {
   private lines: Array<number>;
@@ -60,17 +61,16 @@ export class StopListPage {
   private searchText: String;
   private stops: Array<ViewStop> = new Array<ViewStop>();
   constructor(public nav: NavController) {
-    for (var i = 0; i < 50; i++) {
+    for (let i = 0; i < 50; i++) {
       var stop = new Stop();
       stop.id = i;
       stop.name = "Straße " + i;
       stop.location = new Point(99, 12);
 
-      stop.schedule = [
-        { lineId: this.getRandomLine(), time: this.getRandomTime() },
-        { lineId: this.getRandomLine(), time: this.getRandomTime() },
-        { lineId: this.getRandomLine(), time: this.getRandomTime() }
-      ]
+      stop.schedule = [];
+      for (let i = 0; i < 8; i++) {
+        stop.schedule.push({ lineId: this.getRandomLine(), time: this.getRandomTime() });
+      }
 
       this.stops.push(new ViewStop(stop));
     }
@@ -93,5 +93,9 @@ export class StopListPage {
 
   getRandomLine() {
     return Math.floor(Math.random() * (3 + 1)) + 1;
+  }
+
+  goToStopDetail(stop: Stop) {
+    this.nav.push(StopDetailPage, stop);
   }
 }

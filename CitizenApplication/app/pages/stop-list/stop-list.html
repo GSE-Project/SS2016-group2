@@ -13,7 +13,7 @@
   <ion-searchbar [(ngModel)]="searchText" (input)="onSearch($event)" (cancel)="onSearchCancel($event)">
   </ion-searchbar>
   <ion-list>
-    <ion-item *ngFor="#stop of stops">
+    <ion-item *ngFor="#stop of stops" (click)="goToStopDetail(stop)">
       <div class="line" item-right>
         <p *ngFor="#schedule of stop.getSchedules(3)" class="line line{{schedule.lineId}}">
           {{schedule.lineId}}: {{schedule.time | date:'HH:mm'}}

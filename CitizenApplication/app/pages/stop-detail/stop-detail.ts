@@ -1,4 +1,6 @@
-import {Page, NavController} from 'ionic-angular';
+import {Page, NavController, NavParams, ActionSheet} from 'ionic-angular';
+import {Stop} from '../../providers/model/Stop';
+import {BusDetailPage} from '../bus-detail/bus-detail';
 
 /*
   Generated class for the StopDetailPage page.
@@ -10,5 +12,32 @@ import {Page, NavController} from 'ionic-angular';
   templateUrl: 'build/pages/stop-detail/stop-detail.html',
 })
 export class StopDetailPage {
-  constructor(public nav: NavController) {}
+  private stop: Stop;
+  constructor(public nav: NavController, private navParams: NavParams) {
+    this.stop = navParams.data;
+  }
+  
+  infoClicked(schedule) {
+    let actionSheet = ActionSheet.create({
+      title: 'Tasks',
+      buttons: [
+        {
+          text: 'Request a stop',
+          handler: () => {
+          }
+        },{
+          text: 'Show bus information',
+          handler: () => {
+            this.nav.push(BusDetailPage);
+          }
+        },{
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    this.nav.present(actionSheet);
+  }
 }

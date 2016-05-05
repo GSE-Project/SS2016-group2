@@ -1,3 +1,15 @@
 .stop-detail {
-
+    .requestStopBtn {
+        background-color: color($colors, primary);
+        color: #fff;
+        width: 100%;
+        display: block;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .infoBtn {
+        float: right;
+    }
 }
