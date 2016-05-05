@@ -4,11 +4,11 @@
 
 export default Coordinate;
 
-export class Coordinate{
-    latitude : number;
+export class Coordinate {
+    latitude: number;
     longitude: number;
 
-    constructor(lat:number, lon:number){
+    constructor(lat: number, lon: number) {
         this.latitude = lat;
         this.longitude = lon;
     }
