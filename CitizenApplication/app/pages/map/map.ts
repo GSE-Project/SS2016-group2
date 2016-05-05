@@ -10,17 +10,17 @@ import {Geolocation} from 'ionic-native';
   templateUrl: 'build/pages/map/map.html',
 })
 export class MapPage {
+  private map: google.maps.Map;
+  
   constructor(public nav: NavController) {
-    this.map = null;
-
-    this.loadMap()
+    this.loadMap();
   }
 
   loadMap(){
 
     let options ={timeout: 10000, enableHighAccuracy: true};
 
-    Geolocation.getCurrentPosition(options).then(function(position) {
+    Geolocation.getCurrentPosition(options).then((position) => {
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
       let mapOptions = {
@@ -29,7 +29,7 @@ export class MapPage {
         mypTypeId: google.maps.MapTypeId.ROADMAP,
       };
 
-      this.map = new google.maps.Map((<HTMLInputElement>document.getElementById("map")), mapOptions);
+      this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
     });
   }
 }

@@ -17,3 +17,4 @@ hooks
 Thumbs.db
 .idea/
 .vscode/
+npm-debug.log
