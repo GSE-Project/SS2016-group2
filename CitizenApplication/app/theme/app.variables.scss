@@ -26,10 +26,18 @@
 // are different per mode.
 
 $colors: (
-  primary:    #387ef5,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
-  favorite:   #69BB7B
+  primary:    #1F82C0, // Use for: Navigation Bar, Action Buttons, Main Navigation
+  primary2:   #66BFAC, // Use for: Secondary highlighting
+  green:      #009374, // Use for: Item declarations (e.g. ideas)
+  blue:       #33B8CA, // Use for: Item declarations (e.g. ideas)
+  yellow:     #B1C800,    // Use for: Item declarations (e.g. ideas)
+  red:        #C31D1D  // Use for: Alerts, critical actions
 );
+
+
+$lineColors: red, #0000FF, purple, green;
+
+/*
+ * Edited by skaldo on the 5.5.2016 - added the Ui colors of the DD
+ * project. Added mock colors for the lines.
+ */

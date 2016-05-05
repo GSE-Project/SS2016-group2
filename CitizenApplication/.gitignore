@@ -15,3 +15,6 @@ hooks
 
 .DS_Store
 Thumbs.db
+.idea/
+.vscode/
+npm-debug.log

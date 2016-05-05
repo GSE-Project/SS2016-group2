@@ -17,18 +17,30 @@ export class HomePage {
   constructor(public nav: NavController, private test: Test) {
     this.reqNumber = 0;
   }
-  
+
   askServiceForMyIP() {
     this.test.load().then((result: any) => {
       let toast = Toast.create({
-          message: 'Your IP is: '+result.ip,
-          duration: 3000
+        message: 'Your IP is: ' + result.ip,
+        duration: 3000
       });
-        
+
       this.nav.present(toast);
-      
+
       this.ip = result.ip;
       this.reqNumber++;
     });
+  }
+
+  //hide nav bar when we enter the page
+  onPageWillEnter() {
+    var element = <HTMLElement>document.getElementsByTagName("ion-navbar-section")[0];
+    element.style.display = "none";
+  }
+
+  //show nav bar when we leave the page
+  onPageDidLeave() {
+    var element = <HTMLElement>document.getElementsByTagName("ion-navbar-section")[0];
+    element.style.display = "block";
   }
 }
