@@ -1,20 +1,19 @@
-import CitizenDataServiceInterface from "../../../providers/data/CitizenDataServiceInterface";
-import {RestApiProviderInterface} from "../../../providers/data/RestApiProviderInterface";
-import PersistentDataProviderInterface from "../../../providers/data/PersistentDataProviderInterface";
-import {CitizenDataService} from "../../../providers/data/CitizenDataService";
-import {UpdateData} from "../../../providers/model/UpdateData";
-import Line from "../../../providers/model/Line";
-import Route from "../../../providers/model/Route";
-import Stop from "../../../providers/model/Stop";
-import before = testing.before;
+import CitizenDataServiceInterface from "./CitizenDataServiceInterface";
+import {RestApiProviderInterface} from "./RestApiProviderInterface";
+import PersistentDataProviderInterface from "./PersistentDataProviderInterface";
+import {CitizenDataService} from "./CitizenDataService";
+import {UpdateData} from "../model/UpdateData";
+import Line from "../model/Line";
+import Route from "../model/Route";
+import Stop from "../model/Stop";
 /**
  * Created by sholzer on 06.05.2016.
  */
 
-describe("CitizenDataService specifications", function(){
+describe("CitizenDataService specifications", function () {
 
     //Mocks
-    var restApi : RestApiProviderInterface = jasmine.createSpyObj('restApi', [
+    var restApi: RestApiProviderInterface = jasmine.createSpyObj('restApi', [
         'getUpdateDataFromServer',
         'getBussesFromServer',
         'getLinesFromServer',
@@ -22,7 +21,7 @@ describe("CitizenDataService specifications", function(){
         'getRoutesFromServer',
         'getRealTimeBusData'
     ]);
-    var storageApi : PersistentDataProviderInterface = jasmine.createSpyObj('storageApi',[
+    var storageApi: PersistentDataProviderInterface = jasmine.createSpyObj('storageApi', [
         'getLastUpdateTimes',
         'putLastUpdateTimes',
         'getBusses',
@@ -35,7 +34,7 @@ describe("CitizenDataService specifications", function(){
         'putRoutes'
     ]);
 
-    before(function(){ //Reset Stubs
+    beforeEach(function () { //Reset Stubs
         spyOn(restApi, 'getUpdateDataFromServer').and.stub();
         spyOn(restApi, 'getBussesFromServer').and.stub();
         spyOn(restApi, 'getLinesFromServer').and.stub();
@@ -52,11 +51,11 @@ describe("CitizenDataService specifications", function(){
         spyOn(storageApi, 'putLines').and.stub();
         spyOn(storageApi, 'putStops').and.stub();
         spyOn(storageApi, 'putRoutes').and.stub();
-});
+    });
 
     // Test object
-    var citizenDataService : CitizenDataServiceInterface = new CitizenDataService(restApi, storageApi);
-    it("Initialization and Update", function(){
+    var citizenDataService: CitizenDataServiceInterface = new CitizenDataService(restApi, storageApi);
+    it("Initialization and Update", function () {
         var storageUpdateData = new UpdateData();
         storageUpdateData.busses = 1;
         storageUpdateData.lines = 1;
@@ -67,7 +66,7 @@ describe("CitizenDataService specifications", function(){
         serverUpdateData.lines = 2;
         serverUpdateData.routes = 1;
         serverUpdateData.stops = 1;
-        var serverLines :Line[] = [new Line(),new Line()];
+        var serverLines: Line[] = [new Line(), new Line()];
         spyOn(storageApi, 'getLastUpdateTimes').and.returnValue(storageUpdateData);
         spyOn(restApi, 'getUpdateDataFromServer').and.returnValue(serverUpdateData);
         spyOn(restApi, 'getLinesFromServer').and.returnValue(serverLines);

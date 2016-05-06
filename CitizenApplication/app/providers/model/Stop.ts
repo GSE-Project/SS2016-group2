@@ -1,6 +1,6 @@
 /**
  * Created by sholzer on 03.05.2016.
- * Updated & reviewed by skaldo on 05.05.2016.
+ * Reviewed by skaldo on 05.05.2016 and 06.05.2016.
  */
 
 import {Point} from './geojson/Point';

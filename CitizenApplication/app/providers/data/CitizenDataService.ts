@@ -1,12 +1,16 @@
-import CitizenDataServiceInterface from './CitizenDataServiceInterface.ts';
+/*
+ * Created by sholzer on the 3.5.2016
+ * Reviewed by skaldo on the 6.5.2016
+ */
+import CitizenDataServiceInterface from './CitizenDataServiceInterface';
 import {Injectable} from 'angular2/core';
 import {Http} from 'angular2/http';
 
-import Bus from '../model/Bus.ts';
-import Line from '../model/Line.ts';
-import Stop from '../model/Stop.ts';
-import Route from '../model/Route.ts';
-import Point from '../model/geojson/Point.ts';
+import Bus from '../model/Bus';
+import Line from '../model/Line';
+import Stop from '../model/Stop';
+import Route from '../model/Route';
+import Point from '../model/geojson/Point';
 import {RestApiProviderInterface} from "./RestApiProviderInterface";
 import PersistentDataProviderInterface from "./PersistentDataProviderInterface";
 import {UpdateData} from "../model/UpdateData";
@@ -16,28 +20,42 @@ import {timeInterval} from "rxjs/operator/timeInterval";
 /**
  * Service class to provide data from the data storage to the app ui
  */
-export class CitizenDataService implements CitizenDataServiceInterface{
-
-
-	constructor(restApi:RestApiProviderInterface = null, storageApi:PersistentDataProviderInterface=null){
+export class CitizenDataService implements CitizenDataServiceInterface {
+	constructor(restApi?: RestApiProviderInterface, storageApi?: PersistentDataProviderInterface) {
 		this.cache = this.populateDataCache();
-		if(restApi == null){
+		if (!restApi) {
 			/*this.restApi = new Instance*///TODO instance;
-		}else {
+		} else {
 			this.restApi = restApi;
 		}
-		if(storageApi == null){
+		if (!storageApi) {
 			/*this.storageApi = new Instance*///TODO instance
-		}else{
+		} else {
 			this.storageApi = storageApi;
 		}
 		this.populateDataCache();
 	}
-	private timerSet:boolean = false;
-	private restApi: RestApiProviderInterface /*TODO initialize*/ ;
-	private storageApi : PersistentDataProviderInterface /*TODO initialize*/;
-	private cache:CitizenDataCache = new CitizenDataCache;
+	private timerId: number = null;
+	private restApi: RestApiProviderInterface /*TODO initialize*/;
+	private storageApi: PersistentDataProviderInterface /*TODO initialize*/;
+	private cache: CitizenDataCache = new CitizenDataCache;
 
+	/*
+	 * Generic function for filtering of the objects implementing the DataItemInterface
+	 * Added by skaldo on 06.05.2016
+	 * @param filter optional parameter to filter the output list
+	 * @return A list of Stop object
+	 */
+	private getDataItem<T>(cache: Array<T>, filter?: T): T[]{
+		if (!filter) {
+			return cache;
+		}
+		var result: T = cache.find((value)=>{
+			return value['id'] == filter['id'];
+		});
+		
+		return [result];
+	}
 
 	/*
 	* Interface methods
@@ -47,51 +65,24 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 	* @param filter optional parameter to filter the output list
 	* @return A list of Stop object
 	*/
-	getStopList(filter?: Stop = null): Stop[]{
-		if(filter == null){
-			return this.cache.cached_stops.slice();
-		}
-		var result : Stop[] = this.cache.cached_stops.slice();
-		for(var i : number  = 0; i < result.length;i++){
-			if(filter.id != result[i].id){
-				result.splice(i,1);
-			}
-		}
-		return result;
+	getStopList(filter?: Stop): Stop[] {
+		return this.getDataItem<Stop>(this.cache.cached_stops, filter); 
 	};
 
 	/**
 	* @param filter optional parameter to filter the output list
 	* @return A list of Line objects
 	*/
-	getLineList(filter?: Line = null): Line[] {
-		if(filter == null){
-			return this.cache.cached_lines.slice();
-		}
-		var result : Line[] = this.cache.cached_lines.slice();
-		for(var i : number  = 0; i < result.length;i++){
-			if(filter.id != result[i].id){
-				result.splice(i,1);
-			}
-		}
-		return result;
+	getLineList(filter?: Line): Line[] {
+		return this.getDataItem<Line>(this.cache.cached_lines, filter); 
 	};
 
 	/**
 	* @param filter optional parameter to filter the output list
 	* @return A list of Bus objects
 	*/
-	getBusList(filter?: Bus = null): Bus[] {
-		if(filter == null){
-			return this.cache.cached_busses.slice();
-		}
-		var result : Bus[] = this.cache.cached_busses.slice();
-		for(var i : number  = 0; i < result.length;i++){
-			if(filter.id != result[i].id){
-				result.splice(i,1);
-			}
-		}
-		return result;
+	getBusList(filter?: Bus): Bus[] {
+		return this.getDataItem<Bus>(this.cache.cached_busses, filter); 
 	};
 
 	/**
@@ -106,81 +97,81 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 	* @param filter optional parameter to filter the output list.
 	* @return A list of Route objects
 	*/
-	getRoutes(filter?: Route=null): Route[] {
-		if(filter == null){
-			return this.cache.cached_routes.slice();
-		}
-		var result : Route[] = this.cache.cached_routes.slice();
-		for(var i : number  = 0; i < result.length;i++){
-			if(filter.id != result[i].id){
-				result.splice(i,1);
-			}
-		}
-		return result;
+	getRoutes(filter?: Route): Route[] {
+		// skaldo 06.05.2016:
+    	// I don't think, that this is going to be so easy, we might need thhe promise API here,
+		// as the request is going to be async.
+		return this.getDataItem<Route>(this.cache.cached_routes, filter); 
 	};
 
 	/**
 	* Requests an update from the data source
 	*/
 	update(): void {
-		var serverTime : UpdateData = this._restApi.getUpdateDataFromServer();
-		var currentCacheTime : UpdateData = this.cache.cached_timestamp;
-		if(serverTime.busses > currentCacheTime.busses){
+		var serverTime: UpdateData = this.restApi.getUpdateDataFromServer();
+		var currentCacheTime: UpdateData = this.cache.cached_timestamp;
+		if (serverTime.busses > currentCacheTime.busses) {
 			this.cache.cached_busses = this.restApi.getBussesFromServer();
 		}
-		if(serverTime.lines > currentCacheTime.lines){
+		if (serverTime.lines > currentCacheTime.lines) {
 			this.cache.cached_lines = this.restApi.getLinesFromServer();
 		}
-		if(serverTime.routes > currentCacheTime.routes){
+		if (serverTime.routes > currentCacheTime.routes) {
 			this.cache.cached_routes = this.restApi.getRoutesFromServer();
 		}
-		if(serverTime.stops > currentCacheTime.stops){
+		if (serverTime.stops > currentCacheTime.stops) {
 			this.cache.cached_stops = this.restApi.getStopsFromServer();
 		}
 		this.cache.cached_timestamp = serverTime;
 		this.putDataToStorage(this.cache);
 	};
 
-	public startUpdateTimer(timeInterval:number):void{
-		if(!this.timerSet){
-			window.setInterval(this.update,timeInterval);
-			this.timerSet = true;
+	public startUpdateTimer(timeInterval: number): void {
+		// skaldo, 06.05.2016:
+		// Better than using the timer, use the interval function after we receive the response,
+		// as we might face some problems in the future here.
+		if (!this.timerId) {
+			this.timerId = window.setInterval(this.update, timeInterval);
 		}
+	}
+	
+	/**
+	 * Stops the update timer.
+	 */
+	public stopUpdateTimer(){
+		window.clearInterval(this.timerId);
 	}
 
 	/**
 	 * Fetches the data from the storage
 	 * @returns CitizenDataCache with the data from the storage
      */
-	private populateDataCache():CitizenDataCache{
-		var cache : CitizenDataCache = new CitizenDataCache;
-		cache.cached_timestamp = this._storageApi.getLastUpdateTimes();
-		cache.cached_busses = this._storageApi.getBusses();
-		cache.cached_lines = this._storageApi.getLines();
-		cache.cached_routes = this._storageApi.getRoutes();
-		cache.cached_stops = this._storageApi.getStops();
+	private populateDataCache(): CitizenDataCache {
+		var cache: CitizenDataCache = new CitizenDataCache;
+		cache.cached_timestamp = this.storageApi.getLastUpdateTimes();
+		cache.cached_busses = this.storageApi.getBusses();
+		cache.cached_lines = this.storageApi.getLines();
+		cache.cached_routes = this.storageApi.getRoutes();
+		cache.cached_stops = this.storageApi.getStops();
 		return cache;
 	};
 
-	private putDataToStorage(data:CitizenDataCache):void{
+	private putDataToStorage(data: CitizenDataCache): void {
 		this.storageApi.putBusses(data.cached_busses);
 		this.storageApi.putLines(data.cached_lines);
 		this.storageApi.putRoutes(data.cached_routes);
 		this.storageApi.putStops(data.cached_stops);
 		this.storageApi.putLastUpdateTimes(data.cached_timestamp);
 	}
-
-
-
 }
 
 /**
  * Structure to hold the cached data
  */
-class CitizenDataCache{
-	cached_busses : Bus[] = [];
-	cached_lines : Line[]=[];
-	cached_stops: Stop[]=[];
-	cached_routes: Route[]=[];
-	cached_timestamp : UpdateData = new UpdateData;
+class CitizenDataCache {
+	cached_busses: Bus[] = [];
+	cached_lines: Line[] = [];
+	cached_stops: Stop[] = [];
+	cached_routes: Route[] = [];
+	cached_timestamp: UpdateData = new UpdateData;
 }
