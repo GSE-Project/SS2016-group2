@@ -1,6 +1,7 @@
 language: node_js
 node_js: 4.0
 before_script:
+  - cd CitizenApplication
   - npm install -g gulp
   - npm install
-script: gulp
+script: gulp test
