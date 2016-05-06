@@ -154,11 +154,11 @@ export class CitizenDataService implements CitizenDataServiceInterface{
      */
 	private populateDataCache():CitizenDataCache{
 		var cache : CitizenDataCache = new CitizenDataCache;
-		cache.cached_timestamp = this._storageApi.getLastUpdateTimes();
-		cache.cached_busses = this._storageApi.getBusses();
-		cache.cached_lines = this._storageApi.getLines();
-		cache.cached_routes = this._storageApi.getRoutes();
-		cache.cached_stops = this._storageApi.getStops();
+		cache.cached_timestamp = this.storageApi.getLastUpdateTimes();
+		cache.cached_busses = this.storageApi.getBusses();
+		cache.cached_lines = this.storageApi.getLines();
+		cache.cached_routes = this.storageApi.getRoutes();
+		cache.cached_stops = this.storageApi.getStops();
 		return cache;
 	};
 
