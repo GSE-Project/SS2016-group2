@@ -153,7 +153,7 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 	 * @returns CitizenDataCache with the data from the storage
      */
 	private populateDataCache():CitizenDataCache{
-		var cache : UpdateData = new CitizenDataCache;
+		var cache : CitizenDataCache = new CitizenDataCache;
 		cache.cached_timestamp = this._storageApi.getLastUpdateTimes();
 		cache.cached_busses = this._storageApi.getBusses();
 		cache.cached_lines = this._storageApi.getLines();
