@@ -3,12 +3,12 @@
  * Updated & reviewed by skaldo on 05.05.2016.
  */
 
-import {GeoJSonObject} from './GeoJSonObject';
+import {GeoJsonObject} from './GeoJsonObject';
 import {Coordinate} from './Coordinate';
 
 export default Point;
 
-export class Point implements GeoJSonObject {
+export class Point implements GeoJsonObject {
     type: "Point";
     coordinates: Array<Coordinate>;
     constructor(x: number, y: number) {

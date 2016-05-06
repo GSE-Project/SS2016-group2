@@ -4,9 +4,9 @@
  */
 import Coordinate from './Coordinate';
 
-export default GeoJSonObject;
+export default GeoJsonObject;
 
-export interface GeoJSonObject {
+export interface GeoJsonObject {
     type: "Positions" | "Point" | "MultiPoint" | "LineString" | "MultiLineString" | "Polygon" | "MultiPolygon" | "GeometryCollection";
     coordinates: Coordinate[];
 }
