@@ -17,17 +17,16 @@ import {timeInterval} from "rxjs/operator/timeInterval";
  * Service class to provide data from the data storage to the app ui
  */
 export class CitizenDataService implements CitizenDataServiceInterface{
-	set restApi(value:RestApiProviderInterface){
-            this.restApi=value;
-        }
-
-	set storageApi(value:PersistentDataProviderInterface){
-            this.storageApi=value;
-        }
-
-
 	constructor(){
 		this.cache = this.populateDataCache();
+		this.update();
+	}
+
+
+	constructor(restApi:RestApiProviderInterface, storageApi:PersistentDataProviderInterface){
+		this.cache = this.populateDataCache();
+		this.restApi = restApi;
+		this.storageApi = storageApi;
 		this.update();
 	}
 	private timerSet:boolean = false;
