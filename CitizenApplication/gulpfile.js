@@ -2,8 +2,8 @@ var gulp = require('gulp'),
     gulpWatch = require('gulp-watch'),
     del = require('del'),
     runSequence = require('run-sequence'),
-    argv = process.argv;
-
+    argv = process.argv,
+    test = require('./test/test');
 
 /**
  * Ionic hooks
@@ -72,6 +72,12 @@ gulp.task('build', ['clean'], function(done){
     }
   );
 });
+
+// Added by skaldo on 6.5.2016
+// Testing tasks
+gulp.task('test', test.karma);
+gulp.task('karma-debug', test.karmaDebug);
+gulp.task('lint', test.lint);
 
 gulp.task('sass', buildSass);
 gulp.task('html', copyHTML);
