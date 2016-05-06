@@ -10,18 +10,27 @@ import Point from '../model/geojson/Point.ts';
 import {RestApiProviderInterface} from "./RestApiProviderInterface";
 import PersistentDataProviderInterface from "./PersistentDataProviderInterface";
 import {UpdateData} from "../model/UpdateData";
+import {timeInterval} from "rxjs/operator/timeInterval";
 
 @Injectable()
 /**
  * Service class to provide data from the data storage to the app ui
  */
 export class CitizenDataService implements CitizenDataServiceInterface{
+	set restApi(value:RestApiProviderInterface){
+            this.restApi=value;
+        }
+
+	set storageApi(value:PersistentDataProviderInterface){
+            this.storageApi=value;
+        }
+
 
 	constructor(){
 		this.cache = this.populateDataCache();
 		this.update();
 	}
-
+	private timerSet:boolean = false;
 	private restApi: RestApiProviderInterface /*TODO initialize*/ ;
 	private storageApi : PersistentDataProviderInterface /*TODO initialize*/;
 	private cache:CitizenDataCache = new CitizenDataCache;
@@ -87,7 +96,7 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 	* @return Object with properties (position:Point) and (delay:number)
 	*/
 	getBusRealTimeData(id: number): { position: Point, delay: number } {
-		return this.restApi.getRealTimeBusData(id);
+		return this._restApi.getRealTimeBusData(id);
 	};
 
 	/**
@@ -111,23 +120,30 @@ export class CitizenDataService implements CitizenDataServiceInterface{
 	* Requests an update from the data source
 	*/
 	update(): void {
-		var serverTime : UpdateData = this.restApi.getUpdateDataFromServer();
+		var serverTime : UpdateData = this._restApi.getUpdateDataFromServer();
 		var currentCacheTime : UpdateData = this.cache.cached_timestamp;
 		if(serverTime.busses > currentCacheTime.busses){
-			this.cache.cached_busses = this.restApi.getBussesFromServer();
+			this.cache.cached_busses = this._restApi.getBussesFromServer();
 		}
 		if(serverTime.lines > currentCacheTime.lines){
-			this.cache.cached_lines = this.restApi.getLinesFromServer();
+			this.cache.cached_lines = this._restApi.getLinesFromServer();
 		}
 		if(serverTime.routes > currentCacheTime.routes){
-			this.cache.cached_routes = this.restApi.getRoutesFromServer();
+			this.cache.cached_routes = this._restApi.getRoutesFromServer();
 		}
 		if(serverTime.stops > currentCacheTime.stops){
-			this.cache.cached_stops = this.restApi.getStopsFromServer();
+			this.cache.cached_stops = this._restApi.getStopsFromServer();
 		}
 		this.cache.cached_timestamp = serverTime;
 		this.putDataToStorage(this.cache);
 	};
+
+	public startUpdateTimer(timeInterval:number):void{
+		if(!this.timerSet){
+			window.setInterval(this.update,timeInterval);
+			this.timerSet = true;
+		}
+	}
 
 	/**
 	 * Fetches the data from the storage
@@ -135,21 +151,23 @@ export class CitizenDataService implements CitizenDataServiceInterface{
      */
 	private populateDataCache():CitizenDataCache{
 		var cache : UpdateData = new CitizenDataCache;
-		cache.cached_timestamp = this.storageApi.getLastUpdateTimes();
-		cache.cached_busses = this.storageApi.getBusses();
-		cache.cached_lines = this.storageApi.getLines();
-		cache.cached_routes = this.storageApi.getRoutes();
-		cache.cached_stops = this.storageApi.getStops();
+		cache.cached_timestamp = this._storageApi.getLastUpdateTimes();
+		cache.cached_busses = this._storageApi.getBusses();
+		cache.cached_lines = this._storageApi.getLines();
+		cache.cached_routes = this._storageApi.getRoutes();
+		cache.cached_stops = this._storageApi.getStops();
 		return cache;
 	};
 
 	private putDataToStorage(data:CitizenDataCache):void{
-		this.storageApi.putBusses(data.cached_busses);
-		this.storageApi.putLines(data.cached_lines);
-		this.storageApi.putRoutes(data.cached_routes);
-		this.storageApi.putStops(data.cached_stops);
-		this.storageApi.putLastUpdateTimes(data.cached_timestamp);
+		this._storageApi.putBusses(data.cached_busses);
+		this._storageApi.putLines(data.cached_lines);
+		this._storageApi.putRoutes(data.cached_routes);
+		this._storageApi.putStops(data.cached_stops);
+		this._storageApi.putLastUpdateTimes(data.cached_timestamp);
 	}
+
+
 
 }
 

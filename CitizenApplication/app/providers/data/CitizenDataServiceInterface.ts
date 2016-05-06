@@ -46,4 +46,12 @@ interface CitizenDataServiceInterface {
 	* Requests an update from the data source
 	*/
 	update(): void;
+
+	/**
+	 * Starts the automatically fetch of data
+	 * @param timeInterval the time interval the server is checked for new data
+     */
+	startUpdateTimer(timeInterval:number):void;
+
+
 }
