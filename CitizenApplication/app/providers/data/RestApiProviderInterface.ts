@@ -1,8 +1,10 @@
-import {UpdateData} from "../model/UpdateData";
-import Bus from "../model/Bus";
-import Line from "../model/Line";
-import Stop from "../model/Stop";
-import Route from "../model/Route";
+import {UpdateData} from '../model/UpdateData';
+import Bus from '../model/Bus';
+import Line from '../model/Line';
+import Stop from '../model/Stop';
+import Route from '../model/Route';
+import Point from '../model/geojson/Point';
+
 /**
  * Created by sholzer on 03.05.2016.
  */

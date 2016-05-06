@@ -8,15 +8,30 @@
     "rxjs": "5.0.0-beta.2"
   },
   "devDependencies": {
+    "browserify-istanbul": "^2.0.0",
     "del": "2.2.0",
     "gulp": "3.9.1",
+    "gulp-tslint": "^5.0.0",
     "gulp-watch": "4.3.5",
     "ionic-gulp-browserify-typescript": "^1.1.0",
     "ionic-gulp-fonts-copy": "^1.0.0",
     "ionic-gulp-html-copy": "^1.0.0",
     "ionic-gulp-sass-build": "^1.0.0",
     "ionic-gulp-scripts-copy": "^1.0.1",
-    "run-sequence": "1.1.5"
+    "isparta": "^4.0.0",
+    "istanbul": "^0.4.3",
+    "jasmine-core": "2.4.1",
+    "karma": "^0.13.22",
+    "karma-browserify": "^5.0.4",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.0.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-mocha-reporter": "^2.0.3",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "phantomjs-prebuilt": "^2.1.7",
+    "run-sequence": "1.1.5",
+    "traceur": "0.0.108",
+    "tslint": "^3.9.0"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
