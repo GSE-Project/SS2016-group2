@@ -13,5 +13,11 @@ www/build
 # Hooks
 hooks
 
+#coverage
+test/reports
+
 .DS_Store
 Thumbs.db
+.idea/
+.vscode/
+npm-debug.log
