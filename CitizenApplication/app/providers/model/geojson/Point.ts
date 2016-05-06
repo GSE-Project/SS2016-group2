@@ -3,8 +3,8 @@
  * Updated & reviewed by skaldo on 05.05.2016.
  */
 
-import {GeoJsonObject} from './GeoJsonObject';
-import {Coordinate} from './Coordinate';
+import GeoJsonObject from './GeoJsonObject';
+import Coordinate from './Coordinate';
 
 export default Point;
 
