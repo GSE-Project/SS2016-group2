@@ -59,7 +59,7 @@ describe("CitizenDataService specifications", function () {
     });
 
     // Test object
-    var citizenDataService: CitizenDataServiceInterface = new CitizenDataService(restApi, storageApi);
+    var citizenDataService: CitizenDataServiceInterface;
     describe("Initialization", function () {
         
         var busses = [new Bus()];
@@ -73,6 +73,8 @@ describe("CitizenDataService specifications", function () {
        spyOn(storageApi, 'getLines').and.returnValue(lines);
        spyOn(storageApi, 'getRoutes').and.returnValue(routes);
        spyOn(storageApi, 'getStops').and.returnValue(stops);
+       
+       citizenDataService = new CitizenDataService(restApi, storageApi);
        
        //Expects
        it("Call for busses", function () {
