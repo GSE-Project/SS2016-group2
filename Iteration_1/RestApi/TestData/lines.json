@@ -1,12 +1,21 @@
-{"lines":[{
-	"id":"1",
-	"name":"Dorftour",
-	"routeRef":"1",
-	"busses":["1"]
-}, {
-	"id":"1",
-	"name":"Kaiserslautern und zurück",
-	"routeRef":"2",
-	"busses":["2"]
-	}], 
-"timestamp":"1"}
+{
+	"lines": [
+		{
+			"id": 1,
+			"name": "Dorftour",
+			"routeRef": 1,
+			"busses": [
+				1
+			]
+		},
+		{
+			"id": 1,
+			"name": "Kaiserslautern und zurück",
+			"routeRef": 2,
+			"busses": [
+				2
+			]
+		}
+	],
+	"timestamp": 1
+}
