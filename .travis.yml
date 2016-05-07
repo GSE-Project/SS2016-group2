@@ -5,11 +5,13 @@ before_script:
 - cd CitizenApplication
 - npm install -g gulp
 - npm install -g ionic@beta
+- npm install -g cordova
 - npm install
 script:
 - gulp test
 - ionic build
 deploy:
+  skip_cleanup: true
   provider: releases
   api_key:
     secure: Vg+kJYsF0lB60a/3nuiYLEUQ2X6ISrHjjxYawhZfKWISgJCMThDRqMsd32TI0bdBp5n186Axk7y3x2TG4wcO7fGKjcixL+s6mYLv8Pr6sEpMamLm2Y/6q0nVBNanpaI28vwgrqm9mAcqb0oeN3ClcjJNrhzFE37gRzpfdjGymHUsBAkl2F4UHXAbUvnvUuqMlsWmTGQXJjY3k8VdeY957DuhPaAxm1dsC2cErlNfmqV9E/FnqwkP4JikiA8EDcVwodekh5Lmx8BGOjr2qLbArwwP599Qu1IloxGrEKAy9A7VRjZsy2ZWlihXX+Ut+1XPlSlIR+5Y/pPUoHXDp7pT/vrVq4I6CiM1tR3m0gcGD6dWv81hnw0urZMytxWuomEcns9avSBcwWNrlv+G2au9buJ346ISjpw9GGAludAvgRiVCakeZy7eFDE6k0zg3rhyFJnNqnPV4TzmmaXk4jog/E0c6gL6Mh+1e9Z7urfaQCnR5sb/6Gmmi9ciOjTpIpYKr7W+ThILnGFXNvAkKtTjiUOuVWjcIgFfvND4ZXUJ87cpVuJOJ0icZpHDyJhjAXlkGCPSN03hvSIxFnDPRZyL7y+TM0v3BBjJpIaHjZj8YDdy+croFb0uM+2xeuoKyhL1WqNFFS3ZEO5gIKPIOpzStC6A2D6ZEOhBrSMbcXGkay4=
