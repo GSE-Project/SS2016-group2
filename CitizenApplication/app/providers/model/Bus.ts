@@ -6,6 +6,9 @@
 export default Bus;
 
 export class Bus {
+    
+    public constructor(){};
+    
     public id: number;
     public numberPlate: string;
     public color: string;
