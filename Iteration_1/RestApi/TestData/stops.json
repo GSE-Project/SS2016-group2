@@ -1,0 +1,14 @@
+{"stops":[{
+	"id":"1",
+	"name":"Kirche",
+	"lines":["1,2"],
+	"location":{"latitude":"100","longitude":"100"}, 
+	"schedule":[{
+		"lineId":"1", "time":"12:00"
+		}, {
+		"lineId":"1", "time":"13:00"
+		}, {
+		"lineId":"2", "time":"9:00"
+		}]
+	}], 
+"timestamp":"2"}
