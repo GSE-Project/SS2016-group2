@@ -19,6 +19,7 @@ deploy:
   on:
     repo: GSE-Project/SS2016-group2
     branch: develop
+    tags: true
 before_deploy:
 - zip -r release.zip www platfoms
 after_deploy:
