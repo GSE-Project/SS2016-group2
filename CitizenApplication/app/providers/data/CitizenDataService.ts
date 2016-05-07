@@ -11,8 +11,8 @@ import Line from '../model/Line';
 import Stop from '../model/Stop';
 import Route from '../model/Route';
 import Point from '../model/geojson/Point';
-import {RestApiProviderInterface} from "./RestApiProviderInterface";
-import PersistentDataProviderInterface from "./PersistentDataProviderInterface";
+import {RestApiProvider} from "./RestApiProvider";
+import {PersistentDataProvider} from "./PersistentDataProvider";
 import {UpdateData} from "../model/UpdateData";
 import {timeInterval} from "rxjs/operator/timeInterval";
 
@@ -21,8 +21,12 @@ import {timeInterval} from "rxjs/operator/timeInterval";
  * Service class to provide data from the data storage to the app ui
  */
 export class CitizenDataService implements CitizenDataServiceInterface {
-	constructor(restApi?: RestApiProviderInterface, storageApi?: PersistentDataProviderInterface) {
-		this.cache = this.populateDataCache();
+	private timerId: number = null;
+	private restApi: RestApiProvider;/*TODO initialize*/
+	private storageApi: PersistentDataProvider;/*TODO initialize*/
+	private cache: CitizenDataCache = new CitizenDataCache;
+	
+	constructor(restApi: RestApiProvider, storageApi: PersistentDataProvider) {
 		if (!restApi) {
 			/*this.restApi = new Instance*///TODO instance;
 		} else {
@@ -35,10 +39,6 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 		}
 		this.populateDataCache();
 	}
-	private timerId: number = null;
-	private restApi: RestApiProviderInterface /*TODO initialize*/;
-	private storageApi: PersistentDataProviderInterface /*TODO initialize*/;
-	private cache: CitizenDataCache = new CitizenDataCache;
 
 	/*
 	 * Generic function for filtering of the objects implementing the DataItemInterface
