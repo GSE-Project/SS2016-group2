@@ -3,6 +3,7 @@ import {RestApiProviderInterface} from "./RestApiProviderInterface";
 import PersistentDataProviderInterface from "./PersistentDataProviderInterface";
 import {CitizenDataService} from "./CitizenDataService";
 import {UpdateData} from "../model/UpdateData";
+import Bus from "../model/Bus";
 import Line from "../model/Line";
 import Route from "../model/Route";
 import Stop from "../model/Stop";
@@ -13,15 +14,25 @@ import Stop from "../model/Stop";
 describe("CitizenDataService specifications", function () {
 
     //Mocks
-    var restApi: RestApiProviderInterface = jasmine.createSpyObj('restApi', [
+    var restApi: RestApiProviderInterface;
+    var storageApi: PersistentDataProviderInterface;
+    
+    //Reusable Data
+    var storageUpdateData: UpdateData;
+    var serverUpdateData: UpdateData;
+    
+
+    beforeEach(function () { //Reset Stubs
+       restApi = jasmine.createSpyObj('restApi', [
         'getUpdateDataFromServer',
         'getBussesFromServer',
         'getLinesFromServer',
         'getStopsFromServer',
         'getRoutesFromServer',
         'getRealTimeBusData'
-    ]);
-    var storageApi: PersistentDataProviderInterface = jasmine.createSpyObj('storageApi', [
+        ]);
+        
+        storageApi= jasmine.createSpyObj('storageApi', [
         'getLastUpdateTimes',
         'putLastUpdateTimes',
         'getBusses',
@@ -32,51 +43,53 @@ describe("CitizenDataService specifications", function () {
         'putStops',
         'getRoutes',
         'putRoutes'
-    ]);
-
-    beforeEach(function () { //Reset Stubs
-        spyOn(restApi, 'getUpdateDataFromServer').and.stub();
-        spyOn(restApi, 'getBussesFromServer').and.stub();
-        spyOn(restApi, 'getLinesFromServer').and.stub();
-        spyOn(restApi, 'getStopsFromServer').and.stub();
-        spyOn(restApi, 'getRoutesFromServer').and.stub();
-        spyOn(restApi, 'getRealTimeBusData').and.stub();
-        spyOn(storageApi, 'getLastUpdateTimes').and.stub();
-        spyOn(storageApi, 'putLastUpdateTimes').and.stub();
-        spyOn(storageApi, 'getBusses').and.stub();
-        spyOn(storageApi, 'getLines').and.stub();
-        spyOn(storageApi, 'getRoutes').and.stub();
-        spyOn(storageApi, 'getStops').and.stub();
-        spyOn(storageApi, 'putBusses').and.stub();
-        spyOn(storageApi, 'putLines').and.stub();
-        spyOn(storageApi, 'putStops').and.stub();
-        spyOn(storageApi, 'putRoutes').and.stub();
-    });
-
-    // Test object
-    var citizenDataService: CitizenDataServiceInterface = new CitizenDataService(restApi, storageApi);
-    it("Initialization and Update", function () {
+        ]);
+    
         var storageUpdateData = new UpdateData();
         storageUpdateData.busses = 1;
         storageUpdateData.lines = 1;
         storageUpdateData.routes = 1;
         storageUpdateData.stops = 1;
+        
         var serverUpdateData = new UpdateData();
         serverUpdateData.busses = 1;
-        serverUpdateData.lines = 2;
+        serverUpdateData.lines = 1;
         serverUpdateData.routes = 1;
         serverUpdateData.stops = 1;
-        var serverLines: Line[] = [new Line(), new Line()];
-        spyOn(storageApi, 'getLastUpdateTimes').and.returnValue(storageUpdateData);
-        spyOn(restApi, 'getUpdateDataFromServer').and.returnValue(serverUpdateData);
-        spyOn(restApi, 'getLinesFromServer').and.returnValue(serverLines);
-        spyOn(restApi, 'getBussesFromServer');
-        expect(storageApi.getLastUpdateTimes).toHaveBeenCalled();
-        expect(restApi.getUpdateDataFromServer).toHaveBeenCalled();
-        expect(restApi.getBussesFromServer).not.toHaveBeenCalled();
-        expect(restApi.getLinesFromServer).toHaveBeenCalled();
-        expect(storageApi.putLines).toHaveBeenCalled();
-        expect(storageApi.putLines).toHaveBeenCalledWith(serverLines);
+    });
+
+    // Test object
+    var citizenDataService: CitizenDataServiceInterface = new CitizenDataService(restApi, storageApi);
+    describe("Initialization", function () {
+        
+        var busses = [new Bus()];
+        var lines = [new Line()];
+        var stops = [new Stop()];
+        var routes = [new Route()];
+        
+        //Spy setup
+       spyOn(storageApi, 'getLastUpdateTimes').and.returnValue(storageUpdateData);
+       spyOn(storageApi, 'getBusses').and.returnValue(busses);
+       spyOn(storageApi, 'getLines').and.returnValue(lines);
+       spyOn(storageApi, 'getRoutes').and.returnValue(routes);
+       spyOn(storageApi, 'getStops').and.returnValue(stops);
+       
+       //Expects
+       it("Call for busses", function () {
+           expect(storageApi.getBusses).toHaveBeenCalled;
+       })
+       it("Call for lines", function () {
+           expect(storageApi.getLines).toHaveBeenCalled;
+       })
+       it("Call for stops", function () {
+           expect(storageApi.getStops).toHaveBeenCalled;
+       })
+       it("Call for routes", function () {
+           expect(storageApi.getRoutes).toHaveBeenCalled;
+       })
+       it("Call for last update time", function () {
+           expect(storageApi.getLastUpdateTimes).toHaveBeenCalled;
+       })
     });
 
 
