@@ -28,12 +28,12 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	
 	constructor(restApi: RestApiProvider, storageApi: PersistentDataProvider) {
 		if (!restApi) {
-			/*this.restApi = new Instance*///TODO instance;
+			this.restApi = new RestApiProvider();
 		} else {
 			this.restApi = restApi;
 		}
 		if (!storageApi) {
-			/*this.storageApi = new Instance*///TODO instance
+			this.storageApi = new PersistentDataProvider();
 		} else {
 			this.storageApi = storageApi;
 		}
