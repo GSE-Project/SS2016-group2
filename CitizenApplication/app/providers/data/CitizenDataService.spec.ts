@@ -14,8 +14,8 @@ import Stop from "../model/Stop";
 
 describe("CitizenDataService specifications", function () {
     //Mocks
-    var restApi: RestApiProvider = new RestApiProvider();
-    var storageApi: PersistentDataProvider = new PersistentDataProvider();
+    var restApi: RestApiProvider ///*by sholzer: In unit tests we should not use other units*/= new RestApiProvider();
+    var storageApi: PersistentDataProvider //=  new PersistentDataProvider();
 
     //Reusable Data
     var storageUpdateData: UpdateData;
@@ -31,7 +31,7 @@ describe("CitizenDataService specifications", function () {
             'getRoutesFromServer',
             'getRealTimeBusData'
         ]);
-/*
+
         storageApi = jasmine.createSpyObj('storageApi', [
             'getLastUpdateTimes',
             'putLastUpdateTimes',
@@ -44,7 +44,7 @@ describe("CitizenDataService specifications", function () {
             'getRoutes',
             'putRoutes'
         ]);
-*/
+
         var storageUpdateData = new UpdateData();
         storageUpdateData.busses = 1;
         storageUpdateData.lines = 1;
@@ -77,11 +77,12 @@ describe("CitizenDataService specifications", function () {
 
         beforeEach(()=>{
             //Spy setup
-            spyOn(storageApi, 'getLastUpdateTimes').and.returnValue(storageUpdateData);
-            spyOn(storageApi, 'getBusses').and.returnValue(busses);
-            spyOn(storageApi, 'getLines').and.returnValue(lines);
-            spyOn(storageApi, 'getRoutes').and.returnValue(routes);
-            spyOn(storageApi, 'getStops').and.returnValue(stops);
+            (<jasmine.Spy> storageApi.getLastUpdateTimes).and.returnValue(storageUpdateData);
+            (<jasmine.Spy> storageApi.getBusses).and.returnValue(busses);
+            (<jasmine.Spy> storageApi.getLines).and.returnValue(lines);
+            (<jasmine.Spy> storageApi.getRoutes).and.returnValue(routes);
+            (<jasmine.Spy> storageApi.getStops).and.returnValue(stops);
+            
         });
 
         citizenDataService = new CitizenDataService(restApi, storageApi);
