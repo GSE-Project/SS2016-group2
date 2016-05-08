@@ -66,6 +66,8 @@ var lines = require(basePath + "lines.json");
 var routes = require(basePath + "routes.json");
 var stops = require(basePath + "stops.json");
 var update = require(basePath + "update.json");
+var bus1 = require(basePath + "busses/bus1.json");
+var bus2 = require(basePath + "busses/bus2.json");
 
 // respond with "hello world" when a GET request is made to the homepage
 app.get('/busses', function (req, res) {
@@ -87,3 +89,11 @@ app.get('/update', function (req, res) {
 app.listen(port, function () {
     console.log('Mock server runs on the port ' + port);
 });
+
+app.get('/busses/1',function (req, res){
+    res.send(bus1);
+})
+
+app.get('/busses/2',function (req, res){
+    res.send(bus2);
+})
