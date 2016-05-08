@@ -1,15 +1,31 @@
 language: node_js
 node_js: 4.0
+env:
+  global:
+    - CXX=g++-4.8 # node.js v > 4 requirements
+  matrix:
+    - JOB=unit
+    - JOB=build-web
+addons:
+  apt: # node.js v > 4 requirements
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+cache:
+  directories:
+  - CitizenApplication/node_modules
+  - CitizenApplication/platforms
+  - CitizenApplication/plugins
 before_install: if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
-before_script:
+install:
 - cd CitizenApplication
 - npm install -g gulp
 - npm install -g cordova
 - npm install -g ionic@beta
 - npm install
 script:
-- gulp test
-- ionic build android
+- ../scripts/build_travis.sh
 deploy:
   skip_cleanup: true
   provider: releases
@@ -23,4 +39,7 @@ deploy:
 before_deploy:
 - zip -r release.zip www platfoms
 after_deploy:
-- "echo 'deployed!'"
+- echo 'deployed!'
+notifications:
+  slack:
+    secure: GOMWBtJ9rRFRnaY7WT0Isq4iPtO4JJlBI9eYCH7KjOQL/FfaYIQurNhOt3rlGJXjLlNOlIbxVffImiBPW7N08TEcqQ4gCME5E74cqAV9esXHamg1hcGywMY7JMGN9bblKY8njXk7uHvHFB7GBRfEdil71rhUIm/LCRX8h2VVployaOMNlYMegSu/zxir5F+t/IxqulsHXZxnHcSaz2Ucb16+LPt7h1uhCDSz2DLCW8naCNOk3u962vgQw8W88LCqJoqm3QhLvmnbQDreQ1pKSdPkEXoAviCwRkdhqWa9TbmV1wloJqZYDNTPixBZ7Ze50mSb2VgOjOCbkESDFYJxVyMcLqCmquVN+tT7klVczTvfYBMOnd3Gt96fuZxRFnnVhh3WReYXmK1lu/D1+U9hyFOk/KTlDNYyIkN3KO1xwqvIbgb+Owdf/jLisMwxH+aneySNE/eGREHnB4y05iD6nd7G1EI3KUa6KZ/rUpDQdkooB1KuvEDwjRM3JBQcqXtWVrYoawTZ3l6Jbt94ekHU2dXfKwQ1zyQmLPjmbIIT8k8IfnzStcdhb6f9+rDYYfaS7jwED4JgN8z/egqi6XwpkYuC+nAU/uri5c/tl3rS2eniMmnjD5HLoDOaJGbuAc0XK1Ffq5cp0Zc23XcgoIvxLIyqo6fVssgU1bQAffnzFW8=
