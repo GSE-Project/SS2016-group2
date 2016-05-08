@@ -14,12 +14,25 @@ import Stop from "../model/Stop";
 
 describe("CitizenDataService specifications", function () {
     //Mocks
-    var restApi: RestApiProvider ///*by sholzer: In unit tests we should not use other units*/= new RestApiProvider();
-    var storageApi: PersistentDataProvider //=  new PersistentDataProvider();
+    var restApi: RestApiProvider; ///*by sholzer: In unit tests we should not use other units*/= new RestApiProvider();
+    var storageApi: PersistentDataProvider; //=  new PersistentDataProvider();
 
     //Reusable Data
     var storageUpdateData: UpdateData;
     var serverUpdateData: UpdateData;
+    
+    var busses : Bus[];
+    var lines : Line[];
+    var stops : Stop[];
+    var routes: Route[];
+    
+    var createMockData = function <T>(n: number): T[] {
+            var result: T[] = new Array<T>(n);
+            result.forEach((v, i) => {
+                v['id'] = i;
+            })
+            return result;
+        }
 
 
     beforeEach(function () { //Reset Stubs
@@ -56,34 +69,23 @@ describe("CitizenDataService specifications", function () {
         serverUpdateData.lines = 1;
         serverUpdateData.routes = 1;
         serverUpdateData.stops = 1;
+        
+        busses = createMockData<Bus>(10);
+        lines = createMockData<Line>(10);
+        stops = createMockData<Stop>(10);
+        routes = createMockData<Route>(10);
+        
+         (<jasmine.Spy> storageApi.getLastUpdateTimes).and.returnValue(storageUpdateData);
+         (<jasmine.Spy> storageApi.getBusses).and.returnValue(busses);
+         (<jasmine.Spy> storageApi.getLines).and.returnValue(lines);
+         (<jasmine.Spy> storageApi.getRoutes).and.returnValue(routes);
+         (<jasmine.Spy> storageApi.getStops).and.returnValue(stops);
     });
 
     // Test object
     var citizenDataService: CitizenDataServiceInterface;
     describe("Initialization", function () {
 
-        var createMockData = function <T>(n: number): T[] {
-            var result: T[] = new Array<T>(n);
-            result.forEach((v, i) => {
-                v['id'] = i;
-            })
-            return result;
-        }
-
-        var busses = createMockData<Bus>(10);
-        var lines = createMockData<Line>(10);
-        var stops = createMockData<Stop>(10);
-        var routes = createMockData<Route>(10);
-
-        beforeEach(()=>{
-            //Spy setup
-            (<jasmine.Spy> storageApi.getLastUpdateTimes).and.returnValue(storageUpdateData);
-            (<jasmine.Spy> storageApi.getBusses).and.returnValue(busses);
-            (<jasmine.Spy> storageApi.getLines).and.returnValue(lines);
-            (<jasmine.Spy> storageApi.getRoutes).and.returnValue(routes);
-            (<jasmine.Spy> storageApi.getStops).and.returnValue(stops);
-            
-        });
 
         citizenDataService = new CitizenDataService(restApi, storageApi);
 
@@ -103,6 +105,46 @@ describe("CitizenDataService specifications", function () {
         it("Call for last update time", function () {
             expect(storageApi.getLastUpdateTimes).toHaveBeenCalled;
         })
+    });
+    
+    describe("Update call", function () {
+        
+        //Setup
+        var serverBusses = createMockData<Bus>(9);
+        serverUpdateData= new UpdateData();
+        serverUpdateData.busses = 2;
+        serverUpdateData.lines = 1;
+        serverUpdateData.routes = 1;
+        serverUpdateData.stops = 1;
+        
+        beforeEach(()=>{
+            (<jasmine.Spy> restApi.getUpdateDataFromServer).and.returnValue(serverUpdateData);
+            (<jasmine.Spy> restApi.getBussesFromServer).and.returnValue(serverBusses);
+        });
+        
+        citizenDataService = new CitizenDataService(restApi, storageApi);
+        citizenDataService.update();
+        
+        it("Timestamps from server fetched", function () {
+            expect(restApi.getUpdateDataFromServer).toHaveBeenCalled;
+        });
+        it("Updated Bus data fetched", function () {
+            expect(restApi.getBussesFromServer).toHaveBeenCalled;
+        })
+        it("Other entries are not updated", function () {
+            expect(restApi.getLinesFromServer).not.toHaveBeenCalled;
+            expect(restApi.getRoutesFromServer).not.toHaveBeenCalled;
+            expect(restApi.getStopsFromServer).not.toHaveBeenCalled;
+        });
+        it("Stored updated timestamps in storage", function () {
+            expect(storageApi.putLastUpdateTimes).toHaveBeenCalledWith(serverUpdateData);
+        })
+        it("Stored updated busses data in storage", function () {
+            expect(storageApi.putBusses).toHaveBeenCalledWith(serverBusses);
+            /*expect(storageApi.putLines).toHaveBeenCalledWith(lines);
+            expect(storageApi.putRoutes).toHaveBeenCalledWith(routes);
+            expect(storageApi.putStops).toHaveBeenCalledWith(stops);*///Depends on exact implementation
+        });
     });
 
 
