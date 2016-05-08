@@ -25,7 +25,7 @@ install:
 - npm install -g ionic@beta
 - npm install
 script:
-- pwd
+- ../scripts/build_travis.sh
 deploy:
   skip_cleanup: true
   provider: releases
