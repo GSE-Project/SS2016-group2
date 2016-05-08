@@ -1,14 +1,22 @@
 language: node_js
 node_js: 4.0
+env:
+  global:
+    - CXX=g++-4.8 # node.js v > 4 requirements
+  matrix:
+    - JOB=unit
+    - JOB=build-web
+addons:
+  apt: # node.js v > 4 requirements
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 cache:
   directories:
   - CitizenApplication/node_modules
   - CitizenApplication/platforms
   - CitizenApplication/plugins
-env:
-  matrix:
-    - JOB=unit
-    - JOB=build-web
 before_install: if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
 install:
 - cd CitizenApplication
@@ -17,7 +25,7 @@ install:
 - npm install -g ionic@beta
 - npm install
 script:
-- ./scripts/build_travis.sh
+- scripts/build_travis.sh
 deploy:
   skip_cleanup: true
   provider: releases
