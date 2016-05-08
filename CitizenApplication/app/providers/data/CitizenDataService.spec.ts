@@ -34,7 +34,6 @@ describe("CitizenDataService specifications", function () {
             return result;
         }
 
-
     beforeEach(function () { //Reset Stubs
         restApi = jasmine.createSpyObj('restApi', [
             'getUpdateDataFromServer',
@@ -147,6 +146,22 @@ describe("CitizenDataService specifications", function () {
         });
     });
 
-
+    describe("Getter", function(){
+        // Depends on current (2016-05-08, 16:47) implementation of createMockData()
+        var resultBusses : Bus[];
+        citizenDataService = new CitizenDataService(restApi, storageApi);
+        it("Get all busses", function () {
+            resultBusses = citizenDataService.getBusList();
+            if(resultBusses != busses) fail;
+        });
+        it("Get one bus", function () {
+            var filterBus : Bus = new Bus;
+            filterBus.id=2;
+            if(typeof(filterBus) == "undefined") fail;
+            resultBusses = citizenDataService.getBusList(filterBus);
+            if(resultBusses.length != 1) fail;
+            if(resultBusses[0].id!=2) fail;
+        });
+    });
 
 });
