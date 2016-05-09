@@ -2,41 +2,47 @@
  * Created by skaldo on 07.05.2016.
  */
 import {PersistentDataProviderInterface} from "./PersistentDataProviderInterface";
-import Bus from "../model/Bus";
-import {UpdateData} from "../model/UpdateData";
-import Line from "../model/Line";
-import Stop from "../model/Stop";
-import Route from "../model/Route";
+import Bus from "../../providers/model/Bus";
+import {UpdateData} from "../../providers/model/UpdateData";
+import Line from "../../providers/model/Line";
+import Stop from "../../providers/model/Stop";
+import Route from "../../providers/model/Route";
+import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
 
 export class PersistentDataProvider implements PersistentDataProviderInterface{
+    public local : Storage;
+    constructor(){
+        this.local = new Storage(LocalStorage);
+        this.local["ACTIVE"] = true;
+    }
     getLastUpdateTimes(){
-        return new UpdateData();
+        return this.local["TIMESTAMP"];
     }
     putLastUpdateTimes(updateTimes:UpdateData){
-        return;
+        this.local["TIMESTAMP"] = updateTimes;
     }
     getBusses(){
-        return new Array<Bus>();
+        return this.local["BUS"];
     }
     putBusses(busses:Bus[]){
-        return;
+        this.local["BUS"] = busses;
     }
     getLines(){
-        return new Array<Line>();
+        return this.local["LINE"];
     }
     putLines(lines:Line[]){
-        return;
+        this.local["LINE"] = lines;
     }
     getStops(){
-        return new Array<Stop>();
+        return this.local["STOP"];
     }
     putStops(stops:Stop[]){
-        return;
+        this.local["STOP"] = stops;
     }
     getRoutes(){
-        return new Array<Route>();
+        return this.local["ROUTE"];
     }
     putRoutes(routes:Route[]){
-        return;
+        this.local["ROUTE"] = routes;
     }
 }
