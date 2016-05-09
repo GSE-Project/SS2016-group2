@@ -10,38 +10,38 @@ import Point from '../model/geojson/Point';
  */
 
 
-export interface RestApiProviderInterface{
+export interface RestApiProviderInterface {
 
     /**
      * @return :UpdateData containing the time stamps of the data on the server
      */
-    getUpdateDataFromServer():UpdateData;
+    getUpdateDataFromServer(): Promise<UpdateData>;
 
     /**
      * @return :Bus[] containing the Bus information from the server
      */
-    getBussesFromServer():Bus[];
+    getBussesFromServer(): Promise<Bus[]>;
 
     /**
      * @return :Line[] containing the Line information from the server
      */
-    getLinesFromServer():Line[];
+    getLinesFromServer(): Promise<Line[]>;
 
     /**
      * @return :Stop[] containing the Stop information from the server
      */
-    getStopsFromServer():Stop[];
+    getStopsFromServer(): Promise<Stop[]>;
 
     /**
      * @return :Route[] containing the Route information from the server
      */
-    getRoutesFromServer():Route[];
+    getRoutesFromServer(): Promise<Route[]>;
 
     /**
      * Return the position and delay of a given bus
      * @param id :number of the bus
      * @return object {position:number, delay:number}
      */
-    getRealTimeBusData(id:number):{ position: Point, delay: number };
+    getRealTimeBusData(id: number): Promise<{ position: Point, delay: number }>;
 
 }
