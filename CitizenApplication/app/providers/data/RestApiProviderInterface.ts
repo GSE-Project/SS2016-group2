@@ -20,22 +20,22 @@ export interface RestApiProviderInterface {
     /**
      * @return :Bus[] containing the Bus information from the server
      */
-    getBussesFromServer(): Promise<Bus[]>;
+    getBussesFromServer(): Promise<{timestamp: number, data: Bus[]}>;
 
     /**
      * @return :Line[] containing the Line information from the server
      */
-    getLinesFromServer(): Promise<Line[]>;
+    getLinesFromServer(): Promise<{timestamp: number, data: Line[]}>;
 
     /**
      * @return :Stop[] containing the Stop information from the server
      */
-    getStopsFromServer(): Promise<Stop[]>;
+    getStopsFromServer(): Promise<{timestamp: number, data: Stop[]}>;
 
     /**
      * @return :Route[] containing the Route information from the server
      */
-    getRoutesFromServer(): Promise<Route[]>;
+    getRoutesFromServer(): Promise<{timestamp: number, data: Route[]}>;
 
     /**
      * Return the position and delay of a given bus
