@@ -1,5 +1,7 @@
 /**
  * Created by skaldo on 07.05.2016.
+ * Implemented by tim.dellmann
+ * 
  */
 import {PersistentDataProviderInterface} from "./PersistentDataProviderInterface";
 import Bus from "../../providers/model/Bus";
@@ -9,40 +11,54 @@ import Stop from "../../providers/model/Stop";
 import Route from "../../providers/model/Route";
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
 
-export class PersistentDataProvider implements PersistentDataProviderInterface{
-    public local : Storage;
-    constructor(){
-        this.local = new Storage(LocalStorage);
-        this.local["ACTIVE"] = true;
+const STORAGE_ACTIVE = "A";
+const STORAGE_TIMESTAMP = "T";
+const STORAGE_BUS = "B";
+const STORAGE_LINE = "L";
+const STORAGE_STOP = "S";
+const STORAGE_ROUTE = "R";
+
+export class PersistentDataProvider implements PersistentDataProviderInterface {
+
+
+
+    /**
+     * Generic Storage interface. 
+     */
+    public storage: Storage;
+    constructor() {
+        // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
+        this.storage = new Storage(LocalStorage);
+        this.storage.set(STORAGE_ACTIVE, "true");
     }
-    getLastUpdateTimes(){
-        return this.local["TIMESTAMP"];
+    getLastUpdateTimes():Promise<any> {
+        return this.storage.get(STORAGE_TIMESTAMP);
     }
-    putLastUpdateTimes(updateTimes:UpdateData){
-        this.local["TIMESTAMP"] = updateTimes;
+    putLastUpdateTimes(updateTimes: UpdateData) {
+        this.storage.set(STORAGE_BUS, JSON.stringify(updateTimes));
     }
-    getBusses(){
-        return this.local["BUS"];
+    getBusses():Promise<any> {
+        return this.storage.get(STORAGE_BUS);
     }
-    putBusses(busses:Bus[]){
-        this.local["BUS"] = busses;
+    putBusses(busses: Bus[]) {
+        this.storage.set(STORAGE_BUS, JSON.stringify(busses));
     }
-    getLines(){
-        return this.local["LINE"];
+    getLines():Promise<any> {
+        return this.storage.get(STORAGE_LINE);
     }
-    putLines(lines:Line[]){
-        this.local["LINE"] = lines;
+    putLines(lines: Line[]) {
+        this.storage.set(STORAGE_LINE, JSON.stringify(lines));
     }
-    getStops(){
-        return this.local["STOP"];
+    getStops() :Promise<any>{
+        return this.storage.get(STORAGE_STOP);
     }
-    putStops(stops:Stop[]){
-        this.local["STOP"] = stops;
+    putStops(stops: Stop[]) {
+        this.storage.set(STORAGE_STOP, JSON.stringify(stops));
     }
-    getRoutes(){
-        return this.local["ROUTE"];
+    getRoutes() :Promise<any>{
+        return this.storage.get(STORAGE_ROUTE);
     }
-    putRoutes(routes:Route[]){
-        this.local["ROUTE"] = routes;
+    putRoutes(routes: Route[]) {
+        this.storage.set(STORAGE_ROUTE, JSON.stringify(routes));
     }
 }
