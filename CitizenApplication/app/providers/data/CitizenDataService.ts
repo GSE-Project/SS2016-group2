@@ -6,11 +6,11 @@ import CitizenDataServiceInterface from './CitizenDataServiceInterface';
 import {Injectable} from 'angular2/core';
 import {Http} from 'angular2/http';
 
-import Bus from '../model/Bus';
-import Line from '../model/Line';
-import Stop from '../model/Stop';
-import Route from '../model/Route';
-import Point from '../model/geojson/Point';
+import {Bus} from '../model/Bus';
+import {Line} from '../model/Line';
+import {Stop} from '../model/Stop';
+import {Route} from '../model/Route';
+import {Point} from '../model/geojson/Point';
 import {RestApiProvider} from "./RestApiProvider";
 import {PersistentDataProvider} from "./PersistentDataProvider";
 import {UpdateData} from "../model/UpdateData";
@@ -155,7 +155,11 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 		cache.cached_stops = this.storageApi.getStops();
 		return cache;
 	};
-
+	
+	/**
+	 * Stores the current cache in the data storage
+	 * sholzer: seems never to be called
+	 */
 	private putDataToStorage(data: CitizenDataCache): void {
 		this.storageApi.putBusses(data.cached_busses);
 		this.storageApi.putLines(data.cached_lines);
@@ -173,5 +177,5 @@ class CitizenDataCache {
 	cached_lines: Line[] = [];
 	cached_stops: Stop[] = [];
 	cached_routes: Route[] = [];
-	cached_timestamp: UpdateData = new UpdateData;
+	cached_timestamp: UpdateData = new UpdateData();
 }

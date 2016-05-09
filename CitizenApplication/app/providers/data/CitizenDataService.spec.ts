@@ -3,10 +3,10 @@ import {RestApiProvider} from "./RestApiProvider";
 import {PersistentDataProvider} from "./PersistentDataProvider";
 import {CitizenDataService} from "./CitizenDataService";
 import {UpdateData} from "../model/UpdateData";
-import Bus from "../model/Bus";
-import Line from "../model/Line";
-import Route from "../model/Route";
-import Stop from "../model/Stop";
+import {Bus} from "../model/Bus";
+import {Line} from "../model/Line";
+import {Route} from "../model/Route";
+import {Stop} from "../model/Stop";
 /**
  * Created by sholzer on 06.05.2016.
  * Updated by skaldo on 07.05.2016.
@@ -149,18 +149,27 @@ describe("CitizenDataService specifications", function () {
     describe("Getter", function(){
         // Depends on current (2016-05-08, 16:47) implementation of createMockData()
         var resultBusses : Bus[];
+        
         citizenDataService = new CitizenDataService(restApi, storageApi);
         it("Get all busses", function () {
             resultBusses = citizenDataService.getBusList();
-            if(resultBusses != busses) fail;
+            resultBusses.forEach((b,i)=>{
+                if (busses.indexOf(b)== -1) {
+                    fail("Returned list is incomplete");
+                }
+            });
         });
         it("Get one bus", function () {
-            var filterBus : Bus = new Bus;
+            var inputBusses : Bus[] = [new Bus(), new Bus()];
+            (<jasmine.Spy>storageApi.getBusses).and.returnValue(inputBusses);
+            var filterBus : Bus;
+            filterBus = new Bus();
             filterBus.id=2;
-            if(typeof(filterBus) == "undefined") fail;
+            if(typeof(filterBus) == "undefined") fail("Input Bus is undefined");
             resultBusses = citizenDataService.getBusList(filterBus);
-            if(resultBusses.length != 1) fail;
-            if(resultBusses[0].id!=2) fail;
+            if(resultBusses.length != 1) fail("Array has the wrong size");
+            if(typeof(resultBusses[0]) == "undefined")fail("No Bus returned");
+            if(resultBusses[0].id!=2) fail("Wrong Bus object returned");
         });
     });
 
