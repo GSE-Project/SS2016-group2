@@ -40,7 +40,7 @@ export class PersistentDataProvider implements PersistentDataProviderInterface{
         this.local["STOP"] = stops;
     }
     getRoutes(){
-        return new Array<Route>();
+        return this.local["ROUTE"];
     }
     putRoutes(routes:Route[]){
         this.local["ROUTE"] = routes;
