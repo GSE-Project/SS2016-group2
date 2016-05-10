@@ -3,6 +3,7 @@ import Bus from '../model/Bus.ts';
 import Line from '../model/Line.ts';
 import Stop from '../model/Stop.ts';
 import Route from '../model/Route.ts';
+import {BusRealTimeData}  from '../model/BusRealTimeData';
 import Point from '../model/geojson/Point.ts';
 
 export default CitizenDataServiceInterface;
@@ -34,7 +35,13 @@ interface CitizenDataServiceInterface {
 	* @param id the identifier of a bus
 	* @return Object with properties (position:Point) and (delay:number)
 	*/
-	getBusRealTimeData(id: number): { position: Point, delay: number };
+	getBusRealTimeData(id: number):BusRealTimeData;
+	
+	/**
+	 * Requests the current position and delay for the specified bus from the server
+	 * @param id of the Bus
+	 */
+	requestBusRealTimeData(id:number):void;
 
 	/**
 	* @param filter optional parameter to filter the output list

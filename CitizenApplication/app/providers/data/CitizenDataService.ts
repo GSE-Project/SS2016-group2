@@ -1,11 +1,11 @@
- /*
- * Created by sholzer on the 3.5.2016
- * Reviewed by skaldo on the 6.5.2016
- */
+/*
+* Created by sholzer on the 3.5.2016
+* Reviewed by skaldo on the 6.5.2016
+*/
 import CitizenDataServiceInterface from './CitizenDataServiceInterface';
 import {Injectable} from 'angular2/core';
 import {Http} from 'angular2/http';
-
+import {BusRealTimeData}  from '../model/BusRealTimeData';
 import {Bus} from '../model/Bus';
 import {Line} from '../model/Line';
 import {Stop} from '../model/Stop';
@@ -90,9 +90,25 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	* @param id the identifier of a bus
 	* @return Object with properties (position:Point) and (delay:number)
 	*/
-	getBusRealTimeData(id: number): { position: Point, delay: number } {
-		return this.restApi.getRealTimeBusData(id);
+	getBusRealTimeData(id: number): BusRealTimeData {
+		var existingEntry: BusRealTimeData = this.getEntryForId(id, this.cache.cached_busses_real_time_data);
+		if(existingEntry == null){
+			existingEntry = new BusRealTimeData();
+		}
+		return existingEntry;
 	};
+
+	requestBusRealTimeData(id: number): void {
+		this.restApi.getRealTimeBusData(id).then((value) => {
+			var existingEntry: BusRealTimeData = this.getEntryForId(id, this.cache.cached_busses_real_time_data);
+			if (existingEntry != null) {
+				this.cache.cached_busses_real_time_data.splice(
+					this.cache.cached_busses_real_time_data.indexOf(existingEntry)
+				);
+			}
+			this.cache.cached_busses_real_time_data.push(value);
+		});
+	}
 
 	/**
 	* @param filter optional parameter to filter the output list.
@@ -110,34 +126,34 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	*/
 	update(): void {
 		// First request only the timestamps
-		this.restApi.getUpdateDataFromServer().then((value)=>{
+		this.restApi.getUpdateDataFromServer().then((value) => {
 			// when the timestamps are fetched decide for each data set if an update is neccessary 
-			if(value.busses > this.cache.cached_timestamp.busses){
-				this.restApi.getBussesFromServer().then((value)=>{
+			if (value.busses > this.cache.cached_timestamp.busses) {
+				this.restApi.getBussesFromServer().then((value) => {
 					this.cache.cached_busses = value.data;
 					this.cache.cached_busses_from_server = true;
 					this.cache.cached_timestamp.busses = value.timestamp;
 					this.storageApi.putBusses(value.data);
 				});
 			};
-			if(value.lines > this.cache.cached_timestamp.lines){
-				this.restApi.getLinesFromServer().then((value)=>{
+			if (value.lines > this.cache.cached_timestamp.lines) {
+				this.restApi.getLinesFromServer().then((value) => {
 					this.cache.cached_lines = value.data;
 					this.cache.cached_lines_from_server = true;
 					this.cache.cached_timestamp.lines = value.timestamp;
 					this.storageApi.putLines(value.data);
 				});
 			};
-			if(value.routes > this.cache.cached_timestamp.routes){
-				this.restApi.getRoutesFromServer().then((value)=>{
+			if (value.routes > this.cache.cached_timestamp.routes) {
+				this.restApi.getRoutesFromServer().then((value) => {
 					this.cache.cached_routes = value.data;
 					this.cache.cached_routes_from_server = true;
 					this.cache.cached_timestamp.routes = value.timestamp;
 					this.storageApi.putRoutes(value.data);
 				});
 			};
-			if(value.stops > this.cache.cached_timestamp.stops){
-				this.restApi.getStopsFromServer().then((value)=>{
+			if (value.stops > this.cache.cached_timestamp.stops) {
+				this.restApi.getStopsFromServer().then((value) => {
 					this.cache.cached_stops = value.data;
 					this.cache.cached_stops_from_server = true;
 					this.cache.cached_timestamp.stops = value.timestamp;
@@ -145,7 +161,7 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 				});
 			};
 			this.storageApi.putLastUpdateTimes(value);
-			
+
 		});
 	};
 
@@ -174,23 +190,23 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 			if (this.cache.cached_timestamp_from_server) return;
 			this.cache.cached_timestamp = value;
 		});
-		this.storageApi.getBusses().then((value)=>{
+		this.storageApi.getBusses().then((value) => {
 			// if the cache contains data from the server we don't need the data from the storage
-			if(this.cache.cached_busses_from_server) return;
+			if (this.cache.cached_busses_from_server) return;
 			this.cache.cached_busses = value;
 		});
-		this.storageApi.getLines().then((value)=>{
-			if(this.cache.cached_lines_from_server) return;
+		this.storageApi.getLines().then((value) => {
+			if (this.cache.cached_lines_from_server) return;
 			this.cache.cached_lines = value;
 		});
-		this.storageApi.getStops().then((value)=>{
-			if(this.cache.cached_stops_from_server) return;
+		this.storageApi.getStops().then((value) => {
+			if (this.cache.cached_stops_from_server) return;
 			this.cache.cached_stops = value;
 		});
-		this.storageApi.getRoutes().then((value)=>{
-			if(this.cache.cached_routes_from_server) return;
+		this.storageApi.getRoutes().then((value) => {
+			if (this.cache.cached_routes_from_server) return;
 			this.cache.cached_routes = value;
-		});	
+		});
 	}
 
 
@@ -205,6 +221,17 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 		this.storageApi.putStops(data.cached_stops);
 		this.storageApi.putLastUpdateTimes(data.cached_timestamp);
 	}
+
+	private getEntryForId<T>(id: number, list: T[]): T {
+		var result: T = null;
+		list.forEach((t) => {
+			if (t['id'] == id) {
+				result = t;
+				return;
+			}
+		});
+		return result;
+	}
 }
 
 /**
@@ -213,6 +240,7 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 class CitizenDataCache {
 	cached_busses: Bus[] = [];
 	cached_busses_from_server: boolean = false;
+	cached_busses_real_time_data: BusRealTimeData[] = [];
 	cached_lines: Line[] = [];
 	cached_lines_from_server: boolean = false;
 	cached_stops: Stop[] = [];
