@@ -10,4 +10,12 @@ export class Line {
     public name: string;
     public routeRef: string;
     public busses: number[];
+
+    fromJSON(json: any) {
+        for (var propName in this) {
+            if (json[propName]) {
+                this[propName] = json[propName];
+            }
+        }
+    }
 }

@@ -12,4 +12,13 @@ export class Stop {
     public name: string;
     public location: Point;
     public schedule: { lineId: number, time: Date }[];
+
+    fromJSON(json: any) {
+        for (var propName in this) {
+            // TODO: additional parsing for the schedule needed.
+            if (json[propName]) {
+                this[propName] = json[propName];
+            }
+        }
+    }
 }

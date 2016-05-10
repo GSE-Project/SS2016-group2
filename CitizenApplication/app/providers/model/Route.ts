@@ -10,4 +10,13 @@ export default Route;
 export class Route {
     public id: number;
     public gpsData: Point[];
+
+    fromJSON(json: any) {
+        for (var propName in this) {
+            // TODO: Additional parsing for gpsData needed.
+            if (json[propName]) {
+                this[propName] = json[propName];
+            }
+        }
+    }
 }

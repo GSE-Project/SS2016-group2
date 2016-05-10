@@ -8,4 +8,12 @@ export class UpdateData {
     public lines: number;
     public routes: number;
     public stops: number;
+
+    fromJSON(json: any) {
+        for (var propName in this) {
+            if (json[propName]) {
+                this[propName] = json[propName];
+            }
+        }
+    }
 }
