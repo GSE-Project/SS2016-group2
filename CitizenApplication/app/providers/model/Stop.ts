@@ -4,10 +4,11 @@
  */
 
 import {Point} from './geojson/Point';
+import {JsonParsable} from './JsonParsable';
 
 export default Stop;
 
-export class Stop {
+export class Stop  implements JsonParsable{
     public id: number;
     public name: string;
     public location: Point;

@@ -3,7 +3,10 @@
  * Reviewed by skaldo on 06.05.2016.
  */
 
-export class UpdateData {
+import {JsonParsable} from './JsonParsable';
+
+
+export class UpdateData implements JsonParsable {
     public busses: number;
     public lines: number;
     public routes: number;

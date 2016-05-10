@@ -4,6 +4,7 @@
  */
 
 import Point from './geojson/Point.ts';
+import {JsonParsable} from './JsonParsable';
 
 export default Route;
 
