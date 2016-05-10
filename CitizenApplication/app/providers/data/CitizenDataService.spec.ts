@@ -20,19 +20,19 @@ describe("CitizenDataService specifications", function () {
     //Reusable Data
     var storageUpdateData: UpdateData;
     var serverUpdateData: UpdateData;
-    
-    var busses : Bus[];
-    var lines : Line[];
-    var stops : Stop[];
+
+    var busses: Bus[];
+    var lines: Line[];
+    var stops: Stop[];
     var routes: Route[];
-    
+
     var createMockData = function <T>(n: number): T[] {
-            var result: T[] = new Array<T>(n);
-            result.forEach((v, i) => {
-                v['id'] = i;
-            })
-            return result;
-        }
+        var result: T[] = new Array<T>(n);
+        result.forEach((v, i) => {
+            v['id'] = i;
+        })
+        return result;
+    }
 
     beforeEach(function () { //Reset Stubs
         restApi = jasmine.createSpyObj('restApi', [
@@ -68,17 +68,17 @@ describe("CitizenDataService specifications", function () {
         serverUpdateData.lines = 1;
         serverUpdateData.routes = 1;
         serverUpdateData.stops = 1;
-        
+
         busses = createMockData<Bus>(10);
         lines = createMockData<Line>(10);
         stops = createMockData<Stop>(10);
         routes = createMockData<Route>(10);
-        
-         (<jasmine.Spy> storageApi.getLastUpdateTimes).and.returnValue(storageUpdateData);
-         (<jasmine.Spy> storageApi.getBusses).and.returnValue(busses);
-         (<jasmine.Spy> storageApi.getLines).and.returnValue(lines);
-         (<jasmine.Spy> storageApi.getRoutes).and.returnValue(routes);
-         (<jasmine.Spy> storageApi.getStops).and.returnValue(stops);
+
+        (<jasmine.Spy>storageApi.getLastUpdateTimes).and.returnValue(storageUpdateData);
+        (<jasmine.Spy>storageApi.getBusses).and.returnValue(busses);
+        (<jasmine.Spy>storageApi.getLines).and.returnValue(lines);
+        (<jasmine.Spy>storageApi.getRoutes).and.returnValue(routes);
+        (<jasmine.Spy>storageApi.getStops).and.returnValue(stops);
     });
 
     // Test object
@@ -105,25 +105,25 @@ describe("CitizenDataService specifications", function () {
             expect(storageApi.getLastUpdateTimes).toHaveBeenCalled;
         })
     });
-    
+
     describe("Update call", function () {
-        
+
         //Setup
         var serverBusses = createMockData<Bus>(9);
-        serverUpdateData= new UpdateData();
+        serverUpdateData = new UpdateData();
         serverUpdateData.busses = 2;
         serverUpdateData.lines = 1;
         serverUpdateData.routes = 1;
         serverUpdateData.stops = 1;
-        
-        beforeEach(()=>{
-            (<jasmine.Spy> restApi.getUpdateDataFromServer).and.returnValue(serverUpdateData);
-            (<jasmine.Spy> restApi.getBussesFromServer).and.returnValue(serverBusses);
+
+        beforeEach(() => {
+            (<jasmine.Spy>restApi.getUpdateDataFromServer).and.returnValue(serverUpdateData);
+            (<jasmine.Spy>restApi.getBussesFromServer).and.returnValue(serverBusses);
         });
-        
+
         citizenDataService = new CitizenDataService(restApi, storageApi);
         citizenDataService.update();
-        
+
         it("Timestamps from server fetched", function () {
             expect(restApi.getUpdateDataFromServer).toHaveBeenCalled;
         });
@@ -146,30 +146,30 @@ describe("CitizenDataService specifications", function () {
         });
     });
 
-    describe("Getter", function(){
+    describe("Getter", function () {
         // Depends on current (2016-05-08, 16:47) implementation of createMockData()
-        var resultBusses : Bus[];
-        
+        var resultBusses: Bus[];
+
         citizenDataService = new CitizenDataService(restApi, storageApi);
         it("Get all busses", function () {
             resultBusses = citizenDataService.getBusList();
-            resultBusses.forEach((b,i)=>{
-                if (busses.indexOf(b)== -1) {
+            resultBusses.forEach((b, i) => {
+                if (busses.indexOf(b) == -1) {
                     fail("Returned list is incomplete");
                 }
             });
         });
         it("Get one bus", function () {
-            var inputBusses : Bus[] = [new Bus(), new Bus()];
+            var inputBusses: Bus[] = [new Bus(), new Bus()];
             (<jasmine.Spy>storageApi.getBusses).and.returnValue(inputBusses);
-            var filterBus : Bus;
+            var filterBus: Bus;
             filterBus = new Bus();
-            filterBus.id=2;
-            if(typeof(filterBus) == "undefined") fail("Input Bus is undefined");
+            filterBus.id = 2;
+            if (typeof (filterBus) == "undefined") fail("Input Bus is undefined");
             resultBusses = citizenDataService.getBusList(filterBus);
-            if(resultBusses.length != 1) fail("Array has the wrong size");
-            if(typeof(resultBusses[0]) == "undefined")fail("No Bus returned");
-            if(resultBusses[0].id!=2) fail("Wrong Bus object returned");
+            if (resultBusses.length != 1) fail("Array has the wrong size");
+            if (typeof (resultBusses[0]) == "undefined") fail("No Bus returned. Type was " + typeof (resultBusses[0]));
+            if (resultBusses[0].id != 2) fail("Wrong Bus object returned");
         });
     });
 

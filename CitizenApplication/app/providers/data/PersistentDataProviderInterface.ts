@@ -18,7 +18,7 @@ export interface PersistentDataProviderInterface{
      * Returns the time stamps of the data store lists
      * @return UpdateData object from the data storage
      */
-    getLastUpdateTimes():Promise<any>;
+    getLastUpdateTimes():Promise<UpdateData>;
 
     /**
      * Sets the time stamp of the data storage
@@ -29,7 +29,7 @@ export interface PersistentDataProviderInterface{
     /**
      * @return Array of Bus objects from the data store
      */
-    getBusses():Promise<any>;
+    getBusses():Promise<Array<Bus>>;
 
     /**
      * Stores a list of Bus object in the data storage. This method overwrites an already existing Bus object list in the storage
@@ -40,7 +40,7 @@ export interface PersistentDataProviderInterface{
     /**
      * @return Array of Line objects from the data store
      */
-    getLines():Promise<any>;
+    getLines():Promise<Array<Line>>;
 
     /**
      * Stores a list of Line object in the data storage. This method overwrites an already existing Line object list in the storage
@@ -51,7 +51,7 @@ export interface PersistentDataProviderInterface{
     /**
      * @return Array of Stop objects from the data store
      */
-    getStops():Promise<any>;
+    getStops():Promise<Array<Stop>>;
 
     /**
      * Stores a list of Stop object in the data storage. This method overwrites an already existing Stop object list in the storage
@@ -62,7 +62,7 @@ export interface PersistentDataProviderInterface{
     /**
      * @return Array of Route objects from the data store
      */
-    getRoutes():Promise<any>;
+    getRoutes():Promise<Array<Route>>;
 
     /**
      * Stores a list of Route object in the data storage. This method overwrites an already existing Route object list in the storage

@@ -31,32 +31,42 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
         this.storage = new Storage(LocalStorage);
         this.storage.set(STORAGE_ACTIVE, "true");
     }
-    getLastUpdateTimes():Promise<any> {
-        return this.storage.get(STORAGE_TIMESTAMP);
+    
+    
+    getStorageData<T>(type:string):Promise<T>{
+        return new Promise<T>(resolve=>{
+           this.storage.get(type).then((value)=>{
+               return <T>JSON.parse(<string>value);
+           })
+        });
+    }
+    
+    getLastUpdateTimes():Promise<UpdateData> {
+        return this.getStorageData<UpdateData>(STORAGE_TIMESTAMP);
     }
     putLastUpdateTimes(updateTimes: UpdateData) {
         this.storage.set(STORAGE_BUS, JSON.stringify(updateTimes));
     }
-    getBusses():Promise<any> {
-        return this.storage.get(STORAGE_BUS);
+    getBusses():Promise<Array<Bus>> {
+        return this.getStorageData<Array<Bus>>(STORAGE_BUS);
     }
     putBusses(busses: Bus[]) {
         this.storage.set(STORAGE_BUS, JSON.stringify(busses));
     }
-    getLines():Promise<any> {
-        return this.storage.get(STORAGE_LINE);
+    getLines():Promise<Array<Line>> {
+        return this.getStorageData<Array<Line>>(STORAGE_LINE);
     }
     putLines(lines: Line[]) {
         this.storage.set(STORAGE_LINE, JSON.stringify(lines));
     }
-    getStops() :Promise<any>{
-        return this.storage.get(STORAGE_STOP);
+    getStops() :Promise<Array<Stop>>{
+        return this.getStorageData<Array<Stop>>(STORAGE_STOP);
     }
     putStops(stops: Stop[]) {
         this.storage.set(STORAGE_STOP, JSON.stringify(stops));
     }
-    getRoutes() :Promise<any>{
-        return this.storage.get(STORAGE_ROUTE);
+    getRoutes() :Promise<Array<Route>>{
+        return this.getStorageData<Array<Route>>(STORAGE_ROUTE);
     }
     putRoutes(routes: Route[]) {
         this.storage.set(STORAGE_ROUTE, JSON.stringify(routes));
