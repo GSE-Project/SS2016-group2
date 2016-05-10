@@ -1,4 +1,5 @@
 import {UpdateData} from '../model/UpdateData';
+import {BusRealTimeData}  from '../model/BusRealTimeData';
 import Bus from '../model/Bus';
 import Line from '../model/Line';
 import Stop from '../model/Stop';
@@ -42,6 +43,6 @@ export interface RestApiProviderInterface {
      * @param id :number of the bus
      * @return object {position:number, delay:number}
      */
-    getRealTimeBusData(id: number): Promise<{ position: Point, delay: number }>;
+    getRealTimeBusData(id: number): Promise<BusRealTimeData>;
 
 }

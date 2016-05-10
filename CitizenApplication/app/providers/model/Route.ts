@@ -8,7 +8,7 @@ import {JsonParsable} from './JsonParsable';
 
 export default Route;
 
-export class Route {
+export class Route implements JsonParsable {
     public id: number;
     public gpsData: Point[];
 

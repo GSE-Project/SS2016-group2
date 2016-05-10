@@ -2,11 +2,13 @@
 * Created by skaldo on 07.05.2016.
 */
 import {RestApiProviderInterface} from "./RestApiProviderInterface";
+import {JsonParsable} from '../model/JsonParsable';
 import {UpdateData} from '../model/UpdateData';
 import {Bus} from '../model/Bus';
 import {Line} from '../model/Line';
 import {Route} from '../model/Route';
 import {Stop} from '../model/Stop';
+import {BusRealTimeData}  from '../model/BusRealTimeData';
 import {Point} from '../model/geojson/Point';
 import {Injectable} from 'angular2/core';
 import {Http} from 'angular2/http';
@@ -26,51 +28,44 @@ const UPDATE = "update";
 export class RestApiProvider implements RestApiProviderInterface {
     constructor(public http: Http) { }
 
-    getRemoteDataArray<T>(type: string): Promise<{timestamp: number, data: T[]}> {
+    getRemoteDataArray<T extends JsonParsable>(type: string, constructingClass:{new():T}): Promise<{timestamp: number, data: T[]}> {
         return new Promise<{timestamp: number, data: T[]}>(resolve => {
             this.http.get(baseUrl + type)
                 .map(res => res.json())
                 .subscribe(data => {
-                    // by sholzer at 160510, 12:17
-                    var result : {timestamp:number, data:T[]}= <{timestamp:number, data:T[]}> JSON.parse(data);
-                    // TODO: parsing
-                    // data[type].forEach(item => new T().fromJSON(data));
-                    // resolve({timestamp: data.timestamp, data: data[type]});
-                    resolve(result);
+                   data[type].forEach(item => new constructingClass().fromJSON(item));
+                resolve({timestamp: data.timestamp, data: data[type]});
                 });
         });
     }
 
-    getRemoteData<T>(type: string): Promise<T> {
+    getRemoteData<T extends JsonParsable>(type: string, constructingClass:{new():T}): Promise<T> {
         return new Promise<T>(resolve => {
             this.http.get(baseUrl + type)
                 .map(res => res.json())
                 .subscribe(data => {
-                    // TODO: parsing
-                    // var ret = new T().fromJSON(data);
-                    // resolve(ret);
-                    // by sholzer at 160510, 12:17
-                    resolve(<T>JSON.parse(data));
+                    var ret = new constructingClass().fromJSON(data);
+                resolve(ret);
                 });
         });
     }
 
     getUpdateDataFromServer(): Promise<UpdateData> {
-        return this.getRemoteData<UpdateData>(UPDATE);
+        return this.getRemoteData<UpdateData>(UPDATE, UpdateData);
     };
     getBussesFromServer(): Promise<{timestamp: number, data: Bus[]}> {
-        return this.getRemoteDataArray<Bus>(BUSSES);
+        return this.getRemoteDataArray<Bus>(BUSSES, Bus);
     };
     getLinesFromServer(): Promise<{timestamp: number, data: Line[]}> {
-        return this.getRemoteDataArray<Line>(LINES);
+        return this.getRemoteDataArray<Line>(LINES, Line);
     };
     getStopsFromServer(): Promise<{timestamp: number, data: Stop[]}> {
-        return this.getRemoteDataArray<Stop>(STOPS);
+        return this.getRemoteDataArray<Stop>(STOPS, Stop);
     };
     getRoutesFromServer(): Promise<{timestamp: number, data: Route[]}> {
-        return this.getRemoteDataArray<Route>(ROUTES);
+        return this.getRemoteDataArray<Route>(ROUTES, Route);
     };
-    getRealTimeBusData(id: number): Promise<{ position: Point, delay: number }> {
-        return this.getRemoteData<{ position: Point, delay: number }>(BUSSES + "/" + id);
+    getRealTimeBusData(id: number): Promise<BusRealTimeData> {
+        return this.getRemoteData<BusRealTimeData>(BUSSES + "/" + id, BusRealTimeData);
     };
 }
