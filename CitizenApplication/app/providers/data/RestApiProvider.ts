@@ -31,10 +31,12 @@ export class RestApiProvider implements RestApiProviderInterface {
             this.http.get(baseUrl + type)
                 .map(res => res.json())
                 .subscribe(data => {
+                    // by sholzer at 160510, 12:17
+                    var result : {timestamp:number, data:T[]}= <{timestamp:number, data:T[]}> JSON.parse(data);
                     // TODO: parsing
                     // data[type].forEach(item => new T().fromJSON(data));
                     // resolve({timestamp: data.timestamp, data: data[type]});
-                    resolve(data);
+                    resolve(result);
                 });
         });
     }
@@ -47,7 +49,8 @@ export class RestApiProvider implements RestApiProviderInterface {
                     // TODO: parsing
                     // var ret = new T().fromJSON(data);
                     // resolve(ret);
-                    resolve(data);
+                    // by sholzer at 160510, 12:17
+                    resolve(<T>JSON.parse(data));
                 });
         });
     }
