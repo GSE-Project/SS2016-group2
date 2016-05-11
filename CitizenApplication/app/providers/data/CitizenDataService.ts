@@ -22,21 +22,9 @@ import {timeInterval} from "rxjs/operator/timeInterval";
  */
 export class CitizenDataService implements CitizenDataServiceInterface {
 	private timerId: number = null;
-	private restApi: RestApiProvider;
-	private storageApi: PersistentDataProvider;
 	private cache: CitizenDataCache = new CitizenDataCache;
 
-	constructor(http:Http, restApi?: RestApiProvider, storageApi?: PersistentDataProvider) {
-		if (!restApi) {
-			this.restApi = new RestApiProvider(http);
-		} else {
-			this.restApi = restApi;
-		}
-		if (!storageApi) {
-			this.storageApi = new PersistentDataProvider();
-		} else {
-			this.storageApi = storageApi;
-		}
+	constructor(private http:Http, private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
 		this.cache = new CitizenDataCache();
 		this.requestStorageData();
 	}
@@ -67,6 +55,7 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	* @return A list of Stop object
 	*/
 	getStopList(filter?: Stop): Stop[] {
+		debugger;
 		return this.getDataItem<Stop>(this.cache.cached_stops, filter);
 	};
 

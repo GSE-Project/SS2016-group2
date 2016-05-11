@@ -28,24 +28,24 @@ const UPDATE = "update";
 export class RestApiProvider implements RestApiProviderInterface {
     constructor(public http: Http) { }
 
-    getRemoteDataArray<T extends JsonParsable>(type: string, constructingClass:{new():T}): Promise<{timestamp: number, data: T[]}> {
-        return new Promise<{timestamp: number, data: T[]}>(resolve => {
+    getRemoteDataArray<T extends JsonParsable>(type: string, constructingClass: { new (): T }): Promise<{ timestamp: number, data: T[] }> {
+        return new Promise<{ timestamp: number, data: T[] }>(resolve => {
             this.http.get(baseUrl + type)
                 .map(res => res.json())
                 .subscribe(data => {
-                   data[type].forEach(item => new constructingClass().fromJSON(item));
-                resolve({timestamp: data.timestamp, data: data[type]});
+                    data[type].forEach(item => new constructingClass().fromJSON(item));
+                    resolve({ timestamp: data.timestamp, data: data[type] });
                 });
         });
     }
 
-    getRemoteData<T extends JsonParsable>(type: string, constructingClass:{new():T}): Promise<T> {
+    getRemoteData<T extends JsonParsable>(type: string, constructingClass: { new (): T }): Promise<T> {
         return new Promise<T>(resolve => {
             this.http.get(baseUrl + type)
                 .map(res => res.json())
                 .subscribe(data => {
                     var ret = new constructingClass().fromJSON(data);
-                resolve(ret);
+                    resolve(ret);
                 });
         });
     }
@@ -53,16 +53,16 @@ export class RestApiProvider implements RestApiProviderInterface {
     getUpdateDataFromServer(): Promise<UpdateData> {
         return this.getRemoteData<UpdateData>(UPDATE, UpdateData);
     };
-    getBussesFromServer(): Promise<{timestamp: number, data: Bus[]}> {
+    getBussesFromServer(): Promise<{ timestamp: number, data: Bus[] }> {
         return this.getRemoteDataArray<Bus>(BUSSES, Bus);
     };
-    getLinesFromServer(): Promise<{timestamp: number, data: Line[]}> {
+    getLinesFromServer(): Promise<{ timestamp: number, data: Line[] }> {
         return this.getRemoteDataArray<Line>(LINES, Line);
     };
-    getStopsFromServer(): Promise<{timestamp: number, data: Stop[]}> {
+    getStopsFromServer(): Promise<{ timestamp: number, data: Stop[] }> {
         return this.getRemoteDataArray<Stop>(STOPS, Stop);
     };
-    getRoutesFromServer(): Promise<{timestamp: number, data: Route[]}> {
+    getRoutesFromServer(): Promise<{ timestamp: number, data: Route[] }> {
         return this.getRemoteDataArray<Route>(ROUTES, Route);
     };
     getRealTimeBusData(id: number): Promise<BusRealTimeData> {
