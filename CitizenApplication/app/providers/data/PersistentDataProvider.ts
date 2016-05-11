@@ -44,6 +44,10 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
     getStorageDataArray<T extends JsonParsable>(type:string, constructingClass:{new():T}):Promise<Array<T>>{
         return new Promise<Array<T>>(resolve=>{
             this.storage.get(type).then((value)=>{
+                // skaldo 11.05.1016 - added undefined check.
+                if(!value){
+                    return null;
+                }
                 var result_list : T[] = [];
                 JSON.parse(value).forEach(item=> {
                     result_list.push(new constructingClass().fromJSON(item));

@@ -28,9 +28,11 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 		return this.cache;
 	}
 
-	constructor(private http:Http, private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
+	constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
 		this.cache = new CitizenDataCache();
 		this.requestStorageData();
+		// Ohne das wird das Server nicht angefragt.
+		//this.update();
 	}
 
 	/*
