@@ -25,6 +25,10 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	private restApi: RestApiProvider;
 	private storageApi: PersistentDataProvider;
 	private cache: CitizenDataCache = new CitizenDataCache;
+	
+	public getCache():CitizenDataCache{
+		return this.cache;
+	}
 
 	constructor(http:Http, restApi?: RestApiProvider, storageApi?: PersistentDataProvider) {
 		if (!restApi) {
@@ -213,6 +217,7 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	/**
 	 * Stores the current cache in the data storage
 	 * sholzer: seems never to be called
+	 * @deprecated will be removed soon (sholzer 160511)
 	 */
 	private putDataToStorage(data: CitizenDataCache): void {
 		this.storageApi.putBusses(data.cached_busses);
@@ -237,7 +242,7 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 /**
  * Structure to hold the cached data
  */
-class CitizenDataCache {
+export class CitizenDataCache {
 	cached_busses: Bus[] = [];
 	cached_busses_from_server: boolean = false;
 	cached_busses_real_time_data: BusRealTimeData[] = [];
