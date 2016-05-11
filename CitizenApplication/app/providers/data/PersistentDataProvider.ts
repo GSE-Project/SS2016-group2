@@ -3,6 +3,7 @@
  * Implemented by tim.dellmann
  * 
  */
+import {Injectable} from 'angular2/core';
 import {PersistentDataProviderInterface} from "./PersistentDataProviderInterface";
 import {Bus} from "../../providers/model/Bus";
 import {UpdateData} from "../../providers/model/UpdateData";
@@ -19,10 +20,8 @@ const STORAGE_LINE = "L";
 const STORAGE_STOP = "S";
 const STORAGE_ROUTE = "R";
 
+@Injectable()
 export class PersistentDataProvider implements PersistentDataProviderInterface {
-
-
-
     /**
      * Generic Storage interface. 
      */

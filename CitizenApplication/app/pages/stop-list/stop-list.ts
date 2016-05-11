@@ -6,6 +6,7 @@ import {Page, NavController} from 'ionic-angular';
 import {Stop} from '../../providers/model/Stop';
 import {Point} from '../../providers/model/geojson/Point';
 import {StopDetailPage} from '../stop-detail/stop-detail';
+import {CitizenDataService} from '../../providers/data/CitizenDataService';
 
 class ViewStop extends Stop {
   private lines: Array<number>;
@@ -56,11 +57,17 @@ class ViewStop extends Stop {
 */
 @Page({
   templateUrl: 'build/pages/stop-list/stop-list.html',
+  providers: [CitizenDataService]
 })
 export class StopListPage {
   private searchText: String;
   private stops: Array<ViewStop> = new Array<ViewStop>();
-  constructor(public nav: NavController) {
+  constructor(public nav: NavController, private cDS: CitizenDataService) {
+    this.cDS.getStopList().forEach(stop => {
+      this.stops.push(new ViewStop(stop));
+    });
+    
+    /*
     for (let i = 0; i < 50; i++) {
       var stop = new Stop();
       stop.id = i;
@@ -73,7 +80,7 @@ export class StopListPage {
       }
 
       this.stops.push(new ViewStop(stop));
-    }
+    }*/
   }
 
   onSearch(event) {
