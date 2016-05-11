@@ -17,7 +17,7 @@ import 'rxjs/Rx';
 // skaldo:
 // Eventuell könnten wir es dem constructor übergeben.
 // Mal sehen, wie wir es mit der Injection schaffen werden.
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'http://localhost:3000/';
 const BUSSES = "busses";
 const LINES = "lines";
 const STOPS = "stops";
@@ -29,10 +29,17 @@ export class RestApiProvider implements RestApiProviderInterface {
     constructor(public http: Http) { }
 
     getRemoteDataArray<T extends JsonParsable>(type: string, constructingClass: { new (): T }): Promise<{ timestamp: number, data: T[] }> {
-        return new Promise<{ timestamp: number, data: T[] }>(resolve => {
+        return new Promise<{ timestamp: number, data: T[] }>((resolve, reject) => {
             this.http.get(baseUrl + type)
                 .map(res => res.json())
                 .subscribe(data => {
+                    debugger;
+                    if (!data) {
+                        reject("No data returned.");
+                    }
+                    else if (!data[type]) {
+                        reject("The returned object does not have " + type + " property.");
+                    }
                     data[type].forEach(item => new constructingClass().fromJSON(item));
                     resolve({ timestamp: data.timestamp, data: data[type] });
                 });
@@ -40,10 +47,14 @@ export class RestApiProvider implements RestApiProviderInterface {
     }
 
     getRemoteData<T extends JsonParsable>(type: string, constructingClass: { new (): T }): Promise<T> {
-        return new Promise<T>(resolve => {
+        return new Promise<T>((resolve, reject) => {
             this.http.get(baseUrl + type)
                 .map(res => res.json())
                 .subscribe(data => {
+                    debugger;
+                    if(!data){
+                        reject("No data returned.");
+                    }
                     var ret = new constructingClass().fromJSON(data);
                     resolve(ret);
                 });
