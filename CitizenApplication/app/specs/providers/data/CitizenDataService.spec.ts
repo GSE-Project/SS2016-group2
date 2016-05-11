@@ -26,11 +26,15 @@ describe("CitizenDataService specifications", function () {
     var stops: Stop[];
     var routes: Route[];
 
-    var createMockData = function <T>(n: number): T[] {
-        var result: T[] = new Array<T>(n);
-        result.forEach((v, i) => {
-            v['id'] = i;
-        });
+    var createMockData = function <T>(n: number, type:{new():T}): T[] {
+        var result: T[] = [];
+        // und bist du nicht willig ... 
+        for(var i:number = 0; i<n;i++){
+            var object = new type();
+            object['id']=i;
+            result.push(<T>object);
+        }
+        
         return result;
     }
 
@@ -69,10 +73,10 @@ describe("CitizenDataService specifications", function () {
         serverUpdateData.routes = 1;
         serverUpdateData.stops = 1;
 
-        busses = createMockData<Bus>(10);
-        lines = createMockData<Line>(10);
-        stops = createMockData<Stop>(10);
-        routes = createMockData<Route>(10);
+        busses = createMockData<Bus>(10, Bus);
+        lines = createMockData<Line>(10, Line);
+        stops = createMockData<Stop>(10, Stop);
+        routes = createMockData<Route>(10, Route);
 
         (<jasmine.Spy>storageApi.getLastUpdateTimes).and.returnValue(storageUpdateData);
         (<jasmine.Spy>storageApi.getBusses).and.returnValue(busses);
@@ -109,7 +113,7 @@ describe("CitizenDataService specifications", function () {
     describe("Update call", function () {
 
         //Setup
-        var serverBusses = createMockData<Bus>(9);
+        var serverBusses = createMockData<Bus>(9, Bus);
         serverUpdateData = new UpdateData();
         serverUpdateData.busses = 2;
         serverUpdateData.lines = 1;
