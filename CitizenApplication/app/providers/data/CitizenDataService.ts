@@ -22,7 +22,7 @@ import {timeInterval} from "rxjs/operator/timeInterval";
  */
 export class CitizenDataService implements CitizenDataServiceInterface {
 	private timerId: number = null;
-	private cache: CitizenDataCache = new CitizenDataCache;
+	private cache: CitizenDataCache = new CitizenDataCache();
 	
 	public getCache():CitizenDataCache{
 		return this.cache;
@@ -59,7 +59,6 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	* @return A list of Stop object
 	*/
 	getStopList(filter?: Stop): Stop[] {
-		debugger;
 		return this.getDataItem<Stop>(this.cache.cached_stops, filter);
 	};
 
