@@ -28,9 +28,11 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 		return this.cache;
 	}
 
-	constructor(private http:Http, private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
+	constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
 		this.cache = new CitizenDataCache();
 		this.requestStorageData();
+		// Ohne das wird das Server nicht angefragt.
+		//this.update();
 	}
 
 	/*
@@ -59,7 +61,6 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	* @return A list of Stop object
 	*/
 	getStopList(filter?: Stop): Stop[] {
-		debugger;
 		return this.getDataItem<Stop>(this.cache.cached_stops, filter);
 	};
 
