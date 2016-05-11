@@ -4,12 +4,13 @@
  * 
  */
 import {PersistentDataProviderInterface} from "./PersistentDataProviderInterface";
-import Bus from "../../providers/model/Bus";
+import {Bus} from "../../providers/model/Bus";
 import {UpdateData} from "../../providers/model/UpdateData";
-import Line from "../../providers/model/Line";
-import Stop from "../../providers/model/Stop";
-import Route from "../../providers/model/Route";
+import {Line} from "../../providers/model/Line";
+import {Stop} from "../../providers/model/Stop";
+import {Route} from "../../providers/model/Route";
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
+import {JsonParsable} from "../model/JsonParsable";
 
 const STORAGE_ACTIVE = "A";
 const STORAGE_TIMESTAMP = "T";
@@ -41,6 +42,18 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
         });
     }
     
+    getStorageDataArray<T extends JsonParsable>(type:string, constructingClass:{new():T}):Promise<Array<T>>{
+        return new Promise<Array<T>>(resolve=>{
+            this.storage.get(type).then((value)=>{
+                var result_list : T[] = [];
+                JSON.parse(value).forEach(item=> {
+                    result_list.push(new constructingClass().fromJSON(item));
+                });
+                return result_list;
+            });
+        });
+    }
+    
     getLastUpdateTimes():Promise<UpdateData> {
         return this.getStorageData<UpdateData>(STORAGE_TIMESTAMP);
     }
@@ -48,25 +61,25 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
         this.storage.set(STORAGE_BUS, JSON.stringify(updateTimes));
     }
     getBusses():Promise<Array<Bus>> {
-        return this.getStorageData<Array<Bus>>(STORAGE_BUS);
+        return this.getStorageDataArray<Bus>(STORAGE_BUS, Bus);
     }
     putBusses(busses: Bus[]) {
         this.storage.set(STORAGE_BUS, JSON.stringify(busses));
     }
     getLines():Promise<Array<Line>> {
-        return this.getStorageData<Array<Line>>(STORAGE_LINE);
+        return this.getStorageDataArray<Line>(STORAGE_LINE, Line);
     }
     putLines(lines: Line[]) {
         this.storage.set(STORAGE_LINE, JSON.stringify(lines));
     }
     getStops() :Promise<Array<Stop>>{
-        return this.getStorageData<Array<Stop>>(STORAGE_STOP);
+        return this.getStorageDataArray<Stop>(STORAGE_STOP, Stop);
     }
     putStops(stops: Stop[]) {
         this.storage.set(STORAGE_STOP, JSON.stringify(stops));
     }
     getRoutes() :Promise<Array<Route>>{
-        return this.getStorageData<Array<Route>>(STORAGE_ROUTE);
+        return this.getStorageDataArray<Route>(STORAGE_ROUTE, Route);
     }
     putRoutes(routes: Route[]) {
         this.storage.set(STORAGE_ROUTE, JSON.stringify(routes));
