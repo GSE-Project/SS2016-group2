@@ -1,12 +1,12 @@
-import CitizenDataServiceInterface from "./CitizenDataServiceInterface";
-import {RestApiProvider} from "./RestApiProvider";
-import {PersistentDataProvider} from "./PersistentDataProvider";
-import {CitizenDataService} from "./CitizenDataService";
-import {UpdateData} from "../model/UpdateData";
-import {Bus} from "../model/Bus";
-import {Line} from "../model/Line";
-import {Route} from "../model/Route";
-import {Stop} from "../model/Stop";
+import CitizenDataServiceInterface from "../../../providers/data/CitizenDataServiceInterface";
+import {RestApiProvider} from "../../../providers/data/RestApiProvider";
+import {PersistentDataProvider} from "../../../providers/data/PersistentDataProvider";
+import {CitizenDataService} from "../../../providers/data/CitizenDataService";
+import {UpdateData} from "../../../providers/model/UpdateData";
+import {Bus} from "../../../providers/model/Bus";
+import {Line} from "../../../providers/model/Line";
+import {Route} from "../../../providers/model/Route";
+import {Stop} from "../../../providers/model/Stop";
 /**
  * Created by sholzer on 06.05.2016.
  * Updated by skaldo on 07.05.2016.
@@ -30,7 +30,7 @@ describe("CitizenDataService specifications", function () {
         var result: T[] = new Array<T>(n);
         result.forEach((v, i) => {
             v['id'] = i;
-        })
+        });
         return result;
     }
 
