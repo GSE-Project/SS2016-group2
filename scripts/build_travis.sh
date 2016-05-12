@@ -4,6 +4,7 @@
 set -ev
 if [ $JOB = "unit" ]; then
   gulp test
+  cat ./test/reports/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 elif [ $JOB = "build-ios" ]; then
   ionic build ios
 elif [ $JOB = "build-android" ]; then

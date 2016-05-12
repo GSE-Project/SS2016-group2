@@ -26,8 +26,6 @@ install:
 - npm install
 script:
 - ../scripts/build_travis.sh
-after_script:
-- cat ./test/reports/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 deploy:
   skip_cleanup: true
   provider: releases
