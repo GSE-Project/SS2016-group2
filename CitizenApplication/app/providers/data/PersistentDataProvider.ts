@@ -12,7 +12,6 @@ import {Stop} from "../../providers/model/Stop";
 import {Route} from "../../providers/model/Route";
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
 import {JsonParsable} from "../model/JsonParsable";
-import {Logger} from 'angular2-logger/core';
 
 const STORAGE_ACTIVE = "A";
 const STORAGE_TIMESTAMP = "T";
@@ -27,7 +26,7 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
      * Generic Storage interface. 
      */
     public storage: Storage;
-    constructor(private logger: Logger) {
+    constructor() {
         // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
         this.storage = new Storage(LocalStorage);
         this.storage.set(STORAGE_ACTIVE, "true");
@@ -112,6 +111,7 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
         this.putStorageDataArray<Line>(STORAGE_LINE, promised_lines, "lines");
     }
     getStops(): Promise<Array<Stop>> {
+        debugger;
         return this.getStorageDataArray<Stop>(STORAGE_STOP, Stop);
     }
     putStops(promised_stops: Promise<Stop[]>) {
@@ -130,8 +130,8 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
      * @reason the reason of the failed fetch
      */
     private logCouldNot(action: string, type: string, reason: any): void {
-        this.logger.warn("Could not {} {} because reason:\n{}", action, type, JSON.stringify(reason));
-    }
+        
+     }
 
 
 }

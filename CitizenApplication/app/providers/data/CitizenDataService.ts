@@ -15,12 +15,11 @@ import {RestApiProvider} from "./RestApiProvider";
 import {PersistentDataProvider} from "./PersistentDataProvider";
 import {UpdateData} from "../model/UpdateData";
 import {timeInterval} from "rxjs/operator/timeInterval";
-import {Logger} from "angular2-logger/core";
 
 const UPDATEDATA_BUSSES = "busses", UPDATEDATA_LINES="lines", UPDATEDATA_ROUTES="routes", UPDATEDATA_STOPS="stops";
 
 @Injectable()
-/**
+/** 
  * Service class to provide data from the data storage to the app ui
  */
 export class CitizenDataService implements CitizenDataServiceInterface {
@@ -28,7 +27,9 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	private _server_update_data: UpdateData;
 	private _storage_update_data: UpdateData;
 
-	constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider, private logger: Logger) {
+	constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
+		this.server_update_data = null;
+		this.storage_update_data = null;
 		this.update();
 	}
 	
@@ -195,7 +196,7 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	}
 
 	private logCouldNot(action: string, object: string, reason: any): void {
-		this.logger.warn("Could not {} {} because\n{}", action, object, JSON.stringify(reason));
+		
 	}
 
 }
