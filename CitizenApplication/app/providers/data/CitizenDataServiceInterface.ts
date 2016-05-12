@@ -1,4 +1,6 @@
-// Currently no idea where this files can be found
+/**
+ * @author sholzer 160512
+ */
 import Bus from '../model/Bus.ts';
 import Line from '../model/Line.ts';
 import Stop from '../model/Stop.ts';
@@ -17,19 +19,19 @@ interface CitizenDataServiceInterface {
 	* @param filter optional parameter to filter the output list
 	* @return A list of Stop object
 	*/
-	getStopList(filter?:Stop): Stop[];
+	getStopList(): Promise<Stop[]>;
 
 	/**
 	* @param filter optional parameter to filter the output list
 	* @return A list of Line objects
 	*/
-	getLineList(filter?:Line): Line[];
+	getLineList(): Promise<Line[]>;
 
 	/**
 	* @param filter optional parameter to filter the output list
 	* @return A list of Bus objects
 	*/
-	getBusList(filter?:Bus): Bus[];
+	getBusList(): Promise<Bus[]>;
 
 	/**
 	* @param id the identifier of a bus
@@ -37,17 +39,12 @@ interface CitizenDataServiceInterface {
 	*/
 	getBusRealTimeData(id: number):Promise<BusRealTimeData>;
 	
-	/**
-	 * Requests the current position and delay for the specified bus from the server
-	 * @param id of the Bus
-	 */
-	requestBusRealTimeData(id:number):void;
 
 	/**
 	* @param filter optional parameter to filter the output list
 	* @return A list of Route objects
 	*/
-	getRoutes(filter?: Route): Route[];
+	getRoutes(): Promise<Route[]>;
 
 	/**
 	* Requests an update from the data source
@@ -59,6 +56,12 @@ interface CitizenDataServiceInterface {
 	 * @param timeInterval the time interval the server is checked for new data
      */
 	startUpdateTimer(timeInterval:number):void;
+	
+	/**
+	 * Specifies the server to be used
+	 * @param host_address : host url as string
+	 */
+	setRestApi(host_address:string):void;
 
 
 }

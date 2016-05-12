@@ -15,70 +15,101 @@ import {RestApiProvider} from "./RestApiProvider";
 import {PersistentDataProvider} from "./PersistentDataProvider";
 import {UpdateData} from "../model/UpdateData";
 import {timeInterval} from "rxjs/operator/timeInterval";
+import {Logger} from "angular2-logger/core";
+
+const UPDATEDATA_BUSSES = "busses", UPDATEDATA_LINES="lines", UPDATEDATA_ROUTES="routes", UPDATEDATA_STOPS="stops";
 
 @Injectable()
 /**
  * Service class to provide data from the data storage to the app ui
  */
 export class CitizenDataService implements CitizenDataServiceInterface {
-	private timerId: number = null;
-	private cache: CitizenDataCache = new CitizenDataCache();
+
+	private _server_update_data: UpdateData;
+	private _storage_update_data: UpdateData;
+
+	constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider, private logger: Logger) {
+		this.update();
+	}
 	
-	public getCache():CitizenDataCache{
-		return this.cache;
-	}
 
-	constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
-		this.cache = new CitizenDataCache();
-		this.requestStorageData();
-		// Ohne das wird das Server nicht angefragt.
-		//this.update();
-	}
-
-	/*
-	 * Generic function for filtering of the objects implementing the DataItemInterface
-	 * Added by skaldo on 06.05.2016
-	 * @param filter optional parameter to filter the output list
-	 * @return A list of Stop object
+	/**
+	 * I've created a monster :S
+	 * Returns a promised array with objects of type T from either the server or the local storage depending on the currently known update timestamp
+	 * @param update_data_field the name of the timestamps i.e. busses, lines, ...
+	 * @param rest_get_api method to get the data array from the server
+	 * @param storage_get_api method to get the data array from the local storage
+	 * @param storage_put_api method to set a data array in the storage
+	 * @return Promise<T[]>
+	 * @author sholzer
 	 */
-	private getDataItem<T>(cache: Array<T>, filter?: T): T[] {
-		if (!filter) {
-			return cache;
+	getDataArrayPromise<T>(update_data_field:string,
+		rest_get_api: () => Promise<{ timestamp: number, data: T[] }>,
+		storage_get_api: () => Promise<T[]>,
+		storage_put_api: (promised_array:Promise<T[]>) => void): Promise<T[]> {
+
+		if (this._server_update_data[update_data_field] > this._storage_update_data[update_data_field]) {
+			var server_promise = rest_get_api();
+			// Create resolvable Promise for the data array (throwing away the timestamp field)
+			var result_promise = new Promise<T[]>((resolve, reject)=>{
+				server_promise.then(value=>{
+					if(!value){reject("Null fetched");}
+					resolve(value.data);
+				}).catch(reason=>{reject(reason);});
+			});
+			
+			//Write the new time stamp to the storage. Potentially unstable (what if the result_promise is rejected?)
+			this._storage_update_data[update_data_field] = this._server_update_data[update_data_field];
+			this.putUpdateData(this._storage_update_data);
+			//Return promised to storage and caller
+			storage_put_api(result_promise);
+			return result_promise;
+		} else {
+			return storage_get_api();
 		}
-		var result: T = cache.find((value) => {
-			return value['id'] == filter['id'];
-		});
-
-		return [result];
 	}
-
-	/*
-	* Interface methods
-	*/
 
 	/**
 	* @param filter optional parameter to filter the output list
 	* @return A list of Stop object
 	*/
-	getStopList(filter?: Stop): Stop[] {
-		return this.getDataItem<Stop>(this.cache.cached_stops, filter);
-	};
+	getStopList(): Promise<Stop[]> {
+		return this.getDataArrayPromise<Stop>(
+			UPDATEDATA_STOPS, 
+			this.restApi.getStopsFromServer,
+			this.storageApi.getStops,
+			this.storageApi.putStops
+		);
+
+
+	}
+
 
 	/**
 	* @param filter optional parameter to filter the output list
 	* @return A list of Line objects
 	*/
-	getLineList(filter?: Line): Line[] {
-		return this.getDataItem<Line>(this.cache.cached_lines, filter);
-	};
+	getLineList(): Promise<Line[]> {
+		return this.getDataArrayPromise<Line>(
+			UPDATEDATA_LINES,
+			this.restApi.getLinesFromServer,
+			this.storageApi.getLines,
+			this.storageApi.putLines
+		);
+	}
 
 	/**
 	* @param filter optional parameter to filter the output list
 	* @return A list of Bus objects
 	*/
-	getBusList(filter?: Bus): Bus[] {
-		return this.getDataItem<Bus>(this.cache.cached_busses, filter);
-	};
+	getBusList(): Promise<Bus[]> {
+		return this.getDataArrayPromise<Bus>(
+			UPDATEDATA_BUSSES,
+			this.restApi.getBussesFromServer,
+			this.storageApi.getBusses,
+			this.storageApi.putBusses
+		);
+	}
 
 	/**
 	* @param id the identifier of a bus
@@ -86,167 +117,85 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	*/
 	getBusRealTimeData(id: number): Promise<BusRealTimeData> {
 		return this.restApi.getRealTimeBusData(id);
-		/*var existingEntry: BusRealTimeData = this.getEntryForId(id, this.cache.cached_busses_real_time_data);
-		if(existingEntry == null){
-			existingEntry = new BusRealTimeData();
-		}
-		return existingEntry;*/
-	};
-	
-	/**
-	 * @deprecated
-	 */
-	requestBusRealTimeData(id: number): void {
-		this.restApi.getRealTimeBusData(id).then((value) => {
-			var existingEntry: BusRealTimeData = this.getEntryForId(id, this.cache.cached_busses_real_time_data);
-			if (existingEntry != null) {
-				this.cache.cached_busses_real_time_data.splice(
-					this.cache.cached_busses_real_time_data.indexOf(existingEntry)
-				);
-			}
-			this.cache.cached_busses_real_time_data.push(value);
-		});
 	}
 
+
 	/**
-	* @param filter optional parameter to filter the output list.
+	* @param filter optional parameter to filter the output list
 	* @return A list of Route objects
 	*/
-	getRoutes(filter?: Route): Route[] {
-		// skaldo 06.05.2016:
-		// I don't think, that this is going to be so easy, we might need thhe promise API here,
-		// as the request is going to be async.
-		return this.getDataItem<Route>(this.cache.cached_routes, filter);
-	};
+	getRoutes(): Promise<Route[]> {
+		return this.getDataArrayPromise<Route>(
+			UPDATEDATA_ROUTES,
+			this.restApi.getRoutesFromServer,
+			this.storageApi.getRoutes,
+			this.storageApi.putRoutes	
+		);
+	}
 
 	/**
-	* Requests an update from the data source. 
+	* Requests an update from the data source
 	*/
 	update(): void {
-		// First request only the timestamps
-		this.restApi.getUpdateDataFromServer().then((value) => {
-			// when the timestamps are fetched decide for each data set if an update is neccessary 
-			if (value.busses > this.cache.cached_timestamp.busses) {
-				this.restApi.getBussesFromServer().then((value) => {
-					this.cache.cached_busses = value.data;
-					this.cache.cached_busses_from_server = true;
-					this.cache.cached_timestamp.busses = value.timestamp;
-					this.storageApi.putBusses(value.data);
-				});
-			};
-			if (value.lines > this.cache.cached_timestamp.lines) {
-				this.restApi.getLinesFromServer().then((value) => {
-					this.cache.cached_lines = value.data;
-					this.cache.cached_lines_from_server = true;
-					this.cache.cached_timestamp.lines = value.timestamp;
-					this.storageApi.putLines(value.data);
-				});
-			};
-			if (value.routes > this.cache.cached_timestamp.routes) {
-				this.restApi.getRoutesFromServer().then((value) => {
-					this.cache.cached_routes = value.data;
-					this.cache.cached_routes_from_server = true;
-					this.cache.cached_timestamp.routes = value.timestamp;
-					this.storageApi.putRoutes(value.data);
-				});
-			};
-			if (value.stops > this.cache.cached_timestamp.stops) {
-				this.restApi.getStopsFromServer().then((value) => {
-					this.cache.cached_stops = value.data;
-					this.cache.cached_stops_from_server = true;
-					this.cache.cached_timestamp.stops = value.timestamp;
-					this.storageApi.putStops(value.data);
-				});
-			};
-			this.storageApi.putLastUpdateTimes(value);
+		this.storageApi.getLastUpdateTimes()
+			.then((value) => {
+				this.storage_update_data = value;
+			}).catch(reason => {
+				this.logCouldNot("fetch", "stored update data", reason);
+			});
+		this.restApi.getUpdateDataFromServer()
+			.then(value => {
+				this._server_update_data = value;
+			})
+			.catch(reason => { this.logCouldNot("fetch", "remote update data", reason); });
+	}
 
-		});
-	};
+	/**
+	 * Starts the automatically fetch of data
+	 * @param timeInterval the time interval the server is checked for new data
+	 */
+	startUpdateTimer(timeInterval: number): void {
 
-	public startUpdateTimer(timeInterval: number): void {
-		// skaldo, 06.05.2016:
-		// Better than using the timer, use the interval function after we receive the response,
-		// as we might face some problems in the future here.
-		if (!this.timerId) {
-			this.timerId = window.setInterval(this.update, timeInterval);
+	}
+
+	/**
+	 * Specifies the server to be used
+	 * @param host_address : host url as string
+	 */
+	setRestApi(host_address: string): void {
+
+	}
+
+	putUpdateData(data: UpdateData): void {
+		this.storageApi.putLastUpdateTimes(Promise.resolve(data));
+	}
+
+
+	public set server_update_data(v: UpdateData) {
+		if (!v) {
+			v = new UpdateData();
+			v.busses = -1;
+			v.lines = -1;
+			v.routes = -1;
+			v.stops = -1;
 		}
-	}
-
-	/**
-	 * Stops the update timer.
-	 */
-	public stopUpdateTimer() {
-		window.clearInterval(this.timerId);
-	}
-
-	/**
-	 * Requests the locally stored data. The requested data will NOT replace data fetched from the server
-	 * @author sholzer
-	 */
-	private requestStorageData(): void {
-		this.storageApi.getLastUpdateTimes().then((value) => {
-			if (this.cache.cached_timestamp_from_server) return;
-			this.cache.cached_timestamp = value;
-		});
-		this.storageApi.getBusses().then((value) => {
-			// if the cache contains data from the server we don't need the data from the storage
-			if (this.cache.cached_busses_from_server) return;
-			this.cache.cached_busses = value;
-		});
-		this.storageApi.getLines().then((value) => {
-			if (this.cache.cached_lines_from_server) return;
-			this.cache.cached_lines = value;
-		});
-		this.storageApi.getStops().then((value) => {
-			if (this.cache.cached_stops_from_server) return;
-			this.cache.cached_stops = value;
-		});
-		this.storageApi.getRoutes().then((value) => {
-			if (this.cache.cached_routes_from_server) return;
-			this.cache.cached_routes = value;
-		});
+		this._server_update_data = v;
 	}
 
 
-	/**
-	 * Stores the current cache in the data storage
-	 * sholzer: seems never to be called
-	 * @deprecated will be removed soon (sholzer 160511)
-	 */
-	private putDataToStorage(data: CitizenDataCache): void {
-		this.storageApi.putBusses(data.cached_busses);
-		this.storageApi.putLines(data.cached_lines);
-		this.storageApi.putRoutes(data.cached_routes);
-		this.storageApi.putStops(data.cached_stops);
-		this.storageApi.putLastUpdateTimes(data.cached_timestamp);
+	public set storage_update_data(v: UpdateData) {
+		if (!v) {
+			v = new UpdateData();
+			v.busses = -1;
+			v.lines = -1;
+			v.routes = -1;
+			v.stops = -1;
+		}
+		this._storage_update_data = v;
 	}
 
-	private getEntryForId<T>(id: number, list: T[]): T {
-		var result: T = null;
-		list.forEach((t) => {
-			if (t['id'] == id) {
-				result = t;
-				return;
-			}
-		});
-		return result;
+	private logCouldNot(action: string, object: string, reason: any): void {
+		this.logger.warn("Could not {} {} because\n{}", action, object, JSON.stringify(reason));
 	}
-}
-
-/**
- * Structure to hold the cached data
- */
-export class CitizenDataCache {
-	cached_busses: Bus[] = [];
-	cached_busses_from_server: boolean = false;
-	cached_busses_real_time_data: BusRealTimeData[] = [];
-	cached_lines: Line[] = [];
-	cached_lines_from_server: boolean = false;
-	cached_stops: Stop[] = [];
-	cached_stops_from_server: boolean = false;
-	cached_routes: Route[] = [];
-	cached_routes_from_server: boolean = false;
-	cached_timestamp: UpdateData = new UpdateData();
-	cached_timestamp_from_server: boolean = false;
 
 }
