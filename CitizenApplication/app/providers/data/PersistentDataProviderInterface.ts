@@ -24,7 +24,7 @@ export interface PersistentDataProviderInterface{
      * Sets the time stamp of the data storage
      * @param updateTimes : UpdateData
      */
-    putLastUpdateTimes(updateTimes:UpdateData):void;
+    putLastUpdateTimes(promised_updateTimes:Promise<UpdateData>):void;
 
     /**
      * @return Array of Bus objects from the data store
@@ -35,7 +35,7 @@ export interface PersistentDataProviderInterface{
      * Stores a list of Bus object in the data storage. This method overwrites an already existing Bus object list in the storage
      * @param busses :Bus[]
      */
-    putBusses(busses:Bus[]):void;
+    putBusses(promised_busses:Promise<Bus[]>):void;
 
     /**
      * @return Array of Line objects from the data store
@@ -46,7 +46,7 @@ export interface PersistentDataProviderInterface{
      * Stores a list of Line object in the data storage. This method overwrites an already existing Line object list in the storage
      * @param lines :Line[]
      */
-    putLines(lines:Line[]):void;
+    putLines(promised_lines:Promise<Line[]>):void;
 
     /**
      * @return Array of Stop objects from the data store
@@ -57,7 +57,7 @@ export interface PersistentDataProviderInterface{
      * Stores a list of Stop object in the data storage. This method overwrites an already existing Stop object list in the storage
      * @param stops :Stop[]
      */
-    putStops(stops:Stop[]):void;
+    putStops(promised_stops:Promise<Stop[]>):void;
 
     /**
      * @return Array of Route objects from the data store
@@ -68,5 +68,5 @@ export interface PersistentDataProviderInterface{
      * Stores a list of Route object in the data storage. This method overwrites an already existing Route object list in the storage
      * @param routes :Route[]
      */
-    putRoutes(routes:Route[]):void;
+    putRoutes(promised_routes:Promise<Route[]>):void;
 }
