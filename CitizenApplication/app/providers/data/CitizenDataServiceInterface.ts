@@ -35,7 +35,7 @@ interface CitizenDataServiceInterface {
 	* @param id the identifier of a bus
 	* @return Object with properties (position:Point) and (delay:number)
 	*/
-	getBusRealTimeData(id: number):BusRealTimeData;
+	getBusRealTimeData(id: number):Promise<BusRealTimeData>;
 	
 	/**
 	 * Requests the current position and delay for the specified bus from the server

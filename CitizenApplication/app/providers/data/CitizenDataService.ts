@@ -84,14 +84,18 @@ export class CitizenDataService implements CitizenDataServiceInterface {
 	* @param id the identifier of a bus
 	* @return Object with properties (position:Point) and (delay:number)
 	*/
-	getBusRealTimeData(id: number): BusRealTimeData {
-		var existingEntry: BusRealTimeData = this.getEntryForId(id, this.cache.cached_busses_real_time_data);
+	getBusRealTimeData(id: number): Promise<BusRealTimeData> {
+		return this.restApi.getRealTimeBusData(id);
+		/*var existingEntry: BusRealTimeData = this.getEntryForId(id, this.cache.cached_busses_real_time_data);
 		if(existingEntry == null){
 			existingEntry = new BusRealTimeData();
 		}
-		return existingEntry;
+		return existingEntry;*/
 	};
-
+	
+	/**
+	 * @deprecated
+	 */
 	requestBusRealTimeData(id: number): void {
 		this.restApi.getRealTimeBusData(id).then((value) => {
 			var existingEntry: BusRealTimeData = this.getEntryForId(id, this.cache.cached_busses_real_time_data);
