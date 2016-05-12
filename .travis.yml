@@ -27,10 +27,6 @@ install:
 script:
 - ../scripts/build_travis.sh
 after_script:
-- pwd
-- ls test
-- ls test/reports
-- ls test/reports/coverage
 - cat ./test/reports/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 deploy:
   skip_cleanup: true
