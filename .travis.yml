@@ -24,10 +24,10 @@ install:
 - npm install -g cordova
 - npm install -g ionic@beta
 - npm install
-after_success:
-- cat ./test/coverage/lcov.info | ./CitizenApplication/node_modules/coveralls/bin/coveralls.js
 script:
 - ../scripts/build_travis.sh
+after_script:
+- cat ./test/reports/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 deploy:
   skip_cleanup: true
   provider: releases
