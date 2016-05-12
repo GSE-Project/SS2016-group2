@@ -31,57 +31,58 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
         this.storage = new Storage(LocalStorage);
         this.storage.set(STORAGE_ACTIVE, "true");
     }
-    
-    
-    getStorageData<T>(type:string):Promise<T>{
-        return new Promise<T>(resolve=>{
-           this.storage.get(type).then((value)=>{
-               return <T>JSON.parse(<string>value);
-           })
+
+
+    getStorageData<T>(type: string): Promise<T> {
+        return new Promise<T>(resolve => {
+            this.storage.get(type).then((value) => {
+                return <T>JSON.parse(<string>value);
+            })
         });
     }
-    
-    getStorageDataArray<T extends JsonParsable>(type:string, constructingClass:{new():T}):Promise<Array<T>>{
-        return new Promise<Array<T>>(resolve=>{
-            this.storage.get(type).then((value)=>{
+
+    getStorageDataArray<T extends JsonParsable>(type: string, constructingClass: { new (): T }): Promise<Array<T>> {
+        return new Promise<Array<T>>(resolve => {
+            this.storage.get(type).then((value) => {
                 // skaldo 11.05.1016 - added undefined check.
-                if(!value){
+                if (!value) {
                     return null;
                 }
-                var result_list : T[] = [];
-                JSON.parse(value).forEach(item=> {
+                var result_list: T[] = [];
+                debugger;
+                JSON.parse(value).forEach(item => {
                     result_list.push(new constructingClass().fromJSON(item));
                 });
                 return result_list;
             });
         });
     }
-    
-    getLastUpdateTimes():Promise<UpdateData> {
+
+    getLastUpdateTimes(): Promise<UpdateData> {
         return this.getStorageData<UpdateData>(STORAGE_TIMESTAMP);
     }
     putLastUpdateTimes(updateTimes: UpdateData) {
-        this.storage.set(STORAGE_BUS, JSON.stringify(updateTimes));
+        this.storage.set(STORAGE_TIMESTAMP, JSON.stringify(updateTimes));
     }
-    getBusses():Promise<Array<Bus>> {
+    getBusses(): Promise<Array<Bus>> {
         return this.getStorageDataArray<Bus>(STORAGE_BUS, Bus);
     }
     putBusses(busses: Bus[]) {
         this.storage.set(STORAGE_BUS, JSON.stringify(busses));
     }
-    getLines():Promise<Array<Line>> {
+    getLines(): Promise<Array<Line>> {
         return this.getStorageDataArray<Line>(STORAGE_LINE, Line);
     }
     putLines(lines: Line[]) {
         this.storage.set(STORAGE_LINE, JSON.stringify(lines));
     }
-    getStops() :Promise<Array<Stop>>{
+    getStops(): Promise<Array<Stop>> {
         return this.getStorageDataArray<Stop>(STORAGE_STOP, Stop);
     }
     putStops(stops: Stop[]) {
         this.storage.set(STORAGE_STOP, JSON.stringify(stops));
     }
-    getRoutes() :Promise<Array<Route>>{
+    getRoutes(): Promise<Array<Route>> {
         return this.getStorageDataArray<Route>(STORAGE_ROUTE, Route);
     }
     putRoutes(routes: Route[]) {
