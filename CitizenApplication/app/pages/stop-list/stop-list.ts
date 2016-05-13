@@ -6,13 +6,18 @@ import {Page, NavController} from 'ionic-angular';
 import {Stop} from '../../providers/model/Stop';
 import {Point} from '../../providers/model/geojson/Point';
 import {StopDetailPage} from '../stop-detail/stop-detail';
-import {CitizenDataService} from '../../providers/data/CitizenDataServiceNew';
+import {CitizenDataService} from '../../providers/data/CitizenDataService';
 
-class ViewStop extends Stop {
+class ViewStop implements Stop {
+  name:string;
+  location:Point;
+  schedule:{lineId:number; time:Date}[];
+  id:number;
   private lines: Array<number>;
 
+
+
   constructor(stop: Stop) {
-    super();
 
     this.id = stop.id;
     this.location = stop.location;
@@ -63,8 +68,10 @@ export class StopListPage {
   private searchText: String;
   private stops: Array<ViewStop> = new Array<ViewStop>();
   constructor(public nav: NavController, private cDS: CitizenDataService) {
+    this.cDS.update();
     this.cDS.getStops().subscribe(data => {
-      data.stops.forEach(stop => {
+      this.log("Stops recieved");
+      data.data.forEach(stop => {
         console.log("UI: got stop" + stop.name);
         //faking time in order to prevent errors:
         stop.schedule.forEach(item => {
@@ -116,4 +123,7 @@ export class StopListPage {
   goToStopDetail(stop: Stop) {
     this.nav.push(StopDetailPage, stop);
   }
+  log(message:string):void{
+		console.log("StopListPage: "+message);
+	}
 }

@@ -1,14 +1,15 @@
 import {App, Platform} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {TabsPage} from './pages/tabs/tabs';
-//import {RestApiProvider} from './providers/data/RestApiProvider';
-//import {PersistentDataProvider} from './providers/data/PersistentDataProvider';
-import {RestApiProvider, PersistentDataProvider} from './providers/data/CitizenDataServiceNew';
+import {RestApiProvider} from './providers/data/RestApiProvider';
+import {PersistentDataProvider} from './providers/data/PersistentDataProvider';
+import {CitizenDataService} from './providers/data/CitizenDataService';
+import {Http, ConnectionBackend, HTTP_PROVIDERS} from 'angular2/http';
 
 @App({
   template: '<ion-nav [root]="rootPage"></ion-nav>',
   config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
-  providers: [RestApiProvider, PersistentDataProvider]
+  providers: [Http, ConnectionBackend, HTTP_PROVIDERS, CitizenDataService, RestApiProvider]
 })
 export class MyApp {
   rootPage: any = TabsPage;
