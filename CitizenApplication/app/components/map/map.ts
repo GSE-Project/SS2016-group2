@@ -64,11 +64,8 @@ export class Map implements OnInit, OnInit {
         
       });
       
-      let key = name;
-      
       this.markers[name] = marker; 
-      //marker.setMap(null); for deleting
-      //this.deleteMarker("Standort");
+
  
   }
   
@@ -80,5 +77,14 @@ export class Map implements OnInit, OnInit {
      specified in initPositionMarker
     */
     this.markers[markername].setMap(null);
+  }
+  
+  moveMarker(markername, pos){
+    /*
+    moves marker specified by its name 
+    from its current location to pos
+    */
+    this.deleteMarker(markername);
+    this.addMarker(pos, markername);
   }
 }
