@@ -7,8 +7,8 @@ module.exports = {
     karma.start({
       configFile: path.resolve('test/karma.config.js'),
       singleRun: true
-    }, function () {
-      done();
+    }, function (exitCode) {
+      done(exitCode);
     });
   },
   karmaDebug: function (done) {
@@ -16,8 +16,8 @@ module.exports = {
       configFile: path.resolve('test/karma.config.js'),
       singleRun: false,
       browsers: ['Chrome']
-    }, function () {
-      done();
+    }, function (exitCode) {
+      done(exitCode);
     })
   },
   lint: function () {

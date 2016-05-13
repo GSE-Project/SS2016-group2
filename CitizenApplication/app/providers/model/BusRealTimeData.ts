@@ -1,14 +1,14 @@
 /*
 * @author sholzer on 160510
+* Reviewed by skaldo on 13.05.2016
 */
 
 import {Point} from './geojson/Point';
-import {CitizenDataObject} from "./CitizenDataObject";
+import {ICitizenDataObject} from "./CitizenDataObject";
 
-export default BusRealTimeData;
+export default IBusRealTimeData;
 
-export interface BusRealTimeData  extends  CitizenDataObject{
-
-    delay:number;
-    location:Point;
+export interface IBusRealTimeData extends ICitizenDataObject {
+    delay: number;
+    location: Point;
 }

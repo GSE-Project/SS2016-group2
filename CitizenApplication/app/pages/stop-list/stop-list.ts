@@ -68,10 +68,9 @@ export class StopListPage {
   private searchText: String;
   private stops: Array<ViewStop> = new Array<ViewStop>();
   constructor(public nav: NavController, private cDS: CitizenDataService) {
-    this.cDS.update();
     this.cDS.getStops().subscribe(data => {
       this.log("Stops recieved");
-      data.data.forEach(stop => {
+      data.stops.forEach(stop => {
         console.log("UI: got stop" + stop.name);
         //faking time in order to prevent errors:
         stop.schedule.forEach(item => {

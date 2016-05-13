@@ -9,7 +9,7 @@ import {Http, ConnectionBackend, HTTP_PROVIDERS} from 'angular2/http';
 @App({
   template: '<ion-nav [root]="rootPage"></ion-nav>',
   config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
-  providers: [Http, ConnectionBackend, HTTP_PROVIDERS, CitizenDataService, RestApiProvider]
+  providers: [CitizenDataService, RestApiProvider, PersistentDataProvider]
 })
 export class MyApp {
   rootPage: any = TabsPage;

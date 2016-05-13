@@ -1,16 +1,12 @@
 /**
  * Created by skaldo on 07.05.2016.
  * Implemented by tim.dellmann
- * 
  */
+
 import {Injectable} from 'angular2/core';
-import {Bus} from "../../providers/model/Bus";
-import {UpdateData} from "../../providers/model/UpdateData";
-import {Line} from "../../providers/model/Line";
-import {Stop} from "../../providers/model/Stop";
-import {Route} from "../../providers/model/Route";
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
-import {CitizenDataObject} from "../model/CitizenDataObject";
+import {IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from "../model";
+import {Observable} from "rxjs/Observable";
 
 const STORAGE_ACTIVE = "A";
 const STORAGE_TIMESTAMP = "T";
@@ -19,118 +15,80 @@ const STORAGE_LINE = "L";
 const STORAGE_STOP = "S";
 const STORAGE_ROUTE = "R";
 
+
 @Injectable()
-export class PersistentDataProvider{
-    /**
-     * Generic Storage interface. 
-     */
+export class PersistentDataProvider {
     public storage: Storage;
+    private storedTimeStamps: IUpdateData;
+
     constructor() {
         // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
         this.storage = new Storage(LocalStorage);
-        this.storage.set(STORAGE_ACTIVE, "true");
+        this.storedTimeStamps = { // Instantiation with timestamp:-1 seems more stable
+			busses: -2,
+			lines: -2,
+			routes: -2,
+			stops: -2
+		};
     }
 
-
     /**
-     * Access the storage and promised the return of an object of the generic type T
-     * @param type: controll key
-     * @return Promise<T>
-     * @author skaldo & sholzer
+     * Get the timestamps of the stored data
+     * @returns IUpdateData
      */
-    getStorageData<T>(type: string): Promise<T> {
-        return new Promise<T>((resolve, reject) => {
-            this.storage.get(type).then((value) => {
-                if (!value) reject("fetched null");
-                resolve(<T>JSON.parse(<string>value));
-            }).catch((reason) => { reject(reason); });
+    getTimeStamps(): IUpdateData {
+        return this.storedTimeStamps;
+    }
+
+    // TODO: comment.
+    getStops(): Observable<IRestStops> {
+        return Observable.fromPromise(<Promise<IRestStops>>this.storage.get(STORAGE_STOP));
+    }
+
+    // TODO: comment.
+    putStops(data: IRestStops) {
+        this.storage.set(STORAGE_STOP, JSON.stringify(data)).then(value => {
+            // After successful save, save the timestamp.
+            this.storedTimeStamps.stops = data.timestamp;
         });
     }
-    
-    /**
-     * Acces the storage and promises to return an array of objects of the generic type T
-     * @param type : controll key
-     * @param constructingClass Class to create instances of T (constructingClass extends/implements T)
-     * @return Promise<T[]>
-     * @author skaldo & sholzer
-     */
-    /*getStorageDataArray<T extends CitizenDataObject>(type: string, constructingClass: { new (): T }): Promise<Array<T>> {
-        return new Promise<Array<T>>((resolve, reject) => {
-            this.storage.get(type).then((value) => {
-                // skaldo 11.05.1016 - added undefined check.
-                if (!value) {
-                    reject("fetched nulL")
-                }
-                var result_list: T[] = [];
-                JSON.parse(value).forEach(item => {
-                    result_list.push(new constructingClass().fromJSON(item));
-                }).catch(reason => { reject(reason); });
-                resolve(result_list);
-            });
-        });
-    }*/
-    
-    /**
-     * Puts the promised data array to the storage
-     * @param type: controll key
-     * @param promised_data promised array
-     * @param logInfo: default: type, used for logger output 'Could not do logInfo because ..'
-     * @author sholzer
-     */
-    putStorageDataArray<T>(type:string, promised_data:Promise<T[]>, logInfo:string=type):void{
-        promised_data
-        .then(value=>{
-            this.storage.set(type, JSON.stringify(value)).catch(reason=>{this.logCouldNot("store", logInfo, reason);});
-        })
-        .catch(reason=>{this.logCouldNot("resolve promised", logInfo, reason);});
+
+    // TODO: comment.
+    getBusses(): Observable<IRestBusses> {
+        return Observable.fromPromise(<Promise<IRestBusses>>this.storage.get(STORAGE_BUS));
     }
 
-    getLastUpdateTimes(): Promise<UpdateData> {
-        return this.getStorageData<UpdateData>(STORAGE_TIMESTAMP);
-    }
-    putLastUpdateTimes(promised_updateTimes: Promise<UpdateData>): void {
-        promised_updateTimes.then(value => {
-            this.storage.set(STORAGE_TIMESTAMP, JSON.stringify(value)).catch(reason => {
-                this.logCouldNot("store", "update data", reason);
-            });
-        }).catch(reason => {
-            this.logCouldNot("resolve promised", "update data", reason);
+    // TODO: comment.
+    putBusses(data: IRestBusses) {
+        this.storage.set(STORAGE_BUS, JSON.stringify(data)).then(value => {
+            // After successful save, save the timestamp.
+            this.storedTimeStamps.busses = data.timestamp;
         });
     }
-   /*getBusses(): Promise<Array<Bus>> {
-        return this.getStorageDataArray<Bus>(STORAGE_BUS, Bus);
-    }
-    putBusses(promised_busses: Promise<Bus[]>) {
-        this.putStorageDataArray<Bus>(STORAGE_BUS, promised_busses, "busses");
-    }
-    getLines(): Promise<Array<Line>> {
-        return this.getStorageDataArray<Line>(STORAGE_LINE, Line);
-    }
-    putLines(promised_lines: Promise<Line[]>) {
-        this.putStorageDataArray<Line>(STORAGE_LINE, promised_lines, "lines");
-    }
-    getStops(): Promise<Array<Stop>> {
-        debugger;
-        return this.getStorageDataArray<Stop>(STORAGE_STOP, Stop);
-    }
-    putStops(promised_stops: Promise<Stop[]>) {
-        this.putStorageDataArray<Stop>(STORAGE_STOP, promised_stops, "stops");
-    }
-    getRoutes(): Promise<Array<Route>> {
-        return this.getStorageDataArray<Route>(STORAGE_ROUTE, Route);
-    }
-    putRoutes(promised_routes: Promise<Route[]>) {
-        this.putStorageDataArray<Route>(STORAGE_ROUTE, promised_routes, "routes");
-    }
-*/
-    /**
-     * Logs a warn message
-     * @param type the type that should be fetched
-     * @reason the reason of the failed fetch
-     */
-    private logCouldNot(action: string, type: string, reason: any): void {
-        
-     }
 
+    // TODO: comment.
+    getLines(): Observable<IRestLines> {
+        return Observable.fromPromise(<Promise<IRestLines>>this.storage.get(STORAGE_LINE));
+    }
 
+    // TODO: comment.
+    putLines(data: IRestLines) {
+        this.storage.set(STORAGE_LINE, JSON.stringify(data)).then(value => {
+            // After successful save, save the timestamp.
+            this.storedTimeStamps.lines = data.timestamp;
+        });
+    }
+
+    // TODO: comment.
+    getRoutes(): Observable<IRestRoutes> {
+        return Observable.fromPromise(<Promise<IRestRoutes>>this.storage.get(STORAGE_ROUTE));
+    }
+
+    // TODO: comment.
+    putRoutes(data: IRestRoutes) {
+        this.storage.set(STORAGE_ROUTE, JSON.stringify(data)).then(value => {
+            // After successful save, save the timestamp.
+            this.storedTimeStamps.routes = data.timestamp;
+        });
+    }
 }

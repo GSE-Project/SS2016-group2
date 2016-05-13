@@ -3,10 +3,9 @@
  * Reviewed by skaldo on 06.05.2016.
  */
 
-export interface UpdateData {
-     busses: number;
-     lines: number;
-     routes: number;
-     stops: number;
-
+export interface IUpdateData {
+    busses: number;
+    lines: number;
+    routes: number;
+    stops: number;
 }

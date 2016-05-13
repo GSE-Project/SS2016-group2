@@ -4,10 +4,10 @@
  */
 
 import Point from './geojson/Point.ts';
-import {CitizenDataObject} from "./CitizenDataObject";
+import {ICitizenDataObject} from "./CitizenDataObject";
 
-export default Route;
+export default IRoute;
 
-export interface Route extends CitizenDataObject {
+export interface IRoute extends ICitizenDataObject {
     gpsData: Point[];
 }

@@ -1,11 +1,13 @@
-import {RestDataObject} from "./RestDataObject";
-import {Line} from "../Line";
 /**
  * Created by steff on 13.05.2016.
+ * Reviewed by skaldo on 13.05.2016.
  */
 
-export default RestLines;
+import {IRestDataObject} from "./RestDataObject";
+import {ILine} from "../Line";
 
-export interface RestLines extends RestDataObject{
-    data:Line[];
+export default IRestLines;
+
+export interface IRestLines extends IRestDataObject {
+    lines: ILine[];
 }

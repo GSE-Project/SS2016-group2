@@ -4,13 +4,12 @@
  */
 
 import {Point} from './geojson/Point';
-import {CitizenDataObject} from './CitizenDataObject';
+import {ICitizenDataObject} from './CitizenDataObject';
 
-export default Stop;
+export default IStop;
 
-export interface Stop  extends CitizenDataObject{
+export interface IStop extends ICitizenDataObject {
     name: string;
     location: Point;
     schedule: { lineId: number, time: Date }[];
-
 }

@@ -2,11 +2,11 @@
  * Created by sholzer on 03.05.2016.
  * Reviewed by skaldo on 06.05.2016.
  */
-import {CitizenDataObject} from "./CitizenDataObject";
+import {ICitizenDataObject} from "./CitizenDataObject";
 
-export default Line;
+export default ILine;
 
-export interface Line extends CitizenDataObject{
+export interface ILine extends ICitizenDataObject{
     name: string;
     routeRef: string;
     busses: number[];
