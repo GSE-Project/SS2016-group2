@@ -4,22 +4,13 @@
  */
 
 import {Point} from './geojson/Point';
-import {CitizenDataServiveObject} from './CitizenDataServiceObject';
+import {CitizenDataObject} from './CitizenDataObject';
 
 export default Stop;
 
-export class Stop  implements CitizenDataServiveObject{
-    public id: number;
-    public name: string;
-    public location: Point;
-    public schedule: { lineId: number, time: Date }[];
+export interface Stop  extends CitizenDataObject{
+    name: string;
+    location: Point;
+    schedule: { lineId: number, time: Date }[];
 
-    fromJSON(json: any) {
-        for (var propName in this) {
-            // TODO: additional parsing for the schedule needed.
-            if (json[propName]) {
-                this[propName] = json[propName];
-            }
-        }
-    }
 }

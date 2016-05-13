@@ -4,20 +4,10 @@
  */
 
 import Point from './geojson/Point.ts';
-import {CitizenDataServiveObject} from './CitizenDataServiceObject';
+import {CitizenDataObject} from "./CitizenDataObject";
 
 export default Route;
 
-export class Route implements CitizenDataServiveObject {
-    public id: number;
-    public gpsData: Point[];
-
-    fromJSON(json: any) {
-        for (var propName in this) {
-            // TODO: Additional parsing for gpsData needed.
-            if (json[propName]) {
-                this[propName] = json[propName];
-            }
-        }
-    }
+export interface Route extends CitizenDataObject {
+    gpsData: Point[];
 }

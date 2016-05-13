@@ -2,23 +2,13 @@
 * @author sholzer on 160510
 */
 
-import {CitizenDataServiveObject} from './CitizenDataServiceObject';
 import {Point} from './geojson/Point';
+import {CitizenDataObject} from "./CitizenDataObject";
 
 export default BusRealTimeData;
 
-export class BusRealTimeData  implements CitizenDataServiveObject{
-    
-    public id:number;
-    public delay:number;
-    public location:Point;
-    
-     fromJSON(json: any) {
-        for (var propName in this) {
-            if (json[propName]) {
-                this[propName] = json[propName];
-            }
-        }
-    }
-    
+export interface BusRealTimeData  extends  CitizenDataObject{
+
+    delay:number;
+    location:Point;
 }
