@@ -21,4 +21,8 @@ export class MapPage {
   centerMap(){
     this.map.centerMap();
   }
+  
+  addMarker(pos, name){
+    this.map.addMarker(pos, name);
+  }
 }
