@@ -12,7 +12,7 @@ import {Geolocation} from 'ionic-native';
 })
 export class Map implements OnInit, OnInit {
   private map: google.maps.Map;
-  private markers: Array<google.maps.Marker>;
+  private markers: { [key:string]:google.maps.Marker; } = {};
   
   private defaultMapOptions = {
     zoom: 15,
@@ -45,6 +45,10 @@ export class Map implements OnInit, OnInit {
   ngOnInit() {
     this.createMap();
     this.centerMap();
+    this.initPositionMarker();
+  }
+  
+  initPositionMarker(){
     Geolocation.getCurrentPosition(this.defaultGeoLocationOptions).then((position) => {
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         this.addMarker(latLng, "Standort");
@@ -57,14 +61,24 @@ export class Map implements OnInit, OnInit {
         position: markerLatLong,
         map: this.map,
         title: name
+        
       });
       
-      this.markers.push(marker);
+      let key = name;
+      
+      this.markers[name] = marker; 
       //marker.setMap(null); for deleting
+      //this.deleteMarker("Standort");
  
   }
   
-  deleteMarker(){
-    
+  deleteMarker(markername){
+    /*
+    deletes one marker identified by its name, for example
+     this.deleteMarker("Standort"); 
+     for deleting of the marker of the current position
+     specified in initPositionMarker
+    */
+    this.markers[markername].setMap(null);
   }
 }
