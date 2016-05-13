@@ -55,6 +55,10 @@ export class Map implements OnInit, OnInit {
       });
   }
 
+  /**
+   * @param position new markers position
+   * @param name new markers identify name
+  */
   addMarker(position: google.maps.LatLng, name) {
       let markerLatLong = position;
       let marker = new google.maps.Marker({
@@ -69,6 +73,9 @@ export class Map implements OnInit, OnInit {
  
   }
   
+  /**
+   * @param markername Marker to be deleted
+  */
   deleteMarker(markername){
     /*
     deletes one marker identified by its name, for example
@@ -79,11 +86,11 @@ export class Map implements OnInit, OnInit {
     this.markers[markername].setMap(null);
   }
   
+  /**
+  * @param markername Markers name which should be moved to
+  * @param pos new Position
+  */ 
   moveMarker(markername, pos){
-    /*
-    moves marker specified by its name 
-    from its current location to pos
-    */
     this.deleteMarker(markername);
     this.addMarker(pos, markername);
   }
