@@ -1,5 +1,4 @@
 import { Observable }     from 'rxjs/Observable';
-import CitizenDataServiceInterface from './CitizenDataServiceInterface';
 import {Injectable} from 'angular2/core';
 import {Http} from 'angular2/http';
 import {BusRealTimeData}  from '../model/BusRealTimeData';
@@ -12,8 +11,6 @@ import {Point} from '../model/geojson/Point';
 //import {PersistentDataProvider} from "./PersistentDataProvider";
 import {UpdateData} from "../model/UpdateData";
 import {timeInterval} from "rxjs/operator/timeInterval";
-import {Logger} from "angular2-logger/core";
-import {CitizenDataTypes} from "../model/CitizenDataTypes";
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
 
 // TODO: Add interfaces for other types..
