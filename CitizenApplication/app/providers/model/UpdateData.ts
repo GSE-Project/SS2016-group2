@@ -3,7 +3,7 @@
  * Reviewed by skaldo on 06.05.2016.
  */
 
-import {JsonParsable} from './JsonParsable';
+import {JsonParsable} from "./JsonParsable";
 
 
 export class UpdateData implements JsonParsable {

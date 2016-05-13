@@ -2,12 +2,12 @@
 * @author sholzer on 160510
 */
 
-import {JsonParsable} from './JsonParsable';
+import {CitizenDataServiveObject} from './CitizenDataServiceObject';
 import {Point} from './geojson/Point';
 
 export default BusRealTimeData;
 
-export class BusRealTimeData  implements JsonParsable{
+export class BusRealTimeData  implements CitizenDataServiveObject{
     
     public id:number;
     public delay:number;

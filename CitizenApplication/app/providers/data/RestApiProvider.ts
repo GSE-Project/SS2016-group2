@@ -2,7 +2,7 @@
 * Created by skaldo on 07.05.2016.
 */
 import {RestApiProviderInterface} from "./RestApiProviderInterface";
-import {JsonParsable} from '../model/JsonParsable';
+import {CitizenDataServiveObject} from '../model/CitizenDataServiceObject';
 import {UpdateData} from '../model/UpdateData';
 import {Bus} from '../model/Bus';
 import {Line} from '../model/Line';
@@ -28,7 +28,7 @@ const UPDATE = "update";
 export class RestApiProvider implements RestApiProviderInterface {
     constructor(public http: Http) { }
 
-    getRemoteDataArray<T extends JsonParsable>(type: string, constructingClass: { new (): T }): Promise<{ timestamp: number, data: T[] }> {
+    getRemoteDataArray<T extends CitizenDataServiveObject>(type: string, constructingClass: { new (): T }): Promise<{ timestamp: number, data: T[] }> {
         return new Promise<{ timestamp: number, data: T[] }>((resolve, reject) => {
             this.http.get(baseUrl + type)
                 .map(res => res.json())
@@ -46,7 +46,7 @@ export class RestApiProvider implements RestApiProviderInterface {
         });
     }
 
-    getRemoteData<T extends JsonParsable>(type: string, constructingClass: { new (): T }): Promise<T> {
+    getRemoteData<T extends CitizenDataServiveObject>(type: string, constructingClass: { new (): T }): Promise<T> {
         return new Promise<T>((resolve, reject) => {
             this.http.get(baseUrl + type)
                 .map(res => res.json())

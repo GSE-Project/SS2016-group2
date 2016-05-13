@@ -4,11 +4,11 @@
  */
 
 import Point from './geojson/Point.ts';
-import {JsonParsable} from './JsonParsable';
+import {CitizenDataServiveObject} from './CitizenDataServiceObject';
 
 export default Route;
 
-export class Route implements JsonParsable {
+export class Route implements CitizenDataServiveObject {
     public id: number;
     public gpsData: Point[];
 

@@ -11,7 +11,7 @@ import {Line} from "../../providers/model/Line";
 import {Stop} from "../../providers/model/Stop";
 import {Route} from "../../providers/model/Route";
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
-import {JsonParsable} from "../model/JsonParsable";
+import {CitizenDataServiveObject} from "../model/CitizenDataServiceObject";
 
 const STORAGE_ACTIVE = "A";
 const STORAGE_TIMESTAMP = "T";
@@ -55,7 +55,7 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
      * @return Promise<T[]>
      * @author skaldo & sholzer
      */
-    getStorageDataArray<T extends JsonParsable>(type: string, constructingClass: { new (): T }): Promise<Array<T>> {
+    getStorageDataArray<T extends CitizenDataServiveObject>(type: string, constructingClass: { new (): T }): Promise<Array<T>> {
         return new Promise<Array<T>>((resolve, reject) => {
             this.storage.get(type).then((value) => {
                 // skaldo 11.05.1016 - added undefined check.

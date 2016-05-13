@@ -4,11 +4,11 @@
  */
 
 import {Point} from './geojson/Point';
-import {JsonParsable} from './JsonParsable';
+import {CitizenDataServiveObject} from './CitizenDataServiceObject';
 
 export default Stop;
 
-export class Stop  implements JsonParsable{
+export class Stop  implements CitizenDataServiveObject{
     public id: number;
     public name: string;
     public location: Point;
