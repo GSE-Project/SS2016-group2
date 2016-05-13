@@ -110,4 +110,8 @@ export class RestApiProvider {
             return <BusRealTimeData> res.json();
         });
     };
+    
+    log(message:string):void{
+		console.log("RestApiProvider: "+message);
+	}
 }
