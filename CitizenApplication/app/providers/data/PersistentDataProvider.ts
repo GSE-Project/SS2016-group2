@@ -4,14 +4,13 @@
  * 
  */
 import {Injectable} from 'angular2/core';
-import {PersistentDataProviderInterface} from "./PersistentDataProviderInterface";
 import {Bus} from "../../providers/model/Bus";
 import {UpdateData} from "../../providers/model/UpdateData";
 import {Line} from "../../providers/model/Line";
 import {Stop} from "../../providers/model/Stop";
 import {Route} from "../../providers/model/Route";
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
-import {CitizenDataServiveObject} from "../model/CitizenDataServiceObject";
+import {CitizenDataObject} from "../model/CitizenDataObject";
 
 const STORAGE_ACTIVE = "A";
 const STORAGE_TIMESTAMP = "T";
@@ -21,7 +20,7 @@ const STORAGE_STOP = "S";
 const STORAGE_ROUTE = "R";
 
 @Injectable()
-export class PersistentDataProvider implements PersistentDataProviderInterface {
+export class PersistentDataProvider{
     /**
      * Generic Storage interface. 
      */
@@ -55,7 +54,7 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
      * @return Promise<T[]>
      * @author skaldo & sholzer
      */
-    getStorageDataArray<T extends CitizenDataServiveObject>(type: string, constructingClass: { new (): T }): Promise<Array<T>> {
+    /*getStorageDataArray<T extends CitizenDataObject>(type: string, constructingClass: { new (): T }): Promise<Array<T>> {
         return new Promise<Array<T>>((resolve, reject) => {
             this.storage.get(type).then((value) => {
                 // skaldo 11.05.1016 - added undefined check.
@@ -69,7 +68,7 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
                 resolve(result_list);
             });
         });
-    }
+    }*/
     
     /**
      * Puts the promised data array to the storage
@@ -98,7 +97,7 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
             this.logCouldNot("resolve promised", "update data", reason);
         });
     }
-    getBusses(): Promise<Array<Bus>> {
+   /*getBusses(): Promise<Array<Bus>> {
         return this.getStorageDataArray<Bus>(STORAGE_BUS, Bus);
     }
     putBusses(promised_busses: Promise<Bus[]>) {
@@ -123,7 +122,7 @@ export class PersistentDataProvider implements PersistentDataProviderInterface {
     putRoutes(promised_routes: Promise<Route[]>) {
         this.putStorageDataArray<Route>(STORAGE_ROUTE, promised_routes, "routes");
     }
-
+*/
     /**
      * Logs a warn message
      * @param type the type that should be fetched
