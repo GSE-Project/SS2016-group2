@@ -12,6 +12,7 @@ import {Geolocation} from 'ionic-native';
 })
 export class Map implements OnInit, OnInit {
   private map: google.maps.Map;
+  
   private defaultMapOptions = {
     zoom: 15,
     mypTypeId: google.maps.MapTypeId.ROADMAP,
@@ -43,5 +44,17 @@ export class Map implements OnInit, OnInit {
   ngOnInit() {
     this.createMap();
     this.centerMap();
+  }
+
+  addMarker(position: google.maps.LatLng) {
+    
+      let markerLatLong = new google.maps.LatLng(position.lat(), position.lng());
+      let marker = new google.maps.Marker({
+        position: markerLatLong,
+        map: this.map,
+        title: 'Hello World!'
+      });
+      marker.setMap(this.map);
+    
   }
 }
