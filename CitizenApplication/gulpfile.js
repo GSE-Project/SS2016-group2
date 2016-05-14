@@ -61,15 +61,22 @@ gulp.task('build', ['clean'], function (done) {
   runSequence(
     ['sass', 'html', 'fonts', 'scripts'],
     function () {
+      var error = 0;
       buildBrowserify({
         minify: isRelease,
         browserifyOptions: {
           debug: !isRelease
         },
+        onError: function (err) {
+          console.error(err.toString());
+          error = 1;
+        },
         uglifyOptions: {
           mangle: false
         }
-      }).on('end', done);
+      }).on('end', function () {
+        done(error);
+      });
     }
   );
 });
@@ -84,21 +91,29 @@ gulp.task('lint', function (done) {
     .pipe(tslint({}))
     .pipe(tslint.report('verbose'));
 });
-gulp.task('beforeCommit', function (done) {
+gulp.task('pre-commit', function (done) {
   runSequence(['lint'], function () {
+    var error = 0;
     buildBrowserify({
       minify: false,
       browserifyOptions: {
         debug: false
+      },
+      onError: function (err) {
+        console.error(err.toString());
+        error = 1;
       },
       uglifyOptions: {
         mangle: false
       },
       tsifyOptions: {
       }
-    }).on('end', done);
+    }).on('end', function () {
+      done(error);
+    });
   })
-})
+});
+gulp.task('beforeCommit', ['pre-commit']);
 
 gulp.task('sass', buildSass);
 gulp.task('html', copyHTML);
