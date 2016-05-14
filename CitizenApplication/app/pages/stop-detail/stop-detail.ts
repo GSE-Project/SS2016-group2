@@ -1,5 +1,5 @@
 import {Page, NavController, NavParams, ActionSheet} from 'ionic-angular';
-import {Stop} from '../../providers/model/Stop';
+import {IStop} from '../../providers/model/Stop';
 import {BusDetailPage} from '../bus-detail/bus-detail';
 
 /*
@@ -12,7 +12,7 @@ import {BusDetailPage} from '../bus-detail/bus-detail';
   templateUrl: 'build/pages/stop-detail/stop-detail.html',
 })
 export class StopDetailPage {
-  private stop: Stop;
+  private stop: IStop;
   constructor(public nav: NavController, private navParams: NavParams) {
     this.stop = navParams.data;
   }

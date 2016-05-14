@@ -3,12 +3,12 @@
  */
 
 import {Page, NavController} from 'ionic-angular';
-import {Stop} from '../../providers/model/Stop';
 import {Point} from '../../providers/model/geojson/Point';
 import {StopDetailPage} from '../stop-detail/stop-detail';
 import {CitizenDataService} from '../../providers/data/CitizenDataService';
+import {IStop} from "../../providers/model/Stop";
 
-class ViewStop implements Stop {
+class ViewStop implements IStop {
   name:string;
   location:Point;
   schedule:{lineId:number; time:Date}[];
@@ -17,7 +17,7 @@ class ViewStop implements Stop {
 
 
 
-  constructor(stop: Stop) {
+  constructor(stop: IStop) {
 
     this.id = stop.id;
     this.location = stop.location;
@@ -119,7 +119,7 @@ export class StopListPage {
     return Math.floor(Math.random() * (3 + 1)) + 1;
   }
 
-  goToStopDetail(stop: Stop) {
+  goToStopDetail(stop: IStop) {
     this.nav.push(StopDetailPage, stop);
   }
   log(message:string):void{
