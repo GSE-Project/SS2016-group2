@@ -4,7 +4,7 @@
 set -ev
 if [ $JOB = "unit" ]; then
   gulp test
-if [ $JOB = "lint" ]; then
+elif [ $JOB = "lint" ]; then
   gulp lint
 elif [ $JOB = "build-ios" ]; then
   ionic build ios
