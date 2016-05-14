@@ -19,13 +19,7 @@ export class CitizenDataService {
     private serverTimeStamps: IUpdateData;
 
     constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
-        this.serverTimeStamps = { // Instantiation with timestamp:-1 seems more stable
-            busses: -1,
-            lines: -1,
-            routes: -1,
-            stops: -1,
-        };
-        this.log('Instantiated fields. Getting the update times from the server.');
+        this.storageApi.getTimeStamps();
         this.updateTimeStamps();
     }
 

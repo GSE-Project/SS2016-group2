@@ -11,6 +11,8 @@ import {IRestStops} from "../../../providers/model/rest/RestStops";
 import {Observable} from "rxjs/Observable";
 import {CitizenDataService} from "../../../providers/data/CitizenDataService";
 import {IBusRealTimeData} from "../../../providers/model/BusRealTimeData";
+import {IRestLines} from "../../../providers/model/rest/RestLines";
+
 /**
  * Created by sholzer on 06.05.2016.
  * Updated by skaldo on 07.05.2016.
@@ -24,38 +26,39 @@ describe("CitizenDataService specifications", function () {
 
         var updateCalled: boolean = false;
 
-        restApi = <RestApiProvider>{
-            getUpdateData(): Observable<IUpdateData> {
-                updateCalled = true;
-                return Observable.of({
-                    busses: 1, lines: 1, routes: 1, stops: 1
-                });
-            },
-            getStops(): Observable<IRestStops> {
-                return Observable.of({ timestamp: 1, stops: [{ id: 1 }] });
-            },
-            getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
-                return Observable.of({ delay: id, location: {} });
-            }
-        };
-        storageApi = <PersistentDataProvider>{
-            getTimeStamps(): IUpdateData {
-                return {
-                    busses: 0, lines: 0, routes: 0, stops: 0
-                };
-            },
-            getStops(): Observable<IRestStops> {
-                return Observable.of({ timestamp: 0, stops: [] });
-            },
-            putStops(data: IRestStops): void { }
-        };
-
-        var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
 
         /**
          * Stops should be a sufficient test since the code base is equivalent for the other model data
          */
         it("Get stops from server", () => {
+            restApi = <RestApiProvider>{
+                getUpdateData(): Observable<IUpdateData> {
+                    updateCalled = true;
+                    return Observable.of({
+                        busses: 1, lines: 1, routes: 1, stops: 1
+                    });
+                },
+                getStops(): Observable<IRestStops> {
+                    return Observable.of({ timestamp: 1, stops: [{ id: 1 }] });
+                },
+                getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
+                    return Observable.of({ delay: id, location: {} });
+                }
+            };
+            storageApi = <PersistentDataProvider>{
+                getTimeStamps(): IUpdateData {
+                    return {
+                        busses: 0, lines: 0, routes: 0, stops: 0
+                    };
+                },
+                getStops(): Observable<IRestStops> {
+                    return Observable.of({ timestamp: 0, stops: [] });
+                },
+                putStops(data: IRestStops): void { }
+            };
+
+            var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
+
             assertEqualJson(citizenDataService.getStops(), restApi.getStops());
         });
 
@@ -63,13 +66,137 @@ describe("CitizenDataService specifications", function () {
          * Check the #updateTimeStamps() method.
          */
         it("Get new update data", () => {
+            restApi = <RestApiProvider>{
+                getUpdateData(): Observable<IUpdateData> {
+                    updateCalled = true;
+                    return Observable.of({
+                        busses: 1, lines: 1, routes: 1, stops: 1
+                    });
+                },
+                getStops(): Observable<IRestStops> {
+                    return Observable.of({ timestamp: 1, stops: [{ id: 1 }] });
+                },
+                getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
+                    return Observable.of({ delay: id, location: {} });
+                }
+            };
+            storageApi = <PersistentDataProvider>{
+                getTimeStamps(): IUpdateData {
+                    return {
+                        busses: 0, lines: 0, routes: 0, stops: 0
+                    };
+                },
+                getStops(): Observable<IRestStops> {
+                    return Observable.of({ timestamp: 0, stops: [] });
+                },
+                putStops(data: IRestStops): void { }
+            };
+
+            var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
+
             updateCalled = false;
             citizenDataService.updateTimeStamps();
             assertEqualJson(updateCalled, true);
         });
 
         it("Get RealTimeBusData", () => {
+            restApi = <RestApiProvider>{
+                getUpdateData(): Observable<IUpdateData> {
+                    updateCalled = true;
+                    return Observable.of({
+                        busses: 1, lines: 1, routes: 1, stops: 1
+                    });
+                },
+                getStops(): Observable<IRestStops> {
+                    return Observable.of({ timestamp: 1, stops: [{ id: 1 }] });
+                },
+                getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
+                    return Observable.of({ delay: id, location: {} });
+                }
+            };
+            storageApi = <PersistentDataProvider>{
+                getTimeStamps(): IUpdateData {
+                    return {
+                        busses: 0, lines: 0, routes: 0, stops: 0
+                    };
+                },
+                getStops(): Observable<IRestStops> {
+                    return Observable.of({ timestamp: 0, stops: [] });
+                },
+                putStops(data: IRestStops): void { }
+            };
+
+            var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
+
             assertEqualJson(citizenDataService.getIBusRealTimeData(1), restApi.getRealTimeBusData(1));
+        });
+    });
+
+
+    describe("Get Storage Data", () => {
+        it("Get stored lines", () => {
+            restApi = <RestApiProvider>{
+                getUpdateData(): Observable<IUpdateData> {
+                    return Observable.of({
+                        busses: 1, lines: 1, routes: 1, stops: 2
+                    });
+                },
+                getStops(): Observable<IRestStops> {
+                    return Observable.of({ timestamp: 2, stops: [{ id: 1 }] });
+                },
+                getLines(): Observable<IRestLines> {
+                    return Observable.of({ timestamp: 1, lines: [] });
+                }
+            };
+            storageApi = <PersistentDataProvider>{
+                getTimeStamps(): IUpdateData {
+                    return {
+                        busses: 1, lines: 1, routes: 1, stops: 1
+                    };
+                },
+                getStops(): Observable<IRestStops> {
+                    return Observable.of({ timestamp: 1, stops: [] });
+                },
+                putStops(data: IRestStops): void { },
+                getLines(): Observable<IRestLines> {
+                    return Observable.of({ timestamp: 1, lines: [] });
+                },
+                putLines(data: IRestLines): void { }
+            };
+            var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
+
+            assertEqualJson(citizenDataService.getLines(), storageApi.getLines());
+        });
+        it("Don't get outdated stops", () => {
+            restApi = <RestApiProvider>{
+                getUpdateData(): Observable<IUpdateData> {
+                    return Observable.of({
+                        busses: 1, lines: 1, routes: 1, stops: 2
+                    });
+                },
+                getStops(): Observable<IRestStops> {
+                    return Observable.of({ timestamp: 2, stops: [{ id: 1 }] });
+                },
+                getLines(): Observable<IRestLines> {
+                    return Observable.of({ timestamp: 1, lines: [] });
+                }
+            };
+            storageApi = <PersistentDataProvider>{
+                getTimeStamps(): IUpdateData {
+                    return {
+                        busses: 1, lines: 1, routes: 1, stops: 1
+                    };
+                },
+                getStops(): Observable<IRestStops> {
+                    return Observable.of({ timestamp: 1, stops: [] });
+                },
+                putStops(data: IRestStops): void { },
+                getLines(): Observable<IRestLines> {
+                    return Observable.of({ timestamp: 2, lines: [] });
+                }
+            };
+            var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
+            assertNotEqualJson(citizenDataService.getStops(), storageApi.getStops());
         });
     });
 });
