@@ -32,15 +32,15 @@ export class HomePage {
     });
   }
 
-  //hide nav bar when we enter the page
+  // hide nav bar when we enter the page
   onPageWillEnter() {
-    var element = <HTMLElement>document.getElementsByTagName("ion-navbar-section")[0];
-    element.style.display = "none";
+    var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
+    element.style.display = 'none';
   }
 
-  //show nav bar when we leave the page
+  // show nav bar when we leave the page
   onPageDidLeave() {
-    var element = <HTMLElement>document.getElementsByTagName("ion-navbar-section")[0];
-    element.style.display = "block";
+    var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
+    element.style.display = 'block';
   }
 }

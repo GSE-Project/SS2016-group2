@@ -12,12 +12,13 @@ import {Geolocation} from 'ionic-native';
 })
 export class Map implements OnInit, OnInit {
   private map: google.maps.Map;
-  private markers: { [key:string]:google.maps.Marker; } = {};
-  
+  private markers: { [key: string]: google.maps.Marker; } = {};
+
   private defaultMapOptions = {
     zoom: 15,
     mypTypeId: google.maps.MapTypeId.ROADMAP,
-  }
+  };
+
   private defaultGeoLocationOptions = {
     timeout: 10000,
     enableHighAccuracy: true
@@ -47,12 +48,12 @@ export class Map implements OnInit, OnInit {
     this.centerMap();
     this.initPositionMarker();
   }
-  
-  initPositionMarker(){
+
+  initPositionMarker() {
     Geolocation.getCurrentPosition(this.defaultGeoLocationOptions).then((position) => {
-        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        this.addMarker(latLng, "Standort");
-      });
+      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      this.addMarker(latLng, 'Standort');
+    });
   }
 
   /**
@@ -60,23 +61,23 @@ export class Map implements OnInit, OnInit {
    * @param name new markers identify name
   */
   addMarker(position: google.maps.LatLng, name) {
-      let markerLatLong = position;
-      let marker = new google.maps.Marker({
-        position: markerLatLong,
-        map: this.map,
-        title: name
-        
-      });
-      
-      this.markers[name] = marker; 
+    let markerLatLong = position;
+    let marker = new google.maps.Marker({
+      position: markerLatLong,
+      map: this.map,
+      title: name
 
- 
+    });
+
+    this.markers[name] = marker;
+
+
   }
-  
+
   /**
    * @param markername Marker to be deleted
   */
-  deleteMarker(markername){
+  deleteMarker(markername) {
     /*
     deletes one marker identified by its name, for example
      this.deleteMarker("Standort"); 
@@ -85,12 +86,12 @@ export class Map implements OnInit, OnInit {
     */
     this.markers[markername].setMap(null);
   }
-  
+
   /**
   * @param markername Markers name which should be moved to
   * @param pos new Position
-  */ 
-  moveMarker(markername, pos){
+  */
+  moveMarker(markername, pos) {
     this.deleteMarker(markername);
     this.addMarker(pos, markername);
   }

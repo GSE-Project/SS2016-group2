@@ -4,7 +4,7 @@
  */
 
 import Point from './geojson/Point.ts';
-import {ICitizenDataObject} from "./CitizenDataObject";
+import {ICitizenDataObject} from './CitizenDataObject';
 
 export default IRoute;
 

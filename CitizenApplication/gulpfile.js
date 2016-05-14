@@ -1,9 +1,10 @@
 var gulp = require('gulp'),
-    gulpWatch = require('gulp-watch'),
-    del = require('del'),
-    runSequence = require('run-sequence'),
-    argv = process.argv,
-    test = require('./test/test');
+  gulpWatch = require('gulp-watch'),
+  del = require('del'),
+  runSequence = require('run-sequence'),
+  tslint = require("gulp-tslint"),
+  argv = process.argv,
+  test = require('./test/test');
 
 /**
  * Ionic hooks
@@ -35,7 +36,7 @@ var copyScripts = require('ionic-gulp-scripts-copy');
 
 // This function copies our fonts to the build folder.
 // Author: Dominik Skalnik, 5.5.2016
-var copyDigitaleDoerferFonts = function(options) {
+var copyDigitaleDoerferFonts = function (options) {
   options.src = options.src || 'resources/fonts/**/*.+(ttf|woff|woff2)';
   options.dest = options.dest || 'www/build/fonts';
 
@@ -45,21 +46,21 @@ var copyDigitaleDoerferFonts = function(options) {
 
 var isRelease = argv.indexOf('--release') > -1;
 
-gulp.task('watch', ['clean'], function(done){
+gulp.task('watch', ['clean'], function (done) {
   runSequence(
     ['sass', 'html', 'fonts', 'scripts'],
-    function(){
-      gulpWatch('app/**/*.scss', function(){ gulp.start('sass'); });
-      gulpWatch('app/**/*.html', function(){ gulp.start('html'); });
+    function () {
+      gulpWatch('app/**/*.scss', function () { gulp.start('sass'); });
+      gulpWatch('app/**/*.html', function () { gulp.start('html'); });
       buildBrowserify({ watch: true }).on('end', done);
     }
   );
 });
 
-gulp.task('build', ['clean'], function(done){
+gulp.task('build', ['clean'], function (done) {
   runSequence(
     ['sass', 'html', 'fonts', 'scripts'],
-    function(){
+    function () {
       buildBrowserify({
         minify: isRelease,
         browserifyOptions: {
@@ -77,7 +78,27 @@ gulp.task('build', ['clean'], function(done){
 // Testing tasks
 gulp.task('test', test.karma);
 gulp.task('karma-debug', test.karmaDebug);
-gulp.task('lint', test.lint);
+// Added by skaldo on 14.05.2016
+gulp.task('lint', function (done) {
+  return gulp.src(["app/**/**.ts", "app/**/**.spec.ts"])
+    .pipe(tslint({}))
+    .pipe(tslint.report('verbose'));
+});
+gulp.task('beforeCommit', function (done) {
+  runSequence(['lint'], function () {
+    buildBrowserify({
+      minify: false,
+      browserifyOptions: {
+        debug: false
+      },
+      uglifyOptions: {
+        mangle: false
+      },
+      tsifyOptions: {
+      }
+    }).on('end', done);
+  })
+})
 
 gulp.task('sass', buildSass);
 gulp.task('html', copyHTML);
@@ -85,6 +106,6 @@ gulp.task('ionicFonts', copyFonts);
 gulp.task('digitaleDoerferFonts', copyDigitaleDoerferFonts);
 gulp.task('fonts', ['ionicFonts', 'digitaleDoerferFonts']);
 gulp.task('scripts', copyScripts);
-gulp.task('clean', function(){
+gulp.task('clean', function () {
   return del('www/build');
 });

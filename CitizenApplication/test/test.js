@@ -19,10 +19,5 @@ module.exports = {
     }, function (exitCode) {
       done(exitCode);
     })
-  },
-  lint: function () {
-    return gulp.src(join('**/*.ts'))
-      .pipe(tslint())
-      .pipe(tslint.report('verbose'));
   }
 }

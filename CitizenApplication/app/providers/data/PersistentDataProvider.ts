@@ -5,15 +5,15 @@
 
 import {Injectable} from 'angular2/core';
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
-import {IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from "../model";
-import {Observable} from "rxjs/Observable";
+import {IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
+import {Observable} from 'rxjs/Observable';
 
-const STORAGE_ACTIVE = "A";
-const STORAGE_TIMESTAMP = "T";
-const STORAGE_BUS = "B";
-const STORAGE_LINE = "L";
-const STORAGE_STOP = "S";
-const STORAGE_ROUTE = "R";
+const STORAGE_ACTIVE = 'A';
+const STORAGE_TIMESTAMP = 'T';
+const STORAGE_BUS = 'B';
+const STORAGE_LINE = 'L';
+const STORAGE_STOP = 'S';
+const STORAGE_ROUTE = 'R';
 
 
 @Injectable()
@@ -25,11 +25,11 @@ export class PersistentDataProvider {
         // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
         this.storage = new Storage(LocalStorage);
         this.storedTimeStamps = { // Instantiation with timestamp:-1 seems more stable
-			busses: -2,
-			lines: -2,
-			routes: -2,
-			stops: -2
-		};
+            busses: -2,
+            lines: -2,
+            routes: -2,
+            stops: -2
+        };
     }
 
     /**

@@ -4,6 +4,8 @@
 set -ev
 if [ $JOB = "unit" ]; then
   gulp test
+if [ $JOB = "lint" ]; then
+  gulp lint
 elif [ $JOB = "build-ios" ]; then
   ionic build ios
 elif [ $JOB = "build-android" ]; then

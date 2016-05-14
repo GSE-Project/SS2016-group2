@@ -17,58 +17,58 @@ import {IBusRealTimeData} from "../../../providers/model/BusRealTimeData";
  */
 
 describe("CitizenDataService specifications", function () {
-   
-    var restApi : RestApiProvider;
-    var storageApi : PersistentDataProvider;
-    describe("Get Server Data", ()=>{
 
-        var updateCalled : boolean = false;
+    var restApi: RestApiProvider;
+    var storageApi: PersistentDataProvider;
+    describe("Get Server Data", () => {
 
-        restApi =  <RestApiProvider>{
-            getUpdateData():Observable<IUpdateData>{
+        var updateCalled: boolean = false;
+
+        restApi = <RestApiProvider>{
+            getUpdateData(): Observable<IUpdateData> {
                 updateCalled = true;
                 return Observable.of({
-                    busses:1,lines:1,routes:1, stops:1
+                    busses: 1, lines: 1, routes: 1, stops: 1
                 });
             },
-            getStops():Observable<IRestStops>{
-                return Observable.of({timestamp:1, stops:[{id:1}]});
+            getStops(): Observable<IRestStops> {
+                return Observable.of({ timestamp: 1, stops: [{ id: 1 }] });
             },
-            getRealTimeBusData(id:number):Observable<IBusRealTimeData>{
-                return Observable.of({delay:id, location:{}});
+            getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
+                return Observable.of({ delay: id, location: {} });
             }
         };
-        storageApi  = <PersistentDataProvider>{
-            getTimeStamps():IUpdateData{
-                return{
-                    busses:0,lines:0,routes:0, stops:0
+        storageApi = <PersistentDataProvider>{
+            getTimeStamps(): IUpdateData {
+                return {
+                    busses: 0, lines: 0, routes: 0, stops: 0
                 };
             },
-            getStops():Observable<IRestStops>{
-                return Observable.of({timestamp:0, stops:[]});
+            getStops(): Observable<IRestStops> {
+                return Observable.of({ timestamp: 0, stops: [] });
             },
-            putStops(data:IRestStops):void{}
+            putStops(data: IRestStops): void { }
         };
 
-        var citizenDataService : CitizenDataService = new CitizenDataService(restApi, storageApi);
+        var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
 
         /**
          * Stops should be a sufficient test since the code base is equivalent for the other model data
          */
-        it("Get stops from server", ()=>{
+        it("Get stops from server", () => {
             assertEqualJson(citizenDataService.getStops(), restApi.getStops());
         });
 
         /**
          * Check the #updateTimeStamps() method.
          */
-        it("Get new update data", ()=>{
+        it("Get new update data", () => {
             updateCalled = false;
             citizenDataService.updateTimeStamps();
             assertEqualJson(updateCalled, true);
         });
 
-        it("Get RealTimeBusData", ()=>{
+        it("Get RealTimeBusData", () => {
             assertEqualJson(citizenDataService.getIBusRealTimeData(1), restApi.getRealTimeBusData(1));
         });
     });
@@ -84,8 +84,9 @@ describe("CitizenDataService specifications", function () {
  * @return void. Calls fail() if JSON.stringify(input) != JSON.stringify(expectation)
  */
 function assertEqualJson(input: any, expectation: any): void {
-    if (JSON.stringify(input) != JSON.stringify(expectation)) fail("Expected\n" + JSON.stringify(input) + "\nto be equal to\n" + JSON.stringify(expectation));
-
+    if (JSON.stringify(input) !== JSON.stringify(expectation)) {
+        fail("Expected\n" + JSON.stringify(input) + "\nto be equal to\n" + JSON.stringify(expectation));
+    }
 }
 
 /**
@@ -96,6 +97,7 @@ function assertEqualJson(input: any, expectation: any): void {
  * @return void. Calls fail() if JSON.stringify(input) == JSON.stringify(expectation)
  */
 function assertNotEqualJson(input: any, expectation: any): void {
-    if (JSON.stringify(input) == JSON.stringify(expectation)) fail("Expected\n" + JSON.stringify(input) + "\nNOT to be equal to\n" + JSON.stringify(expectation));
-
+    if (JSON.stringify(input) === JSON.stringify(expectation)) {
+        fail("Expected\n" + JSON.stringify(input) + "\nNOT to be equal to\n" + JSON.stringify(expectation));
+    }
 }

@@ -6,26 +6,22 @@ import {Page, NavController} from 'ionic-angular';
 import {Point} from '../../providers/model/geojson/Point';
 import {StopDetailPage} from '../stop-detail/stop-detail';
 import {CitizenDataService} from '../../providers/data/CitizenDataService';
-import {IStop} from "../../providers/model/Stop";
+import {IStop} from '../../providers/model/Stop';
 
 class ViewStop implements IStop {
-  name:string;
-  location:Point;
-  schedule:{lineId:number; time:Date}[];
-  id:number;
+  public name: string;
+  public location: Point;
+  public schedule: { lineId: number; time: Date }[];
+  public id: number;
   private lines: Array<number>;
 
-
-
   constructor(stop: IStop) {
-
     this.id = stop.id;
     this.location = stop.location;
     this.name = stop.name;
     this.schedule = stop.schedule;
-
     this.lines = Array<number>();
-    var linesHelper = [];
+    let linesHelper = [];
 
     // Do the sorting & get the lines of the stop.
     this.schedule.sort((a, b) => {
@@ -42,14 +38,14 @@ class ViewStop implements IStop {
 
     this.lines.sort((a, b) => {
       return b - a;
-    })
+    });
   }
 
-  getSchedules(first: number) {
+  public getSchedules(first: number) {
     return this.schedule.slice(0, first);
   }
 
-  getLines() {
+  public getLines() {
     return this.lines;
   }
 }
@@ -62,67 +58,48 @@ class ViewStop implements IStop {
 */
 @Page({
   templateUrl: 'build/pages/stop-list/stop-list.html',
-  providers: [CitizenDataService]
+  providers: [CitizenDataService],
 })
 export class StopListPage {
-  private searchText: String;
+  // private searchText: String;
   private stops: Array<ViewStop> = new Array<ViewStop>();
   constructor(public nav: NavController, private cDS: CitizenDataService) {
     this.cDS.getStops().subscribe(data => {
-      this.log("Stops recieved");
+      this.log('Stops recieved');
       data.stops.forEach(stop => {
-        console.log("UI: got stop" + stop.name);
-        //faking time in order to prevent errors:
+        console.log('UI: got stop' + stop.name);
+        // faking time in order to prevent errors:
         stop.schedule.forEach(item => {
           item.time = this.getRandomTime();
         });
         this.stops.push(new ViewStop(stop));
       });
-    })
-    /*
-    this.cDS.getStopList().forEach(stop => {
-      this.stops.push(new ViewStop(stop));
     });
-    
-    /*
-    for (let i = 0; i < 50; i++) {
-      var stop = new Stop();
-      stop.id = i;
-      stop.name = "Straße " + i;
-      stop.location = new Point(99, 12);
-
-      stop.schedule = [];
-      for (let i = 0; i < 8; i++) {
-        stop.schedule.push({ lineId: this.getRandomLine(), time: this.getRandomTime() });
-      }
-
-      this.stops.push(new ViewStop(stop));
-    }*/
   }
 
-  onSearch(event) {
+  public onSearch(event) {
+    // To-be implemented
+  };
+  public onSearchCancel(event) {
+    // To-be implemented
+  };
 
-  }
-  onSearchCancel(event) {
-
-  }
-
-  getRandomTime() {
-    var time = new Date();
-    var minutes = time.getMinutes();
+  public getRandomTime() {
+    let time = new Date();
+    let minutes = time.getMinutes();
     minutes = + Math.floor(Math.random() * (60 - 0));
     time.setMinutes(minutes);
     return time;
   }
 
-  getRandomLine() {
+  public getRandomLine() {
     return Math.floor(Math.random() * (3 + 1)) + 1;
   }
 
-  goToStopDetail(stop: IStop) {
+  public goToStopDetail(stop: IStop) {
     this.nav.push(StopDetailPage, stop);
   }
-  log(message:string):void{
-		console.log("StopListPage: "+message);
-	}
+  private log(message: string): void {
+    console.log('StopListPage: ' + message);
+  }
 }

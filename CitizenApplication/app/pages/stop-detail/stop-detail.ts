@@ -16,7 +16,7 @@ export class StopDetailPage {
   constructor(public nav: NavController, private navParams: NavParams) {
     this.stop = navParams.data;
   }
-  
+
   infoClicked(schedule) {
     let actionSheet = ActionSheet.create({
       title: 'Tasks',
@@ -25,12 +25,12 @@ export class StopDetailPage {
           text: 'Request a stop',
           handler: () => {
           }
-        },{
+        }, {
           text: 'Show bus information',
           handler: () => {
             this.nav.push(BusDetailPage);
           }
-        },{
+        }, {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {

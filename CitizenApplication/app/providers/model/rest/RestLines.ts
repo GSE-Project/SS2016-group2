@@ -3,8 +3,8 @@
  * Reviewed by skaldo on 13.05.2016.
  */
 
-import {IRestDataObject} from "./RestDataObject";
-import {ILine} from "../Line";
+import {IRestDataObject} from './RestDataObject';
+import {ILine} from '../Line';
 
 export default IRestLines;
 

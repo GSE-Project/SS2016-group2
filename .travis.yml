@@ -5,6 +5,7 @@ env:
     - CXX=g++-4.8 # node.js v > 4 requirements
   matrix:
     - JOB=unit
+    - JOB=lint
     - JOB=build-web
 addons:
   apt: # node.js v > 4 requirements

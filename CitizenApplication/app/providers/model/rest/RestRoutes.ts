@@ -3,8 +3,8 @@
  * Reviewed by skaldo on 13.05.2016.
  */
 
-import {IRestDataObject} from "./RestDataObject";
-import {IRoute} from "../Route";
+import {IRestDataObject} from './RestDataObject';
+import {IRoute} from '../Route';
 
 export default IRestRoutes;
 

@@ -1,6 +1,5 @@
 import {Page, NavController} from 'ionic-angular';
 import {ViewChild} from  'angular2/core';
-import {Geolocation} from 'ionic-native';
 import {Map} from '../../components/map/map';
 
 /*
@@ -12,17 +11,17 @@ import {Map} from '../../components/map/map';
 
 @Page({
   templateUrl: 'build/pages/map/map.html',
-  directives: [Map]
+  directives: [Map],
 })
 export class MapPage {
-  @ViewChild(Map) map:Map;
+  @ViewChild(Map) map: Map;
   constructor(public nav: NavController) {
   }
-  centerMap(){
+  centerMap() {
     this.map.centerMap();
   }
-  
-  addMarker(pos, name){
+
+  addMarker(pos, name) {
     this.map.addMarker(pos, name);
   }
 }

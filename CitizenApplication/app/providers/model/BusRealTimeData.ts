@@ -4,7 +4,7 @@
 */
 
 import {Point} from './geojson/Point';
-import {ICitizenDataObject} from "./CitizenDataObject";
+import {ICitizenDataObject} from './CitizenDataObject';
 
 export default IBusRealTimeData;
 

@@ -4,15 +4,14 @@ import {TabsPage} from './pages/tabs/tabs';
 import {RestApiProvider} from './providers/data/RestApiProvider';
 import {PersistentDataProvider} from './providers/data/PersistentDataProvider';
 import {CitizenDataService} from './providers/data/CitizenDataService';
-import {Http, ConnectionBackend, HTTP_PROVIDERS} from 'angular2/http';
 
 @App({
   template: '<ion-nav [root]="rootPage"></ion-nav>',
   config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
-  providers: [CitizenDataService, RestApiProvider, PersistentDataProvider]
+  providers: [CitizenDataService, RestApiProvider, PersistentDataProvider],
 })
 export class MyApp {
-  rootPage: any = TabsPage;
+  public rootPage: any = TabsPage;
 
   constructor(platform: Platform) {
     platform.ready().then(() => {

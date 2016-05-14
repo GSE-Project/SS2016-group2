@@ -33,7 +33,8 @@
     "phantomjs-prebuilt": "^2.1.7",
     "run-sequence": "1.1.5",
     "traceur": "0.0.108",
-    "tslint": "^3.9.0"
+    "tslint": "^3.10.2",
+    "tslint-eslint-rules": "^1.2.0"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",

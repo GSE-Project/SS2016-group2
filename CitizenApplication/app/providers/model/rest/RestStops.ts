@@ -3,8 +3,8 @@
  * Reviewed by skaldo on 13.05.2016.
  */
 
-import {IRestDataObject} from "./RestDataObject";
-import {IStop} from "../Stop";
+import {IRestDataObject} from './RestDataObject';
+import {IStop} from '../Stop';
 
 export default IRestStops;
 

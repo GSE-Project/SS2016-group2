@@ -2,20 +2,20 @@
  * Created by skaldo on 07.05.2016.
  */
 
-import {Injectable} from "angular2/core";
-import {Http} from "angular2/http";
+import {Injectable} from 'angular2/core';
+import {Http} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
-import {IUpdateData, IBus, ILine, IRoute, IStop, IBusRealTimeData, IRestStops, IRestBusses, IRestLines, IRestRoutes} from "../model";
-import "rxjs/Rx";
+import {IUpdateData, IBus, ILine, IRoute, IStop, IBusRealTimeData, IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../model';
+import 'rxjs/Rx';
 
 // skaldo:
 // Eventuell könnten wir es dem constructor übergeben.
 // Mal sehen, wie wir es mit der Injection schaffen werden.
-const BUSSES = "busses";
-const LINES = "lines";
-const STOPS = "stops";
-const ROUTES = "routes";
-const UPDATE = "update";
+const BUSSES = 'busses';
+const LINES = 'lines';
+const STOPS = 'stops';
+const ROUTES = 'routes';
+const UPDATE = 'update';
 
 @Injectable()
 export class RestApiProvider {
@@ -64,12 +64,12 @@ export class RestApiProvider {
     };
 
     getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
-        return this.http.get(this._baseUrl + BUSSES + "/" + id).map(res => {
+        return this.http.get(this._baseUrl + BUSSES + '/' + id).map(res => {
             return <IBusRealTimeData>res.json();
         });
     };
 
     log(message: string): void {
-        console.log("RestApiProvider: " + message);
+        console.log('RestApiProvider: ' + message);
     }
 }

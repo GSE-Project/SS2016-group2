@@ -13,5 +13,5 @@ export class TabsPage {
   tab1Root: any = HomePage;
   tab2Root: any = StopListPage;
   tab3Root: any = MapPage;
-  //tab3Root: any = Page3;
+  // tab3Root: any = Page3;
 }
