@@ -1,28 +1,28 @@
-import {RestApiProvider} from "../../../providers/data/RestApiProvider";
-import {PersistentDataProvider} from "../../../providers/data/PersistentDataProvider";
-import {IUpdateData} from "../../../providers/model/UpdateData";
-import {IBus} from "../../../providers/model/Bus";
-import {ILine} from "../../../providers/model/Line";
-import {IRoute} from "../../../providers/model/Route";
-import {IStop} from "../../../providers/model/Stop";
+import {RestApiProvider} from '../../../providers/data/RestApiProvider';
+import {PersistentDataProvider} from '../../../providers/data/PersistentDataProvider';
+import {IUpdateData} from '../../../providers/model/UpdateData';
+import {IBus} from '../../../providers/model/Bus';
+import {ILine} from '../../../providers/model/Line';
+import {IRoute} from '../../../providers/model/Route';
+import {IStop} from '../../../providers/model/Stop';
 
-import {Http} from "angular2/http";
-import {IRestStops} from "../../../providers/model/rest/RestStops";
-import {Observable} from "rxjs/Observable";
-import {CitizenDataService} from "../../../providers/data/CitizenDataService";
-import {IBusRealTimeData} from "../../../providers/model/BusRealTimeData";
-import {IRestLines} from "../../../providers/model/rest/RestLines";
+import {Http} from 'angular2/http';
+import {IRestStops} from '../../../providers/model/rest/RestStops';
+import {Observable} from 'rxjs/Observable';
+import {CitizenDataService} from '../../../providers/data/CitizenDataService';
+import {IBusRealTimeData} from '../../../providers/model/BusRealTimeData';
+import {IRestLines} from '../../../providers/model/rest/RestLines';
 
 /**
  * Created by sholzer on 06.05.2016.
  * Updated by skaldo on 07.05.2016.
  */
 
-describe("CitizenDataService specifications", function () {
+describe('CitizenDataService specifications', function () {
 
     var restApi: RestApiProvider;
     var storageApi: PersistentDataProvider;
-    describe("Get Server Data", () => {
+    describe('Get Server Data', () => {
 
         var updateCalled: boolean = false;
 
@@ -30,7 +30,7 @@ describe("CitizenDataService specifications", function () {
         /**
          * Stops should be a sufficient test since the code base is equivalent for the other model data
          */
-        it("Get stops from server", () => {
+        it('Get stops from server', () => {
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     updateCalled = true;
@@ -65,7 +65,7 @@ describe("CitizenDataService specifications", function () {
         /**
          * Check the #updateTimeStamps() method.
          */
-        it("Get new update data", () => {
+        it('Get new update data', () => {
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     updateCalled = true;
@@ -99,7 +99,7 @@ describe("CitizenDataService specifications", function () {
             assertEqualJson(updateCalled, true);
         });
 
-        it("Get RealTimeBusData", () => {
+        it('Get RealTimeBusData', () => {
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     updateCalled = true;
@@ -133,8 +133,8 @@ describe("CitizenDataService specifications", function () {
     });
 
 
-    describe("Get Storage Data", () => {
-        it("Get stored lines", () => {
+    describe('Get Storage Data', () => {
+        it('Get stored lines', () => {
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     return Observable.of({
@@ -167,7 +167,7 @@ describe("CitizenDataService specifications", function () {
 
             assertEqualJson(citizenDataService.getLines(), storageApi.getLines());
         });
-        it("Don't get outdated stops", () => {
+        it('Dont get outdated stops', () => {
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     return Observable.of({
@@ -212,7 +212,7 @@ describe("CitizenDataService specifications", function () {
  */
 function assertEqualJson(input: any, expectation: any): void {
     if (JSON.stringify(input) !== JSON.stringify(expectation)) {
-        fail("Expected\n" + JSON.stringify(input) + "\nto be equal to\n" + JSON.stringify(expectation));
+        fail('Expected\n' + JSON.stringify(input) + '\nto be equal to\n' + JSON.stringify(expectation));
     }
 }
 
@@ -225,6 +225,6 @@ function assertEqualJson(input: any, expectation: any): void {
  */
 function assertNotEqualJson(input: any, expectation: any): void {
     if (JSON.stringify(input) === JSON.stringify(expectation)) {
-        fail("Expected\n" + JSON.stringify(input) + "\nNOT to be equal to\n" + JSON.stringify(expectation));
+        fail('Expected\n' + JSON.stringify(input) + '\nNOT to be equal to\n' + JSON.stringify(expectation));
     }
 }
