@@ -2,7 +2,7 @@
  * Created by skaldo on 5.5.2016, added logic for the UI
  */
 
-import {Page, NavController} from 'ionic-angular';
+import {Page, NavController, Refresher} from 'ionic-angular';
 import {Point} from '../../providers/model/geojson/Point';
 import {StopDetailPage} from '../stop-detail/stop-detail';
 import {CitizenDataService} from '../../providers/data/CitizenDataService';
@@ -64,17 +64,7 @@ export class StopListPage {
   // private searchText: String;
   private stops: Array<ViewStop> = new Array<ViewStop>();
   constructor(public nav: NavController, private cDS: CitizenDataService) {
-    this.cDS.getStops().subscribe(data => {
-      this.log('Stops recieved');
-      data.stops.forEach(stop => {
-        console.log('UI: got stop' + stop.name);
-        // faking time in order to prevent errors:
-        stop.schedule.forEach(item => {
-          item.time = this.getRandomTime();
-        });
-        this.stops.push(new ViewStop(stop));
-      });
-    });
+    this.refreshStops();
   }
 
   public onSearch(event) {
@@ -83,6 +73,12 @@ export class StopListPage {
   public onSearchCancel(event) {
     // To-be implemented
   };
+
+  public doRefresh(refresher: Refresher) {
+    this.refreshStops().subscribe(data => {
+      refresher.complete();
+    });
+  }
 
   public getRandomTime() {
     let time = new Date();
@@ -99,6 +95,24 @@ export class StopListPage {
   public goToStopDetail(stop: IStop) {
     this.nav.push(StopDetailPage, stop);
   }
+
+  private refreshStops() {
+    let observable = this.cDS.getStops();
+    this.stops = new Array<ViewStop>();
+    observable.subscribe(data => {
+      this.log('Stops recieved');
+      data.stops.forEach(stop => {
+        this.log('UI: got stop' + stop.name);
+        // faking time in order to prevent errors:
+        stop.schedule.forEach(item => {
+          item.time = this.getRandomTime();
+        });
+        this.stops.push(new ViewStop(stop));
+      });
+    });
+    return observable;
+  }
+
   private log(message: string): void {
     console.log('StopListPage: ' + message);
   }

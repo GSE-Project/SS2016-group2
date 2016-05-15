@@ -19,7 +19,7 @@ const UPDATE = 'update';
 
 @Injectable()
 export class RestApiProvider {
-    private _baseUrl = 'http://localhost:3000/';
+    private _baseUrl = 'http://' + window.location.hostname + ':3000/';
 
     constructor(private http: Http) {
     }

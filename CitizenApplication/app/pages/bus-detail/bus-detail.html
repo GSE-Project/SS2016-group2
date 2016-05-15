@@ -8,6 +8,34 @@
   <ion-title>BusDetail</ion-title>
 </ion-navbar>
 
-<ion-content padding class="bus-detail">
-  
+<ion-content class="bus-detail">
+  <ion-segment [(ngModel)]="busViewType">
+    <ion-segment-button value="information">
+      Information
+    </ion-segment-button>
+    <ion-segment-button value="position">
+      Position
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="busViewType" class="container">
+    <div class="info" *ngSwitchWhen="'information'">
+      <div class="picture">
+        <div style="background-image: url({{bus.picture}});">
+          <img src="{{bus.picture}}">
+        </div>
+        <figcaption></figcaption>
+      </div>
+    </div>
+
+    <div class="map">
+      <div class="estimation" *ngSwitchWhen="'position'">
+        {{getArrival().plannedArrival | date:'mmss'}}
+        <span class="delay">+{{getArrival().delay}}</span>
+      </div>
+      <map *ngSwitchWhen="'position'">
+      </map>
+    </div>
+
+  </div>
 </ion-content>

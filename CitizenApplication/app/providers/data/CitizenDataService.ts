@@ -16,10 +16,16 @@ import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRes
  * Service class to provide data from the data storage to the app ui
  */
 export class CitizenDataService {
-    private serverTimeStamps: IUpdateData;
+    // We don't have any timestamps until the geXY gets called,
+    // therefore we need to instantiate the serverTimeStamps with -1.
+    private serverTimeStamps: IUpdateData = {
+            busses: -1,
+            lines: -1,
+            routes: -1,
+            stops: -1
+        };
 
     constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
-        this.storageApi.getTimeStamps();
         this.updateTimeStamps();
     }
 
@@ -91,7 +97,7 @@ export class CitizenDataService {
     * @param id the identifier of a bus
     * @return Object with properties (position:Point) and (delay:number)
     */
-    public getIBusRealTimeData(id: number): Observable<IBusRealTimeData> {
+    public getBusRealTimeData(id: number): Observable<IBusRealTimeData> {
         return this.restApi.getRealTimeBusData(id);
     }
 

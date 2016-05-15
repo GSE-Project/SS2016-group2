@@ -28,7 +28,7 @@ export class StopDetailPage {
         }, {
           text: 'Show bus information',
           handler: () => {
-            this.nav.push(BusDetailPage);
+            this.nav.push(BusDetailPage, schedule);
           }
         }, {
           text: 'Cancel',

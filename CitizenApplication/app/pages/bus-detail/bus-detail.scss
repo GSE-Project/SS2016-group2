@@ -1,3 +1,66 @@
 .bus-detail {
-
+    scroll-content {
+        display: flex;
+        flex-direction: column;
+    }
+    ion-segment {
+        flex: 0 0 auto;
+        padding: 8px 16px;
+        border-bottom: 1px solid #B2B2B2;
+    }
+    .container {
+        display: flex;
+        flex: 1 1 auto;
+        .map {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            map {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+            }
+            .estimation {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                z-index: 1;
+                height: 35px;
+                line-height: 35px;
+                padding: 0 13px;
+                background: #fff;
+                border: 1px solid #fff;
+                border-radius: 2px;
+                box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+                span.delay {
+                    color: map-get($colors, red);
+                }
+            }
+        }
+        .info {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            .picture {
+                position: relative;
+                div {
+                    background-size: cover;
+                    img {
+                        width: 100%;
+                        display: block;
+                        visibility: hidden;
+                    }
+                }
+                figcaption {
+                    background: linear-gradient(0deg, rgba(255, 255, 255, 0.82) 0, transparent 100%);
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                }
+            }
+        }
+    }
 }

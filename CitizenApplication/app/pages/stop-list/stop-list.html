@@ -10,6 +10,10 @@
 </ion-navbar>
 
 <ion-content class="stop-list">
+  <ion-refresher (refresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="Pull to refresh..." refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-searchbar [(ngModel)]="searchText" (input)="onSearch($event)" (cancel)="onSearchCancel($event)">
   </ion-searchbar>
   <ion-list>
