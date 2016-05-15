@@ -205,7 +205,7 @@ describe('CitizenDataService specifications', function () {
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
 
-            assertEqualJson(citizenDataService.getIBusRealTimeData(1), restApi.getRealTimeBusData(1));
+            assertEqualJson(citizenDataService.getBusRealTimeData(1), restApi.getRealTimeBusData(1));
         });
     });
 
