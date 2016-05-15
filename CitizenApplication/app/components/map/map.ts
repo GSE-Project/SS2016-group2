@@ -10,7 +10,7 @@ import {Geolocation} from 'ionic-native';
   selector: 'map',
   templateUrl: 'build/components/map/map.html'
 })
-export class Map implements OnInit, OnInit {
+export class Map implements OnInit {
   private map: google.maps.Map;
   private markers: { [key: string]: google.maps.Marker; } = {};
 
@@ -32,6 +32,11 @@ export class Map implements OnInit, OnInit {
       Geolocation.getCurrentPosition(this.defaultGeoLocationOptions).then((position) => {
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         this.centerMap(latLng);
+      }).catch(error => {
+        // Handling the error.
+        console.log('Unable to get the current location. ' + error);
+        console.log('Setting: 49.4428949, 7.5893631 as center.');
+        this.centerMap(new google.maps.LatLng(49.4428949, 7.5893631));
       });
       return;
     }
@@ -39,8 +44,9 @@ export class Map implements OnInit, OnInit {
   }
 
   createMap() {
-    let element = this.element.nativeElement.querySelector('.mapElement');
+    let element = this.element.nativeElement.children[0];
     this.map = new google.maps.Map(element, this.defaultMapOptions);
+    console.log(element);
   }
 
   ngOnInit() {
@@ -53,6 +59,9 @@ export class Map implements OnInit, OnInit {
     Geolocation.getCurrentPosition(this.defaultGeoLocationOptions).then((position) => {
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       this.addMarker(latLng, 'Standort');
+    }).catch(error => {
+      // Handling the error.
+      console.log('Unable to get the current location. ' + error);
     });
   }
 
