@@ -44,7 +44,7 @@ export class CitizenDataService {
     */
     public getLines(): Observable<IRestLines> {
         // Check if the data stored is old.
-        if (this.serverTimeStamps.stops > this.storageApi.getTimeStamps().stops) {
+        if (this.serverTimeStamps.lines > this.storageApi.getTimeStamps().lines) {
             let observable = this.restApi.getLines();
             observable.subscribe(data => {
                 // Save the data from the server.
@@ -60,7 +60,7 @@ export class CitizenDataService {
     */
     public getBusses(): Observable<IRestBusses> {
         // Check if the data stored is old.
-        if (this.serverTimeStamps.stops > this.storageApi.getTimeStamps().stops) {
+        if (this.serverTimeStamps.busses > this.storageApi.getTimeStamps().busses) {
             let observable = this.restApi.getBusses();
             observable.subscribe(data => {
                 // Save the data from the server.
@@ -76,7 +76,7 @@ export class CitizenDataService {
     */
     public getRoutes(): Observable<IRestRoutes> {
         // Check if the data stored is old.
-        if (this.serverTimeStamps.stops > this.storageApi.getTimeStamps().stops) {
+        if (this.serverTimeStamps.routes > this.storageApi.getTimeStamps().routes) {
             let observable = this.restApi.getRoutes();
             observable.subscribe(data => {
                 // Save the data from the server.
