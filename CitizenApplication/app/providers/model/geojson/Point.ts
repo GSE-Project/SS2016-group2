@@ -3,15 +3,16 @@
  * Updated & reviewed by skaldo on 05.05.2016 & 13.05.2016.
  */
 
-import IGeoJsonObject from './geojsonObject.ts';
+import {IGeoJsonObject, GeoJsonObjectTypes} from './geojsonObject.ts';
 import Coordinate from './Coordinate.ts';
 
 export default Point;
 
 export class Point implements IGeoJsonObject {
-    type: "Point";
+    type: GeoJsonObjectTypes;
     coordinates: Array<Coordinate>;
     constructor(x: number, y: number) {
+        this.type = GeoJsonObjectTypes.Point;
         this.coordinates = [new Coordinate(x, y)];
     }
 }

@@ -115,6 +115,26 @@ gulp.task('pre-commit', function (done) {
 });
 gulp.task('beforeCommit', ['pre-commit']);
 
+// Added by skaldo on the 15.05.2016
+var typedoc = require("gulp-typedoc");
+gulp.task("typedoc", function() {
+    return gulp
+        .src(["app/**/**.ts", "!app/**/**.spec.ts"])
+        .pipe(typedoc({
+            module: "commonjs",
+            target: "es5",
+            out: "docs/",
+            name: "Citizen Application",
+            ignoreCompilerErrors: true
+            //includeDeclarations: true,
+            //includes: "node_modules/**/**.ts"
+            //excludeExternals: true,
+            //version: true,
+            //externalPattern: "node_modules/**/**.ts"
+        }))
+    ;
+});
+
 gulp.task('sass', buildSass);
 gulp.task('html', copyHTML);
 gulp.task('ionicFonts', copyFonts);
