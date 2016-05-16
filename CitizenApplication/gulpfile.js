@@ -125,12 +125,10 @@ gulp.task("typedoc", function() {
             target: "es5",
             out: "docs/",
             name: "Citizen Application",
-            ignoreCompilerErrors: true
+            ignoreCompilerErrors: true,
             //includeDeclarations: true,
-            //includes: "node_modules/**/**.ts"
-            //excludeExternals: true,
-            //version: true,
-            //externalPattern: "node_modules/**/**.ts"
+            mode: "file",
+            hideGenerator: true
         }))
     ;
 });
