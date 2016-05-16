@@ -33,6 +33,15 @@ export class PersistentDataProvider {
     }
 
     /**
+     * Sets the used Storage api. Mainly for testing purposes
+     * @author sholzer 160516
+     * @param storage Object implementing the Storage interface
+     */
+    setStorage(storage: Storage): void {
+        this.storage = storage;
+    }
+
+    /**
      * Get the timestamps of the stored data
      * @returns IUpdateData
      */
