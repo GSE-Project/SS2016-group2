@@ -8,11 +8,7 @@ import Coordinate from './Coordinate.ts';
 
 export default Point;
 
-export class Point implements IGeoJsonObject {
+export interface  Point extends IGeoJsonObject {
     type: GeoJsonObjectTypes;
     coordinates: Array<Coordinate>;
-    constructor(x: number, y: number) {
-        this.type = GeoJsonObjectTypes.Point;
-        this.coordinates = [new Coordinate(x, y)];
-    }
 }
