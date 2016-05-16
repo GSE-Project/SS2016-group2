@@ -14,7 +14,7 @@ This repository contains the source code of the CitizenApplication, used by the 
 
 This app is used to get information of buses, like current location and potential delay times, in a given town/village and provide this information to the user of the app. Location of a bus is used to precisely calculate the time of arrival at a given stop.
 
-The application is written in [TypeScript](https://github.com/Microsoft/TypeScript) utilizes the beta version of the cross-platform development framework [Ionic](https://github.com/driftyco/ionic/tree/2.0).
+The application is written in [TypeScript](https://github.com/Microsoft/TypeScript) utilizes the beta version of the cross-platform development framework [Ionic](https://github.com/driftyco/ionic/tree/2.0). There is a generated [documentation](http://gse-project.github.io/SS2016-group2/) available.
 
 Can I build this application myself?
 ---------------------------------------
