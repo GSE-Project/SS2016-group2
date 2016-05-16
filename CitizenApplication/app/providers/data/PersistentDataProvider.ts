@@ -30,6 +30,45 @@ export class PersistentDataProvider {
             routes: -2,
             stops: -2
         };
+        this.updateTimeStamps().subscribe(() => {
+            // Notify the parent class somehow that the it is ready.
+            // Maybe you can try to find some solution @sholzer.
+            // The same thing is needed for the CitizenDataService.
+        });
+    }
+
+    /**
+     * Gets the timestamps from the localstorage.
+     * It is intended to call this function to get
+     * the data from the localstorage on the 1st run.
+     */
+    private updateTimeStamps(): Observable<any> {
+        let busObserver = this.getBusses();
+        busObserver.subscribe(data => {
+            if (data) {
+                this.storedTimeStamps.busses = data.timestamp;
+            }
+        });
+        let linesObserver = this.getLines();
+        linesObserver.subscribe(data => {
+            if (data) {
+                this.storedTimeStamps.lines = data.timestamp;
+            }
+        });
+        let routesObserver = this.getRoutes();
+        routesObserver.subscribe(data => {
+            if (data) {
+                this.storedTimeStamps.routes = data.timestamp;
+            }
+        });
+        let stopsObserver = this.getStops();
+        stopsObserver.subscribe(data => {
+            if (data) {
+                this.storedTimeStamps.stops = data.timestamp;
+            }
+        });
+
+        return new Observable(() => {}).merge([busObserver, linesObserver, routesObserver, stopsObserver]);
     }
 
     /**
@@ -51,7 +90,10 @@ export class PersistentDataProvider {
 
     // TODO: comment.
     getStops(): Observable<IRestStops> {
-        return Observable.fromPromise(<Promise<IRestStops>>this.storage.get(STORAGE_STOP));
+        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_STOP)).map(
+            data => {
+                return <IRestStops>JSON.parse(data);
+            });
     }
 
     // TODO: comment.
@@ -64,7 +106,10 @@ export class PersistentDataProvider {
 
     // TODO: comment.
     getBusses(): Observable<IRestBusses> {
-        return Observable.fromPromise(<Promise<IRestBusses>>this.storage.get(STORAGE_BUS));
+        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_BUS)).map(
+            data => {
+                return <IRestBusses>JSON.parse(data);
+            });
     }
 
     // TODO: comment.
@@ -77,7 +122,10 @@ export class PersistentDataProvider {
 
     // TODO: comment.
     getLines(): Observable<IRestLines> {
-        return Observable.fromPromise(<Promise<IRestLines>>this.storage.get(STORAGE_LINE));
+        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_LINE)).map(
+            data => {
+                return <IRestLines>JSON.parse(data);
+            });
     }
 
     // TODO: comment.
@@ -90,7 +138,10 @@ export class PersistentDataProvider {
 
     // TODO: comment.
     getRoutes(): Observable<IRestRoutes> {
-        return Observable.fromPromise(<Promise<IRestRoutes>>this.storage.get(STORAGE_ROUTE));
+        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_ROUTE)).map(
+            data => {
+                return <IRestRoutes>JSON.parse(data);
+            });
     }
 
     // TODO: comment.

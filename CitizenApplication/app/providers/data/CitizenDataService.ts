@@ -19,20 +19,26 @@ export class CitizenDataService {
     // We don't have any timestamps until the geXY gets called,
     // therefore we need to instantiate the serverTimeStamps with -1.
     private serverTimeStamps: IUpdateData = {
-            busses: -1,
-            lines: -1,
-            routes: -1,
-            stops: -1
-        };
+        busses: -1,
+        lines: -1,
+        routes: -1,
+        stops: -1
+    };
+    public initPromise: Promise<boolean>;
 
     constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
-        this.updateTimeStamps();
+        this.updateTimeStamps().subscribe(() => {
+            // Notify the parent class somehow that the it is ready.
+            // Maybe you can try to find some solution @sholzer.
+            // The same thing is going to be needed for the PersistentDataProvider.
+        });
     }
 
     /**
     * @return A list of Stop object
     */
     public getStops(): Observable<IRestStops> {
+        this.log('getting stops');
         // Check if the data stored is old.
         if (this.serverTimeStamps.stops > this.storageApi.getTimeStamps().stops) {
             let observable = this.restApi.getStops();
@@ -104,10 +110,14 @@ export class CitizenDataService {
     /**
     * Refreshes the last update times from the server.
     */
-    public updateTimeStamps(): void {
-        this.restApi.getUpdateData().subscribe(updateData => {
+    public updateTimeStamps(): Observable<IUpdateData> {
+        this.log('updating timestamps');
+        let observable = this.restApi.getUpdateData();
+        observable.subscribe(updateData => {
             this.serverTimeStamps = updateData;
+            this.log('timestamps updated');
         });
+        return observable;
     }
 
     /**
