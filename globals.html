@@ -64,61 +64,193 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<table>
-					<thead>
-						<tr>
-							<th>Branch</th>
-							<th>Build status</th>
-							<th>Test coverage</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Develop</td>
-							<td><a href="https://travis-ci.org/GSE-Project/SS2016-group2"><img src="https://travis-ci.org/GSE-Project/SS2016-group2.svg?branch=develop" alt="Build Status"></a></td>
-							<td><a href="https://coveralls.io/r/GSE-Project/SS2016-group2?branch=develop"><img src="https://coveralls.io/repos/GSE-Project/SS2016-group2/badge.svg?branch=master" alt="Coverage Status"></a></td>
-						</tr>
-						<tr>
-							<td>Master</td>
-							<td><a href="https://travis-ci.org/GSE-Project/SS2016-group2"><img src="https://travis-ci.org/GSE-Project/SS2016-group2.svg?branch=master" alt="Build Status"></a></td>
-							<td><a href="https://coveralls.io/r/GSE-Project/SS2016-group2?branch=master"><img src="https://coveralls.io/repos/GSE-Project/SS2016-group2/badge.svg?branch=master" alt="Coverage Status"></a></td>
-						</tr>
-					</tbody>
-				</table>
-				<h1 id="digitale-d-rfer-mobile-people-s-bus-system">Digitale Dörfer - mobile people’s bus system</h1>
-				<p>This project deals with the development of a mobile people’s bus system. The system consists of a mobile app that serves as the people’s bus host system and another mobile app for citizens to use the different people’s busses. It is intended, that the system will be used within the project <a href="http://www.digitale-doerfer.de">Digitale Dörfer</a></p>
-				<h2 id="citizen-mobile-app">Citizen Mobile APP</h2>
-				<p>This repository contains the source code of the CitizenApplication, used by the citizens of the rural areas.</p>
-				<p>This app is used to get information of buses, like current location and potential delay times, in a given town/village and provide this information to the user of the app. Location of a bus is used to precisely calculate the time of arrival at a given stop.</p>
-				<p>The application is written in <a href="https://github.com/Microsoft/TypeScript">TypeScript</a> utilizes the beta version of the cross-platform development framework <a href="https://github.com/driftyco/ionic/tree/2.0">Ionic</a>.</p>
-				<h2 id="can-i-build-this-application-myself-">Can I build this application myself?</h2>
-				<p>Sure, feel free to clone this repository and try to build it locally. To achieve this, you need to do following:</p>
-				<p>1) Install the Node.js, the LTS version is fine.</p>
-				<p>2) Open a command-line (or shell).</p>
-				<p>3) Install the Ionic CLI tools:</p>
-				<pre><code>`npm <span class="hljs-operator"><span class="hljs-keyword">install</span> -<span class="hljs-keyword">g</span> ionic@beta (<span class="hljs-keyword">on</span> the Mac OSX <span class="hljs-keyword">use</span> sudo)<span class="hljs-string">`</span></span>
-</code></pre><p>4) Go to the CitizenApp directory.</p>
-				<p>5) Install the NPM dependencies:</p>
-				<pre><code><span class="hljs-escape">`n</span>pm install`
-</code></pre><p>6) Start the integrated web server:</p>
-				<pre><code><span class="hljs-escape">`i</span>onic serve`
-</code></pre><p>7) You might get a warning to install/upgrade some tools.
-				Use the shown command/s to continue.</p>
-				<p>8) The app will open in a browser.</p>
-				<p>In order to see some data in the application, you&#39;ll need to start our mock server. Please follow these steps:</p>
-				<p>1) Go to RestServer directory.</p>
-				<p>2) Install the NPM dependencies:</p>
-				<pre><code><span class="hljs-escape">`n</span>pm install`
-</code></pre><p>3) Start the server:</p>
-				<pre><code>`<span class="hljs-keyword">node</span><span class="hljs-identifier"> </span><span class="hljs-title">index</span>.js`
-</code></pre><p>4) <strong>Have fun!</strong></p>
-			</div>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Enumerations</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-enum"><a href="enums/geojsonobjecttypes.html" class="tsd-kind-icon">Geo<wbr>Json<wbr>Object<wbr>Types</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class"><a href="classes/assert.html" class="tsd-kind-icon">Assert</a></li>
+								<li class="tsd-kind-class"><a href="classes/bus.html" class="tsd-kind-icon">Bus</a></li>
+								<li class="tsd-kind-class"><a href="classes/busdetailpage.html" class="tsd-kind-icon">Bus<wbr>Detail<wbr>Page</a></li>
+								<li class="tsd-kind-class"><a href="classes/citizendataservice.html" class="tsd-kind-icon">Citizen<wbr>Data<wbr>Service</a></li>
+								<li class="tsd-kind-class"><a href="classes/coordinate.html" class="tsd-kind-icon">Coordinate</a></li>
+								<li class="tsd-kind-class"><a href="classes/homepage.html" class="tsd-kind-icon">Home<wbr>Page</a></li>
+								<li class="tsd-kind-class"><a href="classes/map.html" class="tsd-kind-icon">Map</a></li>
+								<li class="tsd-kind-class"><a href="classes/mappage.html" class="tsd-kind-icon">Map<wbr>Page</a></li>
+								<li class="tsd-kind-class"><a href="classes/myapp.html" class="tsd-kind-icon">My<wbr>App</a></li>
+								<li class="tsd-kind-class"><a href="classes/persistentdataprovider.html" class="tsd-kind-icon">Persistent<wbr>Data<wbr>Provider</a></li>
+								<li class="tsd-kind-class"><a href="classes/point.html" class="tsd-kind-icon">Point</a></li>
+								<li class="tsd-kind-class"><a href="classes/restapiprovider.html" class="tsd-kind-icon">Rest<wbr>Api<wbr>Provider</a></li>
+								<li class="tsd-kind-class"><a href="classes/stopdetailpage.html" class="tsd-kind-icon">Stop<wbr>Detail<wbr>Page</a></li>
+								<li class="tsd-kind-class"><a href="classes/stoplistpage.html" class="tsd-kind-icon">Stop<wbr>List<wbr>Page</a></li>
+								<li class="tsd-kind-class"><a href="classes/tabspage.html" class="tsd-kind-icon">Tabs<wbr>Page</a></li>
+								<li class="tsd-kind-class"><a href="classes/test.html" class="tsd-kind-icon">Test</a></li>
+								<li class="tsd-kind-class tsd-is-not-exported"><a href="classes/viewstop.html" class="tsd-kind-icon">View<wbr>Stop</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface"><a href="interfaces/ibus.html" class="tsd-kind-icon">IBus</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/ibusrealtimedata.html" class="tsd-kind-icon">IBus<wbr>Real<wbr>Time<wbr>Data</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/icitizendataobject.html" class="tsd-kind-icon">ICitizen<wbr>Data<wbr>Object</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/igeojsonobject.html" class="tsd-kind-icon">IGeo<wbr>Json<wbr>Object</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/iline.html" class="tsd-kind-icon">ILine</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/irestbusses.html" class="tsd-kind-icon">IRest<wbr>Busses</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/irestdataobject.html" class="tsd-kind-icon">IRest<wbr>Data<wbr>Object</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/irestlines.html" class="tsd-kind-icon">IRest<wbr>Lines</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/irestroutes.html" class="tsd-kind-icon">IRest<wbr>Routes</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/ireststops.html" class="tsd-kind-icon">IRest<wbr>Stops</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/iroute.html" class="tsd-kind-icon">IRoute</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/istop.html" class="tsd-kind-icon">IStop</a></li>
+								<li class="tsd-kind-interface"><a href="interfaces/iupdatedata.html" class="tsd-kind-icon">IUpdate<wbr>Data</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#busses" class="tsd-kind-icon">BUSSES</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#lines" class="tsd-kind-icon">LINES</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#routes" class="tsd-kind-icon">ROUTES</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#stops" class="tsd-kind-icon">STOPS</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#storage_active" class="tsd-kind-icon">STORAGE_<wbr>ACTIVE</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#storage_bus" class="tsd-kind-icon">STORAGE_<wbr>BUS</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#storage_line" class="tsd-kind-icon">STORAGE_<wbr>LINE</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#storage_route" class="tsd-kind-icon">STORAGE_<wbr>ROUTE</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#storage_stop" class="tsd-kind-icon">STORAGE_<wbr>STOP</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#storage_timestamp" class="tsd-kind-icon">STORAGE_<wbr>TIMESTAMP</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#update" class="tsd-kind-icon">UPDATE</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="busses" class="tsd-anchor"></a>
+					<h3>BUSSES</h3>
+					<div class="tsd-signature tsd-kind-icon">BUSSES<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L14">providers/data/RestApiProvider.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="lines" class="tsd-anchor"></a>
+					<h3>LINES</h3>
+					<div class="tsd-signature tsd-kind-icon">LINES<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L15">providers/data/RestApiProvider.ts:15</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="routes" class="tsd-anchor"></a>
+					<h3>ROUTES</h3>
+					<div class="tsd-signature tsd-kind-icon">ROUTES<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L17">providers/data/RestApiProvider.ts:17</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="stops" class="tsd-anchor"></a>
+					<h3>STOPS</h3>
+					<div class="tsd-signature tsd-kind-icon">STOPS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L16">providers/data/RestApiProvider.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="storage_active" class="tsd-anchor"></a>
+					<h3>STORAGE_<wbr>ACTIVE</h3>
+					<div class="tsd-signature tsd-kind-icon">STORAGE_<wbr>ACTIVE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L11">providers/data/PersistentDataProvider.ts:11</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="storage_bus" class="tsd-anchor"></a>
+					<h3>STORAGE_<wbr>BUS</h3>
+					<div class="tsd-signature tsd-kind-icon">STORAGE_<wbr>BUS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L13">providers/data/PersistentDataProvider.ts:13</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="storage_line" class="tsd-anchor"></a>
+					<h3>STORAGE_<wbr>LINE</h3>
+					<div class="tsd-signature tsd-kind-icon">STORAGE_<wbr>LINE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L14">providers/data/PersistentDataProvider.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="storage_route" class="tsd-anchor"></a>
+					<h3>STORAGE_<wbr>ROUTE</h3>
+					<div class="tsd-signature tsd-kind-icon">STORAGE_<wbr>ROUTE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L16">providers/data/PersistentDataProvider.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="storage_stop" class="tsd-anchor"></a>
+					<h3>STORAGE_<wbr>STOP</h3>
+					<div class="tsd-signature tsd-kind-icon">STORAGE_<wbr>STOP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L15">providers/data/PersistentDataProvider.ts:15</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="storage_timestamp" class="tsd-anchor"></a>
+					<h3>STORAGE_<wbr>TIMESTAMP</h3>
+					<div class="tsd-signature tsd-kind-icon">STORAGE_<wbr>TIMESTAMP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L12">providers/data/PersistentDataProvider.ts:12</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="update" class="tsd-anchor"></a>
+					<h3>UPDATE</h3>
+					<div class="tsd-signature tsd-kind-icon">UPDATE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L18">providers/data/RestApiProvider.ts:18</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
+					<li class="globals current ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 				</ul>
