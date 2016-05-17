@@ -208,40 +208,40 @@ describe('CitizenDataService specifications', function () {
 
         it('Get Busses from server', () => {
             var putBussesCalled: boolean = false;
-            var puttedData : IRestBusses = {
-                        timestamp: 0, busses:[]
-                    };
+            var puttedData: IRestBusses = {
+                timestamp: 0, busses: []
+            };
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     return Observable.of({
-                        busses: 1, lines: 1, stops:1, routes: 1
+                        busses: 1, lines: 1, stops: 1, routes: 1
                     });
                 },
-                
-                getBusses(): Observable<IRestBusses>{
+
+                getBusses(): Observable<IRestBusses> {
                     return Observable.of({
-                        timestamp: 1, busses:[]
+                        timestamp: 1, busses: []
                     })
                 }
             };
-            
+
             storageApi = <PersistentDataProvider>{
-                getTimeStamps(): IUpdateData{
-                    return {busses: 0, lines: 1, stops:1, routes: 1}
+                getTimeStamps(): IUpdateData {
+                    return { busses: 0, lines: 1, stops: 1, routes: 1 }
                 },
-                
-                putBusses(data: IRestBusses): void{
+
+                putBusses(data: IRestBusses): void {
                     putBussesCalled = true;
                     puttedData = data;
                 }
             };
-            
+
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
-            citizenDataService.getBusses().subscribe(data=>{
-                assertEqualJson(data, {timestamp: 1, busses:[]});
+            citizenDataService.getBusses().subscribe(data => {
+                assertEqualJson(data, { timestamp: 1, busses: [] });
                 assertEqualJson(puttedData, data);
             })
-            
+
         });
     });
 
