@@ -40,9 +40,6 @@ describe('CitizenDataService specifications', function () {
                 },
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 1, stops: [{ id: 1 }] });
-                },
-                getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
-                    return Observable.of({ delay: id, location: {} });
                 }
             };
             storageApi = <PersistentDataProvider>{
