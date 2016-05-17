@@ -12,6 +12,7 @@ import {Observable} from 'rxjs/Observable';
 import {CitizenDataService} from '../../../providers/data/CitizenDataService';
 import {IBusRealTimeData} from '../../../providers/model/BusRealTimeData';
 import {IRestLines} from '../../../providers/model/rest/RestLines';
+import {IRestBusses} from '../../../providers/model/rest/RestBusses';
 
 /**
  * Created by sholzer on 06.05.2016.
@@ -203,6 +204,44 @@ describe('CitizenDataService specifications', function () {
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
 
             assertEqualJson(citizenDataService.getBusRealTimeData(1), restApi.getRealTimeBusData(1));
+        });
+
+        it('Get Busses from server', () => {
+            var putBussesCalled: boolean = false;
+            var puttedData : IRestBusses = {
+                        timestamp: 0, busses:[]
+                    };
+            restApi = <RestApiProvider>{
+                getUpdateData(): Observable<IUpdateData> {
+                    return Observable.of({
+                        busses: 1, lines: 1, stops:1, routes: 1
+                    });
+                },
+                
+                getBusses(): Observable<IRestBusses>{
+                    return Observable.of({
+                        timestamp: 1, busses:[]
+                    })
+                }
+            };
+            
+            storageApi = <PersistentDataProvider>{
+                getTimeStamps(): IUpdateData{
+                    return {busses: 0, lines: 1, stops:1, routes: 1}
+                },
+                
+                putBusses(data: IRestBusses): void{
+                    putBussesCalled = true;
+                    puttedData = data;
+                }
+            };
+            
+            var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
+            citizenDataService.getBusses().subscribe(data=>{
+                assertEqualJson(data, {timestamp: 1, busses:[]});
+                assertEqualJson(puttedData, data);
+            })
+            
         });
     });
 
