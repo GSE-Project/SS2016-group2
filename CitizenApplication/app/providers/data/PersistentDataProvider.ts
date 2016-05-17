@@ -88,7 +88,10 @@ export class PersistentDataProvider {
         return this.storedTimeStamps;
     }
 
-    // TODO: comment.
+    /**
+     * Get the stops from the Storage
+     * @returns Observable<IRestStops>
+     */
     getStops(): Observable<IRestStops> {
         return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_STOP)).map(
             data => {
@@ -96,7 +99,10 @@ export class PersistentDataProvider {
             });
     }
 
-    // TODO: comment.
+    /**
+     * Save the stops in the storage
+     * @param data Array of stops
+     */
     putStops(data: IRestStops) {
         this.storage.set(STORAGE_STOP, JSON.stringify(data)).then(value => {
             // After successful save, save the timestamp.
@@ -104,7 +110,10 @@ export class PersistentDataProvider {
         });
     }
 
-    // TODO: comment.
+    /**
+     * Get the busses from the storage
+     * @returns Observable<IRestBusses>
+     */
     getBusses(): Observable<IRestBusses> {
         return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_BUS)).map(
             data => {
@@ -112,7 +121,10 @@ export class PersistentDataProvider {
             });
     }
 
-    // TODO: comment.
+    /**
+     * Save the busses in the storage
+     * @param data Array of busses (IRestBusses)
+     */
     putBusses(data: IRestBusses) {
         this.storage.set(STORAGE_BUS, JSON.stringify(data)).then(value => {
             // After successful save, save the timestamp.
@@ -120,7 +132,10 @@ export class PersistentDataProvider {
         });
     }
 
-    // TODO: comment.
+    /**
+     * Get the lines from the storage
+     * @returns Observable<IRestLines>
+     */
     getLines(): Observable<IRestLines> {
         return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_LINE)).map(
             data => {
@@ -128,7 +143,10 @@ export class PersistentDataProvider {
             });
     }
 
-    // TODO: comment.
+    /**
+     * Save the lines in the storage
+     * @param data Array of lines (IRestLines)
+     */
     putLines(data: IRestLines) {
         this.storage.set(STORAGE_LINE, JSON.stringify(data)).then(value => {
             // After successful save, save the timestamp.
@@ -136,7 +154,10 @@ export class PersistentDataProvider {
         });
     }
 
-    // TODO: comment.
+    /**
+     * Get the routes from the storage
+     * @returns Observable<IRestRoutes>
+     */
     getRoutes(): Observable<IRestRoutes> {
         return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_ROUTE)).map(
             data => {
@@ -144,7 +165,10 @@ export class PersistentDataProvider {
             });
     }
 
-    // TODO: comment.
+    /**
+     * Save the routes in the storage
+     * @param data Array of routes (IRestRoutes)
+     */
     putRoutes(data: IRestRoutes) {
         this.storage.set(STORAGE_ROUTE, JSON.stringify(data)).then(value => {
             // After successful save, save the timestamp.
