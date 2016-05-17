@@ -94,7 +94,17 @@ export class PersistentDataProvider {
      * @param storage Object implementing the Storage interface
      */
     setStorage(storage: Storage): void {
+        this._waitForObservable = null;
         this.storage = storage;
+        this._isReady = false;
+        this.storedTimeStamps = { // Instantiation with timestamp:-1 seems more stable
+            busses: -2,
+            lines: -2,
+            routes: -2,
+            stops: -2
+        };
+        this.waitForReady().subscribe(res => { this._isReady = true; });
+
     }
 
     /**

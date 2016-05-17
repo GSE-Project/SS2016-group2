@@ -221,13 +221,13 @@ describe('CitizenDataService specifications', function () {
                 getBusses(): Observable<IRestBusses> {
                     return Observable.of({
                         timestamp: 1, busses: []
-                    })
+                    });
                 }
             };
 
             storageApi = <PersistentDataProvider>{
                 getTimeStamps(): IUpdateData {
-                    return { busses: 0, lines: 1, stops: 1, routes: 1 }
+                    return { busses: 0, lines: 1, stops: 1, routes: 1 };
                 },
 
                 putBusses(data: IRestBusses): void {
@@ -240,7 +240,7 @@ describe('CitizenDataService specifications', function () {
             citizenDataService.getBusses().subscribe(data => {
                 assertEqualJson(data, { timestamp: 1, busses: [] });
                 assertEqualJson(puttedData, data);
-            })
+            });
 
         });
     });
