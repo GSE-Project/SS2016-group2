@@ -20,6 +20,8 @@ const STORAGE_ROUTE = 'R';
 export class PersistentDataProvider {
     public storage: Storage;
     private storedTimeStamps: IUpdateData;
+    private _isReady: boolean = false;
+    private _waitForObservable: Observable<any> = null;
 
     constructor() {
         // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
@@ -30,11 +32,7 @@ export class PersistentDataProvider {
             routes: -2,
             stops: -2
         };
-        this.updateTimeStamps().subscribe(() => {
-            // Notify the parent class somehow that the it is ready.
-            // Maybe you can try to find some solution @sholzer.
-            // The same thing is needed for the CitizenDataService.
-        });
+        this.waitForReady().subscribe(res => { this._isReady = true; });
     }
 
     /**
@@ -68,7 +66,26 @@ export class PersistentDataProvider {
             }
         });
 
-        return new Observable(() => {}).merge([busObserver, linesObserver, routesObserver, stopsObserver]);
+        return new Observable(() => { }).merge([busObserver, linesObserver, routesObserver, stopsObserver]);
+    }
+
+    /**
+     * State of the PersistentDataProvider
+     * @return true iff the stored timestamps could be fetched. false otherwise
+     */
+    isReady(): boolean {
+        return this._isReady;
+    }
+
+    waitForReady(): Observable<any> {
+        if (this._isReady) {
+            return Observable.of(true);
+        }
+        if (this._waitForObservable == null) {
+            this._waitForObservable = this.updateTimeStamps();
+        }
+        // I added the map since no external observer needs to know what exactly is resolved here.
+        return this._waitForObservable.map(res => true);
     }
 
     /**
