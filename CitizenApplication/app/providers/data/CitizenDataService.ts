@@ -24,14 +24,11 @@ export class CitizenDataService {
         routes: -1,
         stops: -1
     };
-    public initPromise: Promise<boolean>;
+    private _isReady: boolean = false;
+    private _initObservable: Observable<boolean> = null;
 
     constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
-        this.updateTimeStamps().subscribe(() => {
-            // Notify the parent class somehow that the it is ready.
-            // Maybe you can try to find some solution @sholzer.
-            // The same thing is going to be needed for the PersistentDataProvider.
-        });
+        this.waitForReady().subscribe(data => { this._isReady = true; });
     }
 
     /**
@@ -121,6 +118,25 @@ export class CitizenDataService {
     }
 
     /**
+     * Returns an Observable that notifies watchers when the CitizenDataProvider is properly initialized.
+     * @return Observable<boolean> with resolved data == true 
+     * @author sholzer 160518
+     */
+    public waitForReady(): Observable<boolean> {
+        if (this._isReady) {
+            return Observable.of(true);
+        }
+        if (this._initObservable != null) {
+            return this._initObservable;
+        }
+        var observable = new Observable(() => { })
+            .merge([this.updateTimeStamps(), this.storageApi.waitForReady()])
+            .map(res => true);
+        this._initObservable = observable;
+        return observable;
+    }
+
+    /**
      * Starts the automatically fetch of data
      * @param timeInterval the time interval the server is checked for new data
      */
@@ -137,6 +153,7 @@ export class CitizenDataService {
     }
 
     private log(message: string): void {
-        console.log('CitizenDataService: ' + message);
+        // Temporarly please shut the fuck up. 
+        // console.log('CitizenDataService: ' + message);
     }
 }
