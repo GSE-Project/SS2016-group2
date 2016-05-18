@@ -14,6 +14,9 @@ import {IRestBusses} from '../../providers/model/rest/RestBusses';
 import {IRestStops} from '../../providers/model/rest/RestStops';
 import {IRestRoutes} from '../../providers/model/rest/RestRoutes';
 
+import {Point} from '../../providers/model/geojson/Point';
+import {GeoJsonObjectTypes} from '../../providers/model/geojson/geojsonObject';
+
 import {CitizenDataService} from '../../providers/data/CitizenDataService';
 import {PersistentDataProvider} from '../../providers/data/PersistentDataProvider';
 import {RestApiProvider} from '../../providers/data/RestApiProvider';
@@ -51,6 +54,7 @@ describe('Data Logic specification (Integration test)', () => {
         let serverRoutes: IRestRoutes = { timestamp: 1, routes: [] };
         let serverStops: IRestStops = { timestamp: 1, stops: [] };
         let serverUpdateData: IUpdateData = { busses: 0, lines: 1, routes: 1, stops: 1 };
+        let serverBusRealTimeData: IBusRealTimeData = { id: 1, delay: 1, location: { type: GeoJsonObjectTypes.Point, coordinates: [{ longitude: 1, latitude: 1 }] } };
 
         let http: Http = <Http>{
             get(url: string): Observable<Response> {
@@ -70,6 +74,9 @@ describe('Data Logic specification (Integration test)', () => {
                 if (url.endsWith('update')) {
                     response = new Response(new ResponseOptions({ body: serverUpdateData }));
                 }
+                if (url.includes('busses/')) {
+                    response = new Response(new ResponseOptions({ body: serverBusRealTimeData }));
+                }
                 return Observable.of(response);
             }
         };
@@ -88,6 +95,11 @@ describe('Data Logic specification (Integration test)', () => {
             it('Get Busses from Storage', () => {
                 cds.getBusses().subscribe(data => {
                     Assert.equalJson(data, storageBusses);
+                });
+            });
+            it('Get RealTimeBus data', () => {
+                cds.getBusRealTimeData(1).subscribe(data => {
+                    Assert.equalJson(data, serverBusRealTimeData);
                 });
             });
         });
@@ -123,6 +135,7 @@ let storageBusses: IRestBusses;
         let serverRoutes: IRestRoutes;
         let serverStops: IRestStops;
         let serverUpdateData: IUpdateData;
+        let serverBusRealTimeData: IBusRealTimeData;
 
         let http: Http = <Http>{
             get(url: string): Observable<Response> {
@@ -141,6 +154,9 @@ let storageBusses: IRestBusses;
                 }
                 if (url.endsWith('update')) {
                     response = new Response(new ResponseOptions({ body: serverUpdateData }));
+                }
+                if (url.includes('busses/')) {
+                    response = new Response(new ResponseOptions({ body: serverBusRealTimeData }));
                 }
                 return Observable.of(response);
             }
