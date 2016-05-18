@@ -34,7 +34,7 @@ export class CitizenDataService {
     public getStops(): Observable<IRestStops> {
         this.log('getting stops');
         return this.storageApi.getStops().flatMap(data => {
-            if (data.timestamp < this.serverTimeStamps.stops) {
+            if (data.timestamp > this.serverTimeStamps.stops) {
                 return this.restApi.getStops();
             }
             return Observable.of(data);
@@ -46,7 +46,7 @@ export class CitizenDataService {
     */
     public getLines(): Observable<IRestLines> {
         return this.storageApi.getLines().flatMap(data => {
-            if (data.timestamp < this.serverTimeStamps.lines) {
+            if (data.timestamp > this.serverTimeStamps.lines) {
                 return this.restApi.getLines();
             }
             return Observable.of(data);
@@ -58,7 +58,7 @@ export class CitizenDataService {
     */
     public getBusses(): Observable<IRestBusses> {
         return this.storageApi.getBusses().flatMap(data => {
-            if (data.timestamp < this.serverTimeStamps.busses) {
+            if (data.timestamp > this.serverTimeStamps.busses) {
                 return this.restApi.getBusses();
             }
             return Observable.of(data);
@@ -70,7 +70,7 @@ export class CitizenDataService {
     */
     public getRoutes(): Observable<IRestRoutes> {
         return this.storageApi.getRoutes().flatMap(data => {
-            if (data.timestamp < this.serverTimeStamps.routes) {
+            if (data.timestamp > this.serverTimeStamps.routes) {
                 return this.restApi.getRoutes();
             }
             return Observable.of(data);
