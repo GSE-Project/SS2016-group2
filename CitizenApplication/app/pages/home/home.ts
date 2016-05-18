@@ -1,5 +1,6 @@
 import {Page, NavController, Toast} from 'ionic-angular';
-import {Test} from '../../providers/test/test';
+import {StopListPage} from '../stop-list/stop-list';
+import {BusDetailPage} from '../bus-detail/bus-detail';
 
 /*
   Generated class for the HomePage page.
@@ -8,28 +9,21 @@ import {Test} from '../../providers/test/test';
   Ionic pages and navigation.
 */
 @Page({
-  templateUrl: 'build/pages/home/home.html',
-  providers: [Test]
+  templateUrl: 'build/pages/home/home.html'
 })
 export class HomePage {
   private ip: string;
   private reqNumber: number;
-  constructor(public nav: NavController, private test: Test) {
+  constructor(public nav: NavController) {
     this.reqNumber = 0;
   }
 
-  askServiceForMyIP() {
-    this.test.load().then((result: any) => {
-      let toast = Toast.create({
-        message: 'Your IP is: ' + result.ip,
-        duration: 3000
-      });
+  goToStops() {
+    this.nav.push(StopListPage);
+  }
 
-      this.nav.present(toast);
-
-      this.ip = result.ip;
-      this.reqNumber++;
-    });
+  goToBusDetail() {
+    this.nav.push(BusDetailPage, { lineId: 1, time: new Date() });
   }
 
   // hide nav bar when we enter the page
