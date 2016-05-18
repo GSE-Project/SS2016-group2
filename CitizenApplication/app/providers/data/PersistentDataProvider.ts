@@ -20,6 +20,8 @@ const STORAGE_ROUTE = 'R';
 export class PersistentDataProvider {
     public storage: Storage;
     private storedTimeStamps: IUpdateData;
+    private _isReady: boolean = false;
+    private _waitForObservable: Observable<any> = null;
 
     constructor() {
         // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
@@ -30,17 +32,12 @@ export class PersistentDataProvider {
             routes: -2,
             stops: -2
         };
-        this.updateTimeStamps().subscribe(() => {
-            // Notify the parent class somehow that the it is ready.
-            // Maybe you can try to find some solution @sholzer.
-            // The same thing is needed for the CitizenDataService.
-        });
+        this.waitForReady().subscribe(res => { this._isReady = true; });
     }
 
     /**
      * Gets the timestamps from the localstorage.
-     * It is intended to call this function to get
-     * the data from the localstorage on the 1st run.
+     * is called by #waitForReady() on instantiation of this object
      */
     private updateTimeStamps(): Observable<any> {
         let busObserver = this.getBusses();
@@ -68,7 +65,26 @@ export class PersistentDataProvider {
             }
         });
 
-        return new Observable(() => {}).merge([busObserver, linesObserver, routesObserver, stopsObserver]);
+        return new Observable(() => { }).merge([busObserver, linesObserver, routesObserver, stopsObserver]);
+    }
+
+    /**
+     * State of the PersistentDataProvider
+     * @return true iff the stored timestamps could be fetched. false otherwise
+     */
+    isReady(): boolean {
+        return this._isReady;
+    }
+
+    waitForReady(): Observable<any> {
+        if (this._isReady) {
+            return Observable.of(true);
+        }
+        if (this._waitForObservable == null) {
+            this._waitForObservable = this.updateTimeStamps();
+        }
+        // I added the map since no external observer needs to know what exactly is resolved here.
+        return this._waitForObservable.map(res => true);
     }
 
     /**
@@ -77,7 +93,17 @@ export class PersistentDataProvider {
      * @param storage Object implementing the Storage interface
      */
     setStorage(storage: Storage): void {
+        this._waitForObservable = null;
         this.storage = storage;
+        this._isReady = false;
+        this.storedTimeStamps = { // Instantiation with timestamp:-1 seems more stable
+            busses: -2,
+            lines: -2,
+            routes: -2,
+            stops: -2
+        };
+        this.waitForReady().subscribe(res => { this._isReady = true; });
+
     }
 
     /**

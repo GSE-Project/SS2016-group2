@@ -52,7 +52,10 @@ describe('CitizenDataService specifications', function () {
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 0, stops: [] });
                 },
-                putStops(data: IRestStops): void { }
+                putStops(data: IRestStops): void { },
+                waitForReady(): Observable<boolean> {
+                    return Observable.of(true);
+                }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
@@ -91,7 +94,10 @@ describe('CitizenDataService specifications', function () {
                     return Observable.of({ timestamp: 0, lines: [] });
                 },
                 putStops(data: IRestStops): void { },
-                putLines(data: IRestLines): void { }
+                putLines(data: IRestLines): void { },
+                waitForReady(): Observable<boolean> {
+                    return Observable.of(true);
+                }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
@@ -129,7 +135,10 @@ describe('CitizenDataService specifications', function () {
                     return Observable.of({ timestamp: 0, lines: [] });
                 },
                 putStops(data: IRestStops): void { },
-                putLines(data: IRestLines): void { }
+                putLines(data: IRestLines): void { },
+                waitForReady(): Observable<boolean> {
+                    return Observable.of(true);
+                }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
@@ -164,7 +173,10 @@ describe('CitizenDataService specifications', function () {
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 0, stops: [] });
                 },
-                putStops(data: IRestStops): void { }
+                putStops(data: IRestStops): void { },
+                waitForReady(): Observable<boolean> {
+                    return Observable.of(true);
+                }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
@@ -198,7 +210,10 @@ describe('CitizenDataService specifications', function () {
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 0, stops: [] });
                 },
-                putStops(data: IRestStops): void { }
+                putStops(data: IRestStops): void { },
+                waitForReady(): Observable<boolean> {
+                    return Observable.of(true);
+                }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
@@ -233,6 +248,9 @@ describe('CitizenDataService specifications', function () {
                 putBusses(data: IRestBusses): void {
                     putBussesCalled = true;
                     puttedData = data;
+                },
+                waitForReady(): Observable<boolean> {
+                    return Observable.of(true);
                 }
             };
 
@@ -274,7 +292,10 @@ describe('CitizenDataService specifications', function () {
                 getLines(): Observable<IRestLines> {
                     return Observable.of({ timestamp: 1, lines: [] });
                 },
-                putLines(data: IRestLines): void { }
+                putLines(data: IRestLines): void { },
+                waitForReady(): Observable<boolean> {
+                    return Observable.of(true);
+                }
             };
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
 
@@ -306,6 +327,9 @@ describe('CitizenDataService specifications', function () {
                 putStops(data: IRestStops): void { },
                 getLines(): Observable<IRestLines> {
                     return Observable.of({ timestamp: 2, lines: [] });
+                },
+                waitForReady(): Observable<boolean> {
+                    return Observable.of(true);
                 }
             };
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
