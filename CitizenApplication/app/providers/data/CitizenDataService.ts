@@ -153,7 +153,6 @@ export class CitizenDataService {
     }
 
     private log(message: string): void {
-        // Temporarly please shut the fuck up. 
-        // console.log('CitizenDataService: ' + message);
+        console.log('CitizenDataService: ' + message);
     }
 }
