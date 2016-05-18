@@ -86,28 +86,24 @@ describe('Data Logic specification (Integration test)', () => {
         pdp.setStorage(storage);
         let cds: CitizenDataService = new CitizenDataService(rap, pdp);
 
-        cds.waitForReady().subscribe(res => {
-            it('Get Stop from Server', () => {
-                cds.getStops().subscribe(data => {
-                    Assert.equalJson(data, serverStops);
-                });
-            });
-            it('Get Busses from Storage', () => {
-                cds.getBusses().subscribe(data => {
-                    Assert.equalJson(data, storageBusses);
-                });
-            });
-            it('Get RealTimeBus data', () => {
-                cds.getBusRealTimeData(1).subscribe(data => {
-                    Assert.equalJson(data, serverBusRealTimeData);
-                });
+        it('Get Stop from Server', () => {
+            cds.getStops().subscribe(data => {
+                Assert.equalJson(data, serverStops);
             });
         });
 
+        it('Get Busses from Storage', () => {
+            cds.getBusses().subscribe(data => {
+                Assert.equalJson(data, storageBusses);
+            });
+        });
 
+        it('Get RealTimeBus data', () => {
+            cds.getBusRealTimeData(1).subscribe(data => {
+                Assert.equalJson(data, serverBusRealTimeData);
+            });
+        });
     });
-
-
 });
 
 /* Temnplate for Test Setup

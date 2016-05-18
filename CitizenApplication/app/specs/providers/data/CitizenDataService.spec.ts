@@ -44,18 +44,10 @@ describe('CitizenDataService specifications', function () {
                 }
             };
             storageApi = <PersistentDataProvider>{
-                getTimeStamps(): IUpdateData {
-                    return {
-                        busses: 0, lines: 0, routes: 0, stops: 0
-                    };
-                },
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 0, stops: [] });
                 },
                 putStops(data: IRestStops): void { },
-                waitForReady(): Observable<boolean> {
-                    return Observable.of(true);
-                }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
@@ -82,11 +74,6 @@ describe('CitizenDataService specifications', function () {
                 }
             };
             storageApi = <PersistentDataProvider>{
-                getTimeStamps(): IUpdateData {
-                    return {
-                        busses: 0, lines: 0, routes: 0, stops: 0
-                    };
-                },
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 0, stops: [] });
                 },
@@ -94,10 +81,7 @@ describe('CitizenDataService specifications', function () {
                     return Observable.of({ timestamp: 0, lines: [] });
                 },
                 putStops(data: IRestStops): void { },
-                putLines(data: IRestLines): void { },
-                waitForReady(): Observable<boolean> {
-                    return Observable.of(true);
-                }
+                putLines(data: IRestLines): void { }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
@@ -123,11 +107,6 @@ describe('CitizenDataService specifications', function () {
                 }
             };
             storageApi = <PersistentDataProvider>{
-                getTimeStamps(): IUpdateData {
-                    return {
-                        busses: 0, lines: 0, routes: 0, stops: 0
-                    };
-                },
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 0, stops: [] });
                 },
@@ -135,10 +114,7 @@ describe('CitizenDataService specifications', function () {
                     return Observable.of({ timestamp: 0, lines: [] });
                 },
                 putStops(data: IRestStops): void { },
-                putLines(data: IRestLines): void { },
-                waitForReady(): Observable<boolean> {
-                    return Observable.of(true);
-                }
+                putLines(data: IRestLines): void { }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
@@ -165,18 +141,10 @@ describe('CitizenDataService specifications', function () {
                 }
             };
             storageApi = <PersistentDataProvider>{
-                getTimeStamps(): IUpdateData {
-                    return {
-                        busses: 0, lines: 0, routes: 0, stops: 0
-                    };
-                },
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 0, stops: [] });
                 },
-                putStops(data: IRestStops): void { },
-                waitForReady(): Observable<boolean> {
-                    return Observable.of(true);
-                }
+                putStops(data: IRestStops): void { }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
@@ -202,18 +170,10 @@ describe('CitizenDataService specifications', function () {
                 }
             };
             storageApi = <PersistentDataProvider>{
-                getTimeStamps(): IUpdateData {
-                    return {
-                        busses: 0, lines: 0, routes: 0, stops: 0
-                    };
-                },
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 0, stops: [] });
                 },
-                putStops(data: IRestStops): void { },
-                waitForReady(): Observable<boolean> {
-                    return Observable.of(true);
-                }
+                putStops(data: IRestStops): void { }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
@@ -241,16 +201,9 @@ describe('CitizenDataService specifications', function () {
             };
 
             storageApi = <PersistentDataProvider>{
-                getTimeStamps(): IUpdateData {
-                    return { busses: 0, lines: 1, stops: 1, routes: 1 };
-                },
-
                 putBusses(data: IRestBusses): void {
                     putBussesCalled = true;
                     puttedData = data;
-                },
-                waitForReady(): Observable<boolean> {
-                    return Observable.of(true);
                 }
             };
 
@@ -280,11 +233,6 @@ describe('CitizenDataService specifications', function () {
                 }
             };
             storageApi = <PersistentDataProvider>{
-                getTimeStamps(): IUpdateData {
-                    return {
-                        busses: 1, lines: 1, routes: 1, stops: 1
-                    };
-                },
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 1, stops: [] });
                 },
@@ -292,10 +240,7 @@ describe('CitizenDataService specifications', function () {
                 getLines(): Observable<IRestLines> {
                     return Observable.of({ timestamp: 1, lines: [] });
                 },
-                putLines(data: IRestLines): void { },
-                waitForReady(): Observable<boolean> {
-                    return Observable.of(true);
-                }
+                putLines(data: IRestLines): void { }
             };
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
 
@@ -316,20 +261,12 @@ describe('CitizenDataService specifications', function () {
                 }
             };
             storageApi = <PersistentDataProvider>{
-                getTimeStamps(): IUpdateData {
-                    return {
-                        busses: 1, lines: 1, routes: 1, stops: 1
-                    };
-                },
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 1, stops: [] });
                 },
                 putStops(data: IRestStops): void { },
                 getLines(): Observable<IRestLines> {
                     return Observable.of({ timestamp: 2, lines: [] });
-                },
-                waitForReady(): Observable<boolean> {
-                    return Observable.of(true);
                 }
             };
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);

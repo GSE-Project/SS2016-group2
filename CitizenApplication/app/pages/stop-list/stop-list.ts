@@ -64,10 +64,7 @@ export class StopListPage {
   // private searchText: String;
   private stops: Array<ViewStop> = new Array<ViewStop>();
   constructor(public nav: NavController, private cDS: CitizenDataService) {
-    this.cDS.waitForReady().subscribe(res => {
-      this.log('CitizenDataService is ready');
-      this.refreshStops();
-    });
+    this.refreshStops();
   }
 
   public onSearch(event) {
