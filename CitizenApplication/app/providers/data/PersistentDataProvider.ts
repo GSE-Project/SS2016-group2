@@ -37,8 +37,7 @@ export class PersistentDataProvider {
 
     /**
      * Gets the timestamps from the localstorage.
-     * It is intended to call this function to get
-     * the data from the localstorage on the 1st run.
+     * is called by #waitForReady() on instantiation of this object
      */
     private updateTimeStamps(): Observable<any> {
         let busObserver = this.getBusses();
