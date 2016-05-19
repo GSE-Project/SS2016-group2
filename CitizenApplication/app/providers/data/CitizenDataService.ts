@@ -34,8 +34,12 @@ export class CitizenDataService {
     public getStops(): Observable<IRestStops> {
         this.log('getting stops');
         return this.storageApi.getStops().flatMap(data => {
-            if (data.timestamp > this.serverTimeStamps.stops) {
-                return this.restApi.getStops();
+            if (this.serverTimeStamps.stops > data.timestamp) {
+                let restObservable: Observable<IRestStops> = this.restApi.getStops();
+                restObservable.subscribe(server_data => {
+                    this.storageApi.putStops(server_data);
+                });
+                return restObservable;
             }
             return Observable.of(data);
         });
@@ -46,8 +50,12 @@ export class CitizenDataService {
     */
     public getLines(): Observable<IRestLines> {
         return this.storageApi.getLines().flatMap(data => {
-            if (data.timestamp > this.serverTimeStamps.lines) {
-                return this.restApi.getLines();
+            if (this.serverTimeStamps.lines > data.timestamp) {
+                let restObservable: Observable<IRestLines> = this.restApi.getLines();
+                restObservable.subscribe(server_data => {
+                    this.storageApi.putLines(server_data);
+                });
+                return restObservable;
             }
             return Observable.of(data);
         });
@@ -58,8 +66,12 @@ export class CitizenDataService {
     */
     public getBusses(): Observable<IRestBusses> {
         return this.storageApi.getBusses().flatMap(data => {
-            if (data.timestamp > this.serverTimeStamps.busses) {
-                return this.restApi.getBusses();
+            if (this.serverTimeStamps.busses > data.timestamp) {
+                let restObservable: Observable<IRestBusses> = this.restApi.getBusses();
+                restObservable.subscribe(server_data => {
+                    this.storageApi.putBusses(server_data);
+                });
+                return restObservable;
             }
             return Observable.of(data);
         });
@@ -70,8 +82,12 @@ export class CitizenDataService {
     */
     public getRoutes(): Observable<IRestRoutes> {
         return this.storageApi.getRoutes().flatMap(data => {
-            if (data.timestamp > this.serverTimeStamps.routes) {
-                return this.restApi.getRoutes();
+            if (this.serverTimeStamps.routes > data.timestamp) {
+                let restObservable: Observable<IRestRoutes> = this.restApi.getRoutes();
+                restObservable.subscribe(server_data => {
+                    this.storageApi.putRoutes(server_data);
+                });
+                return restObservable;
             }
             return Observable.of(data);
         });
