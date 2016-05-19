@@ -52,14 +52,17 @@ export class MockFactory {
      * @param putInto: DataConfig a container to store data into 
      * @return {Storage}
      */
-    buildStorageMock(conf: StorageConfig, putInto: DataConfig): Storage {
+    static buildStorageMock(conf: StorageConfig, putInto: DataConfig): Storage {
         return <Storage>{
             get(key: string): Promise<string> {
                 let value: string = '';
                 switch (key) {
                     case 'B': value = JSON.stringify(conf.busses);
+                        break;
                     case 'L': value = JSON.stringify(conf.lines);
+                        break;
                     case 'R': value = JSON.stringify(conf.routes);
+                        break;
                     case 'S': value = JSON.stringify(conf.stops);
                 }
                 return new Promise(resolve => {
@@ -69,8 +72,11 @@ export class MockFactory {
             set(key: string, value: string): Promise<any> {
                 switch (key) {
                     case 'B': putInto.busses = JSON.parse(value);
+                        break;
                     case 'L': putInto.lines = JSON.parse(value);
+                        break;
                     case 'R': putInto.routes = JSON.parse(value);
+                        break;
                     case 'S': putInto.stops = JSON.parse(value);
                 }
 
@@ -88,7 +94,7 @@ export class MockFactory {
     * @param conf: RestConfig specifying return values and the answer delay
     * @return {Storage}
     */
-    buildRestApi(conf: RestConfig): Http {
+    static buildRestApi(conf: RestConfig): Http {
         return <Http>{
             get(url: string): Observable<Response> {
                 let response: Response = new Response(new ResponseOptions({}));
