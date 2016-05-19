@@ -16,7 +16,7 @@ describe('PersistentDataProvider specifications', () => {
     var storage: Storage;
     var storageApi: PersistentDataProvider;
 
-    it('Get Stops', () => {
+    it('Get Stops', (done) => {
         var stops: IRestStops = {
             timestamp: 1,
             stops: []
@@ -34,25 +34,28 @@ describe('PersistentDataProvider specifications', () => {
         storageApi.setStorage(storage);
         storageApi.getStops().subscribe(data => {
             Assert.equalJson(data, stops);
+            done();
         });
     });
 
-    it('Put Stops', () => {
-         var busses: IRestBusses = {
+    it('Put Stops', (done) => {
+        let busses: IRestBusses = {
             timestamp: 1, busses: []
         };
-        var stops: IRestStops = {
+        let stops: IRestStops = {
             timestamp: 4,
             stops: []
         };
-        var lines: IRestLines = {
+        let lines: IRestLines = {
             timestamp: 2,
             lines: []
         };
-        var routes: IRestRoutes = {
+        let routes: IRestRoutes = {
             timestamp: 3,
             routes: []
         };
+
+        let setData: string = '';
         storage = <Storage>{
 
             get(key: string): Promise<string> {
@@ -69,6 +72,7 @@ describe('PersistentDataProvider specifications', () => {
             },
 
             set(key: string, value: string): Promise<any> {
+                setData = value;
                 return Promise.resolve(stops);
             }
 
@@ -82,58 +86,9 @@ describe('PersistentDataProvider specifications', () => {
         storageApi = new PersistentDataProvider();
         storageApi.setStorage(storage);
         storageApi.putStops(new_stops);
-        // DS - I'm not sure about this part if we need to test it.
-        /*
-        setTimeout(function () { // We need to ensure that all promises are resolved by waiting half a second
-            Assert.equalJson(storageApi.getTimeStamps().stops, 5);
-        }, 500);
-        */
+        setTimeout(() => {
+            Assert.equalJson(JSON.parse(setData), new_stops);
+            done();
+        }, 100);
     });
-
-    it('Get Timestamps', () => {
-        var busses: IRestBusses = {
-            timestamp: 1, busses: []
-        };
-        var stops: IRestStops = {
-            timestamp: 4,
-            stops: []
-        };
-        var lines: IRestLines = {
-            timestamp: 2,
-            lines: []
-        };
-        var routes: IRestRoutes = {
-            timestamp: 3,
-            routes: []
-        };
-        storage = <Storage>{
-
-            get(key: string): Promise<string> {
-                switch (key) {
-                    case 'B':
-                        return Promise.resolve(JSON.stringify(busses));
-                    case 'L':
-                        return Promise.resolve(JSON.stringify(lines));
-                    case 'R':
-                        return Promise.resolve(JSON.stringify(routes));
-                    case 'S':
-                        return Promise.resolve(JSON.stringify(stops));
-                }
-            }
-
-        };
-
-
-        storageApi = new PersistentDataProvider();
-        storageApi.setStorage(storage);
-        setTimeout(function () { // We need to ensure that all promises are resolved by waiting half a second
-            // isReady is not needed anymore.
-            // Assert.equalJson(storageApi.isReady(), true);
-            /* DS - See L85
-            Assert.equalJson(storageApi.getTimeStamps(), JSON.stringify({ busses: 1, lines: 2, routes: 3, stops: 4 }));
-            */
-        }, 500);
-    });
-
-
 });

@@ -17,32 +17,31 @@ import {Assert} from '../../util';
 
 describe('RestApiProvider specifications', () => {
 
-    var response: Response;
+    let response: Response;
 
-    var http: Http;
+    let http: Http;
 
-    it('Get Stops', () => {
+    it('Get Stops', (done) => {
         http = <Http>{
             get(url: string): Observable<Response> {
                 var response: Response = new Response(
                     new ResponseOptions({ body: { timestamp: 1, stops: [] } })
                 );
                 var answer: Observable<Response> = Observable.of(response);
-                debugger;
                 return answer;
             }
         };
 
-        var restApi: RestApiProvider = new RestApiProvider(http);
-        // Not beautiful but it works
+        let restApi: RestApiProvider = new RestApiProvider(http);
         restApi.getStops().subscribe(data => {
             Assert.equalJson(data, { timestamp: 1, stops: [] });
+            done();
         });
     });
 
-    it('Get timestamps', () => {
+    it('Get timestamps', (done) => {
 
-        var updateData: IUpdateData = {
+        let updateData: IUpdateData = {
             busses: 1,
             lines: 1,
             routes: 1,
@@ -51,28 +50,27 @@ describe('RestApiProvider specifications', () => {
 
         http = <Http>{
             get(url: string): Observable<Response> {
-                var response: Response = new Response(
+                let response: Response = new Response(
                     new ResponseOptions({ body: updateData })
                 );
-                var answer: Observable<Response> = Observable.of(response);
-                debugger;
+                let answer: Observable<Response> = Observable.of(response);
                 return answer;
             }
         };
 
-        var restApi: RestApiProvider = new RestApiProvider(http);
-        // Not beautiful but it works
+        let restApi: RestApiProvider = new RestApiProvider(http);
         restApi.getUpdateData().subscribe(data => {
             Assert.equalJson(data, updateData);
+            done();
         });
     });
 
-    it('Get RealTimeData', () => {
+    it('Get RealTimeData', (done) => {
 
-        var rtData: IBusRealTimeData = {
+        let rtData: IBusRealTimeData = {
             id: 1,
             delay: 1,
-            location: {type: GeoJsonObjectTypes.Point, coordinates: [{ latitude: 1, longitude: 1 }] }
+            location: { type: GeoJsonObjectTypes.Point, coordinates: [{ latitude: 1, longitude: 1 }] }
         };
 
         http = <Http>{
@@ -81,15 +79,14 @@ describe('RestApiProvider specifications', () => {
                     new ResponseOptions({ body: rtData })
                 );
                 var answer: Observable<Response> = Observable.of(response);
-                debugger;
                 return answer;
             }
         };
 
-        var restApi: RestApiProvider = new RestApiProvider(http);
-        // Not beautiful but it works
+        let restApi: RestApiProvider = new RestApiProvider(http);
         restApi.getUpdateData().subscribe(data => {
             Assert.equalJson(data, rtData);
+            done();
         });
     });
 
