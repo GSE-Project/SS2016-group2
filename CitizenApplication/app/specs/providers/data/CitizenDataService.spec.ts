@@ -31,7 +31,9 @@ describe('CitizenDataService specifications', function () {
         /**
          * Stops should be a sufficient test since the code base is equivalent for the other model data
          */
-        it('Get stops from server', () => {
+        it('Get stops from server', (done) => {
+            var expectedResponse = <IRestStops>{ timestamp: 1, stops: [{ id: 1 }] };
+
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     updateCalled = true;
@@ -40,7 +42,7 @@ describe('CitizenDataService specifications', function () {
                     });
                 },
                 getStops(): Observable<IRestStops> {
-                    return Observable.of({ timestamp: 1, stops: [{ id: 1 }] });
+                    return Observable.of(expectedResponse);
                 }
             };
             storageApi = <PersistentDataProvider>{
@@ -52,10 +54,17 @@ describe('CitizenDataService specifications', function () {
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
 
-            assertEqualJson(citizenDataService.getStops(), restApi.getStops());
+            citizenDataService.getStops().subscribe(data => {
+                assertEqualJson(data, expectedResponse);
+                done();
+            });
         });
 
-        it('Get lines from server', () => {
+        it('Get lines from server', (done) => {
+            var expectedStops = <IRestStops>{ timestamp: 1, stops: [{ id: 1 }] };
+            var expectedLines = <IRestLines>{ timestamp: 1, lines: [] };
+            var expectedRealTimeBusData = <IBusRealTimeData>{ delay: null, location: {} };
+
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     updateCalled = true;
@@ -64,13 +73,14 @@ describe('CitizenDataService specifications', function () {
                     });
                 },
                 getStops(): Observable<IRestStops> {
-                    return Observable.of({ timestamp: 1, stops: [{ id: 1 }] });
+                    return Observable.of(expectedStops);
                 },
                 getLines(): Observable<IRestLines> {
-                    return Observable.of({ timestamp: 1, lines: [] });
+                    return Observable.of(expectedLines);
                 },
                 getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
-                    return Observable.of({ delay: id, location: {} });
+                    expectedRealTimeBusData.id = id;
+                    return Observable.of(expectedRealTimeBusData);
                 }
             };
             storageApi = <PersistentDataProvider>{
@@ -85,10 +95,17 @@ describe('CitizenDataService specifications', function () {
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
-            assertEqualJson(citizenDataService.getLines(), restApi.getLines());
+
+            citizenDataService.getLines().subscribe(data => {
+                assertEqualJson(citizenDataService.getLines(), expectedLines);
+            });
         });
 
         it('Get lines after stops from server', () => {
+            var expectedStops = <IRestStops>{ timestamp: 1, stops: [{ id: 1 }] };
+            var expectedLines = <IRestLines>{ timestamp: 1, lines: [] };
+            var expectedRealTimeBusData = <IBusRealTimeData>{ delay: null, location: {} };
+
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     updateCalled = true;
@@ -97,13 +114,14 @@ describe('CitizenDataService specifications', function () {
                     });
                 },
                 getStops(): Observable<IRestStops> {
-                    return Observable.of({ timestamp: 1, stops: [{ id: 1 }] });
+                    return Observable.of(expectedStops);
                 },
                 getLines(): Observable<IRestLines> {
-                    return Observable.of({ timestamp: 1, lines: [] });
+                    return Observable.of(expectedLines);
                 },
                 getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
-                    return Observable.of({ delay: id, location: {} });
+                    expectedRealTimeBusData.id = id;
+                    return Observable.of(expectedRealTimeBusData);
                 }
             };
             storageApi = <PersistentDataProvider>{
@@ -126,25 +144,37 @@ describe('CitizenDataService specifications', function () {
          * Check the #updateTimeStamps() method.
          */
         it('Get new update data', () => {
+            var expectedStops = <IRestStops>{ timestamp: 1, stops: [{ id: 1 }] };
+            var expectedLines = <IRestLines>{ timestamp: 1, lines: [] };
+            var expectedRealTimeBusData = <IBusRealTimeData>{ delay: null, location: {} };
+
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     updateCalled = true;
                     return Observable.of({
-                        busses: 1, lines: 1, routes: 1, stops: 1
+                        busses: 1, lines: 1, routes: 1, stops: 0
                     });
                 },
                 getStops(): Observable<IRestStops> {
-                    return Observable.of({ timestamp: 1, stops: [{ id: 1 }] });
+                    return Observable.of(expectedStops);
+                },
+                getLines(): Observable<IRestLines> {
+                    return Observable.of(expectedLines);
                 },
                 getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
-                    return Observable.of({ delay: id, location: {} });
+                    expectedRealTimeBusData.id = id;
+                    return Observable.of(expectedRealTimeBusData);
                 }
             };
             storageApi = <PersistentDataProvider>{
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 0, stops: [] });
                 },
-                putStops(data: IRestStops): void { }
+                getLines(): Observable<IRestLines> {
+                    return Observable.of({ timestamp: 0, lines: [] });
+                },
+                putStops(data: IRestStops): void { },
+                putLines(data: IRestLines): void { }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
@@ -154,34 +184,49 @@ describe('CitizenDataService specifications', function () {
             assertEqualJson(updateCalled, true);
         });
 
-        it('Get RealTimeBusData', () => {
+        it('Get RealTimeBusData', (done) => {
+            var expectedStops = <IRestStops>{ timestamp: 1, stops: [{ id: 1 }] };
+            var expectedLines = <IRestLines>{ timestamp: 1, lines: [] };
+            var expectedRealTimeBusData = <IBusRealTimeData>{ delay: null, location: {} };
+
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     updateCalled = true;
                     return Observable.of({
-                        busses: 1, lines: 1, routes: 1, stops: 1
+                        busses: 1, lines: 1, routes: 1, stops: 0
                     });
                 },
                 getStops(): Observable<IRestStops> {
-                    return Observable.of({ timestamp: 1, stops: [{ id: 1 }] });
+                    return Observable.of(expectedStops);
+                },
+                getLines(): Observable<IRestLines> {
+                    return Observable.of(expectedLines);
                 },
                 getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
-                    return Observable.of({ delay: id, location: {} });
+                    expectedRealTimeBusData.id = id;
+                    return Observable.of(expectedRealTimeBusData);
                 }
             };
             storageApi = <PersistentDataProvider>{
                 getStops(): Observable<IRestStops> {
                     return Observable.of({ timestamp: 0, stops: [] });
                 },
-                putStops(data: IRestStops): void { }
+                getLines(): Observable<IRestLines> {
+                    return Observable.of({ timestamp: 0, lines: [] });
+                },
+                putStops(data: IRestStops): void { },
+                putLines(data: IRestLines): void { }
             };
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
-
-            assertEqualJson(citizenDataService.getBusRealTimeData(1), restApi.getRealTimeBusData(1));
+            citizenDataService.getBusRealTimeData(1).subscribe(data => {
+                assertEqualJson(citizenDataService.getBusRealTimeData(1), restApi.getRealTimeBusData(1));
+                done();
+            });
         });
 
-        it('Get Busses from server', () => {
+        it('Get Busses from server', (done) => {
+            var expectedBusses = <IRestBusses>{ timestamp: 1, busses: [] };
             var putBussesCalled: boolean = false;
             var puttedData: IRestBusses = {
                 timestamp: 0, busses: []
@@ -194,9 +239,7 @@ describe('CitizenDataService specifications', function () {
                 },
 
                 getBusses(): Observable<IRestBusses> {
-                    return Observable.of({
-                        timestamp: 1, busses: []
-                    });
+                    return Observable.of(expectedBusses);
                 }
             };
 
@@ -209,8 +252,9 @@ describe('CitizenDataService specifications', function () {
 
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
             citizenDataService.getBusses().subscribe(data => {
-                assertEqualJson(data, { timestamp: 1, busses: [] });
+                assertEqualJson(data, expectedBusses);
                 assertEqualJson(puttedData, data);
+                done();
             });
 
         });
@@ -219,6 +263,7 @@ describe('CitizenDataService specifications', function () {
 
     describe('Get Storage Data', () => {
         it('Get stored lines', () => {
+            var expectedStops = <IRestStops>{ timestamp: 2, stops: [{ id: 1 }] };
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     return Observable.of({
@@ -226,7 +271,7 @@ describe('CitizenDataService specifications', function () {
                     });
                 },
                 getStops(): Observable<IRestStops> {
-                    return Observable.of({ timestamp: 2, stops: [{ id: 1 }] });
+                    return Observable.of(expectedStops);
                 },
                 getLines(): Observable<IRestLines> {
                     return Observable.of({ timestamp: 1, lines: [] });
@@ -243,10 +288,12 @@ describe('CitizenDataService specifications', function () {
                 putLines(data: IRestLines): void { }
             };
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
-
-            assertEqualJson(citizenDataService.getLines(), storageApi.getLines());
+            citizenDataService.getLines().subscribe(data => {
+                assertEqualJson(data, expectedStops);
+            });
         });
         it('Dont get outdated stops', () => {
+            var expectedStops = <IRestStops>{ timestamp: 2, stops: [{ id: 1 }] };
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
                     return Observable.of({
@@ -254,7 +301,7 @@ describe('CitizenDataService specifications', function () {
                     });
                 },
                 getStops(): Observable<IRestStops> {
-                    return Observable.of({ timestamp: 2, stops: [{ id: 1 }] });
+                    return Observable.of(expectedStops);
                 },
                 getLines(): Observable<IRestLines> {
                     return Observable.of({ timestamp: 1, lines: [] });
@@ -270,7 +317,11 @@ describe('CitizenDataService specifications', function () {
                 }
             };
             var citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi);
-            assertNotEqualJson(citizenDataService.getStops(), storageApi.getStops());
+            // @sholzer, please check this, I'm not sure if I got the point of this test right.
+            // as are here calling the assertNotEqualJson method.
+            citizenDataService.getStops().subscribe(data => {
+                assertNotEqualJson(data, expectedStops);
+            });
         });
     });
 });
