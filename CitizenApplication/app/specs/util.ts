@@ -7,11 +7,12 @@ export class Assert {
      * @author sholzer 160511 (I wanted an Junit equivalent of assertEquals())
      * @param input :any an object
      * @param expectation :any the object input is expected to be equal
+     * @param msg string failure message
      * @return void. Calls fail() if JSON.stringify(input) != JSON.stringify(expectation)
      */
-    static equalJson(input: any, expectation: any): void {
+    static equalJson(input: any, expectation: any, msg: string = ''): void {
         if (JSON.stringify(input) !== JSON.stringify(expectation)) {
-            fail('Expected\n' + JSON.stringify(input) + '\nto be equal to\n' + JSON.stringify(expectation));
+            fail(msg + ', Expected\n' + JSON.stringify(input) + '\nto be equal to\n' + JSON.stringify(expectation));
         }
     }
 

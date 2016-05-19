@@ -24,11 +24,8 @@ export class CitizenDataService {
         routes: -1,
         stops: -1
     };
-    private _isReady: boolean = false;
-    private _initObservable: Observable<boolean> = null;
 
     constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
-        this.waitForReady().subscribe(data => { this._isReady = true; });
     }
 
     /**
@@ -36,64 +33,64 @@ export class CitizenDataService {
     */
     public getStops(): Observable<IRestStops> {
         this.log('getting stops');
-        // Check if the data stored is old.
-        if (this.serverTimeStamps.stops > this.storageApi.getTimeStamps().stops) {
-            let observable = this.restApi.getStops();
-            observable.subscribe(data => {
-                // Save the data from the server.
-                this.storageApi.putStops(data);
-            });
-            return observable;
-        }
-        return this.storageApi.getStops();
+        return this.storageApi.getStops().flatMap(data => {
+            if (this.serverTimeStamps.stops > data.timestamp) {
+                let restObservable: Observable<IRestStops> = this.restApi.getStops();
+                restObservable.subscribe(server_data => {
+                    this.storageApi.putStops(server_data);
+                });
+                return restObservable;
+            }
+            return Observable.of(data);
+        });
     }
 
     /**
     * @return A list of ILine objects
     */
     public getLines(): Observable<IRestLines> {
-        // Check if the data stored is old.
-        if (this.serverTimeStamps.lines > this.storageApi.getTimeStamps().lines) {
-            let observable = this.restApi.getLines();
-            observable.subscribe(data => {
-                // Save the data from the server.
-                this.storageApi.putLines(data);
-            });
-            return observable;
-        }
-        return this.storageApi.getLines();
+        return this.storageApi.getLines().flatMap(data => {
+            if (this.serverTimeStamps.lines > data.timestamp) {
+                let restObservable: Observable<IRestLines> = this.restApi.getLines();
+                restObservable.subscribe(server_data => {
+                    this.storageApi.putLines(server_data);
+                });
+                return restObservable;
+            }
+            return Observable.of(data);
+        });
     }
 
     /**
     * @return A list of Bus objects
     */
     public getBusses(): Observable<IRestBusses> {
-        // Check if the data stored is old.
-        if (this.serverTimeStamps.busses > this.storageApi.getTimeStamps().busses) {
-            let observable = this.restApi.getBusses();
-            observable.subscribe(data => {
-                // Save the data from the server.
-                this.storageApi.putBusses(data);
-            });
-            return observable;
-        }
-        return this.storageApi.getBusses();
+        return this.storageApi.getBusses().flatMap(data => {
+            if (this.serverTimeStamps.busses > data.timestamp) {
+                let restObservable: Observable<IRestBusses> = this.restApi.getBusses();
+                restObservable.subscribe(server_data => {
+                    this.storageApi.putBusses(server_data);
+                });
+                return restObservable;
+            }
+            return Observable.of(data);
+        });
     }
 
     /**
     * @return A list of Route objects
     */
     public getRoutes(): Observable<IRestRoutes> {
-        // Check if the data stored is old.
-        if (this.serverTimeStamps.routes > this.storageApi.getTimeStamps().routes) {
-            let observable = this.restApi.getRoutes();
-            observable.subscribe(data => {
-                // Save the data from the server.
-                this.storageApi.putRoutes(data);
-            });
-            return observable;
-        }
-        return this.storageApi.getRoutes();
+        return this.storageApi.getRoutes().flatMap(data => {
+            if (this.serverTimeStamps.routes > data.timestamp) {
+                let restObservable: Observable<IRestRoutes> = this.restApi.getRoutes();
+                restObservable.subscribe(server_data => {
+                    this.storageApi.putRoutes(server_data);
+                });
+                return restObservable;
+            }
+            return Observable.of(data);
+        });
     }
 
     /**
@@ -114,25 +111,6 @@ export class CitizenDataService {
             this.serverTimeStamps = updateData;
             this.log('timestamps updated');
         });
-        return observable;
-    }
-
-    /**
-     * Returns an Observable that notifies watchers when the CitizenDataProvider is properly initialized.
-     * @return Observable<boolean> with resolved data == true 
-     * @author sholzer 160518
-     */
-    public waitForReady(): Observable<boolean> {
-        if (this._isReady) {
-            return Observable.of(true);
-        }
-        if (this._initObservable != null) {
-            return this._initObservable;
-        }
-        var observable = new Observable(() => { })
-            .merge([this.updateTimeStamps(), this.storageApi.waitForReady()])
-            .map(res => true);
-        this._initObservable = observable;
         return observable;
     }
 
