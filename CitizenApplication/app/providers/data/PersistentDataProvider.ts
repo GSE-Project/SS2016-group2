@@ -3,7 +3,7 @@
  * Implemented by tim.dellmann
  */
 
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
 import {IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
 import {Observable} from 'rxjs/Observable';

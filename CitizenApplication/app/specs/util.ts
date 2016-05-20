@@ -8,7 +8,7 @@ import {RestApiProvider} from '../providers/data/RestApiProvider';
 import {IBusRealTimeData} from '../providers/model/BusRealTimeData';
 import {GeoJsonObjectTypes} from '../providers/model/geojson/geojsonObject';
 
-import {Http, Response, ResponseOptions, Headers} from 'angular2/http';
+import {Http, Response, ResponseOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 
 
@@ -116,7 +116,7 @@ export class MockFactory {
                 if (url.includes('busses/')) {
                     response = new Response(new ResponseOptions({ body: conf.rt }));
                 }
-                return Observable.fromPromise(new Promise((resolve) => {
+                return Observable.fromPromise<Response>(new Promise((resolve) => {
                     setTimeout(() => { resolve(response); }, conf.delay);
                 }));
             }
