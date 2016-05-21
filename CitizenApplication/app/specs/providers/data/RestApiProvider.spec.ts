@@ -11,7 +11,7 @@ import {IUpdateData} from '../../../providers/model/UpdateData';
 import {IBusRealTimeData} from '../../../providers/model/BusRealTimeData';
 import {GeoJsonObjectTypes} from '../../../providers/model/geojson/geojsonObject';
 
-import {Http, Response, ResponseOptions, Headers} from 'angular2/http';
+import {Http, Response, ResponseOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Assert, MockFactory} from '../../util';
 

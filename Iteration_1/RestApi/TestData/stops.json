@@ -31,7 +31,8 @@
 			"name": "Marktplatz",
 			"lines": [
 				1,
-				2
+				2,
+				4
 			],
 			"location": {
 				"latitude": 50,
@@ -43,11 +44,11 @@
 					"time": "12:00"
 				},
 				{
-					"lineId": 2,
+					"lineId": 1,
 					"time": "13:00"
 				},
 				{
-					"lineId": 2,
+					"lineId": 4,
 					"time": "9:00"
 				}
 			]

@@ -5,7 +5,7 @@
  * Updated by skaldo on the 14.05.2016 - adjusted to match the tslint rules.
  */
 
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {RestApiProvider} from './RestApiProvider';
 import {PersistentDataProvider} from './PersistentDataProvider';
 import {Observable} from 'rxjs/Observable';
@@ -34,14 +34,14 @@ export class CitizenDataService {
     public getStops(): Observable<IRestStops> {
         this.log('getting stops');
         return this.storageApi.getStops().flatMap(data => {
-            if (this.serverTimeStamps.stops > data.timestamp) {
-                let restObservable: Observable<IRestStops> = this.restApi.getStops();
-                restObservable.subscribe(server_data => {
-                    this.storageApi.putStops(server_data);
-                });
-                return restObservable;
+            if (data && (this.serverTimeStamps.stops < data.timestamp)) {
+                return Observable.of(data);
             }
-            return Observable.of(data);
+            let restObservable: Observable<IRestStops> = this.restApi.getStops();
+            restObservable.subscribe(server_data => {
+                this.storageApi.putStops(server_data);
+            });
+            return restObservable;
         });
     }
 
@@ -50,14 +50,14 @@ export class CitizenDataService {
     */
     public getLines(): Observable<IRestLines> {
         return this.storageApi.getLines().flatMap(data => {
-            if (this.serverTimeStamps.lines > data.timestamp) {
-                let restObservable: Observable<IRestLines> = this.restApi.getLines();
-                restObservable.subscribe(server_data => {
-                    this.storageApi.putLines(server_data);
-                });
-                return restObservable;
+            if (data && (this.serverTimeStamps.lines < data.timestamp)) {
+                return Observable.of(data);
             }
-            return Observable.of(data);
+            let restObservable: Observable<IRestLines> = this.restApi.getLines();
+            restObservable.subscribe(server_data => {
+                this.storageApi.putLines(server_data);
+            });
+            return restObservable;
         });
     }
 
@@ -66,14 +66,14 @@ export class CitizenDataService {
     */
     public getBusses(): Observable<IRestBusses> {
         return this.storageApi.getBusses().flatMap(data => {
-            if (this.serverTimeStamps.busses > data.timestamp) {
-                let restObservable: Observable<IRestBusses> = this.restApi.getBusses();
-                restObservable.subscribe(server_data => {
-                    this.storageApi.putBusses(server_data);
-                });
-                return restObservable;
+            if (data && (this.serverTimeStamps.busses < data.timestamp)) {
+                return Observable.of(data);
             }
-            return Observable.of(data);
+            let restObservable: Observable<IRestBusses> = this.restApi.getBusses();
+            restObservable.subscribe(server_data => {
+                this.storageApi.putBusses(server_data);
+            });
+            return restObservable;
         });
     }
 
@@ -82,14 +82,14 @@ export class CitizenDataService {
     */
     public getRoutes(): Observable<IRestRoutes> {
         return this.storageApi.getRoutes().flatMap(data => {
-            if (this.serverTimeStamps.routes > data.timestamp) {
-                let restObservable: Observable<IRestRoutes> = this.restApi.getRoutes();
-                restObservable.subscribe(server_data => {
-                    this.storageApi.putRoutes(server_data);
-                });
-                return restObservable;
+            if (data && (this.serverTimeStamps.routes < data.timestamp)) {
+                return Observable.of(data);
             }
-            return Observable.of(data);
+            let restObservable: Observable<IRestRoutes> = this.restApi.getRoutes();
+            restObservable.subscribe(server_data => {
+                this.storageApi.putRoutes(server_data);
+            });
+            return restObservable;
         });
     }
 

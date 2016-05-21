@@ -14,7 +14,7 @@
 </ion-navbar>
 
 <ion-content class="stop-detail">
-  <ion-card *ngFor="#schedule of stop.getSchedules(8)" class="line line{{schedule.lineId}}">
+  <ion-card *ngFor="let schedule of stop.getSchedules(8)" class="line line{{schedule.lineId}}">
     <ion-card-header>
       Line {{schedule.lineId}}, Towards: xxx
       <ion-icon name="information-circle" class="infoBtn" (click)="infoClicked(schedule)"></ion-icon>

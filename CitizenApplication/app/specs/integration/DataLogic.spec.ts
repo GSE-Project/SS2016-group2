@@ -12,7 +12,7 @@ import {CitizenDataService} from '../../providers/data/CitizenDataService';
 import {Assert, MockFactory, DataConfig, StorageConfig, RestConfig} from '../util';
 
 import {Storage} from 'ionic-angular';
-import {Http, Response, ResponseOptions, Headers} from 'angular2/http';
+import {Http, Response, ResponseOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 
 import {CitizenApplicationConfig} from '../../providers/config/CitizenApplicationConfig';

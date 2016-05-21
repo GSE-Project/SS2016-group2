@@ -1,5 +1,5 @@
 import {Page, NavController} from 'ionic-angular';
-import {ViewChild} from  'angular2/core';
+import {ViewChild} from  '@angular/core';
 import {Map} from '../../components/map/map';
 
 /*

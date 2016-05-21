@@ -8,7 +8,7 @@ import {RestApiProvider} from '../providers/data/RestApiProvider';
 import {IBusRealTimeData} from '../providers/model/BusRealTimeData';
 import {GeoJsonObjectTypes} from '../providers/model/geojson/geojsonObject';
 
-import {Http, Response, ResponseOptions, Headers} from 'angular2/http';
+import {Http, Response, ResponseOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 
 import {ConfigurationService} from '../providers/config/ConfigurationService';
