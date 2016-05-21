@@ -6,7 +6,7 @@ import {ILine} from '../../../providers/model/Line';
 import {IRoute} from '../../../providers/model/Route';
 import {IStop} from '../../../providers/model/Stop';
 
-import {Http} from 'angular2/http';
+import {Http} from '@angular/http';
 import {IRestStops} from '../../../providers/model/rest/RestStops';
 import {Observable} from 'rxjs/Observable';
 import {CitizenDataService} from '../../../providers/data/CitizenDataService';

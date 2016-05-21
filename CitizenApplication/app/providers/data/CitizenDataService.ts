@@ -5,7 +5,7 @@
  * Updated by skaldo on the 14.05.2016 - adjusted to match the tslint rules.
  */
 
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {RestApiProvider} from './RestApiProvider';
 import {PersistentDataProvider} from './PersistentDataProvider';
 import {Observable} from 'rxjs/Observable';
