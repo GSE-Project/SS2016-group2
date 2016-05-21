@@ -5,12 +5,17 @@ import {RestApiProvider} from './providers/data/RestApiProvider';
 import {PersistentDataProvider} from './providers/data/PersistentDataProvider';
 import {CitizenDataService} from './providers/data/CitizenDataService';
 import {ConfigurationService} from './providers/config/ConfigurationService';
+import {Routes} from '@angular/router';
+import {HomePage} from './pages/home/home.ts';
 
 @App({
   template: '<ion-nav [root]="rootPage"></ion-nav>',
   config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
   providers: [CitizenDataService, RestApiProvider, PersistentDataProvider, ConfigurationService],
 })
+@Routes([
+  { path: '/', component: HomePage }
+])
 export class MyApp {
   public rootPage: any = TabsPage;
 

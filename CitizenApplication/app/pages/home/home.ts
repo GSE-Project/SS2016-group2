@@ -1,6 +1,8 @@
 import {Page, NavController, Toast} from 'ionic-angular';
 import {StopListPage} from '../stop-list/stop-list';
 import {BusDetailPage} from '../bus-detail/bus-detail';
+import {OnActivate, Router, RouteSegment, RouteTree} from '@angular/router';
+import {ConfigurationService} from '../../providers/config/ConfigurationService';
 
 /*
   Generated class for the HomePage page.
@@ -11,10 +13,10 @@ import {BusDetailPage} from '../bus-detail/bus-detail';
 @Page({
   templateUrl: 'build/pages/home/home.html'
 })
-export class HomePage {
+export class HomePage implements OnActivate {
   private ip: string;
   private reqNumber: number;
-  constructor(public nav: NavController) {
+  constructor(public nav: NavController, private config: ConfigurationService) {
     this.reqNumber = 0;
   }
 
@@ -36,5 +38,9 @@ export class HomePage {
   onPageDidLeave() {
     var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
     element.style.display = 'block';
+  }
+
+  routerOnActivate(curr: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree): Promise<any> {
+    return this.config.loadConfig().toPromise();
   }
 }
