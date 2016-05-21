@@ -2,7 +2,9 @@
  * @author sholzer at 160620
  */
 
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
 import {CitizenApplicationConfig, MiscellaneousConfig, StorageApiConfig, RestApiConfig, RESTAPI_FIELD, STORAGEAPI_FIELD, MISC_FIELD} from './CitizenApplicationConfig';
 
 export const DEFAULT_CONFIG: CitizenApplicationConfig = {
@@ -36,8 +38,11 @@ export class ConfigurationService {
 
     private _config: CitizenApplicationConfig = null;
 
-    constructor() {
-        this.loadConfig();
+    constructor(private http: Http) {
+        this.loadConfig().subscribe(data => {
+            this._config = data;
+            console.log('Config loaded:\n' + JSON.stringify(this._config));
+        });
     }
 
     /**
@@ -61,9 +66,11 @@ export class ConfigurationService {
         return this.getConfigCopy<MiscellaneousConfig>(MISC_FIELD);
     }
 
-    private loadConfig() {
-        this._config = require('./config.json');
-        console.log(JSON.stringify(this._config));
+    loadConfig(): Observable<any> {
+        return this.http.get('/config.json')
+            .map(res => {
+                return <CitizenApplicationConfig>res.json();
+            });
     }
 
     /**
@@ -76,7 +83,7 @@ export class ConfigurationService {
         if (this._config != null) {
             config = this._config[field];
         } else {
-            console.log('Configuration not found. Return to default');
+            console.log('Configuration not yet loaded. Return to default');
         }
         return <T>JSON.parse(JSON.stringify(config));
     }

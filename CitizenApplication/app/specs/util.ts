@@ -118,7 +118,7 @@ export class MockFactory {
                 if (url.includes(global_conf.rt_data)) {
                     response = new Response(new ResponseOptions({ body: rest_conf.rt }));
                 }
-                return Observable.fromPromise(new Promise((resolve) => {
+                return Observable.fromPromise(new Promise<Response>((resolve) => {
                     setTimeout(() => { resolve(response); }, rest_conf.delay);
                 }));
             }
