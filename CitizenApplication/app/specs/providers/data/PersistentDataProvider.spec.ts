@@ -9,9 +9,13 @@ import {IRestLines} from '../../../providers/model/rest/RestLines';
 import {IRestRoutes} from '../../../providers/model/rest/RestRoutes';
 import {Storage} from 'ionic-angular';
 
-import {Assert} from '../../util';
+import {Assert, MockFactory} from '../../util';
+import {ConfigurationService, DEFAULT_CONFIG} from '../../../providers/config/ConfigurationService';
+
 
 describe('PersistentDataProvider specifications', () => {
+
+    let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
 
     var storage: Storage;
     var storageApi: PersistentDataProvider;
@@ -30,7 +34,7 @@ describe('PersistentDataProvider specifications', () => {
         };
 
 
-        storageApi = new PersistentDataProvider();
+        storageApi = new PersistentDataProvider(config);
         storageApi.setStorage(storage);
         storageApi.getStops().subscribe(data => {
             Assert.equalJson(data, stops);
@@ -83,7 +87,7 @@ describe('PersistentDataProvider specifications', () => {
             stops: []
         };
 
-        storageApi = new PersistentDataProvider();
+        storageApi = new PersistentDataProvider(config);
         storageApi.setStorage(storage);
         storageApi.putStops(new_stops);
         setTimeout(() => {
