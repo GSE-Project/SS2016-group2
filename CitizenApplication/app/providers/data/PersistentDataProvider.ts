@@ -7,20 +7,13 @@ import {Injectable} from 'angular2/core';
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
 import {IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
 import {Observable} from 'rxjs/Observable';
-
-const STORAGE_ACTIVE = 'A';
-const STORAGE_TIMESTAMP = 'T';
-const STORAGE_BUS = 'B';
-const STORAGE_LINE = 'L';
-const STORAGE_STOP = 'S';
-const STORAGE_ROUTE = 'R';
-
+import {ConfigurationService} from '../config/ConfigurationService';
 
 @Injectable()
 export class PersistentDataProvider {
     public storage: Storage;
 
-    constructor() {
+    constructor(private config: ConfigurationService) {
         // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
         this.storage = new Storage(LocalStorage);
     }
@@ -39,7 +32,7 @@ export class PersistentDataProvider {
      * @returns Observable<IRestStops>
      */
     getStops(): Observable<IRestStops> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_STOP)).map(
+        return Observable.fromPromise(<Promise<string>>this.storage.get(this.config.storageApiConfig.stops)).map(
             data => {
                 return <IRestStops>JSON.parse(data);
             });
@@ -50,7 +43,7 @@ export class PersistentDataProvider {
      * @param data Array of stops
      */
     putStops(data: IRestStops) {
-        this.storage.set(STORAGE_STOP, JSON.stringify(data));
+        this.storage.set(this.config.storageApiConfig.stops, JSON.stringify(data));
     }
 
     /**
@@ -58,7 +51,7 @@ export class PersistentDataProvider {
      * @returns Observable<IRestBusses>
      */
     getBusses(): Observable<IRestBusses> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_BUS)).map(
+        return Observable.fromPromise(<Promise<string>>this.storage.get(this.config.storageApiConfig.busses)).map(
             data => {
                 return <IRestBusses>JSON.parse(data);
             });
@@ -69,7 +62,7 @@ export class PersistentDataProvider {
      * @param data Array of busses (IRestBusses)
      */
     putBusses(data: IRestBusses) {
-        this.storage.set(STORAGE_BUS, JSON.stringify(data));
+        this.storage.set(this.config.storageApiConfig.busses, JSON.stringify(data));
     }
 
     /**
@@ -77,7 +70,7 @@ export class PersistentDataProvider {
      * @returns Observable<IRestLines>
      */
     getLines(): Observable<IRestLines> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_LINE)).map(
+        return Observable.fromPromise(<Promise<string>>this.storage.get(this.config.storageApiConfig.lines)).map(
             data => {
                 return <IRestLines>JSON.parse(data);
             });
@@ -88,7 +81,7 @@ export class PersistentDataProvider {
      * @param data Array of lines (IRestLines)
      */
     putLines(data: IRestLines) {
-        this.storage.set(STORAGE_LINE, JSON.stringify(data));
+        this.storage.set(this.config.storageApiConfig.lines, JSON.stringify(data));
     }
 
     /**
@@ -96,7 +89,7 @@ export class PersistentDataProvider {
      * @returns Observable<IRestRoutes>
      */
     getRoutes(): Observable<IRestRoutes> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_ROUTE)).map(
+        return Observable.fromPromise(<Promise<string>>this.storage.get(this.config.storageApiConfig.routes)).map(
             data => {
                 return <IRestRoutes>JSON.parse(data);
             });
@@ -107,6 +100,6 @@ export class PersistentDataProvider {
      * @param data Array of routes (IRestRoutes)
      */
     putRoutes(data: IRestRoutes) {
-        this.storage.set(STORAGE_ROUTE, JSON.stringify(data));
+        this.storage.set(this.config.storageApiConfig.routes, JSON.stringify(data));
     }
 }
