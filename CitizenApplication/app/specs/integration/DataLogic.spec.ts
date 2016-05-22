@@ -28,7 +28,7 @@ const TIMEOUT = 5000;
 describe('Data Logic Specification with timeout of ' + TIMEOUT + ' ms', () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
     tests(0, 0);
-    tests(500, 1000);
+    tests(50, 100);
 
 });
 

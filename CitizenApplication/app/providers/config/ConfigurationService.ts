@@ -1,13 +1,16 @@
 /**
  * @author sholzer at 160620
+ * Reviewed and updated by skaldo on 22.05.2016
  */
 
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {CitizenApplicationConfig, MiscellaneousConfig, StorageApiConfig, RestApiConfig, RESTAPI_FIELD, STORAGEAPI_FIELD, MISC_FIELD} from './CitizenApplicationConfig';
+import {CitizenDataObjects} from '../model';
 
-import {CURRENT_CONFIG} from './CurrentConfig';
+interface CitizenWindow extends Window { citizenConfig: CitizenApplicationConfig; }
+declare var window: CitizenWindow;
 
 export const DEFAULT_CONFIG: CitizenApplicationConfig = {
     rest_api: {
@@ -41,45 +44,62 @@ export class ConfigurationService {
     private _config: CitizenApplicationConfig = null;
 
     constructor(private http: Http) {
-        this.loadConfig().subscribe(data => {
-            console.log('Loaded Config:\n' + JSON.stringify(data));
-        });
+        if (!window.citizenConfig) {
+            console.log('Config: no config found, using the default one.');
+            window.citizenConfig = DEFAULT_CONFIG;
+        }
+        this._config = window.citizenConfig;
     }
 
     /**
      * Access a copy of the rest api configuration
      */
-    get restApiConfig(): RestApiConfig {
-        return this.getConfigCopy<RestApiConfig>(RESTAPI_FIELD);
+    get restApi(): RestApiConfig {
+        return this.get<RestApiConfig>(RESTAPI_FIELD);
     }
 
     /**
      * Access a copy of the storage api configuration
      */
-    get storageApiConfig(): StorageApiConfig {
-        return this.getConfigCopy<StorageApiConfig>(STORAGEAPI_FIELD);
+    get storageApi(): StorageApiConfig {
+        return this.get<StorageApiConfig>(STORAGEAPI_FIELD);
     }
 
     /**
      * Access a copy of the miscellaneous configuration
      */
-    get miscConfig(): MiscellaneousConfig {
-        return this.getConfigCopy<MiscellaneousConfig>(MISC_FIELD);
+    get misc(): MiscellaneousConfig {
+        return this.get<MiscellaneousConfig>(MISC_FIELD);
     }
 
-    loadConfig(): Observable<any> {
-        /*let observable = this.http.get('/config.json')
-            .map(res => {
-                return <CitizenApplicationConfig>res.json();
-            });
-        observable.subscribe(data => {
-            this._config = data;
-            console.log('Config  fetched in ConfigService:\n' + JSON.stringify(data));
-        });
-        return observable;
-        */
-        this._config = CURRENT_CONFIG;
-        return Observable.of(CURRENT_CONFIG);
+    /**
+     * Access a copy of the url configuration
+     */
+    getUrl(type: CitizenDataObjects): string {
+        let url = this.restApi.host_url + '/';
+        switch (type) {
+            case CitizenDataObjects.Bus:
+                url += this.restApi.busses;
+                break;
+            case CitizenDataObjects.Line:
+                url += this.restApi.lines;
+                break;
+            case CitizenDataObjects.RealTimeData:
+                url += this.restApi.rt_data;
+                break;
+            case CitizenDataObjects.Route:
+                url += this.restApi.routes;
+                break;
+            case CitizenDataObjects.Stop:
+                url += this.restApi.stops;
+                break;
+            case CitizenDataObjects.UpdateData:
+                url += this.restApi.update;
+                break;
+            default:
+                return null;
+        }
+        return url;
     }
 
     /**
@@ -87,7 +107,7 @@ export class ConfigurationService {
      * @param field the field identifier of the configuration for T
      * @return {this._config}[field] if not null. DEFAULT_CONFIG[field] otherwise
      */
-    private getConfigCopy<T>(field: string): T {
+    private get<T>(field: string): T {
         let config: T = DEFAULT_CONFIG[field];
         if (this._config != null) {
             config = this._config[field];

@@ -1,8 +1,4 @@
-import {IRestBusses} from '../providers/model/rest/RestBusses';
-import {IRestLines} from '../providers/model/rest/RestLines';
-import {IRestRoutes} from '../providers/model/rest/RestRoutes';
-import {IRestStops} from '../providers/model/rest/RestStops';
-import {IUpdateData} from '../providers/model/UpdateData';
+import {CitizenDataObjects, IUpdateData, IRestStops, IRestRoutes, IRestLines, IRestBusses} from '../providers/model';
 import {Storage} from 'ionic-angular';
 import {RestApiProvider} from '../providers/data/RestApiProvider';
 import {IBusRealTimeData} from '../providers/model/BusRealTimeData';
@@ -127,14 +123,40 @@ export class MockFactory {
 
     static buildConfig(config: CitizenApplicationConfig): ConfigurationService {
         return <ConfigurationService>{
-            get restApiConfig() {
+            get restApi() {
                 return config.rest_api;
             },
-            get storageApiConfig() {
+            get storageApi() {
                 return config.storage_api;
             },
-            get miscConfig() {
+            get misc() {
                 return config.misc;
+            },
+            getUrl(type: CitizenDataObjects): string {
+                let url = this.restApi.host_url + '/';
+                switch (type) {
+                    case CitizenDataObjects.Bus:
+                        url += this.restApi.busses;
+                        break;
+                    case CitizenDataObjects.Line:
+                        url += this.restApi.lines;
+                        break;
+                    case CitizenDataObjects.RealTimeData:
+                        url += this.restApi.rt_data;
+                        break;
+                    case CitizenDataObjects.Route:
+                        url += this.restApi.routes;
+                        break;
+                    case CitizenDataObjects.Stop:
+                        url += this.restApi.stops;
+                        break;
+                    case CitizenDataObjects.UpdateData:
+                        url += this.restApi.update;
+                        break;
+                    default:
+                        return null;
+                }
+                return url;
             }
         };
     }

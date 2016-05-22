@@ -1,9 +1,10 @@
 /**
- * @author sholzer 160522
+ * Configuration file of the CitizenApplication
+ * Created by skaldo on 22.05.2016
+ * Base TypeScript implementation by sholzer on 22.05.2016
  */
-import {CitizenApplicationConfig} from './CitizenApplicationConfig';
 
-export const CURRENT_CONFIG : CitizenApplicationConfig = {
+window.citizenConfig = {
     rest_api: {
         host_url: 'http://localhost:3000',
         busses: 'busses',
@@ -22,4 +23,4 @@ export const CURRENT_CONFIG : CitizenApplicationConfig = {
     misc: {
         language: 'de'
     }
-} 
+}
