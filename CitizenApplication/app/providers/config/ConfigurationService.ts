@@ -39,10 +39,7 @@ export class ConfigurationService {
     private _config: CitizenApplicationConfig = null;
 
     constructor(private http: Http) {
-        this.loadConfig().subscribe(data => {
-            this._config = data;
-            console.log('Config loaded:\n' + JSON.stringify(this._config));
-        });
+        
     }
 
     /**
@@ -67,10 +64,15 @@ export class ConfigurationService {
     }
 
     loadConfig(): Observable<any> {
-        return this.http.get('/config.json')
+        let observable = this.http.get('/config.json')
             .map(res => {
                 return <CitizenApplicationConfig>res.json();
             });
+            observable.subscribe(data=>{
+                this._config = data;
+                console.log('Config  fetched in ConfigService:\n'+JSON.stringify(data));
+            });
+            return observable;
     }
 
     /**
