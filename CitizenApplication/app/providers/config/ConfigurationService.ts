@@ -7,6 +7,8 @@ import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {CitizenApplicationConfig, MiscellaneousConfig, StorageApiConfig, RestApiConfig, RESTAPI_FIELD, STORAGEAPI_FIELD, MISC_FIELD} from './CitizenApplicationConfig';
 
+import {CURRENT_CONFIG} from './CurrentConfig';
+
 export const DEFAULT_CONFIG: CitizenApplicationConfig = {
     rest_api: {
         host_url: 'http://localhost:3000',
@@ -39,7 +41,9 @@ export class ConfigurationService {
     private _config: CitizenApplicationConfig = null;
 
     constructor(private http: Http) {
-        
+        this.loadConfig().subscribe(data => {
+            console.log('Loaded Config:\n' + JSON.stringify(data));
+        });
     }
 
     /**
@@ -64,15 +68,18 @@ export class ConfigurationService {
     }
 
     loadConfig(): Observable<any> {
-        let observable = this.http.get('/config.json')
+        /*let observable = this.http.get('/config.json')
             .map(res => {
                 return <CitizenApplicationConfig>res.json();
             });
-            observable.subscribe(data=>{
-                this._config = data;
-                console.log('Config  fetched in ConfigService:\n'+JSON.stringify(data));
-            });
-            return observable;
+        observable.subscribe(data => {
+            this._config = data;
+            console.log('Config  fetched in ConfigService:\n' + JSON.stringify(data));
+        });
+        return observable;
+        */
+        this._config = CURRENT_CONFIG;
+        return Observable.of(CURRENT_CONFIG);
     }
 
     /**

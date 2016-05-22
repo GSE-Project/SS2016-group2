@@ -17,7 +17,6 @@ export class HomePage {
   private reqNumber: number;
   constructor(public nav: NavController, private config: ConfigurationService) {
     this.reqNumber = 0;
-    console.log('HomePage build');
   }
 
   goToStops() {
