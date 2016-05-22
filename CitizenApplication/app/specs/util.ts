@@ -1,8 +1,4 @@
-import {IRestBusses} from '../providers/model/rest/RestBusses';
-import {IRestLines} from '../providers/model/rest/RestLines';
-import {IRestRoutes} from '../providers/model/rest/RestRoutes';
-import {IRestStops} from '../providers/model/rest/RestStops';
-import {IUpdateData} from '../providers/model/UpdateData';
+import {CitizenDataObjects, IUpdateData, IRestStops, IRestRoutes, IRestLines, IRestBusses} from '../providers/model';
 import {Storage} from 'ionic-angular';
 import {RestApiProvider} from '../providers/data/RestApiProvider';
 import {IBusRealTimeData} from '../providers/model/BusRealTimeData';
@@ -11,6 +7,8 @@ import {GeoJsonObjectTypes} from '../providers/model/geojson/geojsonObject';
 import {Http, Response, ResponseOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 
+import {ConfigurationService} from '../providers/config/ConfigurationService';
+import {CitizenApplicationConfig, RestApiConfig, StorageApiConfig} from '../providers/config/CitizenApplicationConfig';
 
 export default Assert;
 
@@ -52,38 +50,38 @@ export class MockFactory {
      * @param putInto: DataConfig a container to store data into 
      * @return {Storage}
      */
-    static buildStorageMock(conf: StorageConfig, putInto: DataConfig): Storage {
+    static buildStorageMock(storage_conf: StorageConfig, putInto: DataConfig, global_conf: StorageApiConfig): Storage {
         return <Storage>{
             get(key: string): Promise<string> {
                 let value: string = '';
                 switch (key) {
-                    case 'B': value = JSON.stringify(conf.busses);
+                    case global_conf.busses: value = JSON.stringify(storage_conf.busses);
                         break;
-                    case 'L': value = JSON.stringify(conf.lines);
+                    case global_conf.lines: value = JSON.stringify(storage_conf.lines);
                         break;
-                    case 'R': value = JSON.stringify(conf.routes);
+                    case global_conf.routes: value = JSON.stringify(storage_conf.routes);
                         break;
-                    case 'S': value = JSON.stringify(conf.stops);
+                    case global_conf.stops: value = JSON.stringify(storage_conf.stops);
                 }
                 return new Promise(resolve => {
-                    setTimeout(() => { resolve(value); }, conf.delay);
+                    setTimeout(() => { resolve(value); }, storage_conf.delay);
                 });
             },
             set(key: string, value: string): Promise<any> {
                 switch (key) {
-                    case 'B': putInto.busses = JSON.parse(value);
+                    case global_conf.busses: putInto.busses = JSON.parse(value);
                         break;
-                    case 'L': putInto.lines = JSON.parse(value);
+                    case global_conf.lines: putInto.lines = JSON.parse(value);
                         break;
-                    case 'R': putInto.routes = JSON.parse(value);
+                    case global_conf.routes: putInto.routes = JSON.parse(value);
                         break;
-                    case 'S': putInto.stops = JSON.parse(value);
+                    case global_conf.stops: putInto.stops = JSON.parse(value);
                 }
 
                 return new Promise(resolve => {
                     setTimeout(() => {
                         resolve(key + value);
-                    }, conf.delay);
+                    }, storage_conf.delay);
                 });
             }
         };
@@ -94,31 +92,71 @@ export class MockFactory {
     * @param conf: RestConfig specifying return values and the answer delay
     * @return {Storage}
     */
-    static buildRestApi(conf: RestConfig): Http {
+    static buildRestApi(rest_conf: RestConfig, global_conf: RestApiConfig): Http {
         return <Http>{
             get(url: string): Observable<Response> {
                 let response: Response = new Response(new ResponseOptions({}));
-                if (url.endsWith('busses')) {
-                    response = new Response(new ResponseOptions({ body: conf.busses }));
+                if (url.endsWith(global_conf.busses)) {
+                    response = new Response(new ResponseOptions({ body: rest_conf.busses }));
                 }
-                if (url.endsWith('lines')) {
-                    response = new Response(new ResponseOptions({ body: conf.lines }));
+                if (url.endsWith(global_conf.lines)) {
+                    response = new Response(new ResponseOptions({ body: rest_conf.lines }));
                 }
-                if (url.endsWith('routes')) {
-                    response = new Response(new ResponseOptions({ body: conf.routes }));
+                if (url.endsWith(global_conf.routes)) {
+                    response = new Response(new ResponseOptions({ body: rest_conf.routes }));
                 }
-                if (url.endsWith('stops')) {
-                    response = new Response(new ResponseOptions({ body: conf.stops }));
+                if (url.endsWith(global_conf.stops)) {
+                    response = new Response(new ResponseOptions({ body: rest_conf.stops }));
                 }
-                if (url.endsWith('update')) {
-                    response = new Response(new ResponseOptions({ body: conf.update }));
+                if (url.endsWith(global_conf.update)) {
+                    response = new Response(new ResponseOptions({ body: rest_conf.update }));
                 }
-                if (url.includes('busses/')) {
-                    response = new Response(new ResponseOptions({ body: conf.rt }));
+                if (url.includes(global_conf.rt_data)) {
+                    response = new Response(new ResponseOptions({ body: rest_conf.rt }));
                 }
-                return Observable.fromPromise<Response>(new Promise((resolve) => {
-                    setTimeout(() => { resolve(response); }, conf.delay);
+                return Observable.fromPromise(new Promise<Response>((resolve) => {
+                    setTimeout(() => { resolve(response); }, rest_conf.delay);
                 }));
+            }
+        };
+    }
+
+    static buildConfig(config: CitizenApplicationConfig): ConfigurationService {
+        return <ConfigurationService>{
+            get restApi() {
+                return config.rest_api;
+            },
+            get storageApi() {
+                return config.storage_api;
+            },
+            get misc() {
+                return config.misc;
+            },
+            getUrl(type: CitizenDataObjects): string {
+                let url = this.restApi.host_url + '/';
+                switch (type) {
+                    case CitizenDataObjects.Bus:
+                        url += this.restApi.busses;
+                        break;
+                    case CitizenDataObjects.Line:
+                        url += this.restApi.lines;
+                        break;
+                    case CitizenDataObjects.RealTimeData:
+                        url += this.restApi.rt_data;
+                        break;
+                    case CitizenDataObjects.Route:
+                        url += this.restApi.routes;
+                        break;
+                    case CitizenDataObjects.Stop:
+                        url += this.restApi.stops;
+                        break;
+                    case CitizenDataObjects.UpdateData:
+                        url += this.restApi.update;
+                        break;
+                    default:
+                        return null;
+                }
+                return url;
             }
         };
     }

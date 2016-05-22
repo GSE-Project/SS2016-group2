@@ -1,6 +1,7 @@
 import {Page, NavController, Toast} from 'ionic-angular';
 import {StopListPage} from '../stop-list/stop-list';
 import {BusDetailPage} from '../bus-detail/bus-detail';
+import {ConfigurationService} from '../../providers/config/ConfigurationService';
 
 /*
   Generated class for the HomePage page.
@@ -14,7 +15,7 @@ import {BusDetailPage} from '../bus-detail/bus-detail';
 export class HomePage {
   private ip: string;
   private reqNumber: number;
-  constructor(public nav: NavController) {
+  constructor(public nav: NavController, private config: ConfigurationService) {
     this.reqNumber = 0;
   }
 
