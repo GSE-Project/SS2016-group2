@@ -20,6 +20,8 @@
   <script src="cordova.js"></script>
   <!-- Polyfill needed for platforms without Promise and Collection support -->
   <script src="build/js/es6-shim.min.js"></script>
+  <!-- Workarounf for broken pipe: https://github.com/angular/angular/issues/3333#issuecomment-203327903 -->
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
   <!-- Zone.js and Reflect-metadata  -->
   <script src="build/js/Reflect.js"></script>
   <script src="build/js/zone.js"></script>
