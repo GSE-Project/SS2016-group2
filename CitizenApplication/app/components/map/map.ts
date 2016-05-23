@@ -1,4 +1,4 @@
-import {Component, ElementRef, AfterViewInit} from '@angular/core';
+import {Component, ElementRef, AfterViewInit, OnDestroy} from '@angular/core';
 import {Geolocation} from 'ionic-native';
 
 /*
@@ -10,9 +10,10 @@ import {Geolocation} from 'ionic-native';
   selector: 'map',
   templateUrl: 'build/components/map/map.html'
 })
-export class Map implements AfterViewInit {
+export class Map implements AfterViewInit, OnDestroy {
   private map: google.maps.Map;
   private markers: { [key: string]: google.maps.Marker; } = {};
+  private mapElement;
 
   private defaultMapOptions = {
     center: new google.maps.LatLng(49.4428949, 7.5893631),
@@ -57,15 +58,21 @@ export class Map implements AfterViewInit {
   }
 
   createMap() {
-    let element = this.element.nativeElement.children[0];
-    this.map = new google.maps.Map(element, this.defaultMapOptions);
-    console.log(element);
+    this.mapElement = this.element.nativeElement.children[0];
+    this.map = new google.maps.Map(this.mapElement, this.defaultMapOptions);
   }
 
   ngAfterViewInit() {
     this.createMap();
     this.centerMap();
     this.initPositionMarker();
+  }
+
+  ngOnDestroy() {
+    console.log('Removing the map element along with all the children.');
+    while (this.mapElement.firstChild) {
+      this.mapElement.removeChild(this.mapElement.firstChild);
+    }
   }
 
   initPositionMarker() {
