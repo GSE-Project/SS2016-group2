@@ -48,13 +48,14 @@
     "typedoc": "^0.3.12"
   },
   "cordovaPlugins": [
-    "cordova-plugin-device",
     "cordova-plugin-console",
-    "cordova-plugin-whitelist",
+    "cordova-plugin-device",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard",
-    "cordova-plugin-whitelist"
+    "cordova-plugin-transport-security",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-whitelist",
+    "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [
     "ios",
