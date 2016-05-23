@@ -16,6 +16,13 @@ This app is used to get information of buses, like current location and potentia
 
 The application is written in [TypeScript](https://github.com/Microsoft/TypeScript) utilizes the beta version of the cross-platform development framework [Ionic](https://github.com/driftyco/ionic/tree/2.0). There is a generated [documentation](http://gse-project.github.io/SS2016-group2/) available.
 
+Documents
+---------
+[System Test Cases](https://github.com/GSE-Project/SS2016-group2/wiki/System-Test-Cases)
+[Traceability Matrix](https://github.com/GSE-Project/SS2016-group2/blob/develop/Iteration_1/Traceability.doc)
+[Map Classdiagram](https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/components/map/mapclassdiagram.png)
+
+
 Can I build this application myself?
 ---------------------------------------
 
