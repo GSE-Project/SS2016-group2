@@ -68,8 +68,7 @@ export class BusDetailPage {
     this.cDS.getBusses().subscribe(data => {
       id = id || this.busId;
       this.bus = data.busses.find(bus => {
-        // TODO: Iteration 2 - instead of line use the bus id.
-        return bus.id === this.schedule.lineId;
+        return bus.id === id;
       });
     });
   }

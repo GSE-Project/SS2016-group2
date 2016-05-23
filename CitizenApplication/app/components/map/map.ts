@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, AfterViewInit} from '@angular/core';
 import {Geolocation} from 'ionic-native';
 
 /*
@@ -10,13 +10,23 @@ import {Geolocation} from 'ionic-native';
   selector: 'map',
   templateUrl: 'build/components/map/map.html'
 })
-export class Map implements OnInit {
+export class Map implements AfterViewInit {
   private map: google.maps.Map;
   private markers: { [key: string]: google.maps.Marker; } = {};
 
   private defaultMapOptions = {
-    zoom: 17,
-    mypTypeId: google.maps.MapTypeId.ROADMAP,
+    center: new google.maps.LatLng(49.4428949, 7.5893631),
+    zoom: 15,
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+      mapTypeIds: [
+        google.maps.MapTypeId.ROADMAP,
+        google.maps.MapTypeId.SATELLITE
+      ]
+    },
+    zoomControl: true,
+    rotateControl: true
   };
 
   private defaultGeoLocationOptions = {
@@ -28,8 +38,11 @@ export class Map implements OnInit {
   }
 
   centerMap(center?: google.maps.LatLng) {
+    console.log('centering');
     if (!center) {
+      console.log('getCurrentPosition');
       Geolocation.getCurrentPosition(this.defaultGeoLocationOptions).then((position) => {
+        console.log('got location: ' + position);
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         this.centerMap(latLng);
       }).catch(error => {
@@ -49,7 +62,7 @@ export class Map implements OnInit {
     console.log(element);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.createMap();
     this.centerMap();
     this.initPositionMarker();
@@ -103,7 +116,7 @@ export class Map implements OnInit {
     this.markers[name] = marker;
   }
 
-    addBusMarker(position: google.maps.LatLng, name) {
+  addBusMarker(position: google.maps.LatLng, name) {
     let markerLatLong = position;
 
     let marker = new google.maps.Marker({

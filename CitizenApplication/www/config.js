@@ -6,7 +6,7 @@
 
 window.citizenConfig = {
     rest_api: {
-        host_url: 'http://localhost:3000',
+        host_url: 'http://gsep.skaldo.cz',
         busses: 'busses',
         lines: 'lines',
         routes: 'routes',
