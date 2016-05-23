@@ -12,6 +12,9 @@ import {CitizenDataObjects} from '../model';
 interface CitizenWindow extends Window { citizenConfig: CitizenApplicationConfig; }
 declare var window: CitizenWindow;
 
+/**
+ * A default Configuration to prevent null pointers in the Service
+ */
 export const DEFAULT_CONFIG: CitizenApplicationConfig = {
     rest_api: {
         host_url: 'http://localhost:3000',
@@ -41,6 +44,9 @@ export const DEFAULT_CONFIG: CitizenApplicationConfig = {
  */
 export class ConfigurationService {
 
+    /**
+     * The current used configuration
+     */
     private _config: CitizenApplicationConfig = null;
 
     constructor(private http: Http) {
