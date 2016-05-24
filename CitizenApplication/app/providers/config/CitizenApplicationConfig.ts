@@ -69,4 +69,9 @@ export interface MiscellaneousConfig {
      * The application's language.
      */
     language: string;
+    
+    /**
+     * The deepest log level to be displayed
+     */
+    log_level:string;
 }
