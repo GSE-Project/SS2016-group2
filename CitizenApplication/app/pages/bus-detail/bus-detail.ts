@@ -2,6 +2,7 @@ import {Page, NavController, NavParams} from 'ionic-angular';
 import {IBus, Bus, IBusRealTimeData} from '../../providers/model';
 import {CitizenDataService} from '../../providers/data/CitizenDataService';
 import {Map} from '../../components/map/map';
+import {Logger, LoggerFactory} from '../../providers/logger/Logger';
 
 /*
   Generated class for the BusDetailPage page.
@@ -17,6 +18,7 @@ export class BusDetailPage {
   private schedule: { lineId: number; time: Date; };
   private _realTimeData: IBusRealTimeData;
   private busId: number;
+  private logger: Logger;
 
   get realTimeData(): IBusRealTimeData {
     return this._realTimeData;
@@ -28,13 +30,14 @@ export class BusDetailPage {
   public bus: Bus = new Bus();
   public busViewType = 'information';
 
-  constructor(public nav: NavController, private navParams: NavParams, private cDS: CitizenDataService) {
+  constructor(public nav: NavController, private navParams: NavParams, private cDS: CitizenDataService, private loggerFactory: LoggerFactory) {
     this.schedule = navParams.data;
     // Caution, change this to the bus ID in the next iteration.
     this.busId = this.schedule.lineId;
     this.fetchBus();
     this.fetchBusRealTimeData();
     // Start some update interval for the posititon of the bus.
+    this.logger = this.loggerFactory.getLogger('BusDetailPage');
   }
 
   /**
