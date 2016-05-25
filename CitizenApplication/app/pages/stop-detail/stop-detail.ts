@@ -18,7 +18,7 @@ export class StopDetailPage {
   private logger: Logger;
   constructor(public nav: NavController, private navParams: NavParams, private config: ConfigurationService) {
     this.stop = navParams.data;
-    this.logger = new LoggerFactory().getLogger(config.misc.log_level,'StopDetailPage',config.misc.log_pretty_print);
+    this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'StopDetailPage', config.misc.log_pretty_print);
   }
 
   infoClicked(schedule) {

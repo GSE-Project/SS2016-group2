@@ -16,7 +16,7 @@ describe('CitizenDataService specifications', function () {
     let restApi: RestApiProvider;
     let storageApi: PersistentDataProvider;
     let config: ConfigurationService = MockFactory.buildConfig(ConfigurationService.DEFAULT_CONFIG);
-    
+
     describe('Get Server Data', () => {
 
         let updateCalled: boolean = false;

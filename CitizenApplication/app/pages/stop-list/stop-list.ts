@@ -7,7 +7,7 @@ import {Point, IStop} from '../../providers/model';
 import {StopDetailPage} from '../stop-detail/stop-detail';
 import {CitizenDataService} from '../../providers/data';
 import {Logger, LoggerFactory} from '../../providers/logger';
-import {ConfigurationService} from '../../providers/config'
+import {ConfigurationService} from '../../providers/config';
 
 class ViewStop implements IStop {
   public name: string;
