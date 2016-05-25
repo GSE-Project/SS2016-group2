@@ -3,13 +3,12 @@ import {StatusBar} from 'ionic-native';
 import {TabsPage} from './pages/tabs/tabs';
 import {RestApiProvider, PersistentDataProvider, CitizenDataService} from './providers/data';
 import {ConfigurationService} from './providers/config';
-import {LoggerFactory} from './providers/logger';
 
 @App({
   template: '<!-- custom-router-outlet></custom-router-outlet --><ion-nav [root]="rootPage"></ion-nav>',
   config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
   providers: [CitizenDataService, RestApiProvider,
-    PersistentDataProvider, ConfigurationService, LoggerFactory],
+    PersistentDataProvider, ConfigurationService],
 })
 export class MyApp {
   public rootPage: any = TabsPage;

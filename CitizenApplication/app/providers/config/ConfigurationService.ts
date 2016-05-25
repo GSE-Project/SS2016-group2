@@ -8,6 +8,7 @@ import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {CitizenApplicationConfig, MiscellaneousConfig, StorageApiConfig, RestApiConfig, RESTAPI_FIELD, STORAGEAPI_FIELD, MISC_FIELD} from './';
 import {CitizenDataObjects} from '../model';
+import {Logger, LoggerFactory} from '../logger';
 
 interface CitizenWindow extends Window { citizenConfig: CitizenApplicationConfig; }
 declare var window: CitizenWindow;
@@ -50,13 +51,16 @@ export class ConfigurationService {
      * The current used configuration
      */
     private _config: CitizenApplicationConfig = null;
+    private logger: Logger;
 
     constructor(private http: Http) {
+        this.logger = new LoggerFactory().getLogger('info', 'ConfigurationService', false);
         if (!window.citizenConfig) {
-            console.log('Config: no config found, using the default one.');
-            window.citizenConfig = DEFAULT_CONFIG;
+            this.logger.warn('Config: no config found, using the default one.');
+            window.citizenConfig = ConfigurationService.DEFAULT_CONFIG;
         }
         this._config = window.citizenConfig;
+        this.logger = new LoggerFactory().getLogger(this._config.misc.log_level, 'ConfigurationService', this._config.misc.log_pretty_print);
     }
 
     /**
@@ -120,7 +124,7 @@ export class ConfigurationService {
         if (this._config != null) {
             config = this._config[field];
         } else {
-            console.log('Configuration not yet loaded. Return to default');
+            this.logger.warn('Configuration not yet loaded. Return to default');
         }
         return <T>JSON.parse(JSON.stringify(config));
     }

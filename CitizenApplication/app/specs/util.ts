@@ -155,15 +155,6 @@ export class MockFactory {
             }
         };
     }
-
-    static buildLoggerFactory(test_idenifier: string): LoggerFactory {
-        return <LoggerFactory>{
-            getLogger(identifier: string): Logger {
-                return new Logger('debug', test_idenifier + ':' + identifier, false);
-            }
-        };
-    }
-
 }
 
 export interface DataConfig {

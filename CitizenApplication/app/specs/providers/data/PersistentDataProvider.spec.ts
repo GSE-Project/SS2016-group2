@@ -33,7 +33,6 @@ const DEFAULT_CONFIG = {
 describe('PersistentDataProvider specifications', () => {
 
     let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
-    let loggerFactory = MockFactory.buildLoggerFactory('PDPspec');
 
     var storage: Storage;
     var storageApi: PersistentDataProvider;
@@ -52,7 +51,7 @@ describe('PersistentDataProvider specifications', () => {
         };
 
 
-        storageApi = new PersistentDataProvider(config, loggerFactory);
+        storageApi = new PersistentDataProvider(config);
         storageApi.setStorage(storage);
         storageApi.getStops().subscribe(data => {
             Assert.equalJson(data, stops);
@@ -105,7 +104,7 @@ describe('PersistentDataProvider specifications', () => {
             stops: []
         };
 
-        storageApi = new PersistentDataProvider(config, loggerFactory);
+        storageApi = new PersistentDataProvider(config);
         storageApi.setStorage(storage);
         storageApi.putStops(new_stops);
         setTimeout(() => {

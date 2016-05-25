@@ -16,10 +16,10 @@ export class PersistentDataProvider {
     public storage: Storage;
     private logger: Logger;
 
-    constructor(private config: ConfigurationService, private loggerFactory: LoggerFactory) {
+    constructor(private config: ConfigurationService) {
         // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
         this.storage = new Storage(LocalStorage);
-        this.logger = this.loggerFactory.getLogger('PersistentDataProvider');
+        this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'PersistentDataProvider', config.misc.log_pretty_print);
     }
 
     /**

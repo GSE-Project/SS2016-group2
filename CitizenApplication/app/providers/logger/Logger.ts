@@ -1,34 +1,37 @@
 /**
  * @author sholzer 160524
  */
-import {ConfigurationService} from '../config/ConfigurationService';
-import {Injectable} from '@angular/core';
 
 export default LoggerFactory;
 
-const DEBUG_STRING = 'debug';
-const INFO_STRING = 'info';
-const WARN_STRING = 'warn';
-const ERROR_STRING = 'error';
+export const DEBUG_STRING = 'debug';
+export const INFO_STRING = 'info';
+export const WARN_STRING = 'warn';
+export const ERROR_STRING = 'error';
 
-@Injectable()
 export class LoggerFactory {
 
-    constructor(private config: ConfigurationService) {
+    constructor() {
 
     }
 
-    getLogger(identifier: string): Logger {
-        return new Logger(this.config.misc.log_level, identifier, this.config.misc.log_pretty_print);
+    getLogger(log_lvl: string, identifier: string, log_pretty_print: boolean): Logger {
+        return new LoggerImpl(log_lvl, identifier, log_pretty_print);
     }
 
 }
 
+export interface Logger {
+    debug(msg: string): void;
+    info(msg: string): void;
+    warn(msg: string): void;
+    error(msg: string): void;
+}
 
 /**
  * Logger class to log things in the application. This isn't an injectable service
  */
-export class Logger {
+class LoggerImpl implements Logger {
     private _identifier: string = '';
     private _logLevel: LogLevel;
     private _pretty_print: boolean;

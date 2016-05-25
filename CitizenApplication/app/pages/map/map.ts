@@ -1,7 +1,8 @@
 import {Page, NavController} from 'ionic-angular';
 import {ViewChild} from  '@angular/core';
 import {Map} from '../../components/map/map';
-import {Logger, LoggerFactory} from '../../providers/logger/Logger';
+import {Logger, LoggerFactory} from '../../providers/logger';
+import {ConfigurationService} from '../../providers/config';
 
 /*
   Created by mmueller on the XX.05.2016.
@@ -19,8 +20,8 @@ export class MapPage {
   private logger: Logger;
 
   @ViewChild(Map) map: Map;
-  constructor(public nav: NavController, private loggerFactory: LoggerFactory) {
-    this.logger = this.loggerFactory.getLogger('MapPage');
+  constructor(public nav: NavController, private config: ConfigurationService) {
+    this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'MapPage', config.misc.log_pretty_print);
   }
   centerMap() {
     this.map.centerMap();

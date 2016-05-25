@@ -10,6 +10,7 @@ import {RestApiProvider, PersistentDataProvider} from './';
 import {Observable} from 'rxjs/Observable';
 import {Logger, LoggerFactory} from '../logger/Logger';
 import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../model';
+import {ConfigurationService} from '../config';
 
 @Injectable()
 /** 
@@ -27,8 +28,8 @@ export class CitizenDataService {
 
     private logger: Logger;
 
-    constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider, private loggerFactory: LoggerFactory) {
-        this.logger = this.loggerFactory.getLogger('CitizenDataService');
+    constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider, private config: ConfigurationService) {
+        this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'CitizenDataService', config.misc.log_pretty_print);
     }
 
     /**

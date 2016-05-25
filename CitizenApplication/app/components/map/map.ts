@@ -1,6 +1,7 @@
 import {Component, ElementRef, AfterViewInit, OnDestroy} from '@angular/core';
 import {Geolocation} from 'ionic-native';
-import {Logger, LoggerFactory} from '../../providers/logger/Logger';
+import {Logger, LoggerFactory} from '../../providers/logger';
+import {ConfigurationService} from '../../providers/config';
 
 /*
   Created by skaldo and mmueller on the 09.05.2016.
@@ -38,8 +39,8 @@ export class Map implements AfterViewInit, OnDestroy {
     enableHighAccuracy: true
   };
 
-  constructor(private element: ElementRef, private loggerFactory: LoggerFactory) {
-    this.logger = this.loggerFactory.getLogger('MapComponent');
+  constructor(private element: ElementRef, private config: ConfigurationService) {
+    this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'MapComponent', this.config.misc.log_pretty_print);
   }
 
   centerMap(center?: google.maps.LatLng) {

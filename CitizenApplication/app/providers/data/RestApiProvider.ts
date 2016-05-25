@@ -19,8 +19,8 @@ export class RestApiProvider {
 
     private logger: Logger;
 
-    constructor(private http: Http, private config: ConfigurationService, private loggerFactory: LoggerFactory) {
-        this.logger = this.loggerFactory.getLogger('RestApiProvider');
+    constructor(private http: Http, private config: ConfigurationService) {
+        this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'RestApiProvider', config.misc.log_pretty_print);
     }
 
     /**

@@ -17,9 +17,9 @@ export class HomePage {
   private ip: string;
   private reqNumber: number;
   private logger: Logger;
-  constructor(public nav: NavController, private config: ConfigurationService, private loggerFactory: LoggerFactory) {
+  constructor(public nav: NavController, private config: ConfigurationService) {
     this.reqNumber = 0;
-    this.logger = this.loggerFactory.getLogger('HomePage');
+    this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'HomePage', config.misc.log_pretty_print);
   }
 
   goToStops() {

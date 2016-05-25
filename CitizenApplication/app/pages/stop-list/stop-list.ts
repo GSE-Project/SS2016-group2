@@ -7,6 +7,7 @@ import {Point, IStop} from '../../providers/model';
 import {StopDetailPage} from '../stop-detail/stop-detail';
 import {CitizenDataService} from '../../providers/data';
 import {Logger, LoggerFactory} from '../../providers/logger';
+import {ConfigurationService} from '../../providers/config'
 
 class ViewStop implements IStop {
   public name: string;
@@ -64,9 +65,9 @@ export class StopListPage {
   // private searchText: String;
   private stops: Array<ViewStop> = new Array<ViewStop>();
   private logger: Logger;
-  constructor(public nav: NavController, private cDS: CitizenDataService, private loggerFactory: LoggerFactory) {
+  constructor(public nav: NavController, private cDS: CitizenDataService, private config: ConfigurationService) {
     this.refreshStops();
-    this.logger = this.loggerFactory.getLogger('StopListPage');
+    this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'StopListPage', config.misc.log_pretty_print);
   }
 
   public onSearch(event) {

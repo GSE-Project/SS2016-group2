@@ -2,8 +2,9 @@ import {RestApiProvider, PersistentDataProvider, CitizenDataService} from '../..
 import {IUpdateData, IBus, ILine, IRoute, IStop, IBusRealTimeData, IRestStops, IRestLines, IRestBusses} from '../../../providers/model';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {Assert} from '../../util';
+import {Assert, MockFactory} from '../../util';
 import {Logger, LoggerFactory} from '../../../providers/logger';
+import {ConfigurationService} from '../../../providers/config';
 
 /**
  * Created by sholzer on 06.05.2016.
@@ -14,11 +15,8 @@ describe('CitizenDataService specifications', function () {
 
     let restApi: RestApiProvider;
     let storageApi: PersistentDataProvider;
-    let loggerFactory = <LoggerFactory>{
-        getLogger(identifier: string): Logger {
-            return new Logger('debug', 'DataLogicTest:' + identifier, false);
-        }
-    };
+    let config: ConfigurationService = MockFactory.buildConfig(ConfigurationService.DEFAULT_CONFIG);
+    
     describe('Get Server Data', () => {
 
         let updateCalled: boolean = false;
@@ -48,7 +46,7 @@ describe('CitizenDataService specifications', function () {
                 putStops(data: IRestStops): void { puttedData = data; },
             };
 
-            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, loggerFactory);
+            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, config);
             citizenDataService.updateTimeStamps().subscribe(time => {
                 citizenDataService.getStops().subscribe(data => {
                     Assert.equalJson(data, expectedResponse, 'Wrong data fetched');
@@ -94,7 +92,7 @@ describe('CitizenDataService specifications', function () {
                 putLines(data: IRestLines): void { puttedData = data; }
             };
 
-            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, loggerFactory);
+            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, config);
             citizenDataService.updateTimeStamps().subscribe(time => {
                 citizenDataService.getLines().subscribe(data => {
                     Assert.equalJson(data, expectedLines, 'Wrong data fetched');
@@ -138,7 +136,7 @@ describe('CitizenDataService specifications', function () {
                 putLines(data: IRestLines): void { }
             };
 
-            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, loggerFactory);
+            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, config);
             citizenDataService.updateTimeStamps().subscribe(time => {
                 citizenDataService.getStops().subscribe(stops => {
                     citizenDataService.getLines().subscribe(data => {
@@ -186,7 +184,7 @@ describe('CitizenDataService specifications', function () {
                 putLines(data: IRestLines): void { }
             };
 
-            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, loggerFactory);
+            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, config);
 
             updateCalled = false;
             citizenDataService.updateTimeStamps().subscribe(data => {
@@ -231,7 +229,7 @@ describe('CitizenDataService specifications', function () {
                 putLines(data: IRestLines): void { }
             };
 
-            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, loggerFactory);
+            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, config);
             citizenDataService.getBusRealTimeData(1).subscribe(data => {
                 Assert.equalJson(data, expectedRealTimeBusData);
                 done();
@@ -268,7 +266,7 @@ describe('CitizenDataService specifications', function () {
             };
 
 
-            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, loggerFactory);
+            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, config);
             citizenDataService.updateTimeStamps().subscribe(time => {
                 citizenDataService.getBusses().subscribe(data => {
                     Assert.equalJson(data, expectedBusses, 'Wrong busses fetched');
@@ -303,7 +301,7 @@ describe('CitizenDataService specifications', function () {
                 },
                 putLines(data: IRestLines): void { }
             };
-            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, loggerFactory);
+            let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, config);
             citizenDataService.updateTimeStamps().subscribe(time => {
                 citizenDataService.getLines().subscribe(data => {
                     Assert.equalJson(data, expectedLines);
@@ -334,7 +332,7 @@ describe('CitizenDataService specifications', function () {
                     return Observable.of({ timestamp: 2, lines: [] });
                 }
             };
-            let citizenDataService: CitizenDataService = new CitizenDataService(dgos_restApi, dgos_storageApi, loggerFactory);
+            let citizenDataService: CitizenDataService = new CitizenDataService(dgos_restApi, dgos_storageApi, config);
             citizenDataService.updateTimeStamps().subscribe(time => {
                 Assert.equalJson(time.stops, 2);
                 citizenDataService.getStops().subscribe(data => {

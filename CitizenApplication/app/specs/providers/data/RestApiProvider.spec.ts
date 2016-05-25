@@ -41,7 +41,6 @@ describe('RestApiProvider specifications', () => {
     let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
     let response: Response;
     let http: Http;
-    let loggerFactory = MockFactory.buildLoggerFactory('RAPspec');
 
     it('Get Stops', (done) => {
         http = <Http>{
@@ -54,7 +53,7 @@ describe('RestApiProvider specifications', () => {
             }
         };
 
-        let restApi: RestApiProvider = new RestApiProvider(http, config, loggerFactory);
+        let restApi: RestApiProvider = new RestApiProvider(http, config);
         restApi.getStops().subscribe(data => {
             Assert.equalJson(data, { timestamp: 1, stops: [] });
             done();
@@ -80,7 +79,7 @@ describe('RestApiProvider specifications', () => {
             }
         };
 
-        let restApi: RestApiProvider = new RestApiProvider(http, config, loggerFactory);
+        let restApi: RestApiProvider = new RestApiProvider(http, config);
         restApi.getUpdateData().subscribe(data => {
             Assert.equalJson(data, updateData);
             done();
@@ -105,7 +104,7 @@ describe('RestApiProvider specifications', () => {
             }
         };
 
-        let restApi: RestApiProvider = new RestApiProvider(http, config, loggerFactory);
+        let restApi: RestApiProvider = new RestApiProvider(http, config);
         restApi.getUpdateData().subscribe(data => {
             Assert.equalJson(data, rtData);
             done();
