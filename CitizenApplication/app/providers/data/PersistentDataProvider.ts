@@ -9,14 +9,17 @@ import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
 import {IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
 import {Observable} from 'rxjs/Observable';
 import {ConfigurationService} from '../config';
+import {Logger, LoggerFactory} from '../logger';
 
 @Injectable()
 export class PersistentDataProvider {
     public storage: Storage;
+    private logger:Logger;
 
-    constructor(private config: ConfigurationService) {
+    constructor(private config: ConfigurationService, private loggerFactory: LoggerFactory) {
         // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
         this.storage = new Storage(LocalStorage);
+        this.logger = this.loggerFactory.getLogger('PersistentDataProvider');
     }
 
     /**

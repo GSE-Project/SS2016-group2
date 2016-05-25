@@ -21,6 +21,8 @@ window.citizenConfig = {
         stops: 'S'
     },
     misc: {
-        language: 'de'
+        language: 'de',
+        log_level: 'debug',
+        log_pretty_print: true
     }
 }

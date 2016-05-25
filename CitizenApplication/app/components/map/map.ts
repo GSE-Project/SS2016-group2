@@ -1,5 +1,6 @@
 import {Component, ElementRef, AfterViewInit, OnDestroy} from '@angular/core';
 import {Geolocation} from 'ionic-native';
+import {Logger, LoggerFactory} from '../../providers/logger/Logger';
 
 /*
   Created by skaldo and mmueller on the 09.05.2016.
@@ -14,6 +15,8 @@ export class Map implements AfterViewInit, OnDestroy {
   private map: google.maps.Map;
   private markers: { [key: string]: google.maps.Marker; } = {};
   private mapElement;
+
+  private logger: Logger;
 
   private defaultMapOptions = {
     center: new google.maps.LatLng(49.4428949, 7.5893631),
@@ -35,21 +38,22 @@ export class Map implements AfterViewInit, OnDestroy {
     enableHighAccuracy: true
   };
 
-  constructor(private element: ElementRef) {
+  constructor(private element: ElementRef, private loggerFactory: LoggerFactory) {
+    this.logger = this.loggerFactory.getLogger('MapComponent');
   }
 
   centerMap(center?: google.maps.LatLng) {
-    console.log('centering');
+    this.logger.debug('centering');
     if (!center) {
-      console.log('getCurrentPosition');
+      this.logger.debug('getCurrentPosition');
       Geolocation.getCurrentPosition(this.defaultGeoLocationOptions).then((position) => {
-        console.log('got location: ' + position);
+        this.logger.debug('got location: ' + position);
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         this.centerMap(latLng);
       }).catch(error => {
         // Handling the error.
-        console.log('Unable to get the current location. ' + error);
-        console.log('Setting: 49.4428949, 7.5893631 as center.');
+        this.logger.error('Unable to get the current location. ' + error);
+        this.logger.error('Setting: 49.4428949, 7.5893631 as center.');
         this.centerMap(new google.maps.LatLng(49.4428949, 7.5893631));
       });
       return;
@@ -69,7 +73,7 @@ export class Map implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('Removing the map element along with all the children.');
+    this.logger.debug('Removing the map element along with all the children.');
     while (this.mapElement.firstChild) {
       this.mapElement.removeChild(this.mapElement.firstChild);
     }
@@ -81,7 +85,7 @@ export class Map implements AfterViewInit, OnDestroy {
       this.addPositionMarker(latLng, 'Standort');
     }).catch(error => {
       // Handling the error.
-      console.log('Unable to get the current location. ' + error);
+      this.logger.error('Unable to get the current location. ' + error);
     });
   }
 

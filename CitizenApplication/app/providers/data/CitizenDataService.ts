@@ -8,6 +8,7 @@
 import {Injectable} from '@angular/core';
 import {RestApiProvider, PersistentDataProvider} from './';
 import {Observable} from 'rxjs/Observable';
+import {Logger, LoggerFactory} from '../logger/Logger';
 import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../model';
 
 @Injectable()
@@ -24,14 +25,17 @@ export class CitizenDataService {
         stops: -1
     };
 
-    constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider) {
+    private logger: Logger;
+
+    constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider, private loggerFactory: LoggerFactory) {
+        this.logger = this.loggerFactory.getLogger('CitizenDataService');
     }
 
     /**
     * @return A list of Stop object
     */
     public getStops(): Observable<IRestStops> {
-        this.log('getting stops');
+        this.logger.debug('Getting Stops');
         return this.storageApi.getStops().flatMap(data => {
             if (data && (this.serverTimeStamps.stops < data.timestamp)) {
                 return Observable.of(data);
@@ -104,11 +108,11 @@ export class CitizenDataService {
     * Refreshes the last update times from the server.
     */
     public updateTimeStamps(): Observable<IUpdateData> {
-        this.log('updating timestamps');
+        this.logger.debug('updating timestamps');
         let observable = this.restApi.getUpdateData();
         observable.subscribe(updateData => {
             this.serverTimeStamps = updateData;
-            this.log('timestamps updated');
+            this.logger.debug('timestamps updated');
         });
         return observable;
     }
@@ -127,9 +131,5 @@ export class CitizenDataService {
      */
     public setHostUrl(host_address: string): void {
         this.restApi.baseUrl = host_address;
-    }
-
-    private log(message: string): void {
-        console.log('CitizenDataService: ' + message);
     }
 }

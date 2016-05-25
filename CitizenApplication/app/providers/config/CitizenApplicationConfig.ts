@@ -69,4 +69,15 @@ export interface MiscellaneousConfig {
      * The application's language.
      */
     language: string;
+
+    /**
+     * The deepest log level to be displayed
+     * Possible Value are : debug, info, warn, error
+     */
+    log_level: string;
+
+    /**
+     * Specifies if the log should be pretty and colofull or basic and PhantomJS compatible
+     */
+    log_pretty_print: boolean;
 }

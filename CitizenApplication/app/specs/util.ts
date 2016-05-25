@@ -3,6 +3,7 @@ import {Storage} from 'ionic-angular';
 import {Http, Response, ResponseOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {CitizenApplicationConfig, RestApiConfig, StorageApiConfig, ConfigurationService} from '../providers/config';
+import {Logger, LoggerFactory} from '../providers/logger';
 
 export default Assert;
 
@@ -151,6 +152,14 @@ export class MockFactory {
                         return null;
                 }
                 return url;
+            }
+        };
+    }
+
+    static buildLoggerFactory(test_idenifier: string): LoggerFactory {
+        return <LoggerFactory>{
+            getLogger(identifier: string): Logger {
+                return new Logger('debug', test_idenifier + ':' + identifier, false);
             }
         };
     }

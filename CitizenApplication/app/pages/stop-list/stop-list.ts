@@ -6,6 +6,7 @@ import {Page, NavController, Refresher} from 'ionic-angular';
 import {Point, IStop} from '../../providers/model';
 import {StopDetailPage} from '../stop-detail/stop-detail';
 import {CitizenDataService} from '../../providers/data';
+import {Logger, LoggerFactory} from '../../providers/logger';
 
 class ViewStop implements IStop {
   public name: string;
@@ -62,8 +63,10 @@ class ViewStop implements IStop {
 export class StopListPage {
   // private searchText: String;
   private stops: Array<ViewStop> = new Array<ViewStop>();
-  constructor(public nav: NavController, private cDS: CitizenDataService) {
+  private logger: Logger;
+  constructor(public nav: NavController, private cDS: CitizenDataService, private loggerFactory: LoggerFactory) {
     this.refreshStops();
+    this.logger = this.loggerFactory.getLogger('StopListPage');
   }
 
   public onSearch(event) {
@@ -99,9 +102,9 @@ export class StopListPage {
     let observable = this.cDS.getStops();
     this.stops = new Array<ViewStop>();
     observable.subscribe(data => {
-      this.log('Stops recieved');
+      this.logger.debug('Stops recieved');
       data.stops.forEach(stop => {
-        this.log('UI: got stop' + stop.name);
+        this.logger.debug('UI: got stop' + stop.name);
         // faking time in order to prevent errors:
         stop.schedule.forEach(item => {
           item.time = this.getRandomTime();
@@ -110,9 +113,5 @@ export class StopListPage {
       });
     });
     return observable;
-  }
-
-  private log(message: string): void {
-    console.log('StopListPage: ' + message);
   }
 }
