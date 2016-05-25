@@ -15,7 +15,7 @@ declare var window: CitizenWindow;
 /**
  * A default Configuration to prevent null pointers in the Service
  */
-export const DEFAULT_CONFIG = <CitizenApplicationConfig> {
+export const DEFAULT_CONFIG = <CitizenApplicationConfig>{
     rest_api: {
         host_url: 'http://localhost:3000',
         busses: 'busses',
@@ -33,7 +33,8 @@ export const DEFAULT_CONFIG = <CitizenApplicationConfig> {
     },
     misc: {
         language: 'de',
-        log_level:'debug'
+        log_level: 'debug',
+        log_pretty_print: false
     }
 };
 

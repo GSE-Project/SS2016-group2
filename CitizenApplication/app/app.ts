@@ -5,12 +5,13 @@ import {RestApiProvider} from './providers/data/RestApiProvider';
 import {PersistentDataProvider} from './providers/data/PersistentDataProvider';
 import {CitizenDataService} from './providers/data/CitizenDataService';
 import {ConfigurationService} from './providers/config/ConfigurationService';
+import {LoggerFactory} from './providers/logger/Logger';
 
 @App({
   template: '<!-- custom-router-outlet></custom-router-outlet --><ion-nav [root]="rootPage"></ion-nav>',
   config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
   providers: [CitizenDataService, RestApiProvider,
-    PersistentDataProvider, ConfigurationService],
+    PersistentDataProvider, ConfigurationService, LoggerFactory],
 })
 export class MyApp {
   public rootPage: any = TabsPage;
