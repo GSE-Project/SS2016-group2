@@ -6,7 +6,8 @@
  */
 
 import {Injectable} from '@angular/core';
-import {RestApiProvider, PersistentDataProvider} from './';
+import {RestApiProvider} from './RestApiProvider';
+import {PersistentDataProvider} from './PersistentDataProvider';
 import {Observable} from 'rxjs/Observable';
 import {Logger, LoggerFactory} from '../logger/Logger';
 import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../model';
