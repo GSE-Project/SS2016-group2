@@ -15,7 +15,7 @@ declare var window: CitizenWindow;
 /**
  * A default Configuration to prevent null pointers in the Service
  */
-export const DEFAULT_CONFIG = <CitizenApplicationConfig>{
+const DEFAULT_CONFIG: CitizenApplicationConfig = {
     rest_api: {
         host_url: 'http://localhost:3000',
         busses: 'busses',
@@ -123,6 +123,10 @@ export class ConfigurationService {
             console.log('Configuration not yet loaded. Return to default');
         }
         return <T>JSON.parse(JSON.stringify(config));
+    }
+
+    static get DEFAULT_CONFIG() {
+        return DEFAULT_CONFIG;
     }
 }
 

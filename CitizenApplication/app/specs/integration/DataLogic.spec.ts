@@ -6,7 +6,7 @@ import {Assert, MockFactory, DataConfig, StorageConfig, RestConfig} from '../uti
 import {Storage} from 'ionic-angular';
 import {Http, Response, ResponseOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {ConfigurationService, DEFAULT_CONFIG, CitizenApplicationConfig} from '../../providers/config';
+import {ConfigurationService, CitizenApplicationConfig} from '../../providers/config';
 
 
 /**
@@ -14,6 +14,28 @@ import {ConfigurationService, DEFAULT_CONFIG, CitizenApplicationConfig} from '..
  */
 
 const TIMEOUT = 5000;
+const DEFAULT_CONFIG: CitizenApplicationConfig = {
+    rest_api: {
+        host_url: 'http://localhost:3000',
+        busses: 'busses',
+        lines: 'lines',
+        routes: 'routes',
+        rt_data: 'busses/',
+        stops: 'stops',
+        update: 'update'
+    },
+    storage_api: {
+        busses: 'B',
+        lines: 'L',
+        routes: 'R',
+        stops: 'S'
+    },
+    misc: {
+        language: 'de',
+        log_level: 'debug',
+        log_pretty_print: false
+    }
+};
 
 describe('Data Logic Specification with timeout of ' + TIMEOUT + ' ms', () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
@@ -23,6 +45,7 @@ describe('Data Logic Specification with timeout of ' + TIMEOUT + ' ms', () => {
 });
 
 function getTestSetup(http: Http, storage: Storage): CitizenDataService {
+    debugger;
     let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
     let loggerFactory: LoggerFactory = MockFactory.buildLoggerFactory('DataLogicSpecs');
     let pdp: PersistentDataProvider = new PersistentDataProvider(config, loggerFactory);
@@ -57,6 +80,7 @@ function tests(storageDelay: number, restDelay: number): void {
                     MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
                     MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
+                debugger;
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getStops().subscribe(stops => {
                         Assert.equalJson(stops, restConf.stops);

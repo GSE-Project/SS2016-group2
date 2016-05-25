@@ -3,5 +3,5 @@
  */
 
 export * from './Coordinate';
-export * from './GeoJSonObject';
+export * from './geojsonObject';
 export * from './Point';

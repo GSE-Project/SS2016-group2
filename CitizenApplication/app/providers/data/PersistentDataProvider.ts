@@ -14,7 +14,7 @@ import {Logger, LoggerFactory} from '../logger';
 @Injectable()
 export class PersistentDataProvider {
     public storage: Storage;
-    private logger:Logger;
+    private logger: Logger;
 
     constructor(private config: ConfigurationService, private loggerFactory: LoggerFactory) {
         // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage

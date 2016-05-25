@@ -5,14 +5,36 @@ import {PersistentDataProvider} from '../../../providers/data';
 import {IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../../../providers/model/rest';
 import {Storage} from 'ionic-angular';
 import {Assert, MockFactory} from '../../util';
-import {ConfigurationService, DEFAULT_CONFIG} from '../../../providers/config';
+import {ConfigurationService} from '../../../providers/config';
 
+const DEFAULT_CONFIG = {
+    rest_api: {
+        host_url: 'http://localhost:3000',
+        busses: 'busses',
+        lines: 'lines',
+        routes: 'routes',
+        rt_data: 'busses/',
+        stops: 'stops',
+        update: 'update'
+    },
+    storage_api: {
+        busses: 'B',
+        lines: 'L',
+        routes: 'R',
+        stops: 'S'
+    },
+    misc: {
+        language: 'de',
+        log_level: 'debug',
+        log_pretty_print: false
+    }
+};
 
 describe('PersistentDataProvider specifications', () => {
 
     let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
     let loggerFactory = MockFactory.buildLoggerFactory('PDPspec');
-    
+
     var storage: Storage;
     var storageApi: PersistentDataProvider;
 

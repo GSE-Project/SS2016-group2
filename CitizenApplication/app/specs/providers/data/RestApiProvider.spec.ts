@@ -10,7 +10,31 @@ import {IUpdateData, IBusRealTimeData, GeoJsonObjectTypes} from '../../../provid
 import {Http, Response, ResponseOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Assert, MockFactory} from '../../util';
-import {ConfigurationService, DEFAULT_CONFIG} from '../../../providers/config';
+import {ConfigurationService} from '../../../providers/config';
+
+const DEFAULT_CONFIG = {
+    rest_api: {
+        host_url: 'http://localhost:3000',
+        busses: 'busses',
+        lines: 'lines',
+        routes: 'routes',
+        rt_data: 'busses/',
+        stops: 'stops',
+        update: 'update'
+    },
+    storage_api: {
+        busses: 'B',
+        lines: 'L',
+        routes: 'R',
+        stops: 'S'
+    },
+    misc: {
+        language: 'de',
+        log_level: 'debug',
+        log_pretty_print: false
+    }
+};
+
 
 describe('RestApiProvider specifications', () => {
 

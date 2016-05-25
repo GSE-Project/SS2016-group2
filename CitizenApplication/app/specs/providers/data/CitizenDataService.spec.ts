@@ -4,7 +4,6 @@ import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Assert} from '../../util';
 import {Logger, LoggerFactory} from '../../../providers/logger';
-import {DEFAULT_CONFIG} from '../../../providers/config';
 
 /**
  * Created by sholzer on 06.05.2016.
