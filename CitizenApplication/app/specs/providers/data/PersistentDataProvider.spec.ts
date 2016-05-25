@@ -16,7 +16,8 @@ import {ConfigurationService, DEFAULT_CONFIG} from '../../../providers/config/Co
 describe('PersistentDataProvider specifications', () => {
 
     let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
-
+    let loggerFactory = MockFactory.buildLoggerFactory('PDPspec');
+    
     var storage: Storage;
     var storageApi: PersistentDataProvider;
 
@@ -34,7 +35,7 @@ describe('PersistentDataProvider specifications', () => {
         };
 
 
-        storageApi = new PersistentDataProvider(config);
+        storageApi = new PersistentDataProvider(config, loggerFactory);
         storageApi.setStorage(storage);
         storageApi.getStops().subscribe(data => {
             Assert.equalJson(data, stops);
@@ -87,7 +88,7 @@ describe('PersistentDataProvider specifications', () => {
             stops: []
         };
 
-        storageApi = new PersistentDataProvider(config);
+        storageApi = new PersistentDataProvider(config, loggerFactory);
         storageApi.setStorage(storage);
         storageApi.putStops(new_stops);
         setTimeout(() => {

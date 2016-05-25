@@ -9,6 +9,7 @@ import {Observable} from 'rxjs/Observable';
 import {CitizenDataObjects, IUpdateData, IBus, ILine, IRoute, IStop, IBusRealTimeData, IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../model';
 import 'rxjs/Rx';
 import {ConfigurationService} from '../config/ConfigurationService';
+import {Logger, LoggerFactory} from '../logger/Logger';
 
 /**
  * Provides access to the rest backend. 
@@ -16,8 +17,10 @@ import {ConfigurationService} from '../config/ConfigurationService';
 @Injectable()
 export class RestApiProvider {
 
-    constructor(private http: Http, private config: ConfigurationService) {
+    private logger: Logger;
 
+    constructor(private http: Http, private config: ConfigurationService, private loggerFactory: LoggerFactory) {
+        this.logger = this.loggerFactory.getLogger('RestApiProvider');
     }
 
     /**
@@ -87,13 +90,5 @@ export class RestApiProvider {
         return this.http.get(this.config.getUrl(CitizenDataObjects.RealTimeData) + id).map(res => {
             return <IBusRealTimeData>res.json();
         });
-    };
-
-    /**
-     * Logs Messages for this class to the console: RestApiProvider: {message}
-     * @param message :string
-     */
-    log(message: string): void {
-        console.log('RestApiProvider: ' + message);
     };
 }

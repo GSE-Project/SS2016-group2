@@ -8,6 +8,7 @@ import {Http, Response, ResponseOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 
 import {ConfigurationService} from '../providers/config/ConfigurationService';
+import {Logger, LoggerFactory} from '../providers/logger/Logger';
 import {CitizenApplicationConfig, RestApiConfig, StorageApiConfig} from '../providers/config/CitizenApplicationConfig';
 
 export default Assert;
@@ -157,6 +158,14 @@ export class MockFactory {
                         return null;
                 }
                 return url;
+            }
+        };
+    }
+
+    static buildLoggerFactory(test_idenifier: string): LoggerFactory {
+        return <LoggerFactory>{
+            getLogger(identifier: string): Logger {
+                return new Logger('debug', test_idenifier + ':' + identifier, false);
             }
         };
     }

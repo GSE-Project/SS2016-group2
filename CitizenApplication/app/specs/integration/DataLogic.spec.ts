@@ -7,7 +7,7 @@ import {IUpdateData} from '../../providers/model/UpdateData';
 import {PersistentDataProvider} from '../../providers/data/PersistentDataProvider';
 import {RestApiProvider} from '../../providers/data/RestApiProvider';
 import {CitizenDataService} from '../../providers/data/CitizenDataService';
-
+import {Logger, LoggerFactory} from '../../providers/logger/Logger';
 
 import {Assert, MockFactory, DataConfig, StorageConfig, RestConfig} from '../util';
 
@@ -34,10 +34,11 @@ describe('Data Logic Specification with timeout of ' + TIMEOUT + ' ms', () => {
 
 function getTestSetup(http: Http, storage: Storage): CitizenDataService {
     let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
-    let pdp: PersistentDataProvider = new PersistentDataProvider(config);
-    let rap: RestApiProvider = new RestApiProvider(http, config);
+    let loggerFactory: LoggerFactory = MockFactory.buildLoggerFactory('DataLogicSpecs');
+    let pdp: PersistentDataProvider = new PersistentDataProvider(config, loggerFactory);
+    let rap: RestApiProvider = new RestApiProvider(http, config, loggerFactory);
     pdp.setStorage(storage);
-    return new CitizenDataService(rap, pdp);
+    return new CitizenDataService(rap, pdp, loggerFactory);
 }
 
 function tests(storageDelay: number, restDelay: number): void {
