@@ -18,7 +18,7 @@ The application is written in [TypeScript](https://github.com/Microsoft/TypeScri
 
 Documents
 ---------
-[System Test Cases](https://github.com/GSE-Project/SS2016-group2/wiki/System-Test-Cases)
+[System Test Cases (external OneNote Document)](https://onedrive.live.com/redir?resid=A7AA3215DAB6E5D5!1690&authkey=!AO5qLfyr3LWXjA4&ithint=onenote%2c)
 [Traceability Matrix](https://github.com/GSE-Project/SS2016-group2/blob/develop/Iteration_1/Traceability.doc)
 [Map Classdiagram](https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/components/map/mapclassdiagram.png)
 
