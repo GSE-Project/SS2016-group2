@@ -1,22 +1,11 @@
 
-import {IRestBusses} from '../../providers/model/rest/RestBusses';
-import {IRestLines} from '../../providers/model/rest/RestLines';
-import {IRestRoutes} from '../../providers/model/rest/RestRoutes';
-import {IRestStops} from '../../providers/model/rest/RestStops';
-import {IUpdateData} from '../../providers/model/UpdateData';
-import {PersistentDataProvider} from '../../providers/data/PersistentDataProvider';
-import {RestApiProvider} from '../../providers/data/RestApiProvider';
-import {CitizenDataService} from '../../providers/data/CitizenDataService';
-
-
+import {IUpdateData, IRestBusses, IRestLines, IRestRoutes, IRestStops} from '../../providers/model';
+import {PersistentDataProvider, RestApiProvider, CitizenDataService} from '../../providers/data';
 import {Assert, MockFactory, DataConfig, StorageConfig, RestConfig} from '../util';
-
 import {Storage} from 'ionic-angular';
 import {Http, Response, ResponseOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-
-import {CitizenApplicationConfig} from '../../providers/config/CitizenApplicationConfig';
-import {ConfigurationService, DEFAULT_CONFIG} from '../../providers/config/ConfigurationService';
+import {ConfigurationService, DEFAULT_CONFIG, CitizenApplicationConfig} from '../../providers/config';
 
 
 /**

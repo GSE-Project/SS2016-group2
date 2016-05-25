@@ -1,19 +1,7 @@
-import {RestApiProvider} from '../../../providers/data/RestApiProvider';
-import {PersistentDataProvider} from '../../../providers/data/PersistentDataProvider';
-import {IUpdateData} from '../../../providers/model/UpdateData';
-import {IBus} from '../../../providers/model/Bus';
-import {ILine} from '../../../providers/model/Line';
-import {IRoute} from '../../../providers/model/Route';
-import {IStop} from '../../../providers/model/Stop';
-
+import {RestApiProvider, PersistentDataProvider, CitizenDataService} from '../../../providers/data';
+import {IUpdateData, IBus, ILine, IRoute, IStop, IBusRealTimeData, IRestStops, IRestLines, IRestBusses} from '../../../providers/model';
 import {Http} from '@angular/http';
-import {IRestStops} from '../../../providers/model/rest/RestStops';
 import {Observable} from 'rxjs/Observable';
-import {CitizenDataService} from '../../../providers/data/CitizenDataService';
-import {IBusRealTimeData} from '../../../providers/model/BusRealTimeData';
-import {IRestLines} from '../../../providers/model/rest/RestLines';
-import {IRestBusses} from '../../../providers/model/rest/RestBusses';
-
 import {Assert} from '../../util';
 
 /**

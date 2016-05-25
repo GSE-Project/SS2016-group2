@@ -1,5 +1,5 @@
 import {Page, NavController, NavParams, ActionSheet} from 'ionic-angular';
-import {IStop} from '../../providers/model/Stop';
+import {IStop} from '../../providers/model';
 import {BusDetailPage} from '../bus-detail/bus-detail';
 
 /*

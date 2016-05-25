@@ -5,17 +5,12 @@
  * https://angular.io/docs/js/latest/api/http/Response-class.html
  * https://angular.io/docs/ts/latest/api/http/ResponseOptions-class.html
  */
-
-import {RestApiProvider} from '../../../providers/data/RestApiProvider';
-import {IUpdateData} from '../../../providers/model/UpdateData';
-import {IBusRealTimeData} from '../../../providers/model/BusRealTimeData';
-import {GeoJsonObjectTypes} from '../../../providers/model/geojson/geojsonObject';
-
+import {RestApiProvider} from '../../../providers/data';
+import {IUpdateData, IBusRealTimeData, GeoJsonObjectTypes} from '../../../providers/model';
 import {Http, Response, ResponseOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Assert, MockFactory} from '../../util';
-
-import {ConfigurationService, DEFAULT_CONFIG} from '../../../providers/config/ConfigurationService';
+import {ConfigurationService, DEFAULT_CONFIG} from '../../../providers/config';
 
 describe('RestApiProvider specifications', () => {
 

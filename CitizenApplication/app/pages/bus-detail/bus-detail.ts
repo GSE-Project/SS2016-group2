@@ -1,6 +1,6 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
 import {IBus, Bus, IBusRealTimeData} from '../../providers/model';
-import {CitizenDataService} from '../../providers/data/CitizenDataService';
+import {CitizenDataService} from '../../providers/data';
 import {Map} from '../../components/map/map';
 
 /*

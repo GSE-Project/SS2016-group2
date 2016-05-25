@@ -1,7 +1,7 @@
 import {Page, NavController, Toast} from 'ionic-angular';
 import {StopListPage} from '../stop-list/stop-list';
 import {BusDetailPage} from '../bus-detail/bus-detail';
-import {ConfigurationService} from '../../providers/config/ConfigurationService';
+import {ConfigurationService} from '../../providers/config';
 
 /*
   Generated class for the HomePage page.

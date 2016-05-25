@@ -3,10 +3,9 @@
  */
 
 import {Page, NavController, Refresher} from 'ionic-angular';
-import {Point} from '../../providers/model/geojson/Point';
+import {Point, IStop} from '../../providers/model';
 import {StopDetailPage} from '../stop-detail/stop-detail';
-import {CitizenDataService} from '../../providers/data/CitizenDataService';
-import {IStop} from '../../providers/model/Stop';
+import {CitizenDataService} from '../../providers/data';
 
 class ViewStop implements IStop {
   public name: string;

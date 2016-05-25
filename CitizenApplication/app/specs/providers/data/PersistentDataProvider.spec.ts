@@ -1,16 +1,11 @@
 /**
  * @author sholzer 160516
  */
-
-import {PersistentDataProvider} from '../../../providers/data/PersistentDataProvider';
-import {IRestStops} from '../../../providers/model/rest/RestStops';
-import {IRestBusses} from '../../../providers/model/rest/RestBusses';
-import {IRestLines} from '../../../providers/model/rest/RestLines';
-import {IRestRoutes} from '../../../providers/model/rest/RestRoutes';
+import {PersistentDataProvider} from '../../../providers/data';
+import {IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../../../providers/model/rest';
 import {Storage} from 'ionic-angular';
-
 import {Assert, MockFactory} from '../../util';
-import {ConfigurationService, DEFAULT_CONFIG} from '../../../providers/config/ConfigurationService';
+import {ConfigurationService, DEFAULT_CONFIG} from '../../../providers/config';
 
 
 describe('PersistentDataProvider specifications', () => {

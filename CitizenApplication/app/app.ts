@@ -1,10 +1,8 @@
 import {App, Platform} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {TabsPage} from './pages/tabs/tabs';
-import {RestApiProvider} from './providers/data/RestApiProvider';
-import {PersistentDataProvider} from './providers/data/PersistentDataProvider';
-import {CitizenDataService} from './providers/data/CitizenDataService';
-import {ConfigurationService} from './providers/config/ConfigurationService';
+import {RestApiProvider, PersistentDataProvider, CitizenDataService} from './providers/data';
+import {ConfigurationService} from './providers/config';
 
 @App({
   template: '<!-- custom-router-outlet></custom-router-outlet --><ion-nav [root]="rootPage"></ion-nav>',

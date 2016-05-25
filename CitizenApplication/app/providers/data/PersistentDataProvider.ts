@@ -8,7 +8,7 @@ import {Injectable} from '@angular/core';
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
 import {IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
 import {Observable} from 'rxjs/Observable';
-import {ConfigurationService} from '../config/ConfigurationService';
+import {ConfigurationService} from '../config';
 
 @Injectable()
 export class PersistentDataProvider {

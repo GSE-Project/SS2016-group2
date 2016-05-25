@@ -3,6 +3,7 @@
  */
 
 export * from './rest';
+export * from './geojson';
 export * from './Bus';
 export * from './Line';
 export * from './Route';

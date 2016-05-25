@@ -1,14 +1,8 @@
-import {CitizenDataObjects, IUpdateData, IRestStops, IRestRoutes, IRestLines, IRestBusses} from '../providers/model';
+import {CitizenDataObjects, IUpdateData, IRestStops, IRestRoutes, IRestLines, IRestBusses, IBusRealTimeData, GeoJsonObjectTypes} from '../providers/model';
 import {Storage} from 'ionic-angular';
-import {RestApiProvider} from '../providers/data/RestApiProvider';
-import {IBusRealTimeData} from '../providers/model/BusRealTimeData';
-import {GeoJsonObjectTypes} from '../providers/model/geojson/geojsonObject';
-
 import {Http, Response, ResponseOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-
-import {ConfigurationService} from '../providers/config/ConfigurationService';
-import {CitizenApplicationConfig, RestApiConfig, StorageApiConfig} from '../providers/config/CitizenApplicationConfig';
+import {CitizenApplicationConfig, RestApiConfig, StorageApiConfig, ConfigurationService} from '../providers/config';
 
 export default Assert;
 

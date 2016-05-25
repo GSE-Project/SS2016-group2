@@ -2,9 +2,7 @@
  * Created by steff on 13.05.2016.
  * Reviewed by skaldo on 13.05.2016.
  */
-
-import {IRestDataObject} from './RestDataObject';
-import {IRoute} from '../Route';
+import {IRoute, IRestDataObject} from '../';
 
 export default IRestRoutes;
 
