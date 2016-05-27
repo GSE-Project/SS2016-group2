@@ -361,8 +361,8 @@ describe('CitizenDataService specifications', function () {
                     putStops(arg: any) { }
                 }
             );
-            cds.updateTimeStamps().subscribe((time)=>{
-                cds.getStops().subscribe((data)=>{
+            cds.updateTimeStamps().subscribe((time) => {
+                cds.getStops().subscribe((data) => {
                     Assert.equalJson(data, expectedStops, 'Null not catched');
                     done();
                 });
@@ -387,8 +387,8 @@ describe('CitizenDataService specifications', function () {
                     putRoutes(arg: any) { }
                 }
             );
-            cds.updateTimeStamps().subscribe((time)=>{
-                cds.getRoutes().subscribe((data)=>{
+            cds.updateTimeStamps().subscribe((time) => {
+                cds.getRoutes().subscribe((data) => {
                     Assert.equalJson(data, expectedRoutes, 'Null not catched');
                     done();
                 });
@@ -413,8 +413,8 @@ describe('CitizenDataService specifications', function () {
                     putLines(arg: any) { }
                 }
             );
-            cds.updateTimeStamps().subscribe((time)=>{
-                cds.getLines().subscribe((data)=>{
+            cds.updateTimeStamps().subscribe((time) => {
+                cds.getLines().subscribe((data) => {
                     Assert.equalJson(data, expectedData, 'Null not catched');
                     done();
                 });
@@ -439,8 +439,8 @@ describe('CitizenDataService specifications', function () {
                     putBusses(arg: any) { }
                 }
             );
-            cds.updateTimeStamps().subscribe((time)=>{
-                cds.getBusses().subscribe((data)=>{
+            cds.updateTimeStamps().subscribe((time) => {
+                cds.getBusses().subscribe((data) => {
                     Assert.equalJson(data, expectedData, 'Null not catched');
                     done();
                 });
