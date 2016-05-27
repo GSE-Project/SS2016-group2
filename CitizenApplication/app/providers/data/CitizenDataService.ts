@@ -58,16 +58,12 @@ export class CitizenDataService {
     */
     public getStops(): Observable<IRestStops> {
         this.logger.debug('Getting Stops');
-        return this.storageApi.getStops().flatMap(data => {
-            if (data && (this.serverTimeStamps.stops < data.timestamp)) {
-                return Observable.of(data);
-            }
-            let restObservable: Observable<IRestStops> = this.restApi.getStops();
-            restObservable.subscribe(server_data => {
-                this.storageApi.putStops(server_data);
-            });
-            return restObservable;
-        });
+        return this.getData<IRestStops>(
+            () => { return this.storageApi.getStops(); },
+            (data: IRestStops) => { this.storageApi.putStops(data); },
+            this.serverTimeStamps.stops,
+            () => { return this.restApi.getStops(); }
+        );
     }
 
     /**
