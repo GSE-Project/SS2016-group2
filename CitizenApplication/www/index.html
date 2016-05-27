@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>Ionic</title>
+  <title>Citizen Application</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
@@ -16,12 +16,18 @@
   <!-- this Ionic's root component and where the app will load -->
   <ion-app></ion-app>
 
+  <script src="config.js"></script>
   <!-- cordova.js required for cordova apps -->
   <script src="cordova.js"></script>
   <!-- Polyfill needed for platforms without Promise and Collection support -->
   <script src="build/js/es6-shim.min.js"></script>
+  <!-- Workarounf for broken pipe: https://github.com/angular/angular/issues/3333#issuecomment-203327903 -->
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
   <!-- Zone.js and Reflect-metadata  -->
-  <script src="build/js/angular2-polyfills.js"></script>
+  <script src="build/js/Reflect.js"></script>
+  <script src="build/js/zone.js"></script>
+  <!-- Google maps JS API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=true" type="text/javascript"></script>
   <!-- the bundle which is built from the app's source code -->
   <script src="build/js/app.bundle.js"></script>
 </body>

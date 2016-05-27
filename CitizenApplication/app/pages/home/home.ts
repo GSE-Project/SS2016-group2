@@ -1,5 +1,8 @@
 import {Page, NavController, Toast} from 'ionic-angular';
-import {Test} from '../../providers/test/test';
+import {StopListPage} from '../stop-list/stop-list';
+import {BusDetailPage} from '../bus-detail/bus-detail';
+import {ConfigurationService} from '../../providers/config';
+import {Logger, LoggerFactory} from '../../providers/logger';
 
 /*
   Generated class for the HomePage page.
@@ -8,27 +11,34 @@ import {Test} from '../../providers/test/test';
   Ionic pages and navigation.
 */
 @Page({
-  templateUrl: 'build/pages/home/home.html',
-  providers: [Test]
+  templateUrl: 'build/pages/home/home.html'
 })
 export class HomePage {
   private ip: string;
   private reqNumber: number;
-  constructor(public nav: NavController, private test: Test) {
+  private logger: Logger;
+  constructor(public nav: NavController, private config: ConfigurationService) {
     this.reqNumber = 0;
+    this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'HomePage', config.misc.log_pretty_print);
   }
-  
-  askServiceForMyIP() {
-    this.test.load().then((result: any) => {
-      let toast = Toast.create({
-          message: 'Your IP is: '+result.ip,
-          duration: 3000
-      });
-        
-      this.nav.present(toast);
-      
-      this.ip = result.ip;
-      this.reqNumber++;
-    });
+
+  goToStops() {
+    this.nav.push(StopListPage);
+  }
+
+  goToBusDetail() {
+    this.nav.push(BusDetailPage, { lineId: 1, time: new Date() });
+  }
+
+  // hide nav bar when we enter the page
+  onPageWillEnter() {
+    var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
+    element.style.display = 'none';
+  }
+
+  // show nav bar when we leave the page
+  onPageDidLeave() {
+    var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
+    element.style.display = 'block';
   }
 }

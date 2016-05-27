@@ -1,0 +1,16 @@
+<!--
+ Created by mmueller on 05.05.2016.
+ Template for the map page.
+-->
+<ion-navbar *navbar>
+  <ion-title>Karte</ion-title>
+  <ion-nav-items secondary>
+    <button (click)="centerMap()">Center</button>
+    <!--<button (click)="addMarker(49.42282, 7.74913,'current location')">Add Marker</button>-->
+  </ion-nav-items>
+</ion-navbar>
+
+
+<ion-content class="map">
+  <map></map>
+</ion-content>

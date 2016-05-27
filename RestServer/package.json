@@ -1,0 +1,15 @@
+{
+  "name": "restserver",
+  "version": "0.0.1",
+  "description": "Emulates the REST server, that's going to be developed by the Group1 of the GSE Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dominik Skalnik",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "minimist": "^1.2.0"
+  }
+}

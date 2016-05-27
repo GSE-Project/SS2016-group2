@@ -5,9 +5,27 @@
   Ionic pages and navigation.
 -->
 <ion-navbar *navbar>
-  <ion-title>StopDetail</ion-title>
+  <ion-title>{{stop.name}}</ion-title>
+  <ion-buttons end>
+    <button>
+      <ion-icon name="more"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-navbar>
 
-<ion-content padding class="stop-detail">
-  
+<ion-content class="stop-detail">
+  <ion-card *ngFor="let schedule of stop.getSchedules(8)" class="line line{{schedule.lineId}}">
+    <ion-card-header>
+      Line {{schedule.lineId}}, Towards: xxx
+      <ion-icon name="information-circle" class="infoBtn" (click)="infoClicked(schedule)"></ion-icon>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Estimated arrival: {{schedule.time | date:'HH:mm'}}</p>
+      <p>Free seats: 20</p>
+    </ion-card-content>
+    <ion-card-footer class="requestStopBtn">
+        <ion-icon name="hand"></ion-icon>
+        Request stop
+    </ion-card-footer>
+  </ion-card>
 </ion-content>

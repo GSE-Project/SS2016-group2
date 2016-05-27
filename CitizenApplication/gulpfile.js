@@ -1,9 +1,10 @@
 var gulp = require('gulp'),
-    gulpWatch = require('gulp-watch'),
-    del = require('del'),
-    runSequence = require('run-sequence'),
-    argv = process.argv;
-
+  gulpWatch = require('gulp-watch'),
+  del = require('del'),
+  runSequence = require('run-sequence'),
+  tslint = require("gulp-tslint"),
+  argv = process.argv,
+  test = require('./test/test');
 
 /**
  * Ionic hooks
@@ -33,40 +34,111 @@ var copyHTML = require('ionic-gulp-html-copy');
 var copyFonts = require('ionic-gulp-fonts-copy');
 var copyScripts = require('ionic-gulp-scripts-copy');
 
+// This function copies our fonts to the build folder.
+// Author: Dominik Skalnik, 5.5.2016
+var copyDigitaleDoerferFonts = function (options) {
+  options.src = options.src || 'resources/fonts/**/*.+(ttf|woff|woff2)';
+  options.dest = options.dest || 'www/build/fonts';
+
+  return gulp.src(options.src)
+    .pipe(gulp.dest(options.dest));
+};
+
 var isRelease = argv.indexOf('--release') > -1;
 
-gulp.task('watch', ['clean'], function(done){
+gulp.task('watch', ['clean'], function (done) {
   runSequence(
     ['sass', 'html', 'fonts', 'scripts'],
-    function(){
-      gulpWatch('app/**/*.scss', function(){ gulp.start('sass'); });
-      gulpWatch('app/**/*.html', function(){ gulp.start('html'); });
+    function () {
+      gulpWatch('app/**/*.scss', function () { gulp.start('sass'); });
+      gulpWatch('app/**/*.html', function () { gulp.start('html'); });
       buildBrowserify({ watch: true }).on('end', done);
     }
   );
 });
 
-gulp.task('build', ['clean'], function(done){
+gulp.task('build', ['clean'], function (done) {
   runSequence(
     ['sass', 'html', 'fonts', 'scripts'],
-    function(){
+    function () {
+      var error = 0;
       buildBrowserify({
         minify: isRelease,
         browserifyOptions: {
           debug: !isRelease
         },
+        onError: function (err) {
+          console.error(err.toString());
+          error = 1;
+        },
         uglifyOptions: {
           mangle: false
         }
-      }).on('end', done);
+      }).on('end', function () {
+        done(error);
+      });
     }
   );
 });
 
+// Added by skaldo on 6.5.2016
+// Testing tasks
+gulp.task('test', test.karma);
+gulp.task('karma-debug', test.karmaDebug);
+// Added by skaldo on 14.05.2016
+gulp.task('lint', function (done) {
+  return gulp.src(["app/**/**.ts", "app/**/**.spec.ts"])
+    .pipe(tslint({}))
+    .pipe(tslint.report('verbose'));
+});
+gulp.task('pre-commit', function (done) {
+  runSequence(['lint'], function () {
+    var error = 0;
+    buildBrowserify({
+      minify: false,
+      browserifyOptions: {
+        debug: false
+      },
+      onError: function (err) {
+        console.error(err.toString());
+        error = 1;
+      },
+      uglifyOptions: {
+        mangle: false
+      },
+      tsifyOptions: {
+      }
+    }).on('end', function () {
+      done(error);
+    });
+  })
+});
+gulp.task('beforeCommit', ['pre-commit']);
+
+// Added by skaldo on the 15.05.2016
+var typedoc = require("gulp-typedoc");
+gulp.task("typedoc", function() {
+    return gulp
+        .src(["app/**/**.ts", "!app/**/**.spec.ts"])
+        .pipe(typedoc({
+            module: "commonjs",
+            target: "es5",
+            out: "docs/",
+            name: "Citizen Application",
+            ignoreCompilerErrors: true,
+            //includeDeclarations: true,
+            mode: "file",
+            hideGenerator: true
+        }))
+    ;
+});
+
 gulp.task('sass', buildSass);
 gulp.task('html', copyHTML);
-gulp.task('fonts', copyFonts);
+gulp.task('ionicFonts', copyFonts);
+gulp.task('digitaleDoerferFonts', copyDigitaleDoerferFonts);
+gulp.task('fonts', ['ionicFonts', 'digitaleDoerferFonts']);
 gulp.task('scripts', copyScripts);
-gulp.task('clean', function(){
+gulp.task('clean', function () {
   return del('www/build');
 });

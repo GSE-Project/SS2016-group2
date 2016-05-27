@@ -13,6 +13,9 @@ www/build
 # Hooks
 hooks
 
+# Docs directory
+docs
+
 #coverage
 test/reports
 

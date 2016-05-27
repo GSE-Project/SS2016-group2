@@ -1,14 +1,17 @@
 import {App, Platform} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {TabsPage} from './pages/tabs/tabs';
-
+import {RestApiProvider, PersistentDataProvider, CitizenDataService} from './providers/data';
+import {ConfigurationService} from './providers/config';
 
 @App({
-  template: '<ion-nav [root]="rootPage"></ion-nav>',
-  config: {} // http://ionicframework.com/docs/v2/api/config/Config/
+  template: '<!-- custom-router-outlet></custom-router-outlet --><ion-nav [root]="rootPage"></ion-nav>',
+  config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
+  providers: [CitizenDataService, RestApiProvider,
+    PersistentDataProvider, ConfigurationService],
 })
 export class MyApp {
-  rootPage: any = TabsPage;
+  public rootPage: any = TabsPage;
 
   constructor(platform: Platform) {
     platform.ready().then(() => {

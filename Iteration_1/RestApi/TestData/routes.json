@@ -1,0 +1,31 @@
+{
+	"routes": [
+		{
+			"id": 1,
+			"gpsData": [
+				{
+					"latitude": 100,
+					"longitude": 100
+				},
+				{
+					"latitude": 101,
+					"longitude": 99
+				}
+			]
+		},
+		{
+			"id": 2,
+			"gpsData": [
+				{
+					"latitude": 50,
+					"longitude": 100
+				},
+				{
+					"latitude": 101,
+					"longitude": 50
+				}
+			]
+		}
+	],
+	"timestamp": 1
+}
