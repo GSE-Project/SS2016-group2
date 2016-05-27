@@ -10,7 +10,7 @@ import {RestApiProvider} from './RestApiProvider';
 import {PersistentDataProvider} from './PersistentDataProvider';
 import {Observable} from 'rxjs/Observable';
 import {Logger, LoggerFactory} from '../logger/Logger';
-import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../model';
+import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes, IRestDataObject} from '../model';
 import {ConfigurationService} from '../config';
 
 @Injectable()
@@ -31,6 +31,26 @@ export class CitizenDataService {
 
     constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider, private config: ConfigurationService) {
         this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'CitizenDataService', config.misc.log_pretty_print);
+    }
+
+    public getData<T extends IRestDataObject>(storageRead: () => Observable<T>,
+        storageWrite: (T) => void,
+        serverTime: number,
+        serverRead: () => Observable<T>): Observable<T> {
+        this.logger.debug('Getting data from storage');
+        return storageRead().flatMap((data) => {
+            this.logger.debug('Storage data fetched');
+            if (data && (serverTime < data.timestamp)) {
+                return Observable.of(data);
+            }
+            this.logger.debug('Getting data from server');
+            let restObservable: Observable<T> = serverRead();
+            restObservable.subscribe((data) => {
+                this.logger.debug('Passing data to storage');
+                storageWrite(data);
+            });
+            return restObservable;
+        });
     }
 
     /**
