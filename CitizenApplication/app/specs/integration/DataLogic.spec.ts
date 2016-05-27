@@ -45,7 +45,6 @@ describe('Data Logic Specification with timeout of ' + TIMEOUT + ' ms', () => {
 });
 
 function getTestSetup(http: Http, storage: Storage): CitizenDataService {
-    debugger;
     let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
     let pdp: PersistentDataProvider = new PersistentDataProvider(config);
     let rap: RestApiProvider = new RestApiProvider(http, config);
