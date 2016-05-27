@@ -33,6 +33,14 @@ export class CitizenDataService {
         this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'CitizenDataService', config.misc.log_pretty_print);
     }
 
+    /**
+     * Generic getter for T extending IRestDataObject
+     * @param storageRead ()=>Observable<T> method to read T from the storage
+     * @param storageWrite (T)=>void method to write into storage
+     * @param serverTime : number, timestamp of the server
+     * @param serverRead ()=>Observable<T> method to read from the server
+     * @return Observable<T>
+     */
     public getData<T extends IRestDataObject>(storageRead: () => Observable<T>,
         storageWrite: (T) => void,
         serverTime: number,
@@ -70,48 +78,36 @@ export class CitizenDataService {
     * @return A list of ILine objects
     */
     public getLines(): Observable<IRestLines> {
-        return this.storageApi.getLines().flatMap(data => {
-            if (data && (this.serverTimeStamps.lines < data.timestamp)) {
-                return Observable.of(data);
-            }
-            let restObservable: Observable<IRestLines> = this.restApi.getLines();
-            restObservable.subscribe(server_data => {
-                this.storageApi.putLines(server_data);
-            });
-            return restObservable;
-        });
+        return this.getData<IRestLines>(
+            () => { return this.storageApi.getLines(); },
+            (data: IRestLines) => { this.storageApi.putLines(data); },
+            this.serverTimeStamps.lines,
+            () => { return this.restApi.getLines(); }
+        );
     }
 
     /**
     * @return A list of Bus objects
     */
     public getBusses(): Observable<IRestBusses> {
-        return this.storageApi.getBusses().flatMap(data => {
-            if (data && (this.serverTimeStamps.busses < data.timestamp)) {
-                return Observable.of(data);
-            }
-            let restObservable: Observable<IRestBusses> = this.restApi.getBusses();
-            restObservable.subscribe(server_data => {
-                this.storageApi.putBusses(server_data);
-            });
-            return restObservable;
-        });
+        return this.getData<IRestBusses>(
+            () => { return this.storageApi.getBusses(); },
+            (data: IRestBusses) => { this.storageApi.putBusses(data); },
+            this.serverTimeStamps.busses,
+            () => { return this.restApi.getBusses(); }
+        );
     }
 
     /**
     * @return A list of Route objects
     */
     public getRoutes(): Observable<IRestRoutes> {
-        return this.storageApi.getRoutes().flatMap(data => {
-            if (data && (this.serverTimeStamps.routes < data.timestamp)) {
-                return Observable.of(data);
-            }
-            let restObservable: Observable<IRestRoutes> = this.restApi.getRoutes();
-            restObservable.subscribe(server_data => {
-                this.storageApi.putRoutes(server_data);
-            });
-            return restObservable;
-        });
+        return this.getData<IRestRoutes>(
+            () => { return this.storageApi.getRoutes(); },
+            (data: IRestRoutes) => { this.storageApi.putRoutes(data); },
+            this.serverTimeStamps.busses,
+            () => { return this.restApi.getRoutes(); }
+        );
     }
 
     /**
@@ -146,6 +142,7 @@ export class CitizenDataService {
     /**
      * Specifies the server to be used
      * @param host_address : host url as string
+     * @deprecated
      */
     public setHostUrl(host_address: string): void {
         this.restApi.baseUrl = host_address;
