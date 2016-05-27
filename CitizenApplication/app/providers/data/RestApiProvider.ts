@@ -6,7 +6,7 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {CitizenDataObjects, IUpdateData, IBus, ILine, IRoute, IStop, IBusRealTimeData, IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../model';
+import {CitizenDataObjects, IUpdateData, IBus, ILine, IRoute, IStop, IBusRealTimeData, IRestStops, IRestBusses, IRestLines, IRestRoutes, IRestDataObject} from '../model';
 import 'rxjs/Rx';
 import {ConfigurationService} from '../config';
 import {Logger, LoggerFactory} from '../logger';
@@ -29,6 +29,14 @@ export class RestApiProvider {
      */
     set baseUrl(value: string) {
 
+    }
+
+    getData<T extends IRestDataObject>(data: CitizenDataObjects): Observable<T> {
+        return this.http.get(this.config.getUrl(data)).map(
+            res => {
+                return <T>res.json();
+            }
+        )
     }
 
     /**

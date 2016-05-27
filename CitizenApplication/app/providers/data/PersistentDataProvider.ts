@@ -6,7 +6,7 @@
 
 import {Injectable} from '@angular/core';
 import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
-import {IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
+import {IRestDataObject, IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
 import {Observable} from 'rxjs/Observable';
 import {ConfigurationService} from '../config';
 import {Logger, LoggerFactory} from '../logger';
@@ -29,6 +29,18 @@ export class PersistentDataProvider {
      */
     setStorage(storage: Storage): void {
         this.storage = storage;
+    }
+
+    getData<T extends IRestDataObject>(key: string): Observable<T> {
+        return Observable.fromPromise(<Promise<string>>this.storage.get(key)).map(
+            data => {
+                return <T>JSON.parse(data);
+            }
+        );
+    }
+
+    putData<T extends IRestDataObject>(key: string, data: T): void {
+        this.storage.set(key, JSON.stringify(data));
     }
 
     /**
