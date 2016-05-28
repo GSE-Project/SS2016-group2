@@ -30,7 +30,7 @@ export class RestApiProvider {
     set baseUrl(value: string) {
 
     }
-    
+
     /**
      * Return a data object from the rest server
      * @param data: CitizenDataObjects specifying the object to be returned. 
@@ -41,7 +41,7 @@ export class RestApiProvider {
             res => {
                 return <T>res.json();
             }
-        )
+        );
     }
 
     /**
