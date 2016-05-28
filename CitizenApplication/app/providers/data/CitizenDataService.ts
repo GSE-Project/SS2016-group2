@@ -1,8 +1,11 @@
 /**
+ * Log:
  * Created by sholzer on the 3.5.2016
  * Reviewed by skaldo on the 6.5.2016
  * Updated by skaldo & sholzer on the 13.05.2016
  * Updated by skaldo on the 14.05.2016 - adjusted to match the tslint rules.
+ * Updated by sholzer on the 28.05.2016 - added generic method
+ * Reviewed by skaldo on the 28.05.2016 - OK
  */
 
 import {Injectable} from '@angular/core';

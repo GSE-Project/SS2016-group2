@@ -1,6 +1,9 @@
 /**
+ * Log:
  * Created by skaldo on 07.05.2016.
  * Reviewed and updated by skaldo on 22.05.2016
+ * Updated by sholzer on the 28.05.2016 - added generic method
+ * Reviewed by skaldo on the 28.05.2016 - OK
  */
 
 import {Injectable} from '@angular/core';
