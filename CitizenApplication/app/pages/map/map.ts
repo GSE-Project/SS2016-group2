@@ -1,7 +1,7 @@
 import {Page, NavController} from 'ionic-angular';
 import {ViewChild} from  '@angular/core';
 import {Map} from '../../components/map/map';
-
+import {TranslatePipe} from 'ng2-translate';
 /*
   Created by mmueller on the XX.05.2016.
   Edited by skaldo on 09.05.2016.
@@ -11,6 +11,7 @@ import {Map} from '../../components/map/map';
 
 @Page({
   templateUrl: 'build/pages/map/map.html',
+  pipes: [TranslatePipe],
   directives: [Map],
 })
 export class MapPage {
