@@ -3,7 +3,7 @@
  */
 import {PersistentDataProvider} from '../../../providers/data';
 import {IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../../../providers/model/rest';
-import {Storage} from 'ionic-angular';
+import {IStorage} from '../../../providers/storage';
 import {Assert, MockFactory} from '../../util';
 import {ConfigurationService} from '../../../providers/config';
 
@@ -34,7 +34,7 @@ describe('PersistentDataProvider specifications', () => {
 
     let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
 
-    var storage: Storage;
+    var storage: IStorage;
     var storageApi: PersistentDataProvider;
 
     it('Get Stops', (done) => {
@@ -42,7 +42,7 @@ describe('PersistentDataProvider specifications', () => {
             timestamp: 1,
             stops: []
         };
-        storage = <Storage>{
+        storage = <IStorage>{
 
             get(key: string): Promise<string> {
                 return Promise.resolve(JSON.stringify(stops));
@@ -51,8 +51,7 @@ describe('PersistentDataProvider specifications', () => {
         };
 
 
-        storageApi = new PersistentDataProvider(config);
-        storageApi.setStorage(storage);
+        storageApi = new PersistentDataProvider(config, storage);
         storageApi.getStops().subscribe(data => {
             Assert.equalJson(data, stops);
             done();
@@ -77,7 +76,7 @@ describe('PersistentDataProvider specifications', () => {
         };
 
         let setData: string = '';
-        storage = <Storage>{
+        storage = <IStorage>{
 
             get(key: string): Promise<string> {
                 switch (key) {
@@ -104,8 +103,7 @@ describe('PersistentDataProvider specifications', () => {
             stops: []
         };
 
-        storageApi = new PersistentDataProvider(config);
-        storageApi.setStorage(storage);
+        storageApi = new PersistentDataProvider(config, storage);
         storageApi.putStops(new_stops);
         setTimeout(() => {
             Assert.equalJson(JSON.parse(setData), new_stops);

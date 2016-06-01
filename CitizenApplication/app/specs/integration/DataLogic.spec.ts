@@ -3,7 +3,7 @@ import {IUpdateData, IRestBusses, IRestLines, IRestRoutes, IRestStops} from '../
 import {PersistentDataProvider, RestApiProvider, CitizenDataService} from '../../providers/data';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {Assert, MockFactory, DataConfig, StorageConfig, RestConfig} from '../util';
-import {Storage} from 'ionic-angular';
+import {IStorage} from '../../providers/storage';
 import {Http, Response, ResponseOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {ConfigurationService, CitizenApplicationConfig} from '../../providers/config';
@@ -44,11 +44,10 @@ describe('Data Logic Specification with timeout of ' + TIMEOUT + ' ms', () => {
 
 });
 
-function getTestSetup(http: Http, storage: Storage): CitizenDataService {
+function getTestSetup(http: Http, storage: IStorage): CitizenDataService {
     let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
-    let pdp: PersistentDataProvider = new PersistentDataProvider(config);
+    let pdp: PersistentDataProvider = new PersistentDataProvider(config, storage);
     let rap: RestApiProvider = new RestApiProvider(http, config);
-    pdp.setStorage(storage);
     return new CitizenDataService(rap, pdp, config);
 }
 
