@@ -3,7 +3,7 @@
  */
 import {Injectable} from '@angular/core';
 
-export default IStorage
+export default IStorage;
 
 /**
  * Interface for an injectable Storage object
@@ -17,7 +17,7 @@ export abstract class IStorage {
      * @return Promise<string> after completion
      */
     abstract get(key: string): Promise<string>;
-    
+
     /**
      * returns the data set as asynchronous json object
      * @param key of the data set

@@ -2,19 +2,26 @@
  * @author sholzer 160601
  */
 import {IStorage} from './IStorage';
+import {ConfigurationService} from '../config';
+import {Logger, LoggerFactory} from '../logger';
 import {Storage, LocalStorage} from 'ionic-angular';
+import {Injectable} from '@angular/core';
 
 export default InjectableLocalStorage;
 
 /**
  * Injectable wrapper for ionic-angular LocalStorage. All methods are delegates for LocalStorage
  */
+@Injectable()
 export class InjectableLocalStorage implements IStorage {
 
     private storage: Storage;
+    private logger: Logger;
 
-    constructor() {
+    constructor(config: ConfigurationService) {
         this.storage = new Storage(LocalStorage);
+        this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'LocalStorageWrapper', config.misc.log_pretty_print);
+        this.logger.info('Using LocalStorage');
     }
 
 
