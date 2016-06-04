@@ -6,13 +6,13 @@
 
 window.citizenConfig = {
     rest_api: {
-        host_url: 'http://gsep.skaldo.cz',
-        busses: 'busses',
-        lines: 'lines',
-        routes: 'routes',
-        rt_data: 'busses/',
-        stops: 'stops',
-        update: 'update'
+        host_url: 'http://gsepg1.skaldo.cz/services/rest',
+        busses: 'linemanagement/v1/busses',
+        lines: 'linemanagement/v1/lines',
+        routes: 'linemanagement/v1/routes',
+        rt_data: 'linemanagement/v1/busses/',
+        stops: 'linemanagement/v1/stops',
+        update: 'linemanagement/v1/update'
     },
     storage_api: {
         busses: 'B',
