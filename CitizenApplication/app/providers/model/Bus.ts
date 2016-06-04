@@ -8,7 +8,7 @@ import {ICitizenDataObject} from './';
 
 export interface IBus extends ICitizenDataObject {
     numberPlate: string;
-    lineId: number
+    lineId: number;
     color: string;
     picture: string;
     timestamp: number;

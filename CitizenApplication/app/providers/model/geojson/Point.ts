@@ -10,5 +10,5 @@ export default Point;
 
 export interface Point extends IGeoJsonObject {
     type: 'Point';
-    coordinates:[number, number];
+    coordinates: [number, number];
 }
