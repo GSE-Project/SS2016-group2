@@ -3,5 +3,5 @@
  */
 
 export * from './LineString';
-export * from './geojsonObject';
+export * from './GeoJsonObject';
 export * from './Point';

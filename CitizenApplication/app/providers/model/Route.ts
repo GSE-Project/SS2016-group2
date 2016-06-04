@@ -3,7 +3,8 @@
  * Reviewed by skaldo on 06.05.2016.
  * Adapted by sholzer on 04.06.2016 due to GitHub Issue #66
  */
-import {ICitizenDataObject, Point, LineString} from './';
+import {ICitizenDataObject} from './';
+import {LineString} from './geojson';
 
 export default IRoute;
 
