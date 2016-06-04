@@ -7,17 +7,6 @@ import {Coordinate} from '../';
 export default IGeoJsonObject;
 
 export interface IGeoJsonObject {
-    type: GeoJsonObjectTypes;
-    coordinates: Coordinate[];
-}
-
-export enum GeoJsonObjectTypes {
-    'Positions',
-    'Point',
-    'MultiPoint',
-    'LineString',
-    'MultiLineString',
-    'Polygon',
-    'GeometryCollection',
-    'GeoJsonObjects'
+    type: 'Positions' | 'Point' | 'MultiPoint' | 'LineString' | 'MultiLineString' | 'Polygon' | 'GeometryCollection' | 'GeoJsonObjects';
+    coordinates: [number, number] | [number, number][];
 }
