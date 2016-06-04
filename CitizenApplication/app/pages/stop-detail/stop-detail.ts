@@ -1,6 +1,8 @@
 import {Page, NavController, NavParams, ActionSheet} from 'ionic-angular';
-import {IStop} from '../../providers/model/Stop';
+import {IStop} from '../../providers/model';
 import {BusDetailPage} from '../bus-detail/bus-detail';
+import {Logger, LoggerFactory} from '../../providers/logger';
+import {ConfigurationService} from '../../providers/config';
 
 /*
   Generated class for the StopDetailPage page.
@@ -13,8 +15,10 @@ import {BusDetailPage} from '../bus-detail/bus-detail';
 })
 export class StopDetailPage {
   private stop: IStop;
-  constructor(public nav: NavController, private navParams: NavParams) {
+  private logger: Logger;
+  constructor(public nav: NavController, private navParams: NavParams, private config: ConfigurationService) {
     this.stop = navParams.data;
+    this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'StopDetailPage', config.misc.log_pretty_print);
   }
 
   infoClicked(schedule) {

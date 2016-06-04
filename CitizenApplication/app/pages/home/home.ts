@@ -1,6 +1,8 @@
 import {Page, NavController, Toast} from 'ionic-angular';
 import {StopListPage} from '../stop-list/stop-list';
 import {BusDetailPage} from '../bus-detail/bus-detail';
+import {ConfigurationService} from '../../providers/config';
+import {Logger, LoggerFactory} from '../../providers/logger';
 
 /*
   Generated class for the HomePage page.
@@ -14,8 +16,10 @@ import {BusDetailPage} from '../bus-detail/bus-detail';
 export class HomePage {
   private ip: string;
   private reqNumber: number;
-  constructor(public nav: NavController) {
+  private logger: Logger;
+  constructor(public nav: NavController, private config: ConfigurationService) {
     this.reqNumber = 0;
+    this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'HomePage', config.misc.log_pretty_print);
   }
 
   goToStops() {

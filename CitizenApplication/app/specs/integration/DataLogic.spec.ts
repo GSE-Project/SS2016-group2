@@ -1,19 +1,12 @@
 
-import {IRestBusses} from '../../providers/model/rest/RestBusses';
-import {IRestLines} from '../../providers/model/rest/RestLines';
-import {IRestRoutes} from '../../providers/model/rest/RestRoutes';
-import {IRestStops} from '../../providers/model/rest/RestStops';
-import {IUpdateData} from '../../providers/model/UpdateData';
-import {PersistentDataProvider} from '../../providers/data/PersistentDataProvider';
-import {RestApiProvider} from '../../providers/data/RestApiProvider';
-import {CitizenDataService} from '../../providers/data/CitizenDataService';
-
-
+import {IUpdateData, IRestBusses, IRestLines, IRestRoutes, IRestStops} from '../../providers/model';
+import {PersistentDataProvider, RestApiProvider, CitizenDataService} from '../../providers/data';
+import {Logger, LoggerFactory} from '../../providers/logger';
 import {Assert, MockFactory, DataConfig, StorageConfig, RestConfig} from '../util';
-
-import {Storage} from 'ionic-angular';
+import {IStorage} from '../../providers/storage';
 import {Http, Response, ResponseOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import {ConfigurationService, CitizenApplicationConfig} from '../../providers/config';
 
 
 /**
@@ -21,19 +14,41 @@ import {Observable} from 'rxjs/Observable';
  */
 
 const TIMEOUT = 5000;
+const DEFAULT_CONFIG: CitizenApplicationConfig = {
+    rest_api: {
+        host_url: 'http://localhost:3000',
+        busses: 'busses',
+        lines: 'lines',
+        routes: 'routes',
+        rt_data: 'busses/',
+        stops: 'stops',
+        update: 'update'
+    },
+    storage_api: {
+        busses: 'B',
+        lines: 'L',
+        routes: 'R',
+        stops: 'S'
+    },
+    misc: {
+        language: 'de',
+        log_level: 'debug',
+        log_pretty_print: false
+    }
+};
 
 describe('Data Logic Specification with timeout of ' + TIMEOUT + ' ms', () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
     tests(0, 0);
-    tests(500, 1000);
+    tests(50, 100);
 
 });
 
-function getTestSetup(http: Http, storage: Storage): CitizenDataService {
-    let pdp: PersistentDataProvider = new PersistentDataProvider();
-    let rap: RestApiProvider = new RestApiProvider(http);
-    pdp.setStorage(storage);
-    return new CitizenDataService(rap, pdp);
+function getTestSetup(http: Http, storage: IStorage): CitizenDataService {
+    let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
+    let pdp: PersistentDataProvider = new PersistentDataProvider(config, storage);
+    let rap: RestApiProvider = new RestApiProvider(http, config);
+    return new CitizenDataService(rap, pdp, config);
 }
 
 function tests(storageDelay: number, restDelay: number): void {
@@ -59,9 +74,10 @@ function tests(storageDelay: number, restDelay: number): void {
             it('Get Stops from Server', (done) => {
                 let storagePuts = <DataConfig>{};
                 let cds = getTestSetup(
-                    MockFactory.buildRestApi(restConf),
-                    MockFactory.buildStorageMock(storageConf, storagePuts)
+                    MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
+                    MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
+                debugger;
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getStops().subscribe(stops => {
                         Assert.equalJson(stops, restConf.stops);
@@ -72,8 +88,8 @@ function tests(storageDelay: number, restDelay: number): void {
             it('Get Lines from Server', (done) => {
                 let storagePuts = <DataConfig>{};
                 let cds = getTestSetup(
-                    MockFactory.buildRestApi(restConf),
-                    MockFactory.buildStorageMock(storageConf, storagePuts)
+                    MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
+                    MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getLines().subscribe(data => {
@@ -85,8 +101,8 @@ function tests(storageDelay: number, restDelay: number): void {
             it('Get subsequent lines from Server', (done) => {
                 let storagePuts = <DataConfig>{};
                 let cds = getTestSetup(
-                    MockFactory.buildRestApi(restConf),
-                    MockFactory.buildStorageMock(storageConf, storagePuts)
+                    MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
+                    MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getStops().subscribe(stops => {
@@ -100,8 +116,8 @@ function tests(storageDelay: number, restDelay: number): void {
             it('Get BusRealTimeData from Server', (done) => {
                 let storagePuts = <DataConfig>{};
                 let cds = getTestSetup(
-                    MockFactory.buildRestApi(restConf),
-                    MockFactory.buildStorageMock(storageConf, storagePuts)
+                    MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
+                    MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
                 cds.getBusRealTimeData(1).subscribe(rt => {
                     Assert.equalJson(rt, restConf.rt);
@@ -111,8 +127,8 @@ function tests(storageDelay: number, restDelay: number): void {
             it('Get UpdateData from Server', (done) => {
                 let storagePuts = <DataConfig>{};
                 let cds = getTestSetup(
-                    MockFactory.buildRestApi(restConf),
-                    MockFactory.buildStorageMock(storageConf, storagePuts)
+                    MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
+                    MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
                 cds.updateTimeStamps().subscribe(time => {
                     Assert.equalJson(time, restConf.update);
@@ -122,8 +138,8 @@ function tests(storageDelay: number, restDelay: number): void {
             it('Get Busses from Storage', (done) => {
                 let storagePuts = <DataConfig>{};
                 let cds = getTestSetup(
-                    MockFactory.buildRestApi(restConf),
-                    MockFactory.buildStorageMock(storageConf, storagePuts)
+                    MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
+                    MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getBusses().subscribe(busses => {
@@ -135,8 +151,8 @@ function tests(storageDelay: number, restDelay: number): void {
             it('Get Routes from Storage', (done) => {
                 let storagePuts = <DataConfig>{};
                 let cds = getTestSetup(
-                    MockFactory.buildRestApi(restConf),
-                    MockFactory.buildStorageMock(storageConf, storagePuts)
+                    MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
+                    MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getRoutes().subscribe(routes => {
@@ -148,8 +164,8 @@ function tests(storageDelay: number, restDelay: number): void {
             it('Get subsequent routes from Storage', (done) => {
                 let storagePuts = <DataConfig>{};
                 let cds = getTestSetup(
-                    MockFactory.buildRestApi(restConf),
-                    MockFactory.buildStorageMock(storageConf, storagePuts)
+                    MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
+                    MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getBusses().subscribe(busses => {
@@ -163,8 +179,8 @@ function tests(storageDelay: number, restDelay: number): void {
             it('Storage access after Server access', (done) => {
                 let storagePuts = <DataConfig>{};
                 let cds = getTestSetup(
-                    MockFactory.buildRestApi(restConf),
-                    MockFactory.buildStorageMock(storageConf, storagePuts)
+                    MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
+                    MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getStops().subscribe(stops => {
@@ -178,8 +194,8 @@ function tests(storageDelay: number, restDelay: number): void {
             it('Server access after Storage access', (done) => {
                 let storagePuts = <DataConfig>{};
                 let cds = getTestSetup(
-                    MockFactory.buildRestApi(restConf),
-                    MockFactory.buildStorageMock(storageConf, storagePuts)
+                    MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
+                    MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getBusses().subscribe(busses => {

@@ -1,19 +1,40 @@
 /**
  * @author sholzer 160516
  */
+import {PersistentDataProvider} from '../../../providers/data';
+import {IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../../../providers/model/rest';
+import {IStorage} from '../../../providers/storage';
+import {Assert, MockFactory} from '../../util';
+import {ConfigurationService} from '../../../providers/config';
 
-import {PersistentDataProvider} from '../../../providers/data/PersistentDataProvider';
-import {IRestStops} from '../../../providers/model/rest/RestStops';
-import {IRestBusses} from '../../../providers/model/rest/RestBusses';
-import {IRestLines} from '../../../providers/model/rest/RestLines';
-import {IRestRoutes} from '../../../providers/model/rest/RestRoutes';
-import {Storage} from 'ionic-angular';
-
-import {Assert} from '../../util';
+const DEFAULT_CONFIG = {
+    rest_api: {
+        host_url: 'http://localhost:3000',
+        busses: 'busses',
+        lines: 'lines',
+        routes: 'routes',
+        rt_data: 'busses/',
+        stops: 'stops',
+        update: 'update'
+    },
+    storage_api: {
+        busses: 'B',
+        lines: 'L',
+        routes: 'R',
+        stops: 'S'
+    },
+    misc: {
+        language: 'de',
+        log_level: 'debug',
+        log_pretty_print: false
+    }
+};
 
 describe('PersistentDataProvider specifications', () => {
 
-    var storage: Storage;
+    let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
+
+    var storage: IStorage;
     var storageApi: PersistentDataProvider;
 
     it('Get Stops', (done) => {
@@ -21,7 +42,7 @@ describe('PersistentDataProvider specifications', () => {
             timestamp: 1,
             stops: []
         };
-        storage = <Storage>{
+        storage = <IStorage>{
 
             get(key: string): Promise<string> {
                 return Promise.resolve(JSON.stringify(stops));
@@ -30,8 +51,7 @@ describe('PersistentDataProvider specifications', () => {
         };
 
 
-        storageApi = new PersistentDataProvider();
-        storageApi.setStorage(storage);
+        storageApi = new PersistentDataProvider(config, storage);
         storageApi.getStops().subscribe(data => {
             Assert.equalJson(data, stops);
             done();
@@ -56,7 +76,7 @@ describe('PersistentDataProvider specifications', () => {
         };
 
         let setData: string = '';
-        storage = <Storage>{
+        storage = <IStorage>{
 
             get(key: string): Promise<string> {
                 switch (key) {
@@ -83,8 +103,7 @@ describe('PersistentDataProvider specifications', () => {
             stops: []
         };
 
-        storageApi = new PersistentDataProvider();
-        storageApi.setStorage(storage);
+        storageApi = new PersistentDataProvider(config, storage);
         storageApi.putStops(new_stops);
         setTimeout(() => {
             Assert.equalJson(JSON.parse(setData), new_stops);

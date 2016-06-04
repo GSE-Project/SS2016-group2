@@ -1,5 +1,7 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, AfterViewInit, OnDestroy} from '@angular/core';
 import {Geolocation} from 'ionic-native';
+import {Logger, LoggerFactory} from '../../providers/logger';
+import {ConfigurationService} from '../../providers/config';
 
 /*
   Created by skaldo and mmueller on the 09.05.2016.
@@ -10,13 +12,26 @@ import {Geolocation} from 'ionic-native';
   selector: 'map',
   templateUrl: 'build/components/map/map.html'
 })
-export class Map implements OnInit {
+export class Map implements AfterViewInit, OnDestroy {
   private map: google.maps.Map;
   private markers: { [key: string]: google.maps.Marker; } = {};
+  private mapElement;
+
+  private logger: Logger;
 
   private defaultMapOptions = {
-    zoom: 17,
-    mypTypeId: google.maps.MapTypeId.ROADMAP,
+    center: new google.maps.LatLng(49.4428949, 7.5893631),
+    zoom: 15,
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+      mapTypeIds: [
+        google.maps.MapTypeId.ROADMAP,
+        google.maps.MapTypeId.SATELLITE
+      ]
+    },
+    zoomControl: true,
+    rotateControl: true
   };
 
   private defaultGeoLocationOptions = {
@@ -24,18 +39,22 @@ export class Map implements OnInit {
     enableHighAccuracy: true
   };
 
-  constructor(private element: ElementRef) {
+  constructor(private element: ElementRef, private config: ConfigurationService) {
+    this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'MapComponent', this.config.misc.log_pretty_print);
   }
 
   centerMap(center?: google.maps.LatLng) {
+    this.logger.debug('centering');
     if (!center) {
+      this.logger.debug('getCurrentPosition');
       Geolocation.getCurrentPosition(this.defaultGeoLocationOptions).then((position) => {
+        this.logger.debug('got location: ' + position);
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         this.centerMap(latLng);
       }).catch(error => {
         // Handling the error.
-        console.log('Unable to get the current location. ' + error);
-        console.log('Setting: 49.4428949, 7.5893631 as center.');
+        this.logger.error('Unable to get the current location. ' + error);
+        this.logger.error('Setting: 49.4428949, 7.5893631 as center.');
         this.centerMap(new google.maps.LatLng(49.4428949, 7.5893631));
       });
       return;
@@ -44,15 +63,21 @@ export class Map implements OnInit {
   }
 
   createMap() {
-    let element = this.element.nativeElement.children[0];
-    this.map = new google.maps.Map(element, this.defaultMapOptions);
-    console.log(element);
+    this.mapElement = this.element.nativeElement.children[0];
+    this.map = new google.maps.Map(this.mapElement, this.defaultMapOptions);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.createMap();
     this.centerMap();
     this.initPositionMarker();
+  }
+
+  ngOnDestroy() {
+    this.logger.debug('Removing the map element along with all the children.');
+    while (this.mapElement.firstChild) {
+      this.mapElement.removeChild(this.mapElement.firstChild);
+    }
   }
 
   initPositionMarker() {
@@ -61,7 +86,7 @@ export class Map implements OnInit {
       this.addPositionMarker(latLng, 'Standort');
     }).catch(error => {
       // Handling the error.
-      console.log('Unable to get the current location. ' + error);
+      this.logger.error('Unable to get the current location. ' + error);
     });
   }
 
@@ -103,7 +128,7 @@ export class Map implements OnInit {
     this.markers[name] = marker;
   }
 
-    addBusMarker(position: google.maps.LatLng, name) {
+  addBusMarker(position: google.maps.LatLng, name) {
     let markerLatLong = position;
 
     let marker = new google.maps.Marker({

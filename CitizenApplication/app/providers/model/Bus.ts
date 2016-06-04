@@ -3,7 +3,7 @@
  * Reviewed by skaldo on 06.05.2016 & 13.05.2016.
  */
 
-import {ICitizenDataObject} from './CitizenDataObject';
+import {ICitizenDataObject} from './';
 
 export interface IBus extends ICitizenDataObject {
     numberPlate: string;

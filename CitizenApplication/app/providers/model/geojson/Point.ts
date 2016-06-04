@@ -3,12 +3,11 @@
  * Updated & reviewed by skaldo on 05.05.2016 & 13.05.2016.
  */
 
-import {IGeoJsonObject, GeoJsonObjectTypes} from './geojsonObject.ts';
-import Coordinate from './Coordinate.ts';
+import {IGeoJsonObject, GeoJsonObjectTypes, Coordinate} from './';
 
 export default Point;
 
-export interface  Point extends IGeoJsonObject {
+export interface Point extends IGeoJsonObject {
     type: GeoJsonObjectTypes;
     coordinates: Array<Coordinate>;
 }

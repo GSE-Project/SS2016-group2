@@ -21,9 +21,10 @@
   <div [ngSwitch]="busViewType" class="container">
     <div class="info" *ngSwitchWhen="'information'">
       <div class="picture">
-        <div style="background-image: url({{bus.picture}});">
+        <!-- fix for iOS -->
+        <!--<div style="background-image: url({{bus.picture}});">-->
           <img src="{{bus.picture}}">
-        </div>
+        <!--</div>-->
         <figcaption></figcaption>
       </div>
     </div>

@@ -2,9 +2,7 @@
 * @author sholzer on 160510
 * Reviewed by skaldo on 13.05.2016
 */
-
-import {Point} from './geojson/Point';
-import {ICitizenDataObject} from './CitizenDataObject';
+import {ICitizenDataObject, Point} from './';
 
 export default IBusRealTimeData;
 

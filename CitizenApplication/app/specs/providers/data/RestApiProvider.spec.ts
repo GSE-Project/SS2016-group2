@@ -5,20 +5,41 @@
  * https://angular.io/docs/js/latest/api/http/Response-class.html
  * https://angular.io/docs/ts/latest/api/http/ResponseOptions-class.html
  */
-
-import {RestApiProvider} from '../../../providers/data/RestApiProvider';
-import {IUpdateData} from '../../../providers/model/UpdateData';
-import {IBusRealTimeData} from '../../../providers/model/BusRealTimeData';
-import {GeoJsonObjectTypes} from '../../../providers/model/geojson/geojsonObject';
-
+import {RestApiProvider} from '../../../providers/data';
+import {IUpdateData, IBusRealTimeData, GeoJsonObjectTypes} from '../../../providers/model';
 import {Http, Response, ResponseOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {Assert} from '../../util';
+import {Assert, MockFactory} from '../../util';
+import {ConfigurationService} from '../../../providers/config';
+
+const DEFAULT_CONFIG = {
+    rest_api: {
+        host_url: 'http://localhost:3000',
+        busses: 'busses',
+        lines: 'lines',
+        routes: 'routes',
+        rt_data: 'busses/',
+        stops: 'stops',
+        update: 'update'
+    },
+    storage_api: {
+        busses: 'B',
+        lines: 'L',
+        routes: 'R',
+        stops: 'S'
+    },
+    misc: {
+        language: 'de',
+        log_level: 'debug',
+        log_pretty_print: false
+    }
+};
+
 
 describe('RestApiProvider specifications', () => {
 
+    let config: ConfigurationService = MockFactory.buildConfig(DEFAULT_CONFIG);
     let response: Response;
-
     let http: Http;
 
     it('Get Stops', (done) => {
@@ -32,7 +53,7 @@ describe('RestApiProvider specifications', () => {
             }
         };
 
-        let restApi: RestApiProvider = new RestApiProvider(http);
+        let restApi: RestApiProvider = new RestApiProvider(http, config);
         restApi.getStops().subscribe(data => {
             Assert.equalJson(data, { timestamp: 1, stops: [] });
             done();
@@ -58,7 +79,7 @@ describe('RestApiProvider specifications', () => {
             }
         };
 
-        let restApi: RestApiProvider = new RestApiProvider(http);
+        let restApi: RestApiProvider = new RestApiProvider(http, config);
         restApi.getUpdateData().subscribe(data => {
             Assert.equalJson(data, updateData);
             done();
@@ -83,7 +104,7 @@ describe('RestApiProvider specifications', () => {
             }
         };
 
-        let restApi: RestApiProvider = new RestApiProvider(http);
+        let restApi: RestApiProvider = new RestApiProvider(http, config);
         restApi.getUpdateData().subscribe(data => {
             Assert.equalJson(data, rtData);
             done();

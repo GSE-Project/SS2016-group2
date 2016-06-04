@@ -1,37 +1,44 @@
 /**
  * Created by skaldo on 07.05.2016.
  * Implemented by tim.dellmann
+ * Reviewed and updated by skaldo on 22.05.2016
  */
 
 import {Injectable} from '@angular/core';
-import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
-import {IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
+import {IStorage} from '../storage';
+import {IRestDataObject, IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
 import {Observable} from 'rxjs/Observable';
-
-const STORAGE_ACTIVE = 'A';
-const STORAGE_TIMESTAMP = 'T';
-const STORAGE_BUS = 'B';
-const STORAGE_LINE = 'L';
-const STORAGE_STOP = 'S';
-const STORAGE_ROUTE = 'R';
-
+import {ConfigurationService} from '../config';
+import {Logger, LoggerFactory} from '../logger';
 
 @Injectable()
 export class PersistentDataProvider {
-    public storage: Storage;
 
-    constructor() {
-        // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
-        this.storage = new Storage(LocalStorage);
+    private logger: Logger;
+
+    constructor(private config: ConfigurationService, private storage: IStorage) {
+        this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'PersistentDataProvider', config.misc.log_pretty_print);
     }
 
     /**
      * Sets the used Storage api. Mainly for testing purposes
      * @author sholzer 160516
      * @param storage Object implementing the Storage interface
+     * @deprecated
      */
     setStorage(storage: Storage): void {
-        this.storage = storage;
+    }
+
+    getData<T extends IRestDataObject>(key: string): Observable<T> {
+        return Observable.fromPromise(<Promise<string>>this.storage.get(key)).map(
+            data => {
+                return <T>JSON.parse(data);
+            }
+        );
+    }
+
+    putData<T extends IRestDataObject>(key: string, data: T): void {
+        this.storage.set(key, JSON.stringify(data));
     }
 
     /**
@@ -39,10 +46,7 @@ export class PersistentDataProvider {
      * @returns Observable<IRestStops>
      */
     getStops(): Observable<IRestStops> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_STOP)).map(
-            data => {
-                return <IRestStops>JSON.parse(data);
-            });
+        return this.getData<IRestStops>(this.config.storageApi.stops);
     }
 
     /**
@@ -50,7 +54,7 @@ export class PersistentDataProvider {
      * @param data Array of stops
      */
     putStops(data: IRestStops) {
-        this.storage.set(STORAGE_STOP, JSON.stringify(data));
+        this.putData<IRestStops>(this.config.storageApi.stops, data);
     }
 
     /**
@@ -58,10 +62,8 @@ export class PersistentDataProvider {
      * @returns Observable<IRestBusses>
      */
     getBusses(): Observable<IRestBusses> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_BUS)).map(
-            data => {
-                return <IRestBusses>JSON.parse(data);
-            });
+        return this.getData<IRestBusses>(this.config.storageApi.busses);
+
     }
 
     /**
@@ -69,7 +71,7 @@ export class PersistentDataProvider {
      * @param data Array of busses (IRestBusses)
      */
     putBusses(data: IRestBusses) {
-        this.storage.set(STORAGE_BUS, JSON.stringify(data));
+        this.putData<IRestBusses>(this.config.storageApi.busses, data);
     }
 
     /**
@@ -77,10 +79,7 @@ export class PersistentDataProvider {
      * @returns Observable<IRestLines>
      */
     getLines(): Observable<IRestLines> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_LINE)).map(
-            data => {
-                return <IRestLines>JSON.parse(data);
-            });
+        return this.getData<IRestLines>(this.config.storageApi.lines);
     }
 
     /**
@@ -88,7 +87,7 @@ export class PersistentDataProvider {
      * @param data Array of lines (IRestLines)
      */
     putLines(data: IRestLines) {
-        this.storage.set(STORAGE_LINE, JSON.stringify(data));
+        this.putData<IRestLines>(this.config.storageApi.lines, data);
     }
 
     /**
@@ -96,10 +95,7 @@ export class PersistentDataProvider {
      * @returns Observable<IRestRoutes>
      */
     getRoutes(): Observable<IRestRoutes> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(STORAGE_ROUTE)).map(
-            data => {
-                return <IRestRoutes>JSON.parse(data);
-            });
+        return this.getData<IRestRoutes>(this.config.storageApi.routes);
     }
 
     /**
@@ -107,6 +103,6 @@ export class PersistentDataProvider {
      * @param data Array of routes (IRestRoutes)
      */
     putRoutes(data: IRestRoutes) {
-        this.storage.set(STORAGE_ROUTE, JSON.stringify(data));
+        this.putData<IRestRoutes>(this.config.storageApi.routes, data);
     }
 }
