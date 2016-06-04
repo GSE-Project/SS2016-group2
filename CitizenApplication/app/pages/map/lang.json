@@ -1,0 +1,9 @@
+{
+    "prefix": "MAP_PAGE",
+    "en": {
+        "TESTING_TRANSLATE":"Dieser Text ist Deutsch:)"
+    },
+    "de": {
+        "TESTING_TRANSLATE":"This text is english:)"
+    }
+}

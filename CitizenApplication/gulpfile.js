@@ -48,10 +48,11 @@ var isRelease = argv.indexOf('--release') > -1;
 
 gulp.task('watch', ['clean'], function (done) {
   runSequence(
-    ['sass', 'html', 'fonts', 'scripts'],
+    ['sass', 'html', 'fonts', 'scripts', 'lang'],
     function () {
       gulpWatch('app/**/*.scss', function () { gulp.start('sass'); });
       gulpWatch('app/**/*.html', function () { gulp.start('html'); });
+      gulpWatch('app/**/lang.json', function () { gulp.start('lang'); });
       buildBrowserify({ watch: true }).on('end', done);
     }
   );
@@ -59,7 +60,7 @@ gulp.task('watch', ['clean'], function (done) {
 
 gulp.task('build', ['clean'], function (done) {
   runSequence(
-    ['sass', 'html', 'fonts', 'scripts'],
+    ['sass', 'html', 'fonts', 'scripts', 'lang'],
     function () {
       var error = 0;
       buildBrowserify({
@@ -117,21 +118,41 @@ gulp.task('beforeCommit', ['pre-commit']);
 
 // Added by skaldo on the 15.05.2016
 var typedoc = require("gulp-typedoc");
-gulp.task("typedoc", function() {
-    return gulp
-        .src(["app/**/**.ts", "!app/**/**.spec.ts"])
-        .pipe(typedoc({
-            module: "commonjs",
-            target: "es5",
-            out: "docs/",
-            name: "Citizen Application",
-            ignoreCompilerErrors: true,
-            //includeDeclarations: true,
-            mode: "file",
-            hideGenerator: true
-        }))
+gulp.task("typedoc", function () {
+  return gulp
+    .src(["app/**/**.ts", "!app/**/**.spec.ts"])
+    .pipe(typedoc({
+      module: "commonjs",
+      target: "es5",
+      out: "docs/",
+      name: "Citizen Application",
+      ignoreCompilerErrors: true,
+      //includeDeclarations: true,
+      mode: "file",
+      hideGenerator: true
+    }))
     ;
 });
+
+// Added by skaldo on the 29.05.2016
+// Support for the translations.
+// Feel free to make this more generic.
+var extend = require('gulp-extend');
+var wrap = require('gulp-wrap');
+var jsonFormat = require('gulp-json-format');
+gulp.task("lang", function () {
+  var supportedLanguages = ['en', 'de'];
+  var mergeFn = function (language) {
+    gulp.src('app/**/lang.json')
+      .pipe(extend(language + '.json'))
+      .pipe(wrap('{"<%= contents.prefix %>": <%= JSON.stringify(contents.' + language + ') %>}'), {}, { parse: false })
+      .pipe(jsonFormat(2))
+      .pipe(gulp.dest('www/lang'));
+  }
+  for (var i = 0; i < supportedLanguages.length; i++) {
+    mergeFn(supportedLanguages[i]);
+  }
+})
 
 gulp.task('sass', buildSass);
 gulp.task('html', copyHTML);

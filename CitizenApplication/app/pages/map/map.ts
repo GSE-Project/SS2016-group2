@@ -1,19 +1,18 @@
+/**
+ * Created by mmueller on the XX.05.2016.
+ * Edited by skaldo on 09.05.2016.
+ * Added i18n support by tim284 on the 28.05.2016
+ * Reviewed by skaldo on the 29.05.2016 - inject pipe application-wide, restructured a bit.
+ */
 import {Page, NavController} from 'ionic-angular';
 import {ViewChild} from  '@angular/core';
 import {Map} from '../../components/map/map';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
 
-/*
-  Created by mmueller on the XX.05.2016.
-  Edited by skaldo on 09.05.2016.
-  
-  This is the controller of the map page.  
-*/
-
 @Page({
   templateUrl: 'build/pages/map/map.html',
-  directives: [Map],
+  directives: [Map]
 })
 export class MapPage {
 
