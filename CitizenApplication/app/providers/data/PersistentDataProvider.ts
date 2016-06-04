@@ -5,7 +5,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
+import {IStorage} from '../storage';
 import {IRestDataObject, IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
 import {Observable} from 'rxjs/Observable';
 import {ConfigurationService} from '../config';
@@ -13,12 +13,10 @@ import {Logger, LoggerFactory} from '../logger';
 
 @Injectable()
 export class PersistentDataProvider {
-    public storage: Storage;
+
     private logger: Logger;
 
-    constructor(private config: ConfigurationService) {
-        // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
-        this.storage = new Storage(LocalStorage);
+    constructor(private config: ConfigurationService, private storage: IStorage) {
         this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'PersistentDataProvider', config.misc.log_pretty_print);
     }
 
@@ -26,9 +24,9 @@ export class PersistentDataProvider {
      * Sets the used Storage api. Mainly for testing purposes
      * @author sholzer 160516
      * @param storage Object implementing the Storage interface
+     * @deprecated
      */
     setStorage(storage: Storage): void {
-        this.storage = storage;
     }
 
     getData<T extends IRestDataObject>(key: string): Observable<T> {

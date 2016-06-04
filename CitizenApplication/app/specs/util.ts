@@ -1,5 +1,5 @@
 import {CitizenDataObjects, IUpdateData, IRestStops, IRestRoutes, IRestLines, IRestBusses, IBusRealTimeData, GeoJsonObjectTypes} from '../providers/model';
-import {Storage} from 'ionic-angular';
+import {IStorage} from '../providers/storage';
 import {Http, Response, ResponseOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {CitizenApplicationConfig, RestApiConfig, StorageApiConfig, ConfigurationService} from '../providers/config';
@@ -45,8 +45,8 @@ export class MockFactory {
      * @param putInto: DataConfig a container to store data into 
      * @return {Storage}
      */
-    static buildStorageMock(storage_conf: StorageConfig, putInto: DataConfig, global_conf: StorageApiConfig): Storage {
-        return <Storage>{
+    static buildStorageMock(storage_conf: StorageConfig, putInto: DataConfig, global_conf: StorageApiConfig): IStorage {
+        return <IStorage>{
             get(key: string): Promise<string> {
                 let value: string = '';
                 switch (key) {
