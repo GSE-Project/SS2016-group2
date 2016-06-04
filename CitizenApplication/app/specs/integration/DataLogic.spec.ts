@@ -69,7 +69,7 @@ function tests(storageDelay: number, restDelay: number): void {
                 routes: { timestamp: 1, routes: [] },
                 stops: { timestamp: 2, stops: [] },
                 update: { busses: 1, lines: 2, routes: 1, stops: 2 },
-                rt: { id: 1, delay: 10, location: {} }
+                rt: { id: 1, delay: 10, position: { type: 'Point', coordinates: [1, 1] }, timestamp: 0 }
             };
 
             it('Get Stops from Server', (done) => {

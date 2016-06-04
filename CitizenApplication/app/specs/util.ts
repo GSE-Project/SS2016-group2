@@ -1,4 +1,4 @@
-import {CitizenDataObjects, IUpdateData, IRestStops, IRestRoutes, IRestLines, IRestBusses, IBusRealTimeData, GeoJsonObjectTypes} from '../providers/model';
+import {CitizenDataObjects, IUpdateData, IRestStops, IRestRoutes, IRestLines, IRestBusses, IBusRealTimeData} from '../providers/model';
 import {Storage} from 'ionic-angular';
 import {Http, Response, ResponseOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';

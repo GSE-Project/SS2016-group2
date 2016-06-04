@@ -60,7 +60,7 @@ describe('CitizenDataService specifications', function () {
         it('Get lines from server', (done) => {
             let expectedStops = <IRestStops>{ timestamp: 1, stops: [{ id: 1 }] };
             let expectedLines = <IRestLines>{ timestamp: 1, lines: [] };
-            let expectedRealTimeBusData = <IBusRealTimeData>{ delay: null, location: {} };
+            let expectedRealTimeBusData = <IBusRealTimeData>{ id: 1, delay: 1, position: { type: 'Point', coordinates: [1, 1] }, timestamp: 0 };
             let puttedData: IRestLines = { timestamp: 0, lines: [] };
 
             restApi = <RestApiProvider>{
@@ -105,7 +105,7 @@ describe('CitizenDataService specifications', function () {
         it('Get lines after stops from server', (done) => {
             let expectedStops = <IRestStops>{ timestamp: 1, stops: [{ id: 1 }] };
             let expectedResponse = <IRestLines>{ timestamp: 1, lines: [] };
-            let expectedRealTimeBusData = <IBusRealTimeData>{ delay: null, location: {} };
+            let expectedRealTimeBusData = <IBusRealTimeData>{ id: 1, delay: 1, position: { type: 'Point', coordinates: [1, 1] }, timestamp: 0 };
 
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
@@ -154,7 +154,7 @@ describe('CitizenDataService specifications', function () {
         it('Get new update data', (done) => {
             let expectedStops = <IRestStops>{ timestamp: 1, stops: [{ id: 1 }] };
             let expectedLines = <IRestLines>{ timestamp: 1, lines: [] };
-            let expectedRealTimeBusData = <IBusRealTimeData>{ delay: null, location: {} };
+            let expectedRealTimeBusData = <IBusRealTimeData>{ id: 1, delay: 1, position: { type: 'Point', coordinates: [1, 1] }, timestamp: 0 };
             let expectedUpdateData: IUpdateData = { busses: 1, lines: 1, routes: 1, stops: 0 };
 
             restApi = <RestApiProvider>{
@@ -198,7 +198,7 @@ describe('CitizenDataService specifications', function () {
         it('Get RealTimeBusData', (done) => {
             let expectedStops = <IRestStops>{ timestamp: 1, stops: [{ id: 1 }] };
             let expectedLines = <IRestLines>{ timestamp: 1, lines: [] };
-            let expectedRealTimeBusData = <IBusRealTimeData>{ delay: null, location: {} };
+            let expectedRealTimeBusData = <IBusRealTimeData>{ id: 1, delay: 1, position: { type: 'Point', coordinates: [1, 1] }, timestamp: 0 };
 
             restApi = <RestApiProvider>{
                 getUpdateData(): Observable<IUpdateData> {
