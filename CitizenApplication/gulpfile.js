@@ -145,7 +145,7 @@ gulp.task("lang", function () {
   var mergeFn = function (language) {
     gulp.src('app/**/lang.json')
       .pipe(extend(language + '.json'))
-      .pipe(wrap('{"<%= contents.prefix %>": <%= JSON.stringify(contents.en) %>}'), {}, { parse: false })
+      .pipe(wrap('{"<%= contents.prefix %>": <%= JSON.stringify(contents.' + language + ') %>}'), {}, { parse: false })
       .pipe(jsonFormat(2))
       .pipe(gulp.dest('www/lang'));
   }
