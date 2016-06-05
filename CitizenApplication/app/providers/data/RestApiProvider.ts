@@ -24,6 +24,7 @@ export class RestApiProvider {
 
     constructor(private http: Http, private config: ConfigurationService) {
         this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'RestApiProvider', config.misc.log_pretty_print);
+        this.logger.info('Accessing server at ' + config.restApi.host_url);
     }
 
     /**

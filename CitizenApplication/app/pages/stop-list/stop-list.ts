@@ -8,6 +8,7 @@ import {StopDetailPage} from '../stop-detail/stop-detail';
 import {CitizenDataService} from '../../providers/data';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
+import {TimeUtil} from '../../utils';
 
 class ViewStop implements IStop {
   public name: string;
@@ -35,7 +36,20 @@ class ViewStop implements IStop {
     this.schedule.sort((a, b) => {
       linesHelper[a.lineId] = true;
       linesHelper[b.lineId] = true;
-      return new Date(a.arrivingTime).getTime() - new Date(b.arrivingTime).getTime();
+      let aDate: Date = new Date(Date.now());
+      aDate.setHours(
+        TimeUtil.getHours(a.arrivingTime),
+        TimeUtil.getMinutes(a.arrivingTime),
+        TimeUtil.getSeconds(a.arrivingTime)
+      );
+      let bDate: Date = new Date(Date.now());
+      aDate.setHours(
+        TimeUtil.getHours(b.arrivingTime),
+        TimeUtil.getMinutes(b.arrivingTime),
+        TimeUtil.getSeconds(b.arrivingTime)
+      );
+
+      return aDate.getTime() - bDate.getTime();
     });
 
     linesHelper.forEach((value, index) => {
@@ -115,7 +129,9 @@ export class StopListPage {
         this.logger.debug('UI: got stop' + stop.name);
         // faking time in order to prevent errors:
         stop.schedule.forEach(item => {
-          item.arrivingTime = this.getRandomTime().toDateString();
+          this.logger.debug('Schedule item: ' + JSON.stringify(item));
+          this.logger.debug('UI: stop ' + stop.name + ': scheduled ' + item.lineId + ' at ' + item.arrivingTime);
+          item.arrivingTime = TimeUtil.getTimeString(this.getRandomTime());
         });
         this.stops.push(new ViewStop(stop));
       });
