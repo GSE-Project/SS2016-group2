@@ -1,5 +1,5 @@
-import {CitizenDataObjects, IUpdateData, IRestStops, IRestRoutes, IRestLines, IRestBusses, IBusRealTimeData, GeoJsonObjectTypes} from '../providers/model';
 import {IStorage} from '../providers/storage';
+import {CitizenDataObjects, IUpdateData, IRestStops, IRestRoutes, IRestLines, IRestBusses, IBusRealTimeData} from '../providers/model';
 import {Http, Response, ResponseOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {CitizenApplicationConfig, RestApiConfig, StorageApiConfig, ConfigurationService} from '../providers/config';

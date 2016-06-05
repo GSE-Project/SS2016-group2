@@ -6,7 +6,7 @@
  * https://angular.io/docs/ts/latest/api/http/ResponseOptions-class.html
  */
 import {RestApiProvider} from '../../../providers/data';
-import {IUpdateData, IBusRealTimeData, GeoJsonObjectTypes} from '../../../providers/model';
+import {IUpdateData, IBusRealTimeData} from '../../../providers/model';
 import {Http, Response, ResponseOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Assert, MockFactory} from '../../util';
@@ -91,7 +91,8 @@ describe('RestApiProvider specifications', () => {
         let rtData: IBusRealTimeData = {
             id: 1,
             delay: 1,
-            location: { type: GeoJsonObjectTypes.Point, coordinates: [{ latitude: 1, longitude: 1 }] }
+            position: { type: 'Point', coordinates: [1, 1] },
+            timestamp: 0
         };
 
         http = <Http>{

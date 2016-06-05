@@ -12,33 +12,40 @@ import {ConfigurationService} from '../../providers/config';
 class ViewStop implements IStop {
   public name: string;
   public location: Point;
-  public schedule: { lineId: number; time: Date }[];
+  public schedule: {
+    lineName: string,
+    lineId: number,
+    stopId: number,
+    arrivingTime: string,
+    timestamp: number
+  }[];
   public id: number;
-  private lines: Array<number>;
+  public lines: { id: number }[];
+  public timestamp: number;
 
   constructor(stop: IStop) {
     this.id = stop.id;
     this.location = stop.location;
     this.name = stop.name;
     this.schedule = stop.schedule;
-    this.lines = Array<number>();
+    this.lines = [];
     let linesHelper = [];
 
     // Do the sorting & get the lines of the stop.
     this.schedule.sort((a, b) => {
       linesHelper[a.lineId] = true;
       linesHelper[b.lineId] = true;
-      return a.time.getTime() - b.time.getTime();
+      return new Date(a.arrivingTime).getTime() - new Date(b.arrivingTime).getTime();
     });
 
     linesHelper.forEach((value, index) => {
       if (value) {
-        this.lines.push(index);
+        this.lines.push({ id: index });
       }
     });
 
     this.lines.sort((a, b) => {
-      return b - a;
+      return b.id - a.id;
     });
   }
 
@@ -108,7 +115,7 @@ export class StopListPage {
         this.logger.debug('UI: got stop' + stop.name);
         // faking time in order to prevent errors:
         stop.schedule.forEach(item => {
-          item.time = this.getRandomTime();
+          item.arrivingTime = this.getRandomTime().toDateString();
         });
         this.stops.push(new ViewStop(stop));
       });
