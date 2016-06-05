@@ -31,8 +31,8 @@
 
     <div class="map">
       <div class="estimation" *ngSwitchWhen="'position'">
-        {{getArrival().plannedArrival | date:'mmss'}}
-        <span class="delay">+{{getArrival().delay}}</span>
+        {{schedule.arrivingTime.toDate() | date:'Hms'}}
+        <span *ngIf="realTimeData.delay" class="delay">+{{realTimeData.delay}}</span>
       </div>
       <map *ngSwitchWhen="'position'">
       </map>

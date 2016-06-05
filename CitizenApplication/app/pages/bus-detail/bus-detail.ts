@@ -4,6 +4,7 @@ import {CitizenDataService} from '../../providers/data';
 import {Map} from '../../components/map/map';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
+import {ViewStop, ViewSchedule} from '../models';
 
 /*
   Generated class for the BusDetailPage page.
@@ -16,7 +17,7 @@ import {ConfigurationService} from '../../providers/config';
   directives: [Map],
 })
 export class BusDetailPage {
-  private schedule: { lineId: number; time: Date; };
+  private schedule: ViewSchedule;
   private _realTimeData: IBusRealTimeData;
   private busId: number;
   private logger: Logger;
@@ -43,26 +44,13 @@ export class BusDetailPage {
 
   /**
    * Fetches the realtime information of bus.
+   * Call periodically.
    */
   public fetchBusRealTimeData(id?: number) {
     id = id || this.busId;
     this.cDS.getBusRealTimeData(id).subscribe(data => {
       this.realTimeData = data;
     });
-  }
-
-  /**
-   * Gets the arrival object
-   */
-  public getArrival() {
-    let arrival = this.schedule.time;
-    let delay = this.realTimeData.delay;
-
-    return {
-      delay: delay,
-      plannedArrival: arrival,
-      arrival: arrival.setMinutes(arrival.getMinutes() + delay)
-    };
   }
 
   /**
