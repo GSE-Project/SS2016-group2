@@ -8,18 +8,19 @@ import {StopDetailPage} from '../stop-detail/stop-detail';
 import {CitizenDataService} from '../../providers/data';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
-import {TimeUtil} from '../../utils';
+import * as moment from 'moment/moment';
 
-class ViewStop implements IStop {
+class ViewSchedule {
+  public lineName: string;
+  public lineId: number;
+  public stopId: number;
+  public arrivingTime: moment.Moment;
+};
+
+class ViewStop {
   public name: string;
   public location: Point;
-  public schedule: {
-    lineName: string,
-    lineId: number,
-    stopId: number,
-    arrivingTime: string,
-    timestamp: number
-  }[];
+  public schedule: Array<ViewSchedule> = new Array<ViewSchedule>();
   public id: number;
   public lines: { id: number }[];
   public timestamp: number;
@@ -28,7 +29,16 @@ class ViewStop implements IStop {
     this.id = stop.id;
     this.location = stop.location;
     this.name = stop.name;
-    this.schedule = stop.schedule;
+
+    stop.schedule.forEach(schedule => {
+      this.schedule.push({
+        lineName: schedule.lineName,
+        lineId: schedule.lineId,
+        stopId: schedule.stopId,
+        arrivingTime: moment(schedule.arrivingTime, 'HH-mm-ss')
+      });
+    });
+
     this.lines = [];
     let linesHelper = [];
 
@@ -36,20 +46,7 @@ class ViewStop implements IStop {
     this.schedule.sort((a, b) => {
       linesHelper[a.lineId] = true;
       linesHelper[b.lineId] = true;
-      let aDate: Date = new Date(Date.now());
-      aDate.setHours(
-        TimeUtil.getHours(a.arrivingTime),
-        TimeUtil.getMinutes(a.arrivingTime),
-        TimeUtil.getSeconds(a.arrivingTime)
-      );
-      let bDate: Date = new Date(Date.now());
-      aDate.setHours(
-        TimeUtil.getHours(b.arrivingTime),
-        TimeUtil.getMinutes(b.arrivingTime),
-        TimeUtil.getSeconds(b.arrivingTime)
-      );
-
-      return aDate.getTime() - bDate.getTime();
+      return a.arrivingTime.unix() - b.arrivingTime.unix();
     });
 
     linesHelper.forEach((value, index) => {
@@ -128,11 +125,7 @@ export class StopListPage {
       data.stops.forEach(stop => {
         this.logger.debug('UI: got stop' + stop.name);
         // faking time in order to prevent errors:
-        stop.schedule.forEach(item => {
-          this.logger.debug('Schedule item: ' + JSON.stringify(item));
-          this.logger.debug('UI: stop ' + stop.name + ': scheduled ' + item.lineId + ' at ' + item.arrivingTime);
-          item.arrivingTime = TimeUtil.getTimeString(this.getRandomTime());
-        });
+        ;
         this.stops.push(new ViewStop(stop));
       });
     });

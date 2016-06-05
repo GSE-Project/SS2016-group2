@@ -20,7 +20,7 @@
     <ion-item *ngFor="let stop of stops" (click)="goToStopDetail(stop)">
       <div class="line" item-right>
         <p *ngFor="let schedule of stop.getSchedules(3)" class="line line{{schedule.lineId}}">
-          {{schedule.lineId}}: {{schedule.time | date:'HH:mm'}}
+          {{schedule.lineId}}: {{schedule.arrivingTime.toDate() | date:'HH:mm'}}
         </p>
       </div>
       <h2>{{stop.name}}</h2>
