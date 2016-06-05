@@ -144,14 +144,17 @@ gulp.task("lang", function () {
   var supportedLanguages = ['en', 'de'];
   var mergeFn = function (language) {
     gulp.src('app/**/lang.json')
-      .pipe(extend(language + '.json'))
       .pipe(wrap('{"<%= contents.prefix %>": <%= JSON.stringify(contents.' + language + ') %>}'), {}, { parse: false })
+      .pipe(extend(language + '.json'))
       .pipe(jsonFormat(2))
       .pipe(gulp.dest('www/lang'));
   }
   for (var i = 0; i < supportedLanguages.length; i++) {
     mergeFn(supportedLanguages[i]);
   }
+  gulp.src('www/lang/*.json')
+	  .pipe(jsonFormat(2))
+	  .pipe(gulp.dest('.'));
 })
 
 gulp.task('sass', buildSass);
