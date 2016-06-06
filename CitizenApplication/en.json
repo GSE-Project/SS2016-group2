@@ -6,13 +6,15 @@
     "Search": "Search",
     "PullToRefresh": "Pull to refresh",
     "Refreshing": "Refreshing",
+    "Line": "Line ",
+    "Color": "Color",
+    "NumberPlate": "Number plate",
     "SelectStop": "Select stop:",
     "BusLocation": "Where is my bus?",
     "TESTING_TRANSLATE": "Dieser Text ist Deutsch:)",
     "RequestStop": "Request Stop",
     "FreeSeats": "Free Seats: ",
     "EstimatedArrival": "Estimated arrival:",
-    "Line": "Line ",
     "Towards": "Towards: ",
     "ShowBusInfo": "Show bus information"
   }

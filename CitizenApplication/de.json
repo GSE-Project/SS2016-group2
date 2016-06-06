@@ -6,13 +6,15 @@
     "Search": "Suchen",
     "PullToRefresh": "Ziehen um zu aktualisieren",
     "Refreshing": "Aktualisieren",
+    "Line": "Linie ",
+    "Color": "Farbe",
+    "NumberPlate": "Kennzeichen",
     "SelectStop": "Haltestelle wählen:",
     "BusLocation": "Zeige mir meine Bus auf der Karte",
     "TESTING_TRANSLATE": "This text is english:)",
     "RequestStop": "Haltewunsch äußern",
     "FreeSeats": "Freie Plätze: ",
     "EstimatedArrival": "Erwartete Ankunft:",
-    "Line": "Linie ",
     "Towards": "In Richtung: ",
     "ShowBusInfo": "Bus informationen zeigen"
   }
