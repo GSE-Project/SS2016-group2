@@ -1,20 +1,29 @@
 {
-  "STOP_DETAIL_PAGE": {
+  "C": {
     "Cancel": "Abbrechen",
     "Yes": "Yes",
     "No": "No",
     "Search": "Suchen",
     "PullToRefresh": "Ziehen um zu aktualisieren",
-    "Refreshing": "Aktualisieren",
-    "Line": "Linie ",
+    "Refreshing": "Aktualisieren"
+  },
+  "BUS_DETAIL_PAGE": {
+    "Line": "Linie",
     "Color": "Farbe",
-    "NumberPlate": "Kennzeichen",
+    "NumberPlate": "Kennzeichen"
+  },
+  "HOME_PAGE": {
     "SelectStop": "Haltestelle wählen:",
-    "BusLocation": "Zeige mir meine Bus auf der Karte",
-    "Center": "Zentrieren",
+    "BusLocation": "Zeige mir meine Bus auf der Karte"
+  },
+  "MAP_PAGE": {
+    "Center": "Zentrieren"
+  },
+  "STOP_DETAIL_PAGE": {
     "RequestStop": "Haltewunsch äußern",
     "FreeSeats": "Freie Plätze: ",
-    "EstimatedArrival": "Erwartete Ankunft:",
+    "EstimatedArrival": "Erwartete Ankunft",
+    "Line": "Linie ",
     "Towards": "In Richtung: ",
     "ShowBusInfo": "Bus informationen zeigen"
   }

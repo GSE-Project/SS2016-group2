@@ -1,20 +1,29 @@
 {
-  "STOP_DETAIL_PAGE": {
+  "C": {
     "Cancel": "Cancel",
     "Yes": "Yes",
     "No": "No",
     "Search": "Search",
     "PullToRefresh": "Pull to refresh",
-    "Refreshing": "Refreshing",
-    "Line": "Line ",
+    "Refreshing": "Refreshing"
+  },
+  "BUS_DETAIL_PAGE": {
+    "Line": "Line",
     "Color": "Color",
-    "NumberPlate": "Number plate",
+    "NumberPlate": "Number plate"
+  },
+  "HOME_PAGE": {
     "SelectStop": "Select stop:",
-    "BusLocation": "Where is my bus?",
-    "Center": "Center",
+    "BusLocation": "Where is my bus?"
+  },
+  "MAP_PAGE": {
+    "Center": "Center"
+  },
+  "STOP_DETAIL_PAGE": {
     "RequestStop": "Request Stop",
     "FreeSeats": "Free Seats: ",
-    "EstimatedArrival": "Estimated arrival:",
+    "EstimatedArrival": "Estimated arrival",
+    "Line": "Line ",
     "Towards": "Towards: ",
     "ShowBusInfo": "Show bus information"
   }
