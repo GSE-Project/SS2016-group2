@@ -118,6 +118,7 @@ export class CitizenDataService {
     * @return Object with properties (position:Point) and (delay:number)
     */
     public getBusRealTimeData(id: number): Observable<IBusRealTimeData> {
+        this.logger.debug('Fetching RealTimeData for bus ' + id);
         return this.restApi.getRealTimeBusData(id);
     }
 

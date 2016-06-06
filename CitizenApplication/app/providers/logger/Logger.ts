@@ -43,6 +43,7 @@ class LoggerImpl implements Logger {
     constructor(log_lvl: string, identifier: string, pretty_print: boolean) {
         this._identifier = identifier;
         this._logLevel = this.stringToLogLevel(log_lvl);
+        this._pretty_print = pretty_print;
     }
 
     debug(msg: string): void {
