@@ -3,17 +3,17 @@
     "en": {
         "RequestStop": "Request Stop",
         "FreeSeats": "Free Seats: ",
-        "EstimatedArrival": "Estimated arrival:",
+        "EstimatedArrival": "Estimated arrival",
         "Line": "Line ",
-        "Towards": "Towards: ",
+        "Towards": "Towards",
         "ShowBusInfo": "Show bus information"
     },
     "de": {
         "RequestStop": "Haltewunsch äußern",
         "FreeSeats": "Freie Plätze: ",
-        "EstimatedArrival": "Erwartete Ankunft:",
+        "EstimatedArrival": "Erwartete Ankunft",
         "Line": "Linie ",
-        "Towards": "In Richtung: ",
+        "Towards": "In Richtung",
         "ShowBusInfo": "Bus informationen zeigen"
     }
 }
