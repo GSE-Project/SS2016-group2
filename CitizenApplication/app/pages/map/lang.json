@@ -1,9 +1,9 @@
 {
     "prefix": "MAP_PAGE",
     "en": {
-        "TESTING_TRANSLATE":"Dieser Text ist Deutsch:)"
+        "Center": "Center"
     },
     "de": {
-        "TESTING_TRANSLATE":"This text is english:)"
+        "Center": "Zentrieren"
     }
 }
