@@ -1,0 +1,21 @@
+{
+  "STOP_DETAIL_PAGE": {
+    "Cancel": "Cancel",
+    "Yes": "Yes",
+    "No": "No",
+    "Search": "Search",
+    "PullToRefresh": "Pull to refresh",
+    "Refreshing": "Refreshing",
+    "Line": "Line ",
+    "Color": "Color",
+    "NumberPlate": "Number plate",
+    "SelectStop": "Select stop:",
+    "BusLocation": "Where is my bus?",
+    "Center": "Center",
+    "RequestStop": "Request Stop",
+    "FreeSeats": "Free Seats: ",
+    "EstimatedArrival": "Estimated arrival:",
+    "Towards": "Towards: ",
+    "ShowBusInfo": "Show bus information"
+  }
+}

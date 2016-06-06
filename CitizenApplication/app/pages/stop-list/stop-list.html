@@ -11,10 +11,10 @@
 
 <ion-content class="stop-list">
   <ion-refresher (refresh)="doRefresh($event)">
-    <ion-refresher-content pullingText="Pull to refresh..." refreshingText="Refreshing...">
+    <ion-refresher-content pullingText="{{'C.PullToRefresh' | translate}}" refreshingText="{{'C.Refreshing' | translate}}">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-searchbar [(ngModel)]="searchText" (input)="onSearch($event)" (cancel)="onSearchCancel($event)">
+  <ion-searchbar [(ngModel)]="searchText" (input)="onSearch($event)" (cancel)="onSearchCancel($event)" placeholder="{{'C.Search' | translate}}">
   </ion-searchbar>
   <ion-list>
     <ion-item *ngFor="let stop of stops" (click)="goToStopDetail(stop)">

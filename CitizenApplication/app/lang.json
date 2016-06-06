@@ -1,0 +1,20 @@
+{
+    "description": "These are the common translations that can be used application-wise",
+    "prefix": "C",
+    "en": {
+        "Cancel": "Cancel",
+        "Yes": "Yes",
+        "No": "No",
+        "Search": "Search",
+        "PullToRefresh": "Pull to refresh",
+        "Refreshing": "Refreshing"
+    },
+    "de": {
+        "Cancel": "Abbrechen",
+        "Yes": "Yes",
+        "No": "No",
+        "Search": "Suchen",
+        "PullToRefresh": "Ziehen um zu aktualisieren",
+        "Refreshing": "Aktualisieren"
+    }
+}

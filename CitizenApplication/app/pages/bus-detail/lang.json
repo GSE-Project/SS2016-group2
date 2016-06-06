@@ -1,0 +1,13 @@
+{
+    "prefix": "BUS_DETAIL_PAGE",
+    "en": {
+        "Line": "Line",
+        "Color": "Color",
+        "NumberPlate": "Number plate"
+    },
+    "de": {
+        "Line": "Linie",
+        "Color": "Farbe",
+        "NumberPlate": "Kennzeichen"
+    }
+}

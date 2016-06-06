@@ -3,18 +3,14 @@
  Template for the map page.
 -->
 <ion-navbar *navbar>
-  <ion-title>Karte</ion-title>
+  <ion-title>Navigator</ion-title>
   <ion-nav-items secondary>
-    <button (click)="centerMap()">Center</button>
+    <button (click)="centerMap()">{{'MAP_PAGE.Center' | translate}}</button>
     <!--<button (click)="addMarker(49.42282, 7.74913,'current location')">Add Marker</button>-->
   </ion-nav-items>
 </ion-navbar>
 
 
-<ion-content>
-	<ion-list>
-		<ion-item>
-			{{ 'MAP_PAGE.TESTING_TRANSLATE' | translate }}
-		</ion-item>
-	</ion-list>
+<ion-content class="map">
+  <map></map>
 </ion-content>
