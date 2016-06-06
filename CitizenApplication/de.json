@@ -1,0 +1,16 @@
+{
+  "HOME_PAGE": {
+    "SelectStop": "Haltestelle wählen:",
+    "BusLocation": "Zeige mir meine Bus auf der Karte"
+  },
+  "MAP_PAGE": {
+    "TESTING_TRANSLATE": "This text is english:)"
+  },
+  "STOP_DETAIL_PAGE": {
+    "RequestStop": "Haltewunsch äußern",
+    "FreeSeats": "Freie Plätze: ",
+    "EstimatedArrival": "Erwartete Ankunft:",
+    "Line": "Linie ",
+    "Towards": "In Richtung: "
+  }
+}
