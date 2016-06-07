@@ -15,11 +15,11 @@
 
 <ion-content class="stop-detail">
   <ion-card *ngFor="let schedule of stop.getSchedules(8)" class="line line{{schedule.lineId}}">
-    <ion-card-header>
+    <ion-card-header (click)="infoClicked(schedule)">
       {{ 'STOP_DETAIL_PAGE.Line' | translate }} {{schedule.lineId}}, {{ 'STOP_DETAIL_PAGE.Towards' | translate }}: {{schedule.lineName}}
-      <ion-icon name="information-circle" class="infoBtn" (click)="infoClicked(schedule)"></ion-icon>
+      <ion-icon name="information-circle" class="infoBtn"></ion-icon>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content (click)="infoClicked(schedule)">
       <p>{{ 'STOP_DETAIL_PAGE.EstimatedArrival' | translate }}: {{schedule.arrivingTime.toDate() | date:'HH:mm'}}</p>
       <!--p>{{ 'STOP_DETAIL_PAGE.FreeSeats' | translate }} 20</p-->
     </ion-card-content>
