@@ -4,6 +4,7 @@
  * Reviewed and updated by skaldo on 22.05.2016
  * Updated by sholzer on the 28.05.2016 - added generic method
  * Reviewed by skaldo on the 28.05.2016 - OK
+ * Reviewed by skaldo on the 06.06.2016 - Changed a param to optional.
  */
 
 import {Injectable} from '@angular/core';
@@ -40,8 +41,9 @@ export class RestApiProvider {
      * @param data: CitizenDataObjects specifying the object to be returned. 
      * @return Observable<T>
      */
-    getData<T>(data: CitizenDataObjects, urlSuffix: string): Observable<T> {
+    getData<T>(data: CitizenDataObjects, urlSuffix?: string): Observable<T> {
         this.logger.debug('Accessing ' + this.config.getUrl(data));
+        urlSuffix = urlSuffix ? urlSuffix : '';
         return this.http.get(this.config.getUrl(data) + urlSuffix).map(
             res => {
                 this.logger.debug('Fetched ' + JSON.stringify(res.json()));
@@ -55,7 +57,7 @@ export class RestApiProvider {
      * @returns {Observable<RestStops>}
      */
     getStops(): Observable<IRestStops> {
-        return this.getData<IRestStops>(CitizenDataObjects.Stop, '');
+        return this.getData<IRestStops>(CitizenDataObjects.Stop);
     }
 
     /**
@@ -63,7 +65,7 @@ export class RestApiProvider {
      * @returns {Observable<IUpdateData>} resolving into the current IUpdateData of the server
      */
     getUpdateData(): Observable<IUpdateData> {
-        return this.getData<IUpdateData>(CitizenDataObjects.UpdateData, '');
+        return this.getData<IUpdateData>(CitizenDataObjects.UpdateData);
     };
 
     /**
@@ -71,7 +73,7 @@ export class RestApiProvider {
     * @returns {Observable<IRestBusses>} resolving into the current IRestBusses from the server
     */
     getBusses(): Observable<IRestBusses> {
-        return this.getData<IRestBusses>(CitizenDataObjects.Bus, '');
+        return this.getData<IRestBusses>(CitizenDataObjects.Bus);
     }
 
     /**
@@ -79,7 +81,7 @@ export class RestApiProvider {
     * @returns {Observable<IRestLines>} resolving into the current IRestLines from the server
     */
     getLines(): Observable<IRestLines> {
-        return this.getData<IRestLines>(CitizenDataObjects.Line, '');
+        return this.getData<IRestLines>(CitizenDataObjects.Line);
     };
 
     /**
@@ -87,7 +89,7 @@ export class RestApiProvider {
     * @returns {Observable<IRestRoutes>} resolving into the current IRestRoutes from the server
     */
     getRoutes(): Observable<IRestRoutes> {
-        return this.getData<IRestRoutes>(CitizenDataObjects.Route, '');
+        return this.getData<IRestRoutes>(CitizenDataObjects.Route);
     };
 
     /**
