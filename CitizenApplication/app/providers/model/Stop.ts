@@ -16,7 +16,7 @@ export interface IStop extends ICitizenDataObject {
         lineId: number,
         stopId: number,
         arrivingTime: string,
-        timestamp: number
+        timestamp?: number
     }[];
     location: Point;
     lines: { id: number }[];
