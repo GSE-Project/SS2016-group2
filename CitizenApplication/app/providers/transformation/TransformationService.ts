@@ -21,8 +21,8 @@ export class TransformationService {
      */
     getStops(filterValue: string = null, filterField: string = 'name'): Observable<VIEW.ViewStop[]> {
         return this.cds.getStops().map<VIEW.ViewStop[]>((modelIRStops) => {
-            return TransformationService.mapData<DATA.IStop, VIEW.ViewStop>(filterValue, filterField, modelIRStops.stops, TransformationService.mapStop);
-        });
+            return this.mapData<DATA.IStop, VIEW.ViewStop>(filterValue, filterField, modelIRStops.stops, TransformationService.mapStop);
+        }, this);
     }
 
     /**
@@ -35,10 +35,10 @@ export class TransformationService {
      * @param map: (data:D)=>V the map of one data logic object to a view object
      * @return V[] a list of filtered view objects
      */
-    static mapData<D extends DATA.ICitizenDataObject, V>(filterValue: string = null, filterField: string = 'name', modelData: D[], map: (data: D) => V): V[] {
+    private mapData<D extends DATA.ICitizenDataObject, V>(filterValue: string = null, filterField: string = 'name', modelData: D[], map: (data: D) => V): V[] {
         return modelData.map<V>((modelItem, i, modelItems) => {
             return map(modelItem);
-        }).filter(TransformationService.getFilter());
+        }).filter(this.getFilter<V>(filterValue, filterField));
     }
 
     /**
@@ -48,9 +48,9 @@ export class TransformationService {
      * @param filterName? string the property to be filtered from the ViewStop. Is only considered if filterValue is given and non null
      * @return (data:V)=>boolean that returns true if the filterField value of data is equal to filterValue
      */
-    static getFilter<V>(filterValue: string = null, filterField: string = 'name'): (data: V) => boolean {
+    getFilter<V>(filterValue: string = null, filterField: string = 'name'): (data: V) => boolean {
         return (data) => {
-            if ((filterValue == null) || (String(data[filterField]) === filterValue)) {
+            if ((filterValue == null) || (String(data[filterField]).search(new RegExp(filterValue, 'i')) != -1)) {
                 return true;
             }
             return false;
