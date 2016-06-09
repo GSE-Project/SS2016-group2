@@ -64,15 +64,16 @@ export class Map implements AfterViewInit, OnDestroy {
   }
 
   createMap() {
+    debugger;
     this.mapElement = this.element.nativeElement.children[0];
-    //this.map = new google.maps.Map(this.mapElement, this.defaultMapOptions);
+    // this.map = new google.maps.Map(this.mapElement, this.defaultMapOptions);
     let map = new GoogleMap(this.mapElement);
   }
 
   ngAfterViewInit() {
     this.createMap();
-    //this.centerMap();
-    //this.initPositionMarker();
+    // this.centerMap();
+    // this.initPositionMarker();
   }
 
   ngOnDestroy() {
