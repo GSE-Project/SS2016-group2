@@ -50,7 +50,7 @@ export class TransformationService {
      */
     getFilter<V>(filterValue: string = null, filterField: string = 'name'): (data: V) => boolean {
         return (data) => {
-            if ((filterValue == null) || (String(data[filterField]).search(new RegExp(filterValue, 'i')) != -1)) {
+            if ((filterValue == null) || (String(data[filterField]).search(new RegExp(filterValue, 'i')) !== -1)) {
                 return true;
             }
             return false;
