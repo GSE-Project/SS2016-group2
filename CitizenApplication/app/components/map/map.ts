@@ -2,6 +2,7 @@ import {Component, ElementRef, AfterViewInit, OnDestroy} from '@angular/core';
 import {Geolocation} from 'ionic-native';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
+import {GoogleMap, GoogleMapsEvent} from 'ionic-native';
 
 /*
   Created by skaldo and mmueller on the 09.05.2016.
@@ -64,13 +65,14 @@ export class Map implements AfterViewInit, OnDestroy {
 
   createMap() {
     this.mapElement = this.element.nativeElement.children[0];
-    this.map = new google.maps.Map(this.mapElement, this.defaultMapOptions);
+    //this.map = new google.maps.Map(this.mapElement, this.defaultMapOptions);
+    let map = new GoogleMap(this.mapElement);
   }
 
   ngAfterViewInit() {
     this.createMap();
-    this.centerMap();
-    this.initPositionMarker();
+    //this.centerMap();
+    //this.initPositionMarker();
   }
 
   ngOnDestroy() {
