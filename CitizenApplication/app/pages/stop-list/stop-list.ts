@@ -2,6 +2,7 @@
  * Created by skaldo on 5.5.2016, added logic for the UI
  */
 
+import {Component} from '@angular/core';
 import {Page, NavController, Refresher} from 'ionic-angular';
 import {Point, IStop} from '../../providers/model';
 import {StopDetailPage} from '../stop-detail/stop-detail';
@@ -17,7 +18,7 @@ import * as moment from 'moment/moment';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-@Page({
+@Component({
   templateUrl: 'build/pages/stop-list/stop-list.html',
   providers: [CitizenDataService],
 })
