@@ -1,10 +1,10 @@
-import {Page} from 'ionic-angular';
+import {Component} from '@angular/core';
 import {HomePage} from '../home/home';
 import {StopListPage} from '../stop-list/stop-list';
 import {MapPage} from '../map/map';
 
 
-@Page({
+@Component({
   templateUrl: 'build/pages/tabs/tabs.html'
 })
 export class TabsPage {

@@ -1,7 +1,7 @@
-import {Page, NavController, NavParams} from 'ionic-angular';
+import {NavController, NavParams} from 'ionic-angular';
 import {IBus, Bus, IBusRealTimeData} from '../../providers/model';
 import {CitizenDataService} from '../../providers/data';
-import {ViewChild} from  '@angular/core';
+import {Component, ViewChild} from  '@angular/core';
 import {Map} from '../../components/map/map';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
@@ -13,7 +13,7 @@ import {ViewStop, ViewSchedule} from '../models';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-@Page({
+@Component({
   templateUrl: 'build/pages/bus-detail/bus-detail.html',
   directives: [Map],
 })

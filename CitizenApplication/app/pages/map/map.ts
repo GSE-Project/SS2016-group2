@@ -6,12 +6,12 @@
  * Added native google maps support.
  */
 import {Page, NavController} from 'ionic-angular';
-import {ViewChild} from  '@angular/core';
+import {Component, ViewChild} from  '@angular/core';
 import {NativeMap} from '../../components/native-map/native-map';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
 
-@Page({
+@Component({
   templateUrl: 'build/pages/map/map.html',
   directives: [NativeMap]
 })
@@ -30,7 +30,7 @@ export class MapPage {
   // done here. (skaldo, G2).
   // The handler fires too early too, for now this is hacked by
   // timeout.
-  onPageDidEnter() {
+  ionViewDidEnter() {
     setTimeout(() => {
       this.nativeMap.render();
     }, 250);
