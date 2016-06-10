@@ -1,3 +1,4 @@
+import {Component} from '@angular/core';
 import {Page, NavController, NavParams, ActionSheet} from 'ionic-angular';
 import {IStop} from '../../providers/model';
 import {BusDetailPage} from '../bus-detail/bus-detail';
@@ -11,7 +12,7 @@ import {TranslateService} from 'ng2-translate/ng2-translate';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-@Page({
+@Component({
   templateUrl: 'build/pages/stop-detail/stop-detail.html',
 })
 export class StopDetailPage {
