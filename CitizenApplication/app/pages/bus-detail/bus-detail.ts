@@ -1,5 +1,6 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {IBus, Bus, IBusRealTimeData} from '../../providers/model';
+import {IBus, IBusRealTimeData} from '../../providers/model';
+import {ViewBus} from '../models';
 import {CitizenDataService} from '../../providers/data';
 import {ViewChild} from  '@angular/core';
 import {Map} from '../../components/map/map';
@@ -30,7 +31,7 @@ export class BusDetailPage {
     // Do the map update here.
     this._realTimeData = data;
   }
-  public bus: Bus = new Bus();
+  public bus: ViewBus = new ViewBus();
   private _busViewType = 'information';
 
   get busViewType() {
