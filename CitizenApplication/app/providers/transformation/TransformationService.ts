@@ -33,6 +33,22 @@ export class TransformationService {
     }
 
     /**
+     * Returns the IBus objects as ViewBus for the UI
+     * @param filterValue? string to be filtered with.
+     * @param filterName? string the property to be filtered from the ViewBus. Is only considered if filterValue is given and non null. Default is 'id'
+     * @return Observable<ViewBus[]> containing the transformed stops that matched the given filter (if any) 
+     */
+    getBusses(filterValue: string = null, filterField: string = 'id'): Observable<VIEW.ViewBus[]> {
+        return this.getData<DATA.IRestBusses, DATA.IBus, VIEW.ViewBus>(
+            this.cds.getBusses(),
+            (iRestObject: DATA.IRestBusses) => { return iRestObject.busses },
+            TransformationService.mapBus,
+            filterValue,
+            filterField
+        );
+    }
+
+    /**
      * Return the {D} objects as {V}[] from the data source
      * @param restObservable : Observable<{R}> from the data source to be parsed and filtered.
      * @param iRestObjectsAccess ({R}=>{D}[]) method to retrieve the data model array from the rest model
@@ -82,6 +98,16 @@ export class TransformationService {
 
     static mapStop(stop: DATA.IStop): VIEW.ViewStop {
         return new VIEW.ViewStop(stop);
+    }
+
+    static mapBus(bus: DATA.IBus): VIEW.ViewBus {
+        let result: VIEW.ViewBus = new VIEW.ViewBus();
+        result.color = bus.color;
+        result.id = bus.id;
+        result.lineId = bus.lineId;
+        result.numberPlate = bus.numberPlate;
+        result.picture = bus.picture;
+        return result;
     }
 
 }
