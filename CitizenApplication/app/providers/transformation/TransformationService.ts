@@ -3,7 +3,7 @@
  */
 
 import * as VIEW from '../../pages/models';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs/Rx';
 import {CitizenDataService} from '../data';
 import * as DATA from '../model';
 
@@ -16,14 +16,37 @@ export class TransformationService {
     /**
      * Returns the IStop objects as ViewStop for the UI
      * @param filterValue? string to be filtered with.
-     * @param filterName? string the property to be filtered from the ViewStop. Is only considered if filterValue is given and non null
+     * @param filterName? string the property to be filtered from the ViewStop. Is only considered if filterValue is given and non null. Default is 'name'
      * @return Observable<ViewStop[]> containing the transformed stops that matched the given filter (if any) 
      */
     getStops(filterValue: string = null, filterField: string = 'name'): Observable<VIEW.ViewStop[]> {
-        return this.cds.getStops().map<VIEW.ViewStop[]>((modelIRStops) => {
+        return this.getData<DATA.IRestStops, DATA.IStop, VIEW.ViewStop>(
+            this.cds.getStops(),
+            (iRestObject: DATA.IRestStops) => { return iRestObject.stops },
+            TransformationService.mapStop,
+            filterValue,
+            filterField
+        );
+        /*return this.cds.getStops().map<VIEW.ViewStop[]>((modelIRStops) => {
             return this.mapData<DATA.IStop, VIEW.ViewStop>(filterValue, filterField, modelIRStops.stops, TransformationService.mapStop);
+        }, this);*/
+    }
+
+    /**
+     * Return the {D} objects as {V}[] from the data source
+     * @param restObservable : Observable<{R}> from the data source to be parsed and filtered.
+     * @param iRestObjectsAccess ({R}=>{D}[]) method to retrieve the data model array from the rest model
+     * @param map: (data:D)=>V the map of one data logic object to a view object
+     * @param filterValue? string to be filtered with.
+     * @param filterName? string the property to be filtered from the ViewStop. Is only considered if filterValue is given and non null
+     * @return Observable<{V}[]> 
+     */
+    getData<R extends DATA.IRestDataObject, D extends DATA.ICitizenDataObject, V>(restObservable: Observable<R>, iRestObjectsAccess: (iRestObject: R) => D[], map: (data: D) => V, filerValue: string, filterField: string): Observable<V[]> {
+        return restObservable.map<V[]>((iRestModel) => {
+            return this.mapData<D, V>(filerValue, filterField, iRestObjectsAccess(iRestModel), map);
         }, this);
     }
+
 
     /**
      * Maps D to V data and filters. This method is designed to be called in an observables map() method
@@ -35,7 +58,7 @@ export class TransformationService {
      * @param map: (data:D)=>V the map of one data logic object to a view object
      * @return V[] a list of filtered view objects
      */
-    private mapData<D extends DATA.ICitizenDataObject, V>(filterValue: string = null, filterField: string = 'name', modelData: D[], map: (data: D) => V): V[] {
+    private mapData<D extends DATA.ICitizenDataObject, V>(filterValue: string, filterField: string, modelData: D[], map: (data: D) => V): V[] {
         return modelData.map<V>((modelItem, i, modelItems) => {
             return map(modelItem);
         }).filter(this.getFilter<V>(filterValue, filterField));
@@ -44,9 +67,9 @@ export class TransformationService {
     /**
      * Generic filter method
      * @type V view data type to be filtered
-     * @param filterValue? string to be filtered with.
+     * @param filterValue? case insensitive string to be filtered with.
      * @param filterName? string the property to be filtered from the ViewStop. Is only considered if filterValue is given and non null
-     * @return (data:V)=>boolean that returns true if the filterField value of data is equal to filterValue
+     * @return (data:V)=>boolean that returns true if the filterField value of data matches the RegEx /filterValue/i
      */
     getFilter<V>(filterValue: string = null, filterField: string = 'name'): (data: V) => boolean {
         return (data) => {
