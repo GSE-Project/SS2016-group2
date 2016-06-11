@@ -50,6 +50,49 @@ export class TransformationService {
     }
 
     /**
+     * Returns the Iline objects as ViewLine for the UI
+     * @param filterValue? string to be filtered with.
+     * @param filterName? string the property to be filtered from the ViewLine. Is only considered if filterValue is given and non null. Default is 'name'
+     * @return Observable<ViewLine[]> containing the transformed stops that matched the given filter (if any) 
+     */
+    getLines(filterValue: string = null, filterField: string = 'id') {
+        return this.getData<DATA.IRestLines, DATA.ILine, VIEW.ViewLine>(
+            this.cds.getLines(),
+            (iRestObject: DATA.IRestLines) => { return iRestObject.lines; },
+            Mapper.mapLine,
+            filterValue,
+            filterField);
+    }
+
+    /**
+     * Returns the Iline objects as ViewLine for the UI
+     * @param filterValue? string to be filtered with.
+     * @param filterName? string the property to be filtered from the ViewLine. Is only considered if filterValue is given and non null. Default is 'name'
+     * @return Observable<ViewLine[]> containing the transformed stops that matched the given filter (if any) 
+     */
+    getRoutes(filterValue: string = null, filterField: string = 'id') {
+        return this.getData<DATA.IRestRoutes, DATA.IRoute, VIEW.ViewRoute>(
+            this.cds.getRoutes(),
+            (iRestObject: DATA.IRestRoutes) => { return iRestObject.routes; },
+            Mapper.mapRoute,
+            filterValue,
+            filterField);
+    }
+
+    /**
+     * Returns the BusRealTimeData object parsed to it's view equivalent
+     * @param id : number the number of the busses
+     * @return Observable<ViewBusRealTimeData>
+     */
+    getBusRealTimeData(id: number): Observable<VIEW.ViewBusRealTimeData> {
+        return this.cds.getBusRealTimeData(id).map<VIEW.ViewBusRealTimeData>((brtd) => { return Mapper.mapBRTData(brtd); });
+    }
+
+    updateTimeStamps(): Observable<{ busses: number, lines: number, routes: number, stops: number }> {
+        return this.cds.updateTimeStamps();
+    }
+
+    /**
      * Return the {D} objects as {V}[] from the data source
      * @param restObservable : Observable<{R}> from the data source to be parsed and filtered.
      * @param iRestObjectsAccess ({R}=>{D}[]) method to retrieve the data model array from the rest model
@@ -96,5 +139,4 @@ export class TransformationService {
             return false;
         };
     }
-
 }
