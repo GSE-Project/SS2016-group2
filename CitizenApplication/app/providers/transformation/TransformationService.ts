@@ -6,6 +6,7 @@ import * as VIEW from '../../pages/models';
 import {Observable} from 'rxjs/Rx';
 import {CitizenDataService} from '../data';
 import * as DATA from '../model';
+import {Mapper} from './Mapper';
 
 export class TransformationService {
 
@@ -23,7 +24,7 @@ export class TransformationService {
         return this.getData<DATA.IRestStops, DATA.IStop, VIEW.ViewStop>(
             this.cds.getStops(),
             (iRestObject: DATA.IRestStops) => { return iRestObject.stops; },
-            TransformationService.mapStop,
+            Mapper.mapStop,
             filterValue,
             filterField
         );
@@ -42,7 +43,7 @@ export class TransformationService {
         return this.getData<DATA.IRestBusses, DATA.IBus, VIEW.ViewBus>(
             this.cds.getBusses(),
             (iRestObject: DATA.IRestBusses) => { return iRestObject.busses; },
-            TransformationService.mapBus,
+            Mapper.mapBus,
             filterValue,
             filterField
         );
@@ -94,20 +95,6 @@ export class TransformationService {
             }
             return false;
         };
-    }
-
-    static mapStop(stop: DATA.IStop): VIEW.ViewStop {
-        return new VIEW.ViewStop(stop);
-    }
-
-    static mapBus(bus: DATA.IBus): VIEW.ViewBus {
-        let result: VIEW.ViewBus = new VIEW.ViewBus();
-        result.color = bus.color;
-        result.id = bus.id;
-        result.lineId = bus.lineId;
-        result.numberPlate = bus.numberPlate;
-        result.picture = bus.picture;
-        return result;
     }
 
 }
