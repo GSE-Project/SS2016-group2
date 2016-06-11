@@ -22,7 +22,7 @@ export class TransformationService {
     getStops(filterValue: string = null, filterField: string = 'name'): Observable<VIEW.ViewStop[]> {
         return this.getData<DATA.IRestStops, DATA.IStop, VIEW.ViewStop>(
             this.cds.getStops(),
-            (iRestObject: DATA.IRestStops) => { return iRestObject.stops },
+            (iRestObject: DATA.IRestStops) => { return iRestObject.stops; },
             TransformationService.mapStop,
             filterValue,
             filterField
@@ -41,7 +41,7 @@ export class TransformationService {
     getBusses(filterValue: string = null, filterField: string = 'id'): Observable<VIEW.ViewBus[]> {
         return this.getData<DATA.IRestBusses, DATA.IBus, VIEW.ViewBus>(
             this.cds.getBusses(),
-            (iRestObject: DATA.IRestBusses) => { return iRestObject.busses },
+            (iRestObject: DATA.IRestBusses) => { return iRestObject.busses; },
             TransformationService.mapBus,
             filterValue,
             filterField
