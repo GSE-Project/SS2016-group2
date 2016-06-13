@@ -9,6 +9,7 @@ import * as DATA from '../model';
 import {Mapper} from './Mapper';
 import {Injectable} from '@angular/core';
 
+@Injectable()
 export class TransformationService {
 
     constructor(private cds: CitizenDataService) {
