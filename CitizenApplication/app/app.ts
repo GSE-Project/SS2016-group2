@@ -13,6 +13,7 @@ import {TabsPage} from './pages/tabs/tabs';
 import {RestApiProvider, PersistentDataProvider, CitizenDataService} from './providers/data';
 import {ConfigurationService} from './providers/config';
 import {IStorage, InjectableLocalStorage} from './providers/storage';
+import {TransformationService} from './providers/transformation';
 
 @App({
   template: '<!-- custom-router-outlet></custom-router-outlet --><ion-nav [root]="rootPage"></ion-nav>',
@@ -22,8 +23,9 @@ import {IStorage, InjectableLocalStorage} from './providers/storage';
       useFactory: (http: Http) => new TranslateStaticLoader(http, 'lang', '.json'),
       deps: [Http]
     }),
-    provide(PLATFORM_PIPES, {useValue: [TranslatePipe], multi: true}),
+    provide(PLATFORM_PIPES, { useValue: [TranslatePipe], multi: true }),
     new Provider(IStorage, { useClass: InjectableLocalStorage }),
+    TransformationService,
     TranslateService, CitizenDataService, RestApiProvider, PersistentDataProvider, ConfigurationService],
 })
 export class MyApp {

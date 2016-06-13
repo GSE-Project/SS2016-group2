@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Rx';
 import {CitizenDataService} from '../data';
 import * as DATA from '../model';
 import {Mapper} from './Mapper';
+import {Injectable} from '@angular/core';
 
 export class TransformationService {
 
@@ -88,6 +89,9 @@ export class TransformationService {
         return this.cds.getBusRealTimeData(id).map<VIEW.ViewBusRealTimeData>((brtd) => { return Mapper.mapBRTData(brtd); });
     }
 
+    /**
+     * Delegate for CitizenDataService.updateTimeStamps()
+     */
     updateTimeStamps(): Observable<{ busses: number, lines: number, routes: number, stops: number }> {
         return this.cds.updateTimeStamps();
     }
