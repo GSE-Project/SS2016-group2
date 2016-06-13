@@ -1,12 +1,11 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
-import {IBus, IBusRealTimeData} from '../../providers/model';
 import {ViewBus} from '../models';
-import {CitizenDataService} from '../../providers/data';
+import {TransformationService} from '../../providers/transformation';
 import {ViewChild} from  '@angular/core';
 import {Map} from '../../components/map/map';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
-import {ViewStop, ViewSchedule} from '../models';
+import {ViewStop, ViewSchedule, ViewBusRealTimeData} from '../models';
 
 /*
   Generated class for the BusDetailPage page.
@@ -20,14 +19,14 @@ import {ViewStop, ViewSchedule} from '../models';
 })
 export class BusDetailPage {
   private schedule: ViewSchedule;
-  private _realTimeData: IBusRealTimeData;
+  private _realTimeData: ViewBusRealTimeData;
   private busId: number;
   private logger: Logger;
 
-  get realTimeData(): IBusRealTimeData {
+  get realTimeData(): ViewBusRealTimeData {
     return this._realTimeData;
   }
-  set realTimeData(data: IBusRealTimeData) {
+  set realTimeData(data: ViewBusRealTimeData) {
     // Do the map update here.
     this._realTimeData = data;
   }
@@ -49,7 +48,7 @@ export class BusDetailPage {
   }
 
   @ViewChild(Map) map: Map;
-  constructor(public nav: NavController, private navParams: NavParams, private cDS: CitizenDataService, private config: ConfigurationService) {
+  constructor(public nav: NavController, private navParams: NavParams, private dataAccess: TransformationService, private config: ConfigurationService) {
     this.schedule = navParams.data;
     // Caution, change this to the bus ID in the next iteration.
     this.busId = this.schedule.lineId;
@@ -64,8 +63,10 @@ export class BusDetailPage {
    * Call periodically.
    */
   public fetchBusRealTimeData(id?: number) {
-    id = id || this.busId;
-    this.cDS.getBusRealTimeData(id).subscribe(data => {
+    if (!id) {
+      id = this.busId;
+    }
+    this.dataAccess.getBusRealTimeData(id).subscribe(data => {
       this.realTimeData = data;
     });
   }
@@ -74,11 +75,13 @@ export class BusDetailPage {
    * Fetches the bus based on the ID.
    */
   public fetchBus(id?: number) {
-    this.cDS.getBusses().subscribe(data => {
-      id = id || this.busId;
-      this.bus = data.busses.find(bus => {
-        return bus.id === id;
-      });
+    if (!id) {
+      id = this.busId;
+    }
+    this.dataAccess.getBusses(String(id)).subscribe(data => {
+      if (data.length > 0) {
+        this.bus = data[0];
+      }
     });
   }
 }
