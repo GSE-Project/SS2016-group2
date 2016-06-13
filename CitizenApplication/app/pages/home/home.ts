@@ -1,3 +1,4 @@
+import {Component} from '@angular/core';
 import {Page, NavController, Toast} from 'ionic-angular';
 import {StopListPage} from '../stop-list/stop-list';
 import {BusDetailPage} from '../bus-detail/bus-detail';
@@ -10,7 +11,7 @@ import {Logger, LoggerFactory} from '../../providers/logger';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-@Page({
+@Component({
   templateUrl: 'build/pages/home/home.html'
 })
 export class HomePage {
@@ -31,13 +32,13 @@ export class HomePage {
   }
 
   // hide nav bar when we enter the page
-  onPageWillEnter() {
+  ionViewWillEnter() {
     var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
     element.style.display = 'none';
   }
 
   // show nav bar when we leave the page
-  onPageDidLeave() {
+  ionViewDidLeave() {
     var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
     element.style.display = 'block';
   }

@@ -5,12 +5,12 @@
  * Reviewed by skaldo on the 29.05.2016 - inject pipe application-wide, restructured a bit.
  */
 import {Page, NavController} from 'ionic-angular';
-import {ViewChild} from  '@angular/core';
+import {Component, ViewChild} from  '@angular/core';
 import {Map} from '../../components/map/map';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
 
-@Page({
+@Component({
   templateUrl: 'build/pages/map/map.html',
   directives: [Map]
 })
