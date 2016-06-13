@@ -1,5 +1,5 @@
 import {Page, NavController, NavParams, ActionSheet} from 'ionic-angular';
-import {IStop} from '../../providers/model';
+import {ViewStop} from '../models';
 import {BusDetailPage} from '../bus-detail/bus-detail';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
@@ -15,7 +15,7 @@ import {TranslateService} from 'ng2-translate/ng2-translate';
   templateUrl: 'build/pages/stop-detail/stop-detail.html',
 })
 export class StopDetailPage {
-  private stop: IStop;
+  private stop: ViewStop;
   private logger: Logger;
   constructor(public nav: NavController, private navParams: NavParams, private config: ConfigurationService, private translate: TranslateService) {
     this.stop = navParams.data;

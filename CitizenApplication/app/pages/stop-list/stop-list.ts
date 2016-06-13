@@ -58,7 +58,7 @@ export class StopListPage {
     return Math.floor(Math.random() * (3 + 1)) + 1;
   }
 
-  public goToStopDetail(stop: IStop) {
+  public goToStopDetail(stop: ViewStop) {
     this.nav.push(StopDetailPage, stop);
   }
 
