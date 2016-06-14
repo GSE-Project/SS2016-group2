@@ -21,7 +21,7 @@ export class BusDetailPage {
   private schedule: ViewSchedule;
   private _realTimeData: ViewBusRealTimeData;
   private busId: number;
-  private logger: Logger;
+  private logger: Logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'BusDetailPage', this.config.misc.log_pretty_print);
 
   get realTimeData(): ViewBusRealTimeData {
     return this._realTimeData;
@@ -30,7 +30,7 @@ export class BusDetailPage {
     // Do the map update here.
     this._realTimeData = data;
   }
-  public bus: ViewBus;
+  public bus: ViewBus = new ViewBus();
   private _busViewType = 'information';
 
   get busViewType() {
@@ -54,8 +54,6 @@ export class BusDetailPage {
     this.busId = this.schedule.lineId;
     this.fetchBus();
     this.fetchBusRealTimeData();
-    // Start some update interval for the posititon of the bus.
-    this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'BusDetailPage', config.misc.log_pretty_print);
   }
 
   /**
@@ -66,8 +64,10 @@ export class BusDetailPage {
     if (!id) {
       id = this.busId;
     }
+    this.logger.debug('Accessing RealTimeData for id ' + id);
     this.dataAccess.getBusRealTimeData(id).subscribe(data => {
       this.realTimeData = data;
+      this.logger.debug('BRTD Access done');
     });
   }
 
@@ -78,9 +78,11 @@ export class BusDetailPage {
     if (!id) {
       id = this.busId;
     }
+    this.logger.debug('Accessing Busses from DataLogic: id = ' + id);
     this.dataAccess.getBusses(String(id)).subscribe(data => {
       if (data.length > 0) {
         this.bus = data[0];
+        this.logger.debug('Bus Access done');
       }
     });
   }
