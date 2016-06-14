@@ -85,6 +85,10 @@ export interface MiscellaneousConfig {
      * Specifies if the log should be pretty and colofull or basic and PhantomJS compatible
      */
     log_pretty_print: boolean;
+
+    /**
+     * The application's version.
+     */
     app_version: string;
 }
 
