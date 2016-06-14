@@ -49,8 +49,8 @@ describe('CitizenDataService specifications', function () {
             let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, config);
             citizenDataService.updateTimeStamps().subscribe(time => {
                 citizenDataService.getStops().subscribe(data => {
-                    Assert.equalJson(data, expectedResponse, 'Wrong data fetched');
-                    Assert.equalJson(puttedData, data, 'Wrong data putted');
+                    Assert.equalJson(data, expectedResponse.stops, 'Wrong data fetched');
+                    Assert.equalJson(puttedData.stops, data, 'Wrong data putted');
                     done();
                 });
             });
@@ -95,8 +95,8 @@ describe('CitizenDataService specifications', function () {
             let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, config);
             citizenDataService.updateTimeStamps().subscribe(time => {
                 citizenDataService.getLines().subscribe(data => {
-                    Assert.equalJson(data, expectedLines, 'Wrong data fetched');
-                    Assert.equalJson(puttedData, data, 'Wrong data putted');
+                    Assert.equalJson(data, expectedLines.lines, 'Wrong data fetched');
+                    Assert.equalJson(puttedData.lines, data, 'Wrong data putted');
                     done();
                 });
             });
@@ -140,7 +140,7 @@ describe('CitizenDataService specifications', function () {
             citizenDataService.updateTimeStamps().subscribe(time => {
                 citizenDataService.getStops().subscribe(stops => {
                     citizenDataService.getLines().subscribe(data => {
-                        Assert.equalJson(data, expectedResponse, 'Wrong data fetched');
+                        Assert.equalJson(data, expectedResponse.lines, 'Wrong data fetched');
                         done();
                     });
                 });
@@ -269,8 +269,8 @@ describe('CitizenDataService specifications', function () {
             let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, config);
             citizenDataService.updateTimeStamps().subscribe(time => {
                 citizenDataService.getBusses().subscribe(data => {
-                    Assert.equalJson(data, expectedBusses, 'Wrong busses fetched');
-                    Assert.equalJson(puttedData, data, 'Wrong busses putted');
+                    Assert.equalJson(data, expectedBusses.busses, 'Wrong busses fetched');
+                    Assert.equalJson(puttedData.busses, data, 'Wrong busses putted');
                     done();
                 });
             });
@@ -304,7 +304,7 @@ describe('CitizenDataService specifications', function () {
             let citizenDataService: CitizenDataService = new CitizenDataService(restApi, storageApi, config);
             citizenDataService.updateTimeStamps().subscribe(time => {
                 citizenDataService.getLines().subscribe(data => {
-                    Assert.equalJson(data, expectedLines);
+                    Assert.equalJson(data, expectedLines.lines);
                     done();
                 });
             });
@@ -336,7 +336,7 @@ describe('CitizenDataService specifications', function () {
             citizenDataService.updateTimeStamps().subscribe(time => {
                 Assert.equalJson(time.stops, 2);
                 citizenDataService.getStops().subscribe(data => {
-                    Assert.equalJson(data, dgos_expectedStops);
+                    Assert.equalJson(data, dgos_expectedStops.stops);
                     done();
                 });
             });
@@ -363,7 +363,7 @@ describe('CitizenDataService specifications', function () {
             );
             cds.updateTimeStamps().subscribe((time) => {
                 cds.getStops().subscribe((data) => {
-                    Assert.equalJson(data, expectedStops, 'Null not catched');
+                    Assert.equalJson(data, expectedStops.stops, 'Null not catched');
                     done();
                 });
             });
@@ -389,7 +389,7 @@ describe('CitizenDataService specifications', function () {
             );
             cds.updateTimeStamps().subscribe((time) => {
                 cds.getRoutes().subscribe((data) => {
-                    Assert.equalJson(data, expectedRoutes, 'Null not catched');
+                    Assert.equalJson(data, expectedRoutes.routes, 'Null not catched');
                     done();
                 });
             });
@@ -415,7 +415,7 @@ describe('CitizenDataService specifications', function () {
             );
             cds.updateTimeStamps().subscribe((time) => {
                 cds.getLines().subscribe((data) => {
-                    Assert.equalJson(data, expectedData, 'Null not catched');
+                    Assert.equalJson(data, expectedData.lines, 'Null not catched');
                     done();
                 });
             });
@@ -441,7 +441,7 @@ describe('CitizenDataService specifications', function () {
             );
             cds.updateTimeStamps().subscribe((time) => {
                 cds.getBusses().subscribe((data) => {
-                    Assert.equalJson(data, expectedData, 'Null not catched');
+                    Assert.equalJson(data, expectedData.busses, 'Null not catched');
                     done();
                 });
             });

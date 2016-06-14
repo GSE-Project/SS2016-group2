@@ -13,6 +13,8 @@ import {TabsPage} from './pages/tabs/tabs';
 import {RestApiProvider, PersistentDataProvider, CitizenDataService} from './providers/data';
 import {ConfigurationService} from './providers/config';
 import {IStorage, InjectableLocalStorage} from './providers/storage';
+import {TransformationService} from './providers/transformation';
+
 
 @Component({
   template: '<!-- custom-router-outlet></custom-router-outlet --><ion-nav [root]="rootPage"></ion-nav>'
@@ -41,6 +43,6 @@ ionicBootstrap(MyApp, [
     }),
     provide(PLATFORM_PIPES, {useValue: [TranslatePipe], multi: true}),
     new Provider(IStorage, { useClass: InjectableLocalStorage }),
-    TranslateService, CitizenDataService, RestApiProvider, PersistentDataProvider, ConfigurationService], {
+    TranslateService, CitizenDataService, RestApiProvider, PersistentDataProvider, ConfigurationService, TransformationService], {
   tabbarPlacement: 'bottom'
 });

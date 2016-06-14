@@ -1,17 +1,19 @@
 /**
- * ViewStop
+ * ViewLine
  * Author: skaldo, 05.06.2016
-*/
+ * Edited by skaldo on the 14.06.2016 - changed base class to interface.
+ */
 
 import {ViewSchedule} from './ViewSchedule';
 import {Point, IStop} from '../../providers/model';
 import * as moment from 'moment/moment';
+import {IViewObject} from './ViewObject';
 
-export class ViewStop {
+export class ViewStop implements IViewObject {
+  public id: number;
   public name: string;
   public location: Point;
   public schedule: Array<ViewSchedule> = new Array<ViewSchedule>();
-  public id: number;
   public lines: { id: number }[];
   public timestamp: number;
 
