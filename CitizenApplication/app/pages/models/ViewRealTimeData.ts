@@ -1,13 +1,20 @@
+/**
+ * ViewRealTimeData
+ * Author: sholzer, 14.06.2016
+ * Reviewed by skaldo on the 14.06.2016 - changed base class to interface.
+ */
+
 import * as GeoJson from '../../providers/model/geojson';
 import {IBusRealTimeData} from '../../providers/model';
-import {ViewObject} from './ViewObject';
+import {IViewObject} from './ViewObject';
 
-export class ViewBusRealTimeData extends ViewObject {
+export class ViewBusRealTimeData implements IViewObject {
+    public id: number;
     public delay: number = 0;
     public position: GeoJson.Point;
 
     constructor(brtd: IBusRealTimeData) {
-        super(brtd);
+        this.id = brtd.id;
         this.position = brtd.position;
         if (brtd.delay) {
             this.delay = brtd.delay;

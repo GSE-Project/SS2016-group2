@@ -6,6 +6,8 @@
  * Updated by skaldo on the 14.05.2016 - adjusted to match the tslint rules.
  * Updated by sholzer on the 28.05.2016 - added generic method
  * Reviewed by skaldo on the 28.05.2016 - OK
+ * Edited by sholzer on the 13.06.1026 - The access methods do return the arrays of the ICitizenDataObject
+ * Reviewed by skaldo on the 14.06.2016 - looks good after #84
  */
 
 import {Injectable} from '@angular/core';

@@ -1,3 +1,8 @@
+/**
+ * Created by skaldo
+ * Edited by sholzer on the 14.06.2016
+ * Reviewed by skaldo on the 14.06.2016 - looks good after #84
+ */
 import {NavController, NavParams} from 'ionic-angular';
 import {ViewBus} from '../models';
 import {TransformationService} from '../../providers/transformation';
@@ -7,21 +12,17 @@ import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
 import {ViewStop, ViewSchedule, ViewBusRealTimeData} from '../models';
 
-/*
-  Generated class for the BusDetailPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   templateUrl: 'build/pages/bus-detail/bus-detail.html',
   directives: [Map],
 })
 export class BusDetailPage {
+  public bus: ViewBus;
   private schedule: ViewSchedule;
-  private _realTimeData: ViewBusRealTimeData;
-  private busId: number;
   private logger: Logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'BusDetailPage', this.config.misc.log_pretty_print);
+  private busId: number;
+  private _realTimeData: ViewBusRealTimeData;
+  private _busViewType = 'information';
 
   get realTimeData(): ViewBusRealTimeData {
     return this._realTimeData;
@@ -30,8 +31,7 @@ export class BusDetailPage {
     // Do the map update here.
     this._realTimeData = data;
   }
-  public bus: ViewBus = new ViewBus();
-  private _busViewType = 'information';
+
 
   get busViewType() {
     return this._busViewType;
@@ -81,7 +81,7 @@ export class BusDetailPage {
     this.logger.debug('Accessing Busses from DataLogic: id = ' + id);
     this.dataAccess.getBusses(String(id)).subscribe(data => {
       if (data.length > 0) {
-        this.bus = data[0];
+        this.bus = new ViewBus(data[0]);
         this.logger.debug('Bus Access done');
       }
     });

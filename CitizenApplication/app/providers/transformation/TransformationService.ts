@@ -1,5 +1,6 @@
 /**
  * @author sholzer 1606081950
+ * Reviewed by skaldo on the 14.06.2016 - looks good after #84
  */
 
 import * as VIEW from '../../pages/models';
