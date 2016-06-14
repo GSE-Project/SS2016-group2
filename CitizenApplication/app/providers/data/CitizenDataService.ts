@@ -10,6 +10,7 @@
 
 import {Injectable} from '@angular/core';
 import {RestApiProvider} from './RestApiProvider';
+import * as Model from '../model';
 import {PersistentDataProvider} from './PersistentDataProvider';
 import {Observable} from 'rxjs/Observable';
 import {Logger, LoggerFactory} from '../logger/Logger';
@@ -67,50 +68,50 @@ export class CitizenDataService {
     /**
     * @return A list of Stop object
     */
-    public getStops(): Observable<IRestStops> {
+    public getStops(): Observable<Model.IStop[]> {
         this.logger.debug('Getting Stops');
         return this.getData<IRestStops>(
             () => { return this.storageApi.getStops(); },
             (data: IRestStops) => { this.storageApi.putStops(data); },
             this.serverTimeStamps.stops,
             () => { return this.restApi.getStops(); }
-        );
+        ).map<Model.IStop[]>((res) => { return res.stops; });
     }
 
     /**
     * @return A list of ILine objects
     */
-    public getLines(): Observable<IRestLines> {
+    public getLines(): Observable<Model.ILine[]> {
         return this.getData<IRestLines>(
             () => { return this.storageApi.getLines(); },
             (data: IRestLines) => { this.storageApi.putLines(data); },
             this.serverTimeStamps.lines,
             () => { return this.restApi.getLines(); }
-        );
+        ).map<Model.ILine[]>((res) => { return res.lines; });
     }
 
     /**
     * @return A list of Bus objects
     */
-    public getBusses(): Observable<IRestBusses> {
+    public getBusses(): Observable<Model.IBus[]> {
         return this.getData<IRestBusses>(
             () => { return this.storageApi.getBusses(); },
             (data: IRestBusses) => { this.storageApi.putBusses(data); },
             this.serverTimeStamps.busses,
             () => { return this.restApi.getBusses(); }
-        );
+        ).map<Model.IBus[]>((res) => { return res.busses; });
     }
 
     /**
     * @return A list of Route objects
     */
-    public getRoutes(): Observable<IRestRoutes> {
+    public getRoutes(): Observable<Model.IRoute[]> {
         return this.getData<IRestRoutes>(
             () => { return this.storageApi.getRoutes(); },
             (data: IRestRoutes) => { this.storageApi.putRoutes(data); },
             this.serverTimeStamps.busses,
             () => { return this.restApi.getRoutes(); }
-        );
+        ).map<Model.IRoute[]>((res) => { return res.routes; });
     }
 
     /**

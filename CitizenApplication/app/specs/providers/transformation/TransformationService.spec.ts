@@ -52,8 +52,8 @@ describe('TransformationService specification', () => {
         };
 
         let cds = <CitizenDataService>{
-            getStops(): Observable<DATA.IRestStops> {
-                return Observable.of(restStops);
+            getStops(): Observable<DATA.IStop[]> {
+                return Observable.of(restStops.stops);
             }
         };
 
