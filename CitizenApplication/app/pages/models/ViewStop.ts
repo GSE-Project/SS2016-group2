@@ -6,17 +6,17 @@
 import {ViewSchedule} from './ViewSchedule';
 import {Point, IStop} from '../../providers/model';
 import * as moment from 'moment/moment';
+import {ViewObject} from './ViewObject';
 
-export class ViewStop {
+export class ViewStop extends ViewObject {
   public name: string;
   public location: Point;
   public schedule: Array<ViewSchedule> = new Array<ViewSchedule>();
-  public id: number;
   public lines: { id: number }[];
   public timestamp: number;
 
   constructor(stop: IStop) {
-    this.id = stop.id;
+    super(stop);
     this.location = stop.location;
     this.name = stop.name;
 

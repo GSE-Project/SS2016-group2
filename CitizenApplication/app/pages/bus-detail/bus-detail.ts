@@ -30,7 +30,7 @@ export class BusDetailPage {
     // Do the map update here.
     this._realTimeData = data;
   }
-  public bus: ViewBus = new ViewBus();
+  public bus: ViewBus;
   private _busViewType = 'information';
 
   get busViewType() {
