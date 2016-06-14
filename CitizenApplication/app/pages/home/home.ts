@@ -21,15 +21,14 @@ export class HomePage {
   constructor(public nav: NavController, private config: ConfigurationService) {
     this.reqNumber = 0;
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'HomePage', config.misc.log_pretty_print);
-    if(config.misc.app_version != localStorage.getItem("app_version"))
-    {
-      this.logger.info("Log Cleared, stored Version: " + localStorage.getItem("app_version") + ", configVersion: " + config.misc.app_version);
+    if (config.misc.app_version !== localStorage.getItem('app_version') ) {
+      this.logger.info('Log Cleared, stored Version: ' + localStorage.getItem('app_version') + ', configVersion: ' + config.misc.app_version);
       localStorage.clear();
-      localStorage.setItem("app_version", config.misc.app_version);
+      localStorage.setItem('app_version', config.misc.app_version);
     }
-    else if(localStorage.getItem("app_version") == null){
-      this.logger.debug("Set app Version to: " + config.misc.app_version);
-        localStorage.setItem("app_version", config.misc.app_version);
+    else if (localStorage.getItem('app_version') == null) {
+      this.logger.debug('Set app Version to: ' + config.misc.app_version);
+        localStorage.setItem('app_version', config.misc.app_version);
     }
   }
 
