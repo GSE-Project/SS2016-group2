@@ -1,37 +1,37 @@
+/**
+ * Created by skaldo
+ * Edited by sholzer on the 14.06.2016
+ * Reviewed by skaldo on the 14.06.2016 - looks good after #84
+ */
 import {NavController, NavParams} from 'ionic-angular';
-import {IBus, Bus, IBusRealTimeData} from '../../providers/model';
-import {CitizenDataService} from '../../providers/data';
+import {ViewBus} from '../models';
+import {TransformationService} from '../../providers/transformation';
 import {Component, ViewChild} from  '@angular/core';
 import {Map} from '../../components/map/map';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
-import {ViewStop, ViewSchedule} from '../models';
+import {ViewStop, ViewSchedule, ViewBusRealTimeData} from '../models';
 
-/*
-  Generated class for the BusDetailPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   templateUrl: 'build/pages/bus-detail/bus-detail.html',
   directives: [Map],
 })
 export class BusDetailPage {
+  public bus: ViewBus;
   private schedule: ViewSchedule;
-  private _realTimeData: IBusRealTimeData;
+  private logger: Logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'BusDetailPage', this.config.misc.log_pretty_print);
   private busId: number;
-  private logger: Logger;
+  private _realTimeData: ViewBusRealTimeData;
+  private _busViewType = 'information';
 
-  get realTimeData(): IBusRealTimeData {
+  get realTimeData(): ViewBusRealTimeData {
     return this._realTimeData;
   }
-  set realTimeData(data: IBusRealTimeData) {
+  set realTimeData(data: ViewBusRealTimeData) {
     // Do the map update here.
     this._realTimeData = data;
   }
-  public bus: Bus = new Bus();
-  private _busViewType = 'information';
+
 
   get busViewType() {
     return this._busViewType;
@@ -48,14 +48,12 @@ export class BusDetailPage {
   }
 
   @ViewChild(Map) map: Map;
-  constructor(public nav: NavController, private navParams: NavParams, private cDS: CitizenDataService, private config: ConfigurationService) {
+  constructor(public nav: NavController, private navParams: NavParams, private dataAccess: TransformationService, private config: ConfigurationService) {
     this.schedule = navParams.data;
     // Caution, change this to the bus ID in the next iteration.
     this.busId = this.schedule.lineId;
     this.fetchBus();
     this.fetchBusRealTimeData();
-    // Start some update interval for the posititon of the bus.
-    this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'BusDetailPage', config.misc.log_pretty_print);
   }
 
   /**
@@ -63,9 +61,13 @@ export class BusDetailPage {
    * Call periodically.
    */
   public fetchBusRealTimeData(id?: number) {
-    id = id || this.busId;
-    this.cDS.getBusRealTimeData(id).subscribe(data => {
+    if (!id) {
+      id = this.busId;
+    }
+    this.logger.debug('Accessing RealTimeData for id ' + id);
+    this.dataAccess.getBusRealTimeData(id).subscribe(data => {
       this.realTimeData = data;
+      this.logger.debug('BRTD Access done');
     });
   }
 
@@ -73,11 +75,15 @@ export class BusDetailPage {
    * Fetches the bus based on the ID.
    */
   public fetchBus(id?: number) {
-    this.cDS.getBusses().subscribe(data => {
-      id = id || this.busId;
-      this.bus = data.busses.find(bus => {
-        return bus.id === id;
-      });
+    if (!id) {
+      id = this.busId;
+    }
+    this.logger.debug('Accessing Busses from DataLogic: id = ' + id);
+    this.dataAccess.getBusses(String(id)).subscribe(data => {
+      if (data.length > 0) {
+        this.bus = new ViewBus(data[0]);
+        this.logger.debug('Bus Access done');
+      }
     });
   }
 }

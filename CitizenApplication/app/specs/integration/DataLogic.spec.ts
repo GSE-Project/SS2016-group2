@@ -80,7 +80,7 @@ function tests(storageDelay: number, restDelay: number): void {
                 debugger;
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getStops().subscribe(stops => {
-                        Assert.equalJson(stops, restConf.stops);
+                        Assert.equalJson(stops, restConf.stops.stops);
                         done();
                     });
                 });
@@ -93,7 +93,7 @@ function tests(storageDelay: number, restDelay: number): void {
                 );
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getLines().subscribe(data => {
-                        Assert.equalJson(data, restConf.lines);
+                        Assert.equalJson(data, restConf.lines.lines);
                         done();
                     });
                 });
@@ -107,7 +107,7 @@ function tests(storageDelay: number, restDelay: number): void {
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getStops().subscribe(stops => {
                         cds.getLines().subscribe(lines => {
-                            Assert.equalJson(lines, restConf.lines);
+                            Assert.equalJson(lines, restConf.lines.lines);
                             done();
                         });
                     });
@@ -143,7 +143,7 @@ function tests(storageDelay: number, restDelay: number): void {
                 );
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getBusses().subscribe(busses => {
-                        Assert.equalJson(busses, storageConf.busses);
+                        Assert.equalJson(busses, storageConf.busses.busses);
                         done();
                     });
                 });
@@ -156,7 +156,7 @@ function tests(storageDelay: number, restDelay: number): void {
                 );
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getRoutes().subscribe(routes => {
-                        Assert.equalJson(routes, storageConf.routes);
+                        Assert.equalJson(routes, storageConf.routes.routes);
                         done();
                     });
                 });
@@ -170,7 +170,7 @@ function tests(storageDelay: number, restDelay: number): void {
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getBusses().subscribe(busses => {
                         cds.getRoutes().subscribe(routes => {
-                            Assert.equalJson(routes, storageConf.routes);
+                            Assert.equalJson(routes, storageConf.routes.routes);
                             done();
                         });
                     });
@@ -185,7 +185,7 @@ function tests(storageDelay: number, restDelay: number): void {
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getStops().subscribe(stops => {
                         cds.getBusses().subscribe(busses => {
-                            Assert.equalJson(busses, storageConf.busses);
+                            Assert.equalJson(busses, storageConf.busses.busses);
                             done();
                         });
                     });
@@ -200,7 +200,7 @@ function tests(storageDelay: number, restDelay: number): void {
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getBusses().subscribe(busses => {
                         cds.getStops().subscribe(stops => {
-                            Assert.equalJson(stops, restConf.stops);
+                            Assert.equalJson(stops, restConf.stops.stops);
                             done();
                         });
                     });
