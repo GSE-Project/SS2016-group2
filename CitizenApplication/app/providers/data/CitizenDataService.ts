@@ -16,7 +16,7 @@ import * as Model from '../model';
 import {PersistentDataProvider} from './PersistentDataProvider';
 import {Observable} from 'rxjs/Observable';
 import {Logger, LoggerFactory} from '../logger/Logger';
-import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes, IRestDataObject} from '../model';
+import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes, IRestDataObject, IRequest, IRequestState} from '../model';
 import {ConfigurationService} from '../config';
 
 @Injectable()
@@ -154,4 +154,38 @@ export class CitizenDataService {
     public setHostUrl(host_address: string): void {
         this.restApi.baseUrl = host_address;
     }
+
+    /**
+     * Return asynchronously the state of an request
+     * @param req_id the identifier of the Request
+     * @return Observable<IRequestState>
+     */
+    public getRequestState(req_id: number): Observable<IRequestState> {
+        this.logger.debug('Fetching from server state of Request ' + req_id);
+        let observable = this.restApi.getRequestState(req_id);
+        observable.subscribe(res => {
+            this.logger.debug('Fetched state of Request ' + req_id + ': ' + res.state);
+            this.storageApi.addRequest(res);
+        });
+        return observable;
+    }
+
+    /**
+     * Return asynchronously all open RequestStates known to the Client
+     * @return Observable<IRequestState[]>
+     */
+    public getOpenRequests(): Observable<IRequestState[]> {
+        this.logger.debug('Fetching requests from storage');
+        return this.storageApi.getRequests();
+    }
+
+    /**
+     * Requests a custom stops
+     * @param req IRequest
+     */
+    public requestCustomStop(req: IRequest) {
+        this.restApi.postRequest(req);
+    }
+
+
 }

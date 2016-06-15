@@ -29,9 +29,6 @@ export class TransformationService {
             filterValue,
             filterField
         );
-        /*return this.cds.getStops().map<VIEW.ViewStop[]>((modelIRStops) => {
-            return this.mapData<DATA.IStop, VIEW.ViewStop>(filterValue, filterField, modelIRStops.stops, TransformationService.mapStop);
-        }, this);*/
     }
 
     /**
@@ -92,6 +89,22 @@ export class TransformationService {
     updateTimeStamps(): Observable<{ busses: number, lines: number, routes: number, stops: number }> {
         return this.cds.updateTimeStamps();
     }
+
+    /**
+     * @return Observable<ViewRequestState[]> of not completed requests
+     */
+    getRequests(): Observable<VIEW.ViewRequestState[]> {
+        return this.getData<DATA.IRequestState, VIEW.ViewRequestState>(this.cds.getOpenRequests(), VIEW.ViewRequestState, '', 'id');
+    }
+
+    /**
+     * @param id: id of the request
+     * @return the state of a specified request
+     */
+    getRequestState(id: number): Observable<VIEW.ViewRequestState> {
+        return this.cds.getRequestState(id).map(res => { return new VIEW.ViewRequestState(res); });
+    }
+
 
     /**
      * Return the {D} objects as {V}[] from the data source
