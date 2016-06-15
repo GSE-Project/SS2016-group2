@@ -16,5 +16,7 @@ export enum CitizenDataObjects {
     RealTimeData,
     Route,
     Stop,
-    UpdateData
+    UpdateData,
+    PostRequest,
+    GetRequest
 }
