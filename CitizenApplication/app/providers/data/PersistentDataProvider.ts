@@ -6,7 +6,7 @@
 
 import {Injectable} from '@angular/core';
 import {IStorage} from '../storage';
-import {IRestDataObject, IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
+import {IRestDataObject, IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData, IRequestState, IRequestResponse, RequestStates} from '../model';
 import {Observable} from 'rxjs/Observable';
 import {ConfigurationService} from '../config';
 import {Logger, LoggerFactory} from '../logger';
@@ -105,4 +105,35 @@ export class PersistentDataProvider {
     putRoutes(data: IRestRoutes) {
         this.putData<IRestRoutes>(this.config.storageApi.routes, data);
     }
+
+
+    addRequest(req: IRequestResponse) {
+        this.getRequests().subscribe(res => {
+            let newRequest: IRequestState = {
+                id: req.id,
+                state: RequestStates.Pending
+            };
+            res.push(newRequest);
+            this.storage.set(this.config.storageApi.request, JSON.stringify(res));
+        });
+    }
+
+    /**
+     * @param item :IRequestState
+     * @return true iff the item isn't Completed
+     */
+    private request_filter(item: IRequestState) {
+        if (item.state === RequestStates.Completed) {
+            return false;
+        }
+        return true;
+    }
+
+    getRequests(): Observable<IRequestState[]> {
+        return Observable.from(this.storage.get(this.config.storageApi.request)).map<IRequestState[]>(res => {
+            return (<IRequestState[]>JSON.parse(res)).filter(this.request_filter);
+        });
+    }
+
+
 }

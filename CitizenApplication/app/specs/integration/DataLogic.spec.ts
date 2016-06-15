@@ -22,13 +22,16 @@ const DEFAULT_CONFIG: CitizenApplicationConfig = {
         routes: 'routes',
         rt_data: 'busses/',
         stops: 'stops',
-        update: 'update'
+        update: 'update',
+        request: 'request',
+        post_request: 'request'
     },
     storage_api: {
         busses: 'B',
         lines: 'L',
         routes: 'R',
-        stops: 'S'
+        stops: 'S',
+        request: 'Q',
     },
     misc: {
         language: 'de',
