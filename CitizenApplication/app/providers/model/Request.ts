@@ -1,4 +1,9 @@
+/**
+ * @sholzer 160614
+ */
+
 import * as GeoJson from './geojson';
+import {ICitizenDataObject} from './CitizenDataObject';
 
 export interface IRequest {
     lineId: number;
@@ -11,4 +16,8 @@ export interface IRequest {
         address: string,
         assistance: number[]
     };
+}
+
+export interface IRequestResponse extends ICitizenDataObject {
+
 }

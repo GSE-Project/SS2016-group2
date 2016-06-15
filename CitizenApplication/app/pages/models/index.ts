@@ -5,3 +5,5 @@ export * from './ViewLine';
 export * from './ViewRoute';
 export * from './ViewRealTimeData';
 export * from './ViewObject';
+export * from './ViewRequest';
+export * from './ViewRequestState';
