@@ -26,8 +26,8 @@ window.citizenConfig = {
         log_pretty_print: true,
     },
     version: {
-        build_number: 'localBuild',
-        commit: 'localBuild',
-        release: undefined
+        build_number: '#TRAVIS_BUILD_NUMBER#',
+        commit: '#TRAVIS_COMMIT#',
+        release: false
     }
 }

@@ -32,6 +32,11 @@ const DEFAULT_CONFIG = {
         language: 'de',
         log_level: 'debug',
         log_pretty_print: false
+    },
+    version: {
+        build_number: 'DEFAULT_CONFIG',
+        commit: 'DEFAULT_CONFIG',
+        release: false
     }
 };
 

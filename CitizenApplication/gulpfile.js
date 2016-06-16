@@ -1,5 +1,7 @@
 var gulp = require('gulp'),
   gulpWatch = require('gulp-watch'),
+  gutil = require('gulp-util'),
+  rename = require('gulp-rename'),
   del = require('del'),
   runSequence = require('run-sequence'),
   tslint = require("gulp-tslint"),
@@ -48,7 +50,7 @@ var isRelease = argv.indexOf('--release') > -1;
 
 gulp.task('watch', ['clean'], function (done) {
   runSequence(
-    ['sass', 'html', 'fonts', 'scripts', 'lang'],
+    ['sass', 'html', 'fonts', 'scripts', 'lang', 'modifyConfig'],
     function () {
       gulpWatch('app/**/*.scss', function () { gulp.start('sass'); });
       gulpWatch('app/**/*.html', function () { gulp.start('html'); });
@@ -60,7 +62,7 @@ gulp.task('watch', ['clean'], function (done) {
 
 gulp.task('build', ['clean'], function (done) {
   runSequence(
-    ['sass', 'html', 'fonts', 'scripts', 'lang'],
+    ['sass', 'html', 'fonts', 'scripts', 'lang', 'modifyConfig'],
     function () {
       var error = 0;
       buildBrowserify({
@@ -153,9 +155,22 @@ gulp.task("lang", function () {
     mergeFn(supportedLanguages[i]);
   }
   gulp.src('www/lang/*.json')
-	  .pipe(jsonFormat(2))
-	  .pipe(gulp.dest('.'));
+    .pipe(jsonFormat(2))
+    .pipe(gulp.dest('.'));
 })
+
+// Added by skaldo on the 15.06.2016
+// Travis adds the changeset to the config
+var replace = require('gulp-replace');
+gulp.task("modifyConfig", function () {
+  // Copy the default config and replace the required properties.
+  gulp.src('www/config.default.js')
+    .pipe(replace('#TRAVIS_BUILD_NUMBER#', gutil.env.TRAVIS_BUILD_NUMBER || 'localBuild'))
+    .pipe(replace('#TRAVIS_COMMIT#', gutil.env.TRAVIS_BUILD_NUMBER || 'localBuild'))
+    .pipe(replace('release: false', 'release: ' + gutil.env.TRAVIS))
+    .pipe(rename({ basename: 'config'}))
+    .pipe(gulp.dest('www'));
+});
 
 gulp.task('sass', buildSass);
 gulp.task('html', copyHTML);

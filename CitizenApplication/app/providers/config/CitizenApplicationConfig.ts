@@ -7,6 +7,7 @@ export default CitizenApplicationConfig;
 export const RESTAPI_FIELD: string = 'rest_api';
 export const STORAGEAPI_FIELD: string = 'storage_api';
 export const MISC_FIELD: string = 'misc';
+export const VERSION_FIELD = 'version';
 
 /**
  * JSON parsable interface for the CitizenApplication configuration
@@ -24,6 +25,10 @@ export interface CitizenApplicationConfig {
      * Other non-data related configuration
      */
     misc: MiscellaneousConfig;
+    /**
+     * The version related information
+     */
+    version: VersionConfig;
 }
 
 /**
@@ -80,4 +85,19 @@ export interface MiscellaneousConfig {
      * Specifies if the log should be pretty and colofull or basic and PhantomJS compatible
      */
     log_pretty_print: boolean;
+}
+
+export interface VersionConfig {
+    /**
+     * The Travis build number
+     */
+    build_number: string;
+    /**
+     * The commit that triggered the build
+     */
+    commit: string;
+    /**
+     * Defines if the app is release or debug
+     */
+    release: boolean;
 }
