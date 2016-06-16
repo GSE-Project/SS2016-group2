@@ -22,15 +22,15 @@
     <div class="info" *ngSwitchWhen="'information'">
       <ion-item detail-none>
         {{'BUS_DETAIL_PAGE.Line' | translate}}
-        <ion-note item-right>{{bus.lineId}}</ion-note>
+        <ion-note item-right>{{bus?.lineId}}</ion-note>
         </ion-item>
       <ion-item detail-none>
         {{'BUS_DETAIL_PAGE.Color' | translate}}        
-        <ion-note item-right>{{bus.color}}</ion-note>
+        <ion-note item-right>{{bus?.color}}</ion-note>
         </ion-item>
       <ion-item detail-none>
         {{'BUS_DETAIL_PAGE.NumberPlate' | translate}}
-        <ion-note item-right>{{bus.numberPlate}}</ion-note>
+        <ion-note item-right>{{bus?.numberPlate}}</ion-note>
         </ion-item>
       <div class="picture">
         <!-- fix for iOS -->
@@ -43,11 +43,11 @@
 
     <div class="map">
       <div class="estimation" *ngSwitchWhen="'position'">
-        {{schedule.arrivingTime.toDate() | date:'Hms'}}
+        {{schedule?.arrivingTime?.toDate() | date:'Hms'}}
         <span *ngIf="realTimeData.delay" class="delay">+{{realTimeData.delay}}</span>
       </div>
-      <map *ngSwitchWhen="'position'">
-      </map>
+      <native-map *ngSwitchWhen="'position'">
+      </native-map>
     </div>
 
   </div>
