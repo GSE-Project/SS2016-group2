@@ -12,4 +12,5 @@ export default IBusRealTimeData;
 export interface IBusRealTimeData extends ICitizenDataObject {
     delay?: number;
     position: Point;
+    takenSeats: number;
 }
