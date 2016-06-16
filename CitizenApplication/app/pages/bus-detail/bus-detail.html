@@ -32,6 +32,10 @@
         {{'BUS_DETAIL_PAGE.NumberPlate' | translate}}
         <ion-note item-right>{{bus?.numberPlate}}</ion-note>
         </ion-item>
+      <ion-item detail-none>
+      {{'BUS_DETAIL_PAGE.Seats' | translate}}
+      <ion-note item-right>{{freeSeats}}</ion-note>
+      </ion-item>
       <div class="picture">
         <!-- fix for iOS -->
         <!--<div style="background-image: url({{bus?.picture}});">-->

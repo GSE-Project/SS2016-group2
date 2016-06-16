@@ -3,11 +3,13 @@
     "en": {
         "Line": "Line",
         "Color": "Color",
-        "NumberPlate": "Number plate"
+        "NumberPlate": "Number plate",
+        "Seats" : "Free seats"
     },
     "de": {
         "Line": "Linie",
         "Color": "Farbe",
-        "NumberPlate": "Kennzeichen"
+        "NumberPlate": "Kennzeichen",
+        "Seats" : "Freie Plätze"
     }
 }

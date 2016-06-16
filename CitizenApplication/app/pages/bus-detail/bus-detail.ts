@@ -2,6 +2,7 @@
  * Created by skaldo
  * Edited by sholzer on the 14.06.2016
  * Reviewed by skaldo on the 14.06.2016 - looks good after #84
+ * Added #85, available seats by tim284 on the 16.06.2016
  */
 import {NavController, NavParams} from 'ionic-angular';
 import {ViewBus} from '../models';
@@ -18,6 +19,7 @@ import {ViewStop, ViewSchedule, ViewBusRealTimeData} from '../models';
 })
 export class BusDetailPage {
   public bus: ViewBus;
+  public freeSeats: number = 20; // initialized with 20 to see something in the "gui
   private schedule: ViewSchedule;
   private logger: Logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'BusDetailPage', this.config.misc.log_pretty_print);
   private busId: number;
@@ -67,6 +69,7 @@ export class BusDetailPage {
     this.logger.debug('Accessing RealTimeData for id ' + id);
     this.dataAccess.getBusRealTimeData(id).subscribe(data => {
       this.realTimeData = data;
+      this.freeSeats = this.bus.seats - this.realTimeData.takenSeats;
       this.logger.debug('BRTD Access done');
     });
   }

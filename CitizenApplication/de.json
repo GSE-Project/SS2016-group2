@@ -10,7 +10,8 @@
   "BUS_DETAIL_PAGE": {
     "Line": "Linie",
     "Color": "Farbe",
-    "NumberPlate": "Kennzeichen"
+    "NumberPlate": "Kennzeichen",
+    "Seats": "Freie Plätze"
   },
   "HOME_PAGE": {
     "SelectStop": "Haltestelle wählen:",

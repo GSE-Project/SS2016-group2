@@ -10,7 +10,8 @@
   "BUS_DETAIL_PAGE": {
     "Line": "Line",
     "Color": "Color",
-    "NumberPlate": "Number plate"
+    "NumberPlate": "Number plate",
+    "Seats": "Free seats"
   },
   "HOME_PAGE": {
     "SelectStop": "Select stop:",
