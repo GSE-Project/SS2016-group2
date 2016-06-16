@@ -6,7 +6,7 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {CitizenApplicationConfig, MiscellaneousConfig, StorageApiConfig, RestApiConfig, RESTAPI_FIELD, STORAGEAPI_FIELD, MISC_FIELD} from './';
+import {CitizenApplicationConfig, MiscellaneousConfig, VersionConfig, StorageApiConfig, RestApiConfig, RESTAPI_FIELD, STORAGEAPI_FIELD, MISC_FIELD, VERSION_FIELD} from './';
 import {CitizenDataObjects} from '../model';
 import {Logger, LoggerFactory} from '../logger';
 
@@ -87,6 +87,10 @@ export class ConfigurationService {
      */
     get misc(): MiscellaneousConfig {
         return this.get<MiscellaneousConfig>(MISC_FIELD);
+    }
+
+    get version(): VersionConfig {
+        return this.get<VersionConfig>(VERSION_FIELD);
     }
 
     /**

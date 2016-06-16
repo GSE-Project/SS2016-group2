@@ -22,16 +22,22 @@ export class HomePage {
     this.reqNumber = 0;
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'HomePage', config.misc.log_pretty_print);
 
-    // app was updated, we need to delete our (possible) outdated data.
-    if (config.misc.app_version !== localStorage.getItem('app_version') ) {
-      this.logger.info('Log Cleared, stored Version: ' + localStorage.getItem('app_version') + ', configVersion: ' + config.misc.app_version);
+    // app was updated, we need to delete our (possible) outdated data or we are in devMode.
+    if (!config.version.release || config.version.build_number !== localStorage.getItem('app_version')) {
+      if (!config.version.release) {
+        this.logger.info('LocalStorage cleared, developmentMode found');
+      }
+      else {
+        this.logger.info('LocalStorage cleared, stored Version: ' + localStorage.getItem('app_version') + ', configVersion: ' + config.version.build_number);
+      }
+
       localStorage.clear();
-      localStorage.setItem('app_version', config.misc.app_version);
+      localStorage.setItem('app_version', config.version.build_number);
     }
     // App was never started before, so we need to set 'app_version'
     else if (localStorage.getItem('app_version') == null) {
-      this.logger.debug('Set app Version to: ' + config.misc.app_version);
-        localStorage.setItem('app_version', config.misc.app_version);
+      this.logger.debug('Set app Version to: ' + config.version.build_number);
+      localStorage.setItem('app_version', config.version.build_number);
     }
   }
 
