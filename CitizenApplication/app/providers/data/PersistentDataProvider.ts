@@ -6,7 +6,7 @@
 
 import {Injectable} from '@angular/core';
 import {IStorage} from '../storage';
-import {IRestDataObject, IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData, IRequestState, IRequestResponse, RequestStates} from '../model';
+import {IRestDataObject, IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData, IRequestState, IRequestResponse, RequestStates, ICitizenData} from '../model';
 import {Observable} from 'rxjs/Observable';
 import {ConfigurationService} from '../config';
 import {Logger, LoggerFactory} from '../logger';
@@ -106,7 +106,6 @@ export class PersistentDataProvider {
         this.putData<IRestRoutes>(this.config.storageApi.routes, data);
     }
 
-
     addRequest(req: IRequestResponse) {
         this.getRequests().subscribe(res => {
             let newRequest: IRequestState = {
@@ -135,5 +134,39 @@ export class PersistentDataProvider {
         });
     }
 
+    updateRequest(req: IRequestState) {
+        this.getRequests().subscribe(res => {
+            let sameIdItems = res.filter(item => (item.id === req.id ? true : false));
+            switch (sameIdItems.length) {
+                case 0:
+                    this.logger.warn('Did not found RequestStates with the specified id ' + req.id);
+                    break;
+                default:
+                    this.logger.warn('Inconsistent Database! Two request state items with the same ID found!');
+                case 1:
+                    res[res.indexOf(sameIdItems[0])].state = req.state;
+                    this.logger.debug('State of Request ' + req.id + ' set to ' + req.state);
+            }
+            this.storage.set(this.config.storageApi.request, JSON.stringify(res));
+        });
+    }
+
+    /**
+     * Puts the CitizenData to the storage
+     */
+    putCitizenData(cd: ICitizenData) {
+        let cd_json = JSON.stringify(cd);
+        this.logger.debug('putting ' + cd_json);
+        this.storage.set(this.config.storageApi.citizen_data, cd_json);
+    }
+
+    /**
+     * Gets the CitizenData
+     */
+    getCitizenData(): Observable<ICitizenData> {
+        return Observable.from(this.storage.get(this.config.storageApi.citizen_data)).map<ICitizenData>(res => {
+            return JSON.parse(res);
+        });
+    }
 
 }

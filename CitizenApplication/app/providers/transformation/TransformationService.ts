@@ -105,6 +105,10 @@ export class TransformationService {
         return this.cds.getRequestState(id).map(res => { return new VIEW.ViewRequestState(res); });
     }
 
+    getCitizenData(): Observable<{ name: string, address: string, assistance: number[] }> {
+        return this.cds.getCitizenData();
+    }
+
 
     /**
      * Return the {D} objects as {V}[] from the data source

@@ -11,13 +11,20 @@ export interface IRequest {
     location: GeoJson.Point;
     numberOfPersons: number;
     deviceID: string;
-    info: {
-        name: string,
-        address: string,
-        assistance: number[]
-    };
+    info: ICitizenData;
 }
 
 export interface IRequestResponse extends ICitizenDataObject {
 
+}
+
+export interface ICitizenData {
+    name: string;
+    address: string;
+    assistance: number[];
+}
+
+export enum CitizenDataAssistance {
+    Luggage = 0,
+    Wheelchair = 1
 }

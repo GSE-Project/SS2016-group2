@@ -16,7 +16,7 @@ import * as Model from '../model';
 import {PersistentDataProvider} from './PersistentDataProvider';
 import {Observable} from 'rxjs/Observable';
 import {Logger, LoggerFactory} from '../logger/Logger';
-import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes, IRestDataObject, IRequest, IRequestState} from '../model';
+import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes, IRestDataObject, IRequest, IRequestState, ICitizenData} from '../model';
 import {ConfigurationService} from '../config';
 
 @Injectable()
@@ -165,7 +165,7 @@ export class CitizenDataService {
         let observable = this.restApi.getRequestState(req_id);
         observable.subscribe(res => {
             this.logger.debug('Fetched state of Request ' + req_id + ': ' + res.state);
-            this.storageApi.addRequest(res);
+            this.storageApi.updateRequest(res);
         });
         return observable;
     }
@@ -184,8 +184,18 @@ export class CitizenDataService {
      * @param req IRequest
      */
     public requestCustomStop(req: IRequest) {
-        this.restApi.postRequest(req);
+        this.storageApi.putCitizenData(req.info);
+        this.restApi.postRequest(req).subscribe(res => {
+            this.logger.debug('Requested Stop from server:' + JSON.stringify(req));
+            this.storageApi.addRequest(res);
+        });
     }
 
+    /**
+     * 
+     */
+    public getCitizenData(): Observable<ICitizenData> {
+        return this.storageApi.getCitizenData();
+    }
 
 }

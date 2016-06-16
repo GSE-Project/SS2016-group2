@@ -27,6 +27,7 @@ const DEFAULT_CONFIG = {
     },
     storage_api: {
         busses: 'B',
+        citizen_data: 'C',
         lines: 'L',
         routes: 'R',
         stops: 'S',

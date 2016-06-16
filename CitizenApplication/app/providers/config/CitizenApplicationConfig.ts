@@ -64,6 +64,8 @@ export interface RestApiConfig extends AccessConfig {
  */
 export interface StorageApiConfig extends AccessConfig {
     // Room for additional storage configuration like storage types or so. 
+    citizen_data: string;
+
 }
 
 /**
