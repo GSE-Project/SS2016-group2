@@ -13,7 +13,7 @@ export class ViewBus implements IViewObject {
     numberPlate: string;
     color: string;
     picture: string;
-    totalSeats: number;
+    seats: number;
 
     constructor(bus: IBus) {
         /*if (!bus) {
@@ -24,6 +24,6 @@ export class ViewBus implements IViewObject {
         this.color = bus.color;
         this.numberPlate = bus.numberPlate;
         this.picture = bus.picture;
-        this.totalSeats = bus.totalSeats;
+        this.seats = bus.seats;
     }
 }
