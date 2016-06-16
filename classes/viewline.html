@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ViewStop | Citizen Application</title>
+	<title>ViewLine | Citizen Application</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="viewstop.html">ViewStop</a>
+					<a href="viewline.html">ViewLine</a>
 				</li>
 			</ul>
-			<h1>Class ViewStop</h1>
+			<h1>Class ViewLine</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ViewStop</span>
+						<span class="target">ViewLine</span>
 					</li>
 				</ul>
 			</section>
@@ -88,25 +88,16 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="viewstop.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="viewline.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewstop.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewstop.html#lines" class="tsd-kind-icon">lines</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewstop.html#location" class="tsd-kind-icon">location</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewstop.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewstop.html#schedule" class="tsd-kind-icon">schedule</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewstop.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="viewstop.html#getlines" class="tsd-kind-icon">get<wbr>Lines</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="viewstop.html#getschedules" class="tsd-kind-icon">get<wbr>Schedules</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewline.html#busses" class="tsd-kind-icon">busses</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewline.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewline.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewline.html#routeid" class="tsd-kind-icon">route<wbr>Id</a></li>
 							</ul>
 						</section>
 					</div>
@@ -118,22 +109,22 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>View<wbr>Stop<span class="tsd-signature-symbol">(</span>stop<span class="tsd-signature-symbol">: </span><a href="../interfaces/istop.html" class="tsd-signature-type">IStop</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="viewstop.html" class="tsd-signature-type">ViewStop</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>View<wbr>Line<span class="tsd-signature-symbol">(</span>line<span class="tsd-signature-symbol">: </span><a href="../interfaces/iline.html" class="tsd-signature-type">ILine</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="viewline.html" class="tsd-signature-type">ViewLine</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewStop.ts#L18">pages/models/ViewStop.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewLine.ts#L14">pages/models/ViewLine.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>stop: <a href="../interfaces/istop.html" class="tsd-signature-type">IStop</a></h5>
+									<h5>line: <a href="../interfaces/iline.html" class="tsd-signature-type">ILine</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="viewstop.html" class="tsd-signature-type">ViewStop</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="viewline.html" class="tsd-signature-type">ViewLine</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -141,41 +132,23 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="busses" class="tsd-anchor"></a>
+					<h3>busses</h3>
+					<div class="tsd-signature tsd-kind-icon">busses<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewLine.ts#L14">pages/models/ViewLine.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="id" class="tsd-anchor"></a>
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/iviewobject.html">IViewObject</a>.<a href="../interfaces/iviewobject.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewStop.ts#L13">pages/models/ViewStop.ts:13</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="lines" class="tsd-anchor"></a>
-					<h3>lines</h3>
-					<div class="tsd-signature tsd-kind-icon">lines<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewStop.ts#L17">pages/models/ViewStop.ts:17</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter">
-								<h5>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="location" class="tsd-anchor"></a>
-					<h3>location</h3>
-					<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <a href="../interfaces/point.html" class="tsd-signature-type">Point</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewStop.ts#L15">pages/models/ViewStop.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewLine.ts#L11">pages/models/ViewLine.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -185,72 +158,19 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewStop.ts#L14">pages/models/ViewStop.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewLine.ts#L12">pages/models/ViewLine.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="schedule" class="tsd-anchor"></a>
-					<h3>schedule</h3>
-					<div class="tsd-signature tsd-kind-icon">schedule<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="viewschedule.html" class="tsd-signature-type">ViewSchedule</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<a name="routeid" class="tsd-anchor"></a>
+					<h3>route<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">route<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewStop.ts#L16">pages/models/ViewStop.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewLine.ts#L13">pages/models/ViewLine.ts:13</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="timestamp" class="tsd-anchor"></a>
-					<h3>timestamp</h3>
-					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewStop.ts#L18">pages/models/ViewStop.ts:18</a></li>
-						</ul>
-					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getlines" class="tsd-anchor"></a>
-					<h3>get<wbr>Lines</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Lines<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewStop.ts#L59">pages/models/ViewStop.ts:59</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="getschedules" class="tsd-anchor"></a>
-					<h3>get<wbr>Schedules</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Schedules<span class="tsd-signature-symbol">(</span>first<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="viewschedule.html" class="tsd-signature-type">ViewSchedule</a><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewStop.ts#L55">pages/models/ViewStop.ts:55</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>first: <span class="tsd-signature-type">number</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="viewschedule.html" class="tsd-signature-type">ViewSchedule</a><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
 				</section>
 			</section>
 		</div>
@@ -267,34 +187,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="viewstop.html" class="tsd-kind-icon">View<wbr>Stop</a>
+						<a href="viewline.html" class="tsd-kind-icon">View<wbr>Line</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="viewstop.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="viewline.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="viewstop.html#id" class="tsd-kind-icon">id</a>
+								<a href="viewline.html#busses" class="tsd-kind-icon">busses</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="viewstop.html#lines" class="tsd-kind-icon">lines</a>
+								<a href="viewline.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="viewstop.html#location" class="tsd-kind-icon">location</a>
+								<a href="viewline.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="viewstop.html#name" class="tsd-kind-icon">name</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="viewstop.html#schedule" class="tsd-kind-icon">schedule</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="viewstop.html#timestamp" class="tsd-kind-icon">timestamp</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="viewstop.html#getlines" class="tsd-kind-icon">get<wbr>Lines</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="viewstop.html#getschedules" class="tsd-kind-icon">get<wbr>Schedules</a>
+								<a href="viewline.html#routeid" class="tsd-kind-icon">route<wbr>Id</a>
 							</li>
 						</ul>
 					</li>

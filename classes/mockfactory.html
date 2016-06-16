@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IRestStops | Citizen Application</title>
+	<title>MockFactory | Citizen Application</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ireststops.html">IRestStops</a>
+					<a href="mockfactory.html">MockFactory</a>
 				</li>
 			</ul>
-			<h1>Interface IRestStops</h1>
+			<h1>Class MockFactory</h1>
 		</div>
 	</div>
 </header>
@@ -71,12 +71,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="irestdataobject.html" class="tsd-signature-type">IRestDataObject</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">IRestStops</span>
-							</li>
-						</ul>
+						<span class="target">MockFactory</span>
 					</li>
 				</ul>
 			</section>
@@ -85,37 +80,105 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ireststops.html#stops" class="tsd-kind-icon">stops</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="ireststops.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="mockfactory.html#buildconfig" class="tsd-kind-icon">build<wbr>Config</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="mockfactory.html#buildrestapi" class="tsd-kind-icon">build<wbr>Rest<wbr>Api</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="mockfactory.html#buildstoragemock" class="tsd-kind-icon">build<wbr>Storage<wbr>Mock</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="stops" class="tsd-anchor"></a>
-					<h3>stops</h3>
-					<div class="tsd-signature tsd-kind-icon">stops<span class="tsd-signature-symbol">:</span> <a href="istop.html" class="tsd-signature-type">IStop</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/rest/RestStops.ts#L10">providers/model/rest/RestStops.ts:10</a></li>
-						</ul>
-					</aside>
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="buildconfig" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> build<wbr>Config</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">build<wbr>Config<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="../interfaces/citizenapplicationconfig.html" class="tsd-signature-type">CitizenApplicationConfig</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="configurationservice.html" class="tsd-signature-type">ConfigurationService</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/specs/util.ts#L119">specs/util.ts:119</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>config: <a href="../interfaces/citizenapplicationconfig.html" class="tsd-signature-type">CitizenApplicationConfig</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="configurationservice.html" class="tsd-signature-type">ConfigurationService</a></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="timestamp" class="tsd-anchor"></a>
-					<h3>timestamp</h3>
-					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="irestdataobject.html">IRestDataObject</a>.<a href="irestdataobject.html#timestamp">timestamp</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/rest/RestDataObject.ts#L10">providers/model/rest/RestDataObject.ts:10</a></li>
-						</ul>
-					</aside>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="buildrestapi" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> build<wbr>Rest<wbr>Api</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">build<wbr>Rest<wbr>Api<span class="tsd-signature-symbol">(</span>rest_conf<span class="tsd-signature-symbol">: </span><a href="../interfaces/restconfig.html" class="tsd-signature-type">RestConfig</a>, global_conf<span class="tsd-signature-symbol">: </span><a href="../interfaces/restapiconfig.html" class="tsd-signature-type">RestApiConfig</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Http</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/specs/util.ts#L90">specs/util.ts:90</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a mocked Storage object</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>rest_conf: <a href="../interfaces/restconfig.html" class="tsd-signature-type">RestConfig</a></h5>
+								</li>
+								<li>
+									<h5>global_conf: <a href="../interfaces/restapiconfig.html" class="tsd-signature-type">RestApiConfig</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Http</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="buildstoragemock" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> build<wbr>Storage<wbr>Mock</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">build<wbr>Storage<wbr>Mock<span class="tsd-signature-symbol">(</span>storage_conf<span class="tsd-signature-symbol">: </span><a href="../interfaces/storageconfig.html" class="tsd-signature-type">StorageConfig</a>, putInto<span class="tsd-signature-symbol">: </span><a href="../interfaces/dataconfig.html" class="tsd-signature-type">DataConfig</a>, global_conf<span class="tsd-signature-symbol">: </span><a href="../interfaces/storageapiconfig.html" class="tsd-signature-type">StorageApiConfig</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="istorage.html" class="tsd-signature-type">IStorage</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/specs/util.ts#L48">specs/util.ts:48</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns a mocked Storage object</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>storage_conf: <a href="../interfaces/storageconfig.html" class="tsd-signature-type">StorageConfig</a></h5>
+								</li>
+								<li>
+									<h5>putInto: <a href="../interfaces/dataconfig.html" class="tsd-signature-type">DataConfig</a></h5>
+								</li>
+								<li>
+									<h5>global_conf: <a href="../interfaces/storageapiconfig.html" class="tsd-signature-type">StorageApiConfig</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="istorage.html" class="tsd-signature-type">IStorage</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -131,14 +194,17 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="ireststops.html" class="tsd-kind-icon">IRest<wbr>Stops</a>
+					<li class="current tsd-kind-class">
+						<a href="mockfactory.html" class="tsd-kind-icon">Mock<wbr>Factory</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ireststops.html#stops" class="tsd-kind-icon">stops</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="mockfactory.html#buildconfig" class="tsd-kind-icon">build<wbr>Config</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="ireststops.html#timestamp" class="tsd-kind-icon">timestamp</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="mockfactory.html#buildrestapi" class="tsd-kind-icon">build<wbr>Rest<wbr>Api</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="mockfactory.html#buildstoragemock" class="tsd-kind-icon">build<wbr>Storage<wbr>Mock</a>
 							</li>
 						</ul>
 					</li>

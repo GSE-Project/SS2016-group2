@@ -67,6 +67,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Provides access to the rest backend.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -88,8 +95,9 @@
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="restapiprovider.html#_baseurl" class="tsd-kind-icon">_base<wbr>Url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="restapiprovider.html#config" class="tsd-kind-icon">config</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="restapiprovider.html#http" class="tsd-kind-icon">http</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="restapiprovider.html#logger" class="tsd-kind-icon">logger</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -102,12 +110,12 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="restapiprovider.html#getbusses" class="tsd-kind-icon">get<wbr>Busses</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="restapiprovider.html#getdata" class="tsd-kind-icon">get<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="restapiprovider.html#getlines" class="tsd-kind-icon">get<wbr>Lines</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="restapiprovider.html#getrealtimebusdata" class="tsd-kind-icon">get<wbr>Real<wbr>Time<wbr>Bus<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="restapiprovider.html#getroutes" class="tsd-kind-icon">get<wbr>Routes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="restapiprovider.html#getstops" class="tsd-kind-icon">get<wbr>Stops</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="restapiprovider.html#getupdatedata" class="tsd-kind-icon">get<wbr>Update<wbr>Data</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="restapiprovider.html#log" class="tsd-kind-icon">log</a></li>
 							</ul>
 						</section>
 					</div>
@@ -119,19 +127,22 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Rest<wbr>Api<wbr>Provider<span class="tsd-signature-symbol">(</span>http<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Http</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="restapiprovider.html" class="tsd-signature-type">RestApiProvider</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Rest<wbr>Api<wbr>Provider<span class="tsd-signature-symbol">(</span>http<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Http</span>, config<span class="tsd-signature-symbol">: </span><a href="configurationservice.html" class="tsd-signature-type">ConfigurationService</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="restapiprovider.html" class="tsd-signature-type">RestApiProvider</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L22">providers/data/RestApiProvider.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L24">providers/data/RestApiProvider.ts:24</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>http: <span class="tsd-signature-type">Http</span></h5>
+								</li>
+								<li>
+									<h5>config: <a href="configurationservice.html" class="tsd-signature-type">ConfigurationService</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="restapiprovider.html" class="tsd-signature-type">RestApiProvider</a></h4>
@@ -142,12 +153,12 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="_baseurl" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _base<wbr>Url</h3>
-					<div class="tsd-signature tsd-kind-icon">_base<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="config" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> config</h3>
+					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <a href="configurationservice.html" class="tsd-signature-type">ConfigurationService</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L22">providers/data/RestApiProvider.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L26">providers/data/RestApiProvider.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -157,7 +168,17 @@
 					<div class="tsd-signature tsd-kind-icon">http<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Http</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L24">providers/data/RestApiProvider.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L26">providers/data/RestApiProvider.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="logger" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> logger</h3>
+					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <a href="../interfaces/logger.html" class="tsd-signature-type">Logger</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L24">providers/data/RestApiProvider.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -174,9 +195,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L28">providers/data/RestApiProvider.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L35">providers/data/RestApiProvider.ts:35</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Does nothing</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd></dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -200,10 +230,56 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L48">providers/data/RestApiProvider.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L75">providers/data/RestApiProvider.ts:75</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>author</dt>
+									<dd><p>skaldo &amp; sholzer</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/irestbusses.html" class="tsd-signature-type">IRestBusses</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>resolving into the current IRestBusses from the server</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="getdata" class="tsd-anchor"></a>
+					<h3>get<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Data&lt;T&gt;<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../enums/citizendataobjects.html" class="tsd-signature-type">CitizenDataObjects</a>, urlSuffix<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L44">providers/data/RestApiProvider.ts:44</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return a data object from the rest server</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <a href="../enums/citizendataobjects.html" class="tsd-signature-type">CitizenDataObjects</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> urlSuffix: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Observable<T></p>
 						</li>
 					</ul>
 				</section>
@@ -217,10 +293,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L54">providers/data/RestApiProvider.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L83">providers/data/RestApiProvider.ts:83</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>author</dt>
+									<dd><p>skaldo &amp; sholzer</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/irestlines.html" class="tsd-signature-type">IRestLines</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>resolving into the current IRestLines from the server</p>
 						</li>
 					</ul>
 				</section>
@@ -234,16 +318,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L66">providers/data/RestApiProvider.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L100">providers/data/RestApiProvider.ts:100</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>author</dt>
+									<dd><p>skaldo &amp; sholzer</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>: number specifying the bus</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ibusrealtimedata.html" class="tsd-signature-type">IBusRealTimeData</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>resolving into the current IBusRealTimeData of the specified bus from the server</p>
 						</li>
 					</ul>
 				</section>
@@ -257,10 +352,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L60">providers/data/RestApiProvider.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L91">providers/data/RestApiProvider.ts:91</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>author</dt>
+									<dd><p>skaldo &amp; sholzer</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/irestroutes.html" class="tsd-signature-type">IRestRoutes</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>resolving into the current IRestRoutes from the server</p>
 						</li>
 					</ul>
 				</section>
@@ -274,7 +377,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L36">providers/data/RestApiProvider.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L59">providers/data/RestApiProvider.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -298,33 +401,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L42">providers/data/RestApiProvider.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/RestApiProvider.ts#L67">providers/data/RestApiProvider.ts:67</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>author</dt>
+									<dd><p>skaldo &amp; sholzer</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/iupdatedata.html" class="tsd-signature-type">IUpdateData</a><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="log" class="tsd-anchor"></a>
-					<h3>log</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">log<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/RestApiProvider.ts#L72">providers/data/RestApiProvider.ts:72</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>message: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<p>resolving into the current IUpdateData of the server</p>
 						</li>
 					</ul>
 				</section>
@@ -349,16 +437,22 @@
 								<a href="restapiprovider.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="restapiprovider.html#_baseurl" class="tsd-kind-icon">_base<wbr>Url</a>
+								<a href="restapiprovider.html#config" class="tsd-kind-icon">config</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="restapiprovider.html#http" class="tsd-kind-icon">http</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="restapiprovider.html#logger" class="tsd-kind-icon">logger</a>
 							</li>
 							<li class=" tsd-kind-set-signature tsd-parent-kind-class">
 								<a href="restapiprovider.html#baseurl" class="tsd-kind-icon">base<wbr>Url</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="restapiprovider.html#getbusses" class="tsd-kind-icon">get<wbr>Busses</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="restapiprovider.html#getdata" class="tsd-kind-icon">get<wbr>Data</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="restapiprovider.html#getlines" class="tsd-kind-icon">get<wbr>Lines</a>
@@ -374,9 +468,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="restapiprovider.html#getupdatedata" class="tsd-kind-icon">get<wbr>Update<wbr>Data</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="restapiprovider.html#log" class="tsd-kind-icon">log</a>
 							</li>
 						</ul>
 					</li>

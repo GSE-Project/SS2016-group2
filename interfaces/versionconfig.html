@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IRestStops | Citizen Application</title>
+	<title>VersionConfig | Citizen Application</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ireststops.html">IRestStops</a>
+					<a href="versionconfig.html">VersionConfig</a>
 				</li>
 			</ul>
-			<h1>Interface IRestStops</h1>
+			<h1>Interface VersionConfig</h1>
 		</div>
 	</div>
 </header>
@@ -71,12 +71,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="irestdataobject.html" class="tsd-signature-type">IRestDataObject</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">IRestStops</span>
-							</li>
-						</ul>
+						<span class="target">VersionConfig</span>
 					</li>
 				</ul>
 			</section>
@@ -87,8 +82,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ireststops.html#stops" class="tsd-kind-icon">stops</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="ireststops.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="versionconfig.html#build_number" class="tsd-kind-icon">build_<wbr>number</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="versionconfig.html#commit" class="tsd-kind-icon">commit</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="versionconfig.html#release" class="tsd-kind-icon">release</a></li>
 							</ul>
 						</section>
 					</div>
@@ -97,25 +93,49 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="stops" class="tsd-anchor"></a>
-					<h3>stops</h3>
-					<div class="tsd-signature tsd-kind-icon">stops<span class="tsd-signature-symbol">:</span> <a href="istop.html" class="tsd-signature-type">IStop</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="build_number" class="tsd-anchor"></a>
+					<h3>build_<wbr>number</h3>
+					<div class="tsd-signature tsd-kind-icon">build_<wbr>number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/rest/RestStops.ts#L10">providers/model/rest/RestStops.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/config/CitizenApplicationConfig.ts#L94">providers/config/CitizenApplicationConfig.ts:94</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The Travis build number</p>
+						</div>
+					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="timestamp" class="tsd-anchor"></a>
-					<h3>timestamp</h3>
-					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="commit" class="tsd-anchor"></a>
+					<h3>commit</h3>
+					<div class="tsd-signature tsd-kind-icon">commit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="irestdataobject.html">IRestDataObject</a>.<a href="irestdataobject.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/rest/RestDataObject.ts#L10">providers/model/rest/RestDataObject.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/config/CitizenApplicationConfig.ts#L98">providers/config/CitizenApplicationConfig.ts:98</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The commit that triggered the build</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="release" class="tsd-anchor"></a>
+					<h3>release</h3>
+					<div class="tsd-signature tsd-kind-icon">release<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/config/CitizenApplicationConfig.ts#L102">providers/config/CitizenApplicationConfig.ts:102</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines if the app is release or debug</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -132,13 +152,16 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="ireststops.html" class="tsd-kind-icon">IRest<wbr>Stops</a>
+						<a href="versionconfig.html" class="tsd-kind-icon">Version<wbr>Config</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ireststops.html#stops" class="tsd-kind-icon">stops</a>
+								<a href="versionconfig.html#build_number" class="tsd-kind-icon">build_<wbr>number</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="ireststops.html#timestamp" class="tsd-kind-icon">timestamp</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="versionconfig.html#commit" class="tsd-kind-icon">commit</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="versionconfig.html#release" class="tsd-kind-icon">release</a>
 							</li>
 						</ul>
 					</li>

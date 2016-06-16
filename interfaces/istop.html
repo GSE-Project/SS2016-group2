@@ -80,12 +80,6 @@
 					</li>
 				</ul>
 			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/viewstop.html" class="tsd-signature-type">ViewStop</a></li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -94,9 +88,11 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="istop.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="istop.html#lines" class="tsd-kind-icon">lines</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="istop.html#location" class="tsd-kind-icon">location</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="istop.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="istop.html#schedule" class="tsd-kind-icon">schedule</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="istop.html#timestamp-1" class="tsd-kind-icon">timestamp</a></li>
 							</ul>
 						</section>
 					</div>
@@ -111,17 +107,35 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="icitizendataobject.html">ICitizenDataObject</a>.<a href="icitizendataobject.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/model/CitizenDataObject.ts#L9">providers/model/CitizenDataObject.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/CitizenDataObject.ts#L9">providers/model/CitizenDataObject.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="location" class="tsd-anchor"></a>
-					<h3>location</h3>
-					<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <a href="../classes/point.html" class="tsd-signature-type">Point</a></div>
+					<a name="lines" class="tsd-anchor"></a>
+					<h3>lines</h3>
+					<div class="tsd-signature tsd-kind-icon">lines<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/model/Stop.ts#L13">providers/model/Stop.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/Stop.ts#L22">providers/model/Stop.ts:22</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="location" class="tsd-anchor"></a>
+					<h3>location</h3>
+					<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <a href="point.html" class="tsd-signature-type">Point</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/Stop.ts#L21">providers/model/Stop.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -131,7 +145,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/model/Stop.ts#L12">providers/model/Stop.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/Stop.ts#L13">providers/model/Stop.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -141,20 +155,40 @@
 					<div class="tsd-signature tsd-kind-icon">schedule<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/model/Stop.ts#L14">providers/model/Stop.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/Stop.ts#L14">providers/model/Stop.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter">
+								<h5>arriving<wbr>Time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
 								<h5>line<wbr>Id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5>time<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Date</span></h5>
+								<h5>line<wbr>Name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>stop<wbr>Id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> timestamp<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5>
 							</li>
 						</ul>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="timestamp-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> timestamp</h3>
+					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="icitizendataobject.html">ICitizenDataObject</a>.<a href="icitizendataobject.html#timestamp">timestamp</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/CitizenDataObject.ts#L10">providers/model/CitizenDataObject.ts:10</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -177,6 +211,9 @@
 								<a href="istop.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="istop.html#lines" class="tsd-kind-icon">lines</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="istop.html#location" class="tsd-kind-icon">location</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
@@ -184,6 +221,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="istop.html#schedule" class="tsd-kind-icon">schedule</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="istop.html#timestamp-1" class="tsd-kind-icon">timestamp</a>
 							</li>
 						</ul>
 					</li>

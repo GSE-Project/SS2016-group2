@@ -65,6 +65,8 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
+				<p><img src="https://www.demografie-portal.de/SharedDocs/Bilder/Handeln/GutePraxis/Digitale_Doerfer_RLP.png?__blob=normal&v=7" alt="Digitale Dörfer logo" height="100" ></p>
+				<h1 id="digitale-d-rfer-mobile-people-s-bus-system">Digitale Dörfer - mobile people’s bus system</h1>
 				<table>
 					<thead>
 						<tr>
@@ -77,21 +79,28 @@
 						<tr>
 							<td>Develop</td>
 							<td><a href="https://travis-ci.org/GSE-Project/SS2016-group2"><img src="https://travis-ci.org/GSE-Project/SS2016-group2.svg?branch=develop" alt="Build Status"></a></td>
-							<td><a href="https://coveralls.io/r/GSE-Project/SS2016-group2?branch=develop"><img src="https://coveralls.io/repos/GSE-Project/SS2016-group2/badge.svg?branch=master" alt="Coverage Status"></a></td>
+							<td><a href="https://coveralls.io/github/GSE-Project/SS2016-group2?branch=develop"><img src="https://coveralls.io/repos/github/GSE-Project/SS2016-group2/badge.svg?branch=develop" alt="Coverage Status"></a></td>
 						</tr>
 						<tr>
 							<td>Master</td>
 							<td><a href="https://travis-ci.org/GSE-Project/SS2016-group2"><img src="https://travis-ci.org/GSE-Project/SS2016-group2.svg?branch=master" alt="Build Status"></a></td>
-							<td><a href="https://coveralls.io/r/GSE-Project/SS2016-group2?branch=master"><img src="https://coveralls.io/repos/GSE-Project/SS2016-group2/badge.svg?branch=master" alt="Coverage Status"></a></td>
+							<td><a href="https://coveralls.io/github/GSE-Project/SS2016-group2?branch=master"><img src="https://coveralls.io/repos/github/GSE-Project/SS2016-group2/badge.svg?branch=master" alt="Coverage Status"></a></td>
 						</tr>
 					</tbody>
 				</table>
-				<h1 id="digitale-d-rfer-mobile-people-s-bus-system">Digitale Dörfer - mobile people’s bus system</h1>
+				<p><strong>Welcome to the Digitale Dörfer!</strong></p>
 				<p>This project deals with the development of a mobile people’s bus system. The system consists of a mobile app that serves as the people’s bus host system and another mobile app for citizens to use the different people’s busses. It is intended, that the system will be used within the project <a href="http://www.digitale-doerfer.de">Digitale Dörfer</a></p>
 				<h2 id="citizen-mobile-app">Citizen Mobile APP</h2>
 				<p>This repository contains the source code of the CitizenApplication, used by the citizens of the rural areas.</p>
 				<p>This app is used to get information of buses, like current location and potential delay times, in a given town/village and provide this information to the user of the app. Location of a bus is used to precisely calculate the time of arrival at a given stop.</p>
-				<p>The application is written in <a href="https://github.com/Microsoft/TypeScript">TypeScript</a> utilizes the beta version of the cross-platform development framework <a href="https://github.com/driftyco/ionic/tree/2.0">Ionic</a>.</p>
+				<p>The application is written in <a href="https://github.com/Microsoft/TypeScript">TypeScript</a> utilizes the beta version of the cross-platform development framework <a href="https://github.com/driftyco/ionic/tree/2.0">Ionic</a>. There is a generated <a href="http://gse-project.github.io/SS2016-group2/">documentation</a> available.</p>
+				<h2 id="documents">Documents</h2>
+				<ul>
+					<li><a href="https://onedrive.live.com/redir?resid=A7AA3215DAB6E5D5!1690&amp;authkey=!AO5qLfyr3LWXjA4&amp;ithint=onenote%2c">System Test Cases (external OneNote Document)</a></li>
+					<li><a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/Iteration_1/Traceability.doc">Traceability Matrix</a></li>
+					<li><a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/components/map/mapclassdiagram.png">Map Classdiagram</a></li>
+					<li><a href="http://gse-project.github.io/SS2016-group2/">Documentation</a></li>
+				</ul>
 				<h2 id="can-i-build-this-application-myself-">Can I build this application myself?</h2>
 				<p>Sure, feel free to clone this repository and try to build it locally. To achieve this, you need to do following:</p>
 				<p>1) Install the Node.js, the LTS version is fine.</p>
@@ -126,13 +135,13 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-enum">
-						<a href="enums/geojsonobjecttypes.html" class="tsd-kind-icon">Geo<wbr>Json<wbr>Object<wbr>Types</a>
+						<a href="enums/citizendataobjects.html" class="tsd-kind-icon">Citizen<wbr>Data<wbr>Objects</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-is-not-exported">
+						<a href="enums/loglevel.html" class="tsd-kind-icon">Log<wbr>Level</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/assert.html" class="tsd-kind-icon">Assert</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/bus.html" class="tsd-kind-icon">Bus</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/busdetailpage.html" class="tsd-kind-icon">Bus<wbr>Detail<wbr>Page</a>
@@ -141,10 +150,22 @@
 						<a href="classes/citizendataservice.html" class="tsd-kind-icon">Citizen<wbr>Data<wbr>Service</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/coordinate.html" class="tsd-kind-icon">Coordinate</a>
+						<a href="classes/configurationservice.html" class="tsd-kind-icon">Configuration<wbr>Service</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/homepage.html" class="tsd-kind-icon">Home<wbr>Page</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/istorage.html" class="tsd-kind-icon">IStorage</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/injectablelocalstorage.html" class="tsd-kind-icon">Injectable<wbr>Local<wbr>Storage</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/loggerfactory.html" class="tsd-kind-icon">Logger<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/loggerimpl.html" class="tsd-kind-icon">Logger<wbr>Impl</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/map.html" class="tsd-kind-icon">Map</a>
@@ -153,13 +174,13 @@
 						<a href="classes/mappage.html" class="tsd-kind-icon">Map<wbr>Page</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/mockfactory.html" class="tsd-kind-icon">Mock<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/myapp.html" class="tsd-kind-icon">My<wbr>App</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/persistentdataprovider.html" class="tsd-kind-icon">Persistent<wbr>Data<wbr>Provider</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/point.html" class="tsd-kind-icon">Point</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/restapiprovider.html" class="tsd-kind-icon">Rest<wbr>Api<wbr>Provider</a>
@@ -174,10 +195,40 @@
 						<a href="classes/tabspage.html" class="tsd-kind-icon">Tabs<wbr>Page</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/test.html" class="tsd-kind-icon">Test</a>
+						<a href="classes/transformationservice.html" class="tsd-kind-icon">Transformation<wbr>Service</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-not-exported">
+					<li class=" tsd-kind-class">
+						<a href="classes/viewbus.html" class="tsd-kind-icon">View<wbr>Bus</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/viewbusrealtimedata.html" class="tsd-kind-icon">View<wbr>Bus<wbr>Real<wbr>Time<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/viewline.html" class="tsd-kind-icon">View<wbr>Line</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/viewobject.html" class="tsd-kind-icon">View<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/viewroute.html" class="tsd-kind-icon">View<wbr>Route</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/viewschedule.html" class="tsd-kind-icon">View<wbr>Schedule</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/viewstop.html" class="tsd-kind-icon">View<wbr>Stop</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/accessconfig.html" class="tsd-kind-icon">Access<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/citizenapplicationconfig.html" class="tsd-kind-icon">Citizen<wbr>Application<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/citizenwindow.html" class="tsd-kind-icon">Citizen<wbr>Window</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/dataconfig.html" class="tsd-kind-icon">Data<wbr>Config</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/ibus.html" class="tsd-kind-icon">IBus</a>
@@ -218,38 +269,65 @@
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/iupdatedata.html" class="tsd-kind-icon">IUpdate<wbr>Data</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#busses" class="tsd-kind-icon">BUSSES</a>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/iviewobject.html" class="tsd-kind-icon">IView<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/linestring.html" class="tsd-kind-icon">Line<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/logger.html" class="tsd-kind-icon">Logger</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/miscellaneousconfig.html" class="tsd-kind-icon">Miscellaneous<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/point.html" class="tsd-kind-icon">Point</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/restapiconfig.html" class="tsd-kind-icon">Rest<wbr>Api<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/restconfig.html" class="tsd-kind-icon">Rest<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/storageapiconfig.html" class="tsd-kind-icon">Storage<wbr>Api<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/storageconfig.html" class="tsd-kind-icon">Storage<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/versionconfig.html" class="tsd-kind-icon">Version<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#debug_string" class="tsd-kind-icon">DEBUG_<wbr>STRING</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#error_string" class="tsd-kind-icon">ERROR_<wbr>STRING</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#info_string" class="tsd-kind-icon">INFO_<wbr>STRING</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#misc_field" class="tsd-kind-icon">MISC_<wbr>FIELD</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#restapi_field" class="tsd-kind-icon">RESTAPI_<wbr>FIELD</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#storageapi_field" class="tsd-kind-icon">STORAGEAPI_<wbr>FIELD</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#version_field" class="tsd-kind-icon">VERSION_<wbr>FIELD</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#warn_string" class="tsd-kind-icon">WARN_<wbr>STRING</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#lines" class="tsd-kind-icon">LINES</a>
+						<a href="globals.html#window" class="tsd-kind-icon">window</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#routes" class="tsd-kind-icon">ROUTES</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#stops" class="tsd-kind-icon">STOPS</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#storage_active" class="tsd-kind-icon">STORAGE_<wbr>ACTIVE</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#storage_bus" class="tsd-kind-icon">STORAGE_<wbr>BUS</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#storage_line" class="tsd-kind-icon">STORAGE_<wbr>LINE</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#storage_route" class="tsd-kind-icon">STORAGE_<wbr>ROUTE</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#storage_stop" class="tsd-kind-icon">STORAGE_<wbr>STOP</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#storage_timestamp" class="tsd-kind-icon">STORAGE_<wbr>TIMESTAMP</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#update" class="tsd-kind-icon">UPDATE</a>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#default_config" class="tsd-kind-icon">DEFAULT_<wbr>CONFIG</a>
 					</li>
 				</ul>
 			</nav>

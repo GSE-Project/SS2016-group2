@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IRestStops | Citizen Application</title>
+	<title>ViewSchedule | Citizen Application</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ireststops.html">IRestStops</a>
+					<a href="viewschedule.html">ViewSchedule</a>
 				</li>
 			</ul>
-			<h1>Interface IRestStops</h1>
+			<h1>Class ViewSchedule</h1>
 		</div>
 	</div>
 </header>
@@ -71,12 +71,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="irestdataobject.html" class="tsd-signature-type">IRestDataObject</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">IRestStops</span>
-							</li>
-						</ul>
+						<span class="target">ViewSchedule</span>
 					</li>
 				</ul>
 			</section>
@@ -87,8 +82,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ireststops.html#stops" class="tsd-kind-icon">stops</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="ireststops.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewschedule.html#arrivingtime" class="tsd-kind-icon">arriving<wbr>Time</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewschedule.html#lineid" class="tsd-kind-icon">line<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewschedule.html#linename" class="tsd-kind-icon">line<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="viewschedule.html#stopid" class="tsd-kind-icon">stop<wbr>Id</a></li>
 							</ul>
 						</section>
 					</div>
@@ -96,24 +93,43 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="stops" class="tsd-anchor"></a>
-					<h3>stops</h3>
-					<div class="tsd-signature tsd-kind-icon">stops<span class="tsd-signature-symbol">:</span> <a href="istop.html" class="tsd-signature-type">IStop</a><span class="tsd-signature-symbol">[]</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="arrivingtime" class="tsd-anchor"></a>
+					<h3>arriving<wbr>Time</h3>
+					<div class="tsd-signature tsd-kind-icon">arriving<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Moment</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/rest/RestStops.ts#L10">providers/model/rest/RestStops.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewSchedule.ts#L12">pages/models/ViewSchedule.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="timestamp" class="tsd-anchor"></a>
-					<h3>timestamp</h3>
-					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="lineid" class="tsd-anchor"></a>
+					<h3>line<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">line<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="irestdataobject.html">IRestDataObject</a>.<a href="irestdataobject.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/rest/RestDataObject.ts#L10">providers/model/rest/RestDataObject.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewSchedule.ts#L10">pages/models/ViewSchedule.ts:10</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="linename" class="tsd-anchor"></a>
+					<h3>line<wbr>Name</h3>
+					<div class="tsd-signature tsd-kind-icon">line<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewSchedule.ts#L9">pages/models/ViewSchedule.ts:9</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="stopid" class="tsd-anchor"></a>
+					<h3>stop<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">stop<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/models/ViewSchedule.ts#L11">pages/models/ViewSchedule.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -131,14 +147,20 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="ireststops.html" class="tsd-kind-icon">IRest<wbr>Stops</a>
+					<li class="current tsd-kind-class">
+						<a href="viewschedule.html" class="tsd-kind-icon">View<wbr>Schedule</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ireststops.html#stops" class="tsd-kind-icon">stops</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="viewschedule.html#arrivingtime" class="tsd-kind-icon">arriving<wbr>Time</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="ireststops.html#timestamp" class="tsd-kind-icon">timestamp</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="viewschedule.html#lineid" class="tsd-kind-icon">line<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="viewschedule.html#linename" class="tsd-kind-icon">line<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="viewschedule.html#stopid" class="tsd-kind-icon">stop<wbr>Id</a>
 							</li>
 						</ul>
 					</li>

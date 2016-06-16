@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IRestStops | Citizen Application</title>
+	<title>DataConfig | Citizen Application</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ireststops.html">IRestStops</a>
+					<a href="dataconfig.html">DataConfig</a>
 				</li>
 			</ul>
-			<h1>Interface IRestStops</h1>
+			<h1>Interface DataConfig</h1>
 		</div>
 	</div>
 </header>
@@ -71,10 +71,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="irestdataobject.html" class="tsd-signature-type">IRestDataObject</a>
+						<span class="target">DataConfig</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">IRestStops</span>
+								<a href="storageconfig.html" class="tsd-signature-type">StorageConfig</a>
 							</li>
 						</ul>
 					</li>
@@ -87,8 +87,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ireststops.html#stops" class="tsd-kind-icon">stops</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="ireststops.html#timestamp" class="tsd-kind-icon">timestamp</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="dataconfig.html#busses" class="tsd-kind-icon">busses</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="dataconfig.html#lines" class="tsd-kind-icon">lines</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="dataconfig.html#routes" class="tsd-kind-icon">routes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="dataconfig.html#stops" class="tsd-kind-icon">stops</a></li>
 							</ul>
 						</section>
 					</div>
@@ -97,23 +99,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="stops" class="tsd-anchor"></a>
-					<h3>stops</h3>
-					<div class="tsd-signature tsd-kind-icon">stops<span class="tsd-signature-symbol">:</span> <a href="istop.html" class="tsd-signature-type">IStop</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="busses" class="tsd-anchor"></a>
+					<h3>busses</h3>
+					<div class="tsd-signature tsd-kind-icon">busses<span class="tsd-signature-symbol">:</span> <a href="irestbusses.html" class="tsd-signature-type">IRestBusses</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/rest/RestStops.ts#L10">providers/model/rest/RestStops.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/specs/util.ts#L161">specs/util.ts:161</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="timestamp" class="tsd-anchor"></a>
-					<h3>timestamp</h3>
-					<div class="tsd-signature tsd-kind-icon">timestamp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="lines" class="tsd-anchor"></a>
+					<h3>lines</h3>
+					<div class="tsd-signature tsd-kind-icon">lines<span class="tsd-signature-symbol">:</span> <a href="irestlines.html" class="tsd-signature-type">IRestLines</a></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="irestdataobject.html">IRestDataObject</a>.<a href="irestdataobject.html#timestamp">timestamp</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/model/rest/RestDataObject.ts#L10">providers/model/rest/RestDataObject.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/specs/util.ts#L162">specs/util.ts:162</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="routes" class="tsd-anchor"></a>
+					<h3>routes</h3>
+					<div class="tsd-signature tsd-kind-icon">routes<span class="tsd-signature-symbol">:</span> <a href="irestroutes.html" class="tsd-signature-type">IRestRoutes</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/specs/util.ts#L163">specs/util.ts:163</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="stops" class="tsd-anchor"></a>
+					<h3>stops</h3>
+					<div class="tsd-signature tsd-kind-icon">stops<span class="tsd-signature-symbol">:</span> <a href="ireststops.html" class="tsd-signature-type">IRestStops</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/specs/util.ts#L164">specs/util.ts:164</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -132,13 +153,19 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="ireststops.html" class="tsd-kind-icon">IRest<wbr>Stops</a>
+						<a href="dataconfig.html" class="tsd-kind-icon">Data<wbr>Config</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ireststops.html#stops" class="tsd-kind-icon">stops</a>
+								<a href="dataconfig.html#busses" class="tsd-kind-icon">busses</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="ireststops.html#timestamp" class="tsd-kind-icon">timestamp</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="dataconfig.html#lines" class="tsd-kind-icon">lines</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="dataconfig.html#routes" class="tsd-kind-icon">routes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="dataconfig.html#stops" class="tsd-kind-icon">stops</a>
 							</li>
 						</ul>
 					</li>

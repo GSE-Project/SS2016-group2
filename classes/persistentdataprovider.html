@@ -85,25 +85,28 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="persistentdataprovider.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="persistentdataprovider.html#storage" class="tsd-kind-icon">storage</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="persistentdataprovider.html#storedtimestamps" class="tsd-kind-icon">stored<wbr>Time<wbr>Stamps</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="persistentdataprovider.html#config" class="tsd-kind-icon">config</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="persistentdataprovider.html#logger" class="tsd-kind-icon">logger</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="persistentdataprovider.html#storage" class="tsd-kind-icon">storage</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistentdataprovider.html#getbusses" class="tsd-kind-icon">get<wbr>Busses</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="persistentdataprovider.html#getdata" class="tsd-kind-icon">get<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistentdataprovider.html#getlines" class="tsd-kind-icon">get<wbr>Lines</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistentdataprovider.html#getroutes" class="tsd-kind-icon">get<wbr>Routes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistentdataprovider.html#getstops" class="tsd-kind-icon">get<wbr>Stops</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistentdataprovider.html#gettimestamps" class="tsd-kind-icon">get<wbr>Time<wbr>Stamps</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistentdataprovider.html#putbusses" class="tsd-kind-icon">put<wbr>Busses</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="persistentdataprovider.html#putdata" class="tsd-kind-icon">put<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistentdataprovider.html#putlines" class="tsd-kind-icon">put<wbr>Lines</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistentdataprovider.html#putroutes" class="tsd-kind-icon">put<wbr>Routes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistentdataprovider.html#putstops" class="tsd-kind-icon">put<wbr>Stops</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="persistentdataprovider.html#setstorage" class="tsd-kind-icon">set<wbr>Storage</a></li>
 							</ul>
 						</section>
 					</div>
@@ -115,39 +118,58 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Persistent<wbr>Data<wbr>Provider<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="persistentdataprovider.html" class="tsd-signature-type">PersistentDataProvider</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Persistent<wbr>Data<wbr>Provider<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="configurationservice.html" class="tsd-signature-type">ConfigurationService</a>, storage<span class="tsd-signature-symbol">: </span><a href="istorage.html" class="tsd-signature-type">IStorage</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="persistentdataprovider.html" class="tsd-signature-type">PersistentDataProvider</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L22">providers/data/PersistentDataProvider.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L17">providers/data/PersistentDataProvider.ts:17</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>config: <a href="configurationservice.html" class="tsd-signature-type">ConfigurationService</a></h5>
+								</li>
+								<li>
+									<h5>storage: <a href="istorage.html" class="tsd-signature-type">IStorage</a></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="persistentdataprovider.html" class="tsd-signature-type">PersistentDataProvider</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="storage" class="tsd-anchor"></a>
-					<h3>storage</h3>
-					<div class="tsd-signature tsd-kind-icon">storage<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Storage</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="config" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> config</h3>
+					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <a href="configurationservice.html" class="tsd-signature-type">ConfigurationService</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L21">providers/data/PersistentDataProvider.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L19">providers/data/PersistentDataProvider.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="storedtimestamps" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> stored<wbr>Time<wbr>Stamps</h3>
-					<div class="tsd-signature tsd-kind-icon">stored<wbr>Time<wbr>Stamps<span class="tsd-signature-symbol">:</span> <a href="../interfaces/iupdatedata.html" class="tsd-signature-type">IUpdateData</a></div>
+					<a name="logger" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> logger</h3>
+					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <a href="../interfaces/logger.html" class="tsd-signature-type">Logger</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L22">providers/data/PersistentDataProvider.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L17">providers/data/PersistentDataProvider.ts:17</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="storage" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> storage</h3>
+					<div class="tsd-signature tsd-kind-icon">storage<span class="tsd-signature-symbol">:</span> <a href="istorage.html" class="tsd-signature-type">IStorage</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L19">providers/data/PersistentDataProvider.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -164,10 +186,45 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L57">providers/data/PersistentDataProvider.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L64">providers/data/PersistentDataProvider.ts:64</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the busses from the storage</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/irestbusses.html" class="tsd-signature-type">IRestBusses</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Observable<IRestBusses></p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="getdata" class="tsd-anchor"></a>
+					<h3>get<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Data&lt;T&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L32">providers/data/PersistentDataProvider.ts:32</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="../interfaces/irestdataobject.html" class="tsd-signature-type">IRestDataObject</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -181,10 +238,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L70">providers/data/PersistentDataProvider.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L81">providers/data/PersistentDataProvider.ts:81</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the lines from the storage</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/irestlines.html" class="tsd-signature-type">IRestLines</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Observable<IRestLines></p>
 						</li>
 					</ul>
 				</section>
@@ -198,10 +261,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L83">providers/data/PersistentDataProvider.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L97">providers/data/PersistentDataProvider.ts:97</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the routes from the storage</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/irestroutes.html" class="tsd-signature-type">IRestRoutes</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Observable<IRestRoutes></p>
 						</li>
 					</ul>
 				</section>
@@ -215,33 +284,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L44">providers/data/PersistentDataProvider.ts:44</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ireststops.html" class="tsd-signature-type">IRestStops</a><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="gettimestamps" class="tsd-anchor"></a>
-					<h3>get<wbr>Time<wbr>Stamps</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Time<wbr>Stamps<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/iupdatedata.html" class="tsd-signature-type">IUpdateData</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L39">providers/data/PersistentDataProvider.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L48">providers/data/PersistentDataProvider.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Get the timestamps of the stored data</p>
+									<p>Get the stops from the Storage</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/iupdatedata.html" class="tsd-signature-type">IUpdateData</a></h4>
-							<p>IUpdateData</p>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/ireststops.html" class="tsd-signature-type">IRestStops</a><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Observable<IRestStops></p>
 						</li>
 					</ul>
 				</section>
@@ -255,13 +307,53 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L62">providers/data/PersistentDataProvider.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L73">providers/data/PersistentDataProvider.ts:73</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Save the busses in the storage</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>data: <a href="../interfaces/irestbusses.html" class="tsd-signature-type">IRestBusses</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array of busses (IRestBusses)</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="putdata" class="tsd-anchor"></a>
+					<h3>put<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">put<wbr>Data&lt;T&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L40">providers/data/PersistentDataProvider.ts:40</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="../interfaces/irestdataobject.html" class="tsd-signature-type">IRestDataObject</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>data: <span class="tsd-signature-type">T</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -278,13 +370,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L75">providers/data/PersistentDataProvider.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L89">providers/data/PersistentDataProvider.ts:89</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Save the lines in the storage</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>data: <a href="../interfaces/irestlines.html" class="tsd-signature-type">IRestLines</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array of lines (IRestLines)</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -301,13 +401,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L88">providers/data/PersistentDataProvider.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L105">providers/data/PersistentDataProvider.ts:105</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Save the routes in the storage</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>data: <a href="../interfaces/irestroutes.html" class="tsd-signature-type">IRestRoutes</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array of routes (IRestRoutes)</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -324,13 +432,59 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L49">providers/data/PersistentDataProvider.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L56">providers/data/PersistentDataProvider.ts:56</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Save the stops in the storage</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>data: <a href="../interfaces/ireststops.html" class="tsd-signature-type">IRestStops</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array of stops</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setstorage" class="tsd-anchor"></a>
+					<h3>set<wbr>Storage</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Storage<span class="tsd-signature-symbol">(</span>storage<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Storage</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/providers/data/PersistentDataProvider.ts#L29">providers/data/PersistentDataProvider.ts:29</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the used Storage api. Mainly for testing purposes</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>author</dt>
+									<dd><p>sholzer 160516</p>
+									</dd>
+									<dt>deprecated</dt>
+									<dd></dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>storage: <span class="tsd-signature-type">Storage</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object implementing the Storage interface</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -357,14 +511,20 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="persistentdataprovider.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="persistentdataprovider.html#storage" class="tsd-kind-icon">storage</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="persistentdataprovider.html#config" class="tsd-kind-icon">config</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="persistentdataprovider.html#storedtimestamps" class="tsd-kind-icon">stored<wbr>Time<wbr>Stamps</a>
+								<a href="persistentdataprovider.html#logger" class="tsd-kind-icon">logger</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="persistentdataprovider.html#storage" class="tsd-kind-icon">storage</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="persistentdataprovider.html#getbusses" class="tsd-kind-icon">get<wbr>Busses</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="persistentdataprovider.html#getdata" class="tsd-kind-icon">get<wbr>Data</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="persistentdataprovider.html#getlines" class="tsd-kind-icon">get<wbr>Lines</a>
@@ -376,10 +536,10 @@
 								<a href="persistentdataprovider.html#getstops" class="tsd-kind-icon">get<wbr>Stops</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="persistentdataprovider.html#gettimestamps" class="tsd-kind-icon">get<wbr>Time<wbr>Stamps</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="persistentdataprovider.html#putbusses" class="tsd-kind-icon">put<wbr>Busses</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="persistentdataprovider.html#putdata" class="tsd-kind-icon">put<wbr>Data</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="persistentdataprovider.html#putlines" class="tsd-kind-icon">put<wbr>Lines</a>
@@ -389,6 +549,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="persistentdataprovider.html#putstops" class="tsd-kind-icon">put<wbr>Stops</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="persistentdataprovider.html#setstorage" class="tsd-kind-icon">set<wbr>Storage</a>
 							</li>
 						</ul>
 					</li>

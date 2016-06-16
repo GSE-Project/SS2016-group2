@@ -88,9 +88,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="stopdetailpage.html#config" class="tsd-kind-icon">config</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="stopdetailpage.html#logger" class="tsd-kind-icon">logger</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="stopdetailpage.html#nav" class="tsd-kind-icon">nav</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="stopdetailpage.html#navparams" class="tsd-kind-icon">nav<wbr>Params</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="stopdetailpage.html#stop" class="tsd-kind-icon">stop</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="stopdetailpage.html#translate" class="tsd-kind-icon">translate</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -108,13 +111,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Stop<wbr>Detail<wbr>Page<span class="tsd-signature-symbol">(</span>nav<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span>, navParams<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavParams</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="stopdetailpage.html" class="tsd-signature-type">StopDetailPage</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Stop<wbr>Detail<wbr>Page<span class="tsd-signature-symbol">(</span>nav<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span>, navParams<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavParams</span>, config<span class="tsd-signature-symbol">: </span><a href="configurationservice.html" class="tsd-signature-type">ConfigurationService</a>, translate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TranslateService</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="stopdetailpage.html" class="tsd-signature-type">StopDetailPage</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L15">pages/stop-detail/stop-detail.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L20">pages/stop-detail/stop-detail.ts:20</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -125,6 +128,12 @@
 								<li>
 									<h5>navParams: <span class="tsd-signature-type">NavParams</span></h5>
 								</li>
+								<li>
+									<h5>config: <a href="configurationservice.html" class="tsd-signature-type">ConfigurationService</a></h5>
+								</li>
+								<li>
+									<h5>translate: <span class="tsd-signature-type">TranslateService</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="stopdetailpage.html" class="tsd-signature-type">StopDetailPage</a></h4>
 						</li>
@@ -133,13 +142,33 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="config" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> config</h3>
+					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <a href="configurationservice.html" class="tsd-signature-type">ConfigurationService</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L21">pages/stop-detail/stop-detail.ts:21</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="logger" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> logger</h3>
+					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <a href="../interfaces/logger.html" class="tsd-signature-type">Logger</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L20">pages/stop-detail/stop-detail.ts:20</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="nav" class="tsd-anchor"></a>
 					<h3>nav</h3>
 					<div class="tsd-signature tsd-kind-icon">nav<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NavController</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L16">pages/stop-detail/stop-detail.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L21">pages/stop-detail/stop-detail.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -149,17 +178,27 @@
 					<div class="tsd-signature tsd-kind-icon">nav<wbr>Params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NavParams</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L16">pages/stop-detail/stop-detail.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L21">pages/stop-detail/stop-detail.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="stop" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> stop</h3>
-					<div class="tsd-signature tsd-kind-icon">stop<span class="tsd-signature-symbol">:</span> <a href="../interfaces/istop.html" class="tsd-signature-type">IStop</a></div>
+					<div class="tsd-signature tsd-kind-icon">stop<span class="tsd-signature-symbol">:</span> <a href="viewstop.html" class="tsd-signature-type">ViewStop</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L15">pages/stop-detail/stop-detail.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L19">pages/stop-detail/stop-detail.ts:19</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="translate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> translate</h3>
+					<div class="tsd-signature tsd-kind-icon">translate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TranslateService</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L21">pages/stop-detail/stop-detail.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -176,7 +215,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/develop/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L20">pages/stop-detail/stop-detail.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/GSE-Project/SS2016-group2/blob/feature/travis-to-gh-pages/CitizenApplication/app/pages/stop-detail/stop-detail.ts#L26">pages/stop-detail/stop-detail.ts:26</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -209,6 +248,12 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="stopdetailpage.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="stopdetailpage.html#config" class="tsd-kind-icon">config</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="stopdetailpage.html#logger" class="tsd-kind-icon">logger</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="stopdetailpage.html#nav" class="tsd-kind-icon">nav</a>
 							</li>
@@ -217,6 +262,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="stopdetailpage.html#stop" class="tsd-kind-icon">stop</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="stopdetailpage.html#translate" class="tsd-kind-icon">translate</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="stopdetailpage.html#infoclicked" class="tsd-kind-icon">info<wbr>Clicked</a>
