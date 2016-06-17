@@ -11,6 +11,8 @@ import {Observable} from 'rxjs/Observable';
 import {ConfigurationService} from '../config';
 import {Logger, LoggerFactory} from '../logger';
 
+const VERSION = 'app_version';
+
 @Injectable()
 export class PersistentDataProvider {
 
@@ -18,6 +20,20 @@ export class PersistentDataProvider {
 
     constructor(private config: ConfigurationService, private storage: IStorage) {
         this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'PersistentDataProvider', config.misc.log_pretty_print);
+        Observable.from(this.storage.get(VERSION)).subscribe(storage_version => {
+            if (!config.version.release || config.version.build_number !== storage_version) {
+                if (!config.version.release) {
+                    this.logger.info('LocalStorage cleared, developmentMode found');
+                }
+                else {
+                    this.logger.info('LocalStorage cleared, stored Version: ' + localStorage.getItem('app_version') + ', configVersion: ' + config.version.build_number);
+                }
+                storage.clear();
+            }
+            // @sholzer removed elseif since storage.set was called in both 'if' and 'elseif' eventually
+            this.logger.debug('Set app Version to: ' + config.version.build_number);
+            storage.set(VERSION, config.version.build_number);
+        });
     }
 
     /**
