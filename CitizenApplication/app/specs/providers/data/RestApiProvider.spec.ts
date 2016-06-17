@@ -11,6 +11,7 @@ import {Http, Response, ResponseOptions, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Assert, MockFactory} from '../../util';
 import {ConfigurationService} from '../../../providers/config';
+import * as Model from '../../../providers/model';
 
 const DEFAULT_CONFIG = {
     rest_api: {
@@ -117,7 +118,57 @@ describe('RestApiProvider specifications', () => {
         });
     });
 
+    describe('Request stops', () => {
+        let testRequestState = { id: 1, state: Model.RequestStates.Rejected };
+        let testRequestResponse: Model.IRequestResponse = { id: 2 };
+        let input: string = '';
+        let httpPost = <Http>{
+            get(url: string): Observable<Response> {
+                var response = new Response(
+                    new ResponseOptions({ body: testRequestState })
+                );
+                return Observable.of(response);
+            },
+            post(url: string, value: string): Observable<Response> {
+                this.input = value;
+                var response = new Response(
+                    new ResponseOptions({ body: testRequestResponse })
+                );
+                return Observable.of(response);
+            }
+        };
 
+        it('Set Request', done => {
+            let restApi: RestApiProvider = new RestApiProvider(httpPost, config);
+            let req: Model.IRequest = {
+                lineId: 0,
+                pickUpTime: 0,
+                location: { type: 'Point', coordinates: [1, 1] },
+                numberOfPersons: 1,
+                deviceID: '',
+                info: {
+                    name: 'none',
+                    address: 'also none',
+                    assistance: [0]
+                }
+            };
+            restApi.postRequest(req).subscribe(res => {
+                Assert.equalJson(res, testRequestResponse, 'Wrong response');
+                done();
+            });
+
+        });
+        it('Get State', done => {
+            let restApi = new RestApiProvider(httpPost, config);
+            restApi.getRequestState(0).subscribe(res => {
+                Assert.equalJson(res, testRequestState);
+                done();
+            });
+        });
+
+
+
+    });
 });
 
 class MyResponse extends Response {
