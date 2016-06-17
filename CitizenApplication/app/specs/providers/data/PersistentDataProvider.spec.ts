@@ -3,6 +3,7 @@
  */
 import {PersistentDataProvider} from '../../../providers/data';
 import {IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../../../providers/model/rest';
+import * as Model from '../../../providers/model';
 import {IStorage} from '../../../providers/storage';
 import {Assert, MockFactory} from '../../util';
 import {ConfigurationService} from '../../../providers/config';
@@ -113,5 +114,60 @@ describe('PersistentDataProvider specifications', () => {
             Assert.equalJson(JSON.parse(setData), new_stops);
             done();
         }, 100);
+    });
+
+
+    describe('Request Logic', () => {
+        let config = DEFAULT_CONFIG;
+        let setData: string = '';
+        let testReq: Model.IRequestState[] = [
+            { id: 0, state: Model.RequestStates.Pending },
+            { id: 1, state: Model.RequestStates.Accepted },
+            { id: 3, state: Model.RequestStates.Completed }
+        ];
+        let storage = <IStorage>{
+            get(key: string): Promise<string> {
+                switch (key) {
+                    case config.storage_api.request:
+                        return Promise.resolve(JSON.stringify(testReq));
+                    default:
+                        break;
+                }
+            },
+            set(key: string, value: string) {
+                switch (key) {
+                    case config.storage_api.request:
+                        setData = value;
+                        return Promise.resolve();
+                    default:
+                        break;
+                }
+            }
+        };
+        let newReq = <Model.IRequestResponse>{ id: 2 };
+        let testPDP = new PersistentDataProvider(MockFactory.buildConfig(config), storage);
+        it('Get Requests', done => {
+            testPDP.getRequests().subscribe(res => {
+                Assert.equalJson(res.length, 2, 'Completed Reqeusts shouldnt be displayed');
+                done();
+            });
+        });
+        it('Set Requests', done => {
+            testPDP.addRequest(newReq).subscribe(data => {
+                let res = <Model.IRequestState[]>JSON.parse(setData);
+                Assert.equalJson(res.length, 3, 'Wrong number of RequestStates');
+                Assert.equalJson(res.filter(item => item.id === newReq.id ? true : false).length, 1, 'New Item not present');
+                done();
+            });
+        });
+        it('Update Request State', done => {
+            let newReqState = <Model.IRequestState>{ id: 1, state: 1 };
+            testPDP.updateRequest(newReqState).subscribe(data => {
+                let res = <Model.IRequestState[]>JSON.parse(setData);
+                Assert.equalJson(res.filter(item => item.id === newReqState.id ? true : false)[0].state, newReqState.state);
+                done();
+            });
+        });
+
     });
 });

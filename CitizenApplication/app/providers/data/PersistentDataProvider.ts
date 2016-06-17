@@ -106,8 +106,9 @@ export class PersistentDataProvider {
         this.putData<IRestRoutes>(this.config.storageApi.routes, data);
     }
 
-    addRequest(req: IRequestResponse) {
-        this.getRequests().subscribe(res => {
+    addRequest(req: IRequestResponse): Observable<IRequestState[]> {
+        let observable = this.getRequests();
+        observable.subscribe(res => {
             let newRequest: IRequestState = {
                 id: req.id,
                 state: RequestStates.Pending
@@ -115,6 +116,7 @@ export class PersistentDataProvider {
             res.push(newRequest);
             this.storage.set(this.config.storageApi.request, JSON.stringify(res));
         });
+        return observable;
     }
 
     /**
@@ -131,11 +133,12 @@ export class PersistentDataProvider {
     getRequests(): Observable<IRequestState[]> {
         return Observable.from(this.storage.get(this.config.storageApi.request)).map<IRequestState[]>(res => {
             return (<IRequestState[]>JSON.parse(res)).filter(this.request_filter);
-        });
+        }, this);
     }
 
-    updateRequest(req: IRequestState) {
-        this.getRequests().subscribe(res => {
+    updateRequest(req: IRequestState): Observable<IRequestState[]> {
+        let observable = this.getRequests();
+        observable.subscribe(res => {
             let sameIdItems = res.filter(item => (item.id === req.id ? true : false));
             switch (sameIdItems.length) {
                 case 0:
@@ -149,6 +152,7 @@ export class PersistentDataProvider {
             }
             this.storage.set(this.config.storageApi.request, JSON.stringify(res));
         });
+        return observable;
     }
 
     /**
