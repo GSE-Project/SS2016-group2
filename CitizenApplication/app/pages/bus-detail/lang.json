@@ -4,12 +4,14 @@
         "Line": "Line",
         "Color": "Color",
         "NumberPlate": "Number plate",
-        "Seats" : "Free seats"
+        "FreeSeats" : "Free seats",
+        "TotalSeats" : "Total seats"
     },
     "de": {
         "Line": "Linie",
         "Color": "Farbe",
         "NumberPlate": "Kennzeichen",
-        "Seats" : "Freie Plätze"
+        "FreeSeats" : "Freie Plätze",
+        "TotalSeats" : "Plätze gesamt"        
     }
 }

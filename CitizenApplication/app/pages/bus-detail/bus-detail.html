@@ -23,23 +23,27 @@
       <ion-item detail-none>
         {{'BUS_DETAIL_PAGE.Line' | translate}}
         <ion-note item-right>{{bus?.lineId}}</ion-note>
-        </ion-item>
+      </ion-item>
       <ion-item detail-none>
-        {{'BUS_DETAIL_PAGE.Color' | translate}}        
+        {{'BUS_DETAIL_PAGE.Color' | translate}}
         <ion-note item-right>{{bus?.color}}</ion-note>
-        </ion-item>
+      </ion-item>
       <ion-item detail-none>
         {{'BUS_DETAIL_PAGE.NumberPlate' | translate}}
         <ion-note item-right>{{bus?.numberPlate}}</ion-note>
-        </ion-item>
+      </ion-item>
       <ion-item detail-none>
-      {{'BUS_DETAIL_PAGE.Seats' | translate}}
-      <ion-note item-right>{{freeSeats}}</ion-note>
+        {{'BUS_DETAIL_PAGE.TotalSeats' | translate}}
+        <ion-note item-right>{{bus?.totalSeats}}</ion-note>
+      </ion-item>
+      <ion-item detail-none>
+        {{'BUS_DETAIL_PAGE.FreeSeats' | translate}}
+        <ion-note item-right>{{(bus?.totalSeats || 0) - (realTimeData?.takenSeats || 0)}}</ion-note>
       </ion-item>
       <div class="picture">
         <!-- fix for iOS -->
         <!--<div style="background-image: url({{bus?.picture}});">-->
-          <img src="{{bus?.picture}}">
+        <img src="{{bus?.picture}}">
         <!--</div>-->
         <figcaption></figcaption>
       </div>

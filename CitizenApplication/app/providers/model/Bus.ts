@@ -12,5 +12,5 @@ export interface IBus extends ICitizenDataObject {
     lineId: number;
     color: string;
     picture: string;
-    seats: number;
+    totalSeats: number;
 }
