@@ -24,7 +24,7 @@
         </p>
       </div>
       <h2>{{stop.name}}</h2>
-      <p class="lines"><span *ngFor="let line of stop.getLines()" class="line line{{line}}">{{line}}</span></p>
+      <p class="lines"><span *ngFor="let line of stop.getLines()" class="line line{{line.id}}">{{line.id}}</span></p>
     </ion-item>
   </ion-list>
 </ion-content>

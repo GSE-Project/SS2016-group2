@@ -22,8 +22,8 @@ $lines: 4;
 .stop-list {
     span.line {
         padding: 0 2px;
-        border: 2px solid;
-        border-radius: 5px;
+        border: 1px solid;
+        border-radius: 2px;
         margin-right: 2px;
         color: white;
         font-weight: bold;
@@ -51,6 +51,5 @@ $lines: 4;
     }
     p.lines {
         height: 17px;
-        margin-top: 5px;
     }
 }
