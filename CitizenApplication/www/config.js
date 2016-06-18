@@ -2,11 +2,12 @@
  * Configuration file of the CitizenApplication
  * Created by skaldo on 22.05.2016
  * Base TypeScript implementation by sholzer on 22.05.2016
+ * Edit by skaldo on the 18.06.2016 - changed the url to newer version of the server.
  */
 
 window.citizenConfig = {
     rest_api: {
-        host_url: 'http://gsepg1.skaldo.cz/services/rest',
+        host_url: 'http://gsepg1v2.skaldo.cz/services/rest',
         busses: 'linemanagement/v1/busses',
         lines: 'linemanagement/v1/lines',
         routes: 'linemanagement/v1/routes',

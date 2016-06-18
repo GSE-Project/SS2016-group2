@@ -2,6 +2,8 @@
  * Created by skaldo
  * Edited by sholzer on the 14.06.2016
  * Reviewed by skaldo on the 14.06.2016 - looks good after #84
+ * Added #85, available seats by tim284 on the 16.06.2016
+ * Reviewed by skaldo on the 18.06.2016 - some minor changes done. OK.
  */
 import {NavController, NavParams} from 'ionic-angular';
 import {ViewBus} from '../models';
@@ -43,7 +45,7 @@ export class BusDetailPage {
       setTimeout(() => {
         let latLng = new google.maps.LatLng(this.realTimeData.position.coordinates[0], this.realTimeData.position.coordinates[1]);
         this.map.addBusMarker(latLng, this.bus.numberPlate);
-      }, 1000);
+      }, 250);
     }
   }
 

@@ -12,10 +12,12 @@ export class ViewBusRealTimeData implements IViewObject {
     public id: number;
     public delay: number = 0;
     public position: GeoJson.Point;
+    public takenSeats: number;
 
     constructor(brtd: IBusRealTimeData) {
         this.id = brtd.id;
         this.position = brtd.position;
+        this.takenSeats = brtd.takenSeats;
         if (brtd.delay) {
             this.delay = brtd.delay;
         }

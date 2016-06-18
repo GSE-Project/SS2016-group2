@@ -97,7 +97,8 @@ describe('RestApiProvider specifications', () => {
             id: 1,
             delay: 1,
             position: { type: 'Point', coordinates: [1, 1] },
-            timestamp: 0
+            timestamp: 0,
+            takenSeats: 7
         };
 
         http = <Http>{
