@@ -156,7 +156,7 @@ gulp.task("lang", function () {
   }
   gulp.src('www/lang/*.json')
     .pipe(jsonFormat(2))
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest('www/lang'));
 })
 
 // Added by skaldo on the 15.06.2016
