@@ -10,28 +10,28 @@ import {GoogleMap, GoogleMapsEvent, GoogleMapsMarker, GoogleMapsLatLng, GoogleMa
   This is Map component for the CitizenApplication.
 */
 @Component({
-  selector: 'native-map',
-  templateUrl: 'build/components/native-map/map.html'
+    selector: 'native-map',
+    templateUrl: 'build/components/native-map/map.html'
 })
 export class NativeMap implements OnDestroy {
-  private map;
-  private mapElement;
-  private logger: Logger;
-  private mapElementId;
+    private map;
+    private mapElement;
+    private logger: Logger;
+    private mapElementId;
 
-  constructor(private element: ElementRef, private config: ConfigurationService) {
-    this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'MapComponent', this.config.misc.log_pretty_print);
-  }
+    constructor(private element: ElementRef, private config: ConfigurationService) {
+        this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'MapComponent', this.config.misc.log_pretty_print);
+    }
 
-  render() {
-    // Generate pseudorandom ID of the div, as the Ionic native plugin does not accept the element object,
-    // but just the div id.
-    this.mapElementId = 'map' + new Date().getTime();
-    this.mapElement = this.element.nativeElement.children[0];
-    this.mapElement.setAttribute('id', this.mapElementId);
-    let map = new GoogleMap(this.mapElementId);
-    this.map = map;
-    this.map.setOptions({
+    render() {
+        // Generate pseudorandom ID of the div, as the Ionic native plugin does not accept the element object,
+        // but just the div id.
+        this.mapElementId = 'map' + new Date().getTime();
+        this.mapElement = this.element.nativeElement.children[0];
+        this.mapElement.setAttribute('id', this.mapElementId);
+        let map = new GoogleMap(this.mapElementId);
+        this.map = map;
+        this.map.setOptions({
             'backgroundColor': 'white',
             'controls': {
                 'compass': true,
@@ -47,9 +47,9 @@ export class NativeMap implements OnDestroy {
         });
         this.centerCamera();
         console.log('successfully loaded map');
-  }
+    }
 
-  centerCamera() {
+    centerCamera() {
         let options = { timeout: 10000, enableHighAccuracy: true };
         Geolocation.getCurrentPosition(options).then((resp) => {
             let latitude = resp.coords.latitude;
@@ -78,12 +78,27 @@ export class NativeMap implements OnDestroy {
         };
     }
 
-  ngOnDestroy() {
-    this.logger.debug('Removing the map element along with all the children.');
-    while (this.mapElement.firstChild) {
-      this.mapElement.removeChild(this.mapElement.firstChild);
+    /**
+     * shows the bus position
+     * @param busX current x-coord of the bus
+     * @param busY current y-ccord of the bus
+    */
+    showBus(busX, busY ) {
+        let busLatLng = new GoogleMapsLatLng(busX, busY);
+        this.map.addMarker({
+            'position': busLatLng,
+            'title': 'busposition'
+        }, function (marker) {
+            marker.showInfoWindow();
+        });
     }
-  }
+
+    ngOnDestroy() {
+        this.logger.debug('Removing the map element along with all the children.');
+        while (this.mapElement.firstChild) {
+            this.mapElement.removeChild(this.mapElement.firstChild);
+        }
+    }
 
 }
 
