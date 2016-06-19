@@ -30,3 +30,11 @@
 // App iOS Only Sass
 // --------------------------------------------------
 // CSS that should only apply to the iOS app
+
+ion-searchbar {
+    input.searchbar-input {
+        color: $ion-navbar-search-text-color;
+        box-shadow: none;
+        background-color: inherit;
+    }
+}

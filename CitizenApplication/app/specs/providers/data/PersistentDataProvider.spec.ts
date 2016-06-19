@@ -44,7 +44,7 @@ describe('PersistentDataProvider specifications', () => {
 
     it('Get Stops', (done) => {
         var stops: IRestStops = {
-            timestamp: 1,
+            timeStamp: 1,
             stops: []
         };
         storage = <IStorage>{
@@ -65,18 +65,18 @@ describe('PersistentDataProvider specifications', () => {
 
     it('Put Stops', (done) => {
         let busses: IRestBusses = {
-            timestamp: 1, busses: []
+            timeStamp: 1, busses: []
         };
         let stops: IRestStops = {
-            timestamp: 4,
+            timeStamp: 4,
             stops: []
         };
         let lines: IRestLines = {
-            timestamp: 2,
+            timeStamp: 2,
             lines: []
         };
         let routes: IRestRoutes = {
-            timestamp: 3,
+            timeStamp: 3,
             routes: []
         };
 
@@ -104,7 +104,7 @@ describe('PersistentDataProvider specifications', () => {
         };
 
         var new_stops: IRestStops = {
-            timestamp: 5,
+            timeStamp: 5,
             stops: []
         };
 

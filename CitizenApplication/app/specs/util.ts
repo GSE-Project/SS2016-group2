@@ -165,14 +165,10 @@ export interface DataConfig {
 }
 
 export interface StorageConfig extends DataConfig {
-
     delay: number;
-
 }
 
 export interface RestConfig extends StorageConfig {
-
     update: IUpdateData;
     rt: IBusRealTimeData;
-
 }

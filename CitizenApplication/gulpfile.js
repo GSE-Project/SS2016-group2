@@ -37,7 +37,7 @@ var copyScripts = require('ionic-gulp-scripts-copy');
 // This function copies our fonts to the build folder.
 // Author: Dominik Skalnik, 5.5.2016
 var copyDigitaleDoerferFonts = function (options) {
-  options.src = options.src || 'resources/fonts/**/*.+(ttf|woff|woff2)';
+  options.src = options.src || 'resources/fonts/**/*.+(ttf|woff|woff2|otf)';
   options.dest = options.dest || 'www/build/fonts';
 
   return gulp.src(options.src)

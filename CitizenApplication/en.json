@@ -5,7 +5,8 @@
     "No": "No",
     "Search": "Search",
     "PullToRefresh": "Pull to refresh",
-    "Refreshing": "Refreshing"
+    "Refreshing": "Refreshing",
+    "Submit": "Submit"
   },
   "BUS_DETAIL_PAGE": {
     "Line": "Line",
@@ -14,10 +15,25 @@
   },
   "HOME_PAGE": {
     "SelectStop": "Select stop:",
+    "RequestStop": "Request stop",
     "BusLocation": "Where is my bus?"
   },
-  "MAP_PAGE": {
+  "NAVIGATOR_PAGE": {
     "Center": "Center"
+  },
+  "REQUEST_STOP_PAGE": {
+    "Journey": "Journey",
+    "From": "From",
+    "Line": "Line",
+    "Time": "Time",
+    "Persons": "Persons",
+    "PersonalInformation": "Personal information",
+    "Name": "Name",
+    "Address": "Address",
+    "RequiredAssistance": "Required assistance",
+    "Luggage": "Luggage",
+    "Wheelchair": "Wheelchair",
+    "ShoppingAssistance": "Shopping assistance"
   },
   "STOP_DETAIL_PAGE": {
     "RequestStop": "Request Stop",

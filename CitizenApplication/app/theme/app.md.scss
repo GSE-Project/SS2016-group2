@@ -29,3 +29,19 @@
 // App Material Design Only Sass
 // --------------------------------------------------
 // CSS that should only apply to the Material Design app
+
+.searchbar-input {
+     font-size: 2rem;
+}
+
+ion-searchbar {
+    input.searchbar-input {
+        color: $ion-navbar-search-text-color;
+        box-shadow: none;
+        background-color: inherit;
+    }
+}
+
+tab-highlight {
+    background: $tab-md-hihlight-custom-color;
+}

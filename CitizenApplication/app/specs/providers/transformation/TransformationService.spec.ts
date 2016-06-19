@@ -48,7 +48,7 @@ describe('TransformationService specification', () => {
                     lines: [{ id: 1 }, { id: 2 }]
                 }
             ],
-            timestamp: 1
+            timeStamp: 1
         };
 
         let cds = <CitizenDataService>{

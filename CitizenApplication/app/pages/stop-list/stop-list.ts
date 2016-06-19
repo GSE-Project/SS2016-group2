@@ -27,7 +27,7 @@ export class StopListPage {
   private allStops: Array<ViewStop> = new Array<ViewStop>();
   private stops: Array<ViewStop> = new Array<ViewStop>();
   private logger: Logger;
-  private searchText: string; // if we bind the search bar to 'searchText' we should also have a searchText field in our model
+  private searchText: string = ''; // if we bind the search bar to 'searchText' we should also have a searchText field in our model
   constructor(public nav: NavController, private dataAccess: TransformationService, private config: ConfigurationService) {
     this.refreshStops();
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'StopListPage', config.misc.log_pretty_print);

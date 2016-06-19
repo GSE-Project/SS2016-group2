@@ -53,7 +53,6 @@ export class RestApiProvider {
         this.logger.debug('Accessing ' + this.config.getUrl(data) + urlSuffix);
         return this.http.get(this.config.getUrl(data) + urlSuffix).map(
             res => {
-                this.logger.debug('Fetched ' + JSON.stringify(res.json()));
                 return <T>res.json();
             }
         );

@@ -7,7 +7,7 @@
 
 export interface ICitizenDataObject {
     id: number;
-    timestamp?: number;
+    timeStamp?: number;
 }
 
 export enum CitizenDataObjects {

@@ -1,0 +1,94 @@
+<!--
+  Generated template for the RequestStopPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-navbar *navbar class="request-stop">
+  <ion-title>Request Stop</ion-title>
+  <ion-buttons end>
+    <button (click)="submit()">
+      <ion-icon name="checkmark"></ion-icon>
+    </button>
+    <button (click)="dismiss()">
+      <ion-icon name="close"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content padding class="request-stop">
+  <ion-list no-border>
+    <ion-list-header>
+      {{"REQUEST_STOP_PAGE.Journey" | translate}}
+    </ion-list-header>
+    <ion-item (click)="showMap()">
+      <ion-icon name='locate' item-left></ion-icon>
+      {{"REQUEST_STOP_PAGE.From" | translate}}
+      <ion-note item-right>{{requestObj.location.toString()}}</ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" [(ngModel)]="requestObj.lineId"></ion-input>
+      <ion-label>
+        {{"REQUEST_STOP_PAGE.Line" | translate}}
+      </ion-label>
+      <ion-icon name='bus' item-left></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{"REQUEST_STOP_PAGE.Time" | translate}}
+      </ion-label>
+      <ion-datetime displayFormat="HH:mm" [(ngModel)]="requestObj.pickUpTime"></ion-datetime>
+      <ion-icon name='time' item-left></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" [(ngModel)]="requestObj.numberOfPersons"></ion-input>
+      <ion-label>
+        {{"REQUEST_STOP_PAGE.Persons" | translate}}
+      </ion-label>
+      <ion-icon name='contacts' item-left></ion-icon>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list no-border>
+    <ion-list-header>
+      {{"REQUEST_STOP_PAGE.PersonalInformation" | translate}}
+    </ion-list-header>
+
+    <ion-item>
+      <ion-icon name='man' item-left></ion-icon>
+      <ion-label>{{"REQUEST_STOP_PAGE.Name" | translate}}</ion-label>
+      <ion-input placeholder="Name" [(ngModel)]="requestObj.info.name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name='home' item-left></ion-icon>
+      <ion-label>{{"REQUEST_STOP_PAGE.Address" | translate}}</ion-label>
+      <ion-input placeholder="Address" [(ngModel)]="requestObj.info.address"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-list no-border>
+    <ion-list-header>
+      {{"REQUEST_STOP_PAGE.RequiredAssistance" | translate}}
+    </ion-list-header>
+    <ion-item>
+      <ion-toggle [(ngModel)]="requestObj.info.assistance.luggage"></ion-toggle>
+      <ion-icon name='briefcase' item-left></ion-icon>
+      <ion-label>{{"REQUEST_STOP_PAGE.Luggage" | translate}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-toggle [(ngModel)]="requestObj.info.assistance.wheelchair"></ion-toggle>
+      <ion-icon name='help-buoy' item-left></ion-icon>
+      <ion-label>{{"REQUEST_STOP_PAGE.Wheelchair" | translate}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-toggle [(ngModel)]="requestObj.info.assistance.shopping"></ion-toggle>
+      <ion-icon name='basket' item-left></ion-icon>
+      <ion-label>{{"REQUEST_STOP_PAGE.ShoppingAssistance" | translate}}</ion-label>
+    </ion-item>
+  </ion-list>
+  <button class="submit" (click)="submit()">
+      {{"C.Submit" | translate}}<ion-icon name="checkmark"></ion-icon>
+    </button>
+</ion-content>

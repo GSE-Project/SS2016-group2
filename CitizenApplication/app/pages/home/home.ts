@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {Page, NavController, Toast} from 'ionic-angular';
+import {Page, NavController, Toast, Modal} from 'ionic-angular';
 import {StopListPage} from '../stop-list/stop-list';
 import {BusDetailPage} from '../bus-detail/bus-detail';
+import {RequestStopPage} from '../request-stop/request-stop';
 import {ConfigurationService} from '../../providers/config';
 import {Logger, LoggerFactory} from '../../providers/logger';
 
@@ -23,14 +24,15 @@ export class HomePage {
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'HomePage', config.misc.log_pretty_print);
   }
 
-  goToStops() {
-    this.nav.push(StopListPage);
+  requestStop() {
+    let requestStopModal = Modal.create(RequestStopPage);
+    this.nav.present(requestStopModal);
   }
 
   goToBusDetail() {
     this.nav.push(BusDetailPage, { lineId: 1, time: new Date() });
   }
-
+/*
   // hide nav bar when we enter the page
   ionViewWillEnter() {
     var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
@@ -41,5 +43,5 @@ export class HomePage {
   ionViewDidLeave() {
     var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
     element.style.display = 'block';
-  }
+  }*/
 }

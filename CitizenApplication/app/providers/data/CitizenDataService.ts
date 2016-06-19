@@ -32,11 +32,12 @@ export class CitizenDataService {
         routes: -1,
         stops: -1
     };
-
     private logger: Logger;
 
     constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider, private config: ConfigurationService) {
         this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'CitizenDataService', config.misc.log_pretty_print);
+        // TODO: use config.
+        this.startUpdateTimer(10000);
     }
 
     /**
@@ -54,7 +55,7 @@ export class CitizenDataService {
         this.logger.debug('Getting data from storage');
         return storageRead().flatMap((data) => {
             this.logger.debug('Storage data fetched');
-            if (data && (serverTime < data.timestamp)) {
+            if (data && (serverTime <= data.timeStamp)) {
                 return Observable.of(data);
             }
             this.logger.debug('Getting data from server');
@@ -143,7 +144,11 @@ export class CitizenDataService {
      * @param timeInterval the time interval the server is checked for new data
      */
     public startUpdateTimer(timeInterval: number): void {
-        // To-be implemented.
+        this.updateTimeStamps().subscribe(() => {
+            setTimeout(() => {
+                this.updateTimeStamps();
+            }, timeInterval);
+        });
     }
 
     /**

@@ -6,16 +6,15 @@
   Ionic pages and navigation.
 -->
 <ion-navbar *navbar>
-  <ion-title>StopList</ion-title>
+  <ion-searchbar [(ngModel)]="searchText" (input)="onSearch($event)" (cancel)="onSearchCancel($event)" placeholder="{{'C.Search' | translate}}">
+  </ion-searchbar>
 </ion-navbar>
 
 <ion-content class="stop-list">
-  <ion-refresher (ionRefresh)="doRefresh($event)">
+  <!--<ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingText="{{'C.PullToRefresh' | translate}}" refreshingText="{{'C.Refreshing' | translate}}">
     </ion-refresher-content>
-  </ion-refresher>
-  <ion-searchbar [(ngModel)]="searchText" (input)="onSearch($event)" (cancel)="onSearchCancel($event)" placeholder="{{'C.Search' | translate}}">
-  </ion-searchbar>
+  </ion-refresher>-->
   <ion-list>
     <ion-item *ngFor="let stop of stops" (click)="goToStopDetail(stop)">
       <div class="line" item-right>
@@ -24,7 +23,7 @@
         </p>
       </div>
       <h2>{{stop.name}}</h2>
-      <p class="lines"><span *ngFor="let line of stop.getLines()" class="line line{{line}}">{{line}}</span></p>
+      <p class="lines"><span *ngFor="let line of stop.lines" class="line line{{line.id}}">{{line.id}}</span></p>
     </ion-item>
   </ion-list>
 </ion-content>

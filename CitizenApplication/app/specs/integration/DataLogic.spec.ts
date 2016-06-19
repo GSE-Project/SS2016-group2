@@ -44,7 +44,7 @@ const DEFAULT_CONFIG: CitizenApplicationConfig = {
 describe('Data Logic Specification with timeout of ' + TIMEOUT + ' ms', () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT;
     tests(0, 0);
-    tests(50, 100);
+    tests(10, 20);
 
 });
 
@@ -60,19 +60,19 @@ function tests(storageDelay: number, restDelay: number): void {
         + '\nstorage delay of ' + storageDelay + ' ms', () => {
             let storageConf = <StorageConfig>{
                 delay: storageDelay,
-                busses: { timestamp: 1, busses: [] },
-                lines: { timestamp: 1, lines: [] },
-                routes: { timestamp: 1, routes: [] },
-                stops: { timestamp: 1, stops: [] }
+                busses: { timeStamp: 1, busses: [] },
+                lines: { timeStamp: 1, lines: [] },
+                routes: { timeStamp: 1, routes: [] },
+                stops: { timeStamp: 1, stops: [] }
             };
             let restConf = <RestConfig>{
                 delay: restDelay,
-                busses: { timestamp: 1, busses: [] },
-                lines: { timestamp: 2, lines: [] },
-                routes: { timestamp: 1, routes: [] },
-                stops: { timestamp: 2, stops: [] },
+                busses: { timeStamp: 1, busses: [] },
+                lines: { timeStamp: 2, lines: [] },
+                routes: { timeStamp: 1, routes: [] },
+                stops: { timeStamp: 2, stops: [] },
                 update: { busses: 1, lines: 2, routes: 1, stops: 2 },
-                rt: { id: 1, delay: 10, position: { type: 'Point', coordinates: [1, 1] }, timestamp: 0 }
+                rt: { id: 1, delay: 10, position: { type: 'Point', coordinates: [1, 1] }, timeStamp: 0 }
             };
 
             it('Get Stops from Server', (done) => {

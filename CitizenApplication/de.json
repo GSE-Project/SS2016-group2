@@ -5,7 +5,8 @@
     "No": "No",
     "Search": "Suchen",
     "PullToRefresh": "Ziehen um zu aktualisieren",
-    "Refreshing": "Aktualisieren"
+    "Refreshing": "Aktualisieren",
+    "Submit": "Einreichen"
   },
   "BUS_DETAIL_PAGE": {
     "Line": "Linie",
@@ -14,10 +15,25 @@
   },
   "HOME_PAGE": {
     "SelectStop": "Haltestelle wählen:",
+    "RequestStop": "Haltewunsch äußern",
     "BusLocation": "Zeige mir meine Bus auf der Karte"
   },
-  "MAP_PAGE": {
+  "NAVIGATOR_PAGE": {
     "Center": "Zentrieren"
+  },
+  "REQUEST_STOP_PAGE": {
+    "Journey": "Fahrt",
+    "From": "Von",
+    "Line": "Linie",
+    "Time": "Uhrzeit",
+    "Persons": "Personen",
+    "PersonalInformation": "Persönliche Angaben",
+    "Name": "Name",
+    "Address": "Adresse",
+    "RequiredAssistance": "Benötigte Unterstützung",
+    "Luggage": "Gepäck",
+    "Wheelchair": "Rollstuhl",
+    "ShoppingAssistance": "Unterstützung beim Einkauf"
   },
   "STOP_DETAIL_PAGE": {
     "RequestStop": "Haltewunsch äußern",

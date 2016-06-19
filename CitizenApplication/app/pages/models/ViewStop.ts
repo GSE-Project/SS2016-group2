@@ -15,7 +15,6 @@ export class ViewStop implements IViewObject {
   public location: Point;
   public schedule: Array<ViewSchedule> = new Array<ViewSchedule>();
   public lines: { id: number }[];
-  public timestamp: number;
 
   constructor(stop: IStop) {
     this.id = stop.id;
@@ -31,7 +30,7 @@ export class ViewStop implements IViewObject {
       });
     });
 
-    this.lines = [];
+    this.lines = stop.lines;
     let linesHelper = [];
 
     // Do the sorting & get the lines of the stop.
@@ -41,12 +40,6 @@ export class ViewStop implements IViewObject {
       return a.arrivingTime.unix() - b.arrivingTime.unix();
     });
 
-    linesHelper.forEach((value, index) => {
-      if (value) {
-        this.lines.push({ id: index });
-      }
-    });
-
     this.lines.sort((a, b) => {
       return b.id - a.id;
     });
@@ -54,9 +47,5 @@ export class ViewStop implements IViewObject {
 
   public getSchedules(first: number) {
     return this.schedule.slice(0, first);
-  }
-
-  public getLines() {
-    return this.lines;
   }
 }
