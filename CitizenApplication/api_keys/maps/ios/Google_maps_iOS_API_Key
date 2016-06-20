@@ -1,3 +1,5 @@
 Google_maps_iOS_API_Key
 
 AIzaSyCxD2jkTLp-2cE8YWtx8leLCFHojWhwzhw
+
+Installation command: cordova plugin add https://github.com/phonegap-googlemaps-plugin/cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="AIzaSyCTDvPOMux4GiwFYSM_WNBqaivyHD1_7G8" --variable API_KEY_FOR_IOS="AIzaSyCxD2jkTLp-2cE8YWtx8leLCFHojWhwzhw"

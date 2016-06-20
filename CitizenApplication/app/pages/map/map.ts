@@ -23,16 +23,4 @@ export class MapPage {
   constructor(public nav: NavController, private config: ConfigurationService) {
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'MapPage', config.misc.log_pretty_print);
   }
-
-  // Page has been fully rendered. We can create the map.
-  // Unfortunately I has not able to find a way how to listen
-  // to the parent's 'onPageDidEnter' event. Tus it has to bee
-  // done here. (skaldo, G2).
-  // The handler fires too early too, for now this is hacked by
-  // timeout.
-  ionViewDidEnter() {
-    setTimeout(() => {
-      this.nativeMap.render();
-    }, 250);
-  }
 }

@@ -41,12 +41,12 @@
       </div>
     </div>
 
-    <div class="map">
-      <div class="estimation" *ngSwitchWhen="'position'">
+    <div class="map" *ngSwitchWhen="'position'">
+      <div class="estimation">
         {{schedule?.arrivingTime?.toDate() | date:'Hms'}}
         <span *ngIf="realTimeData.delay" class="delay">+{{realTimeData.delay}}</span>
       </div>
-      <native-map *ngSwitchWhen="'position'">
+      <native-map style="width: 100%; height: 100%; flex: 1 1 auto; display: flex;">
       </native-map>
     </div>
 

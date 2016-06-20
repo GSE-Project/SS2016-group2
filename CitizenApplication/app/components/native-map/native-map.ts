@@ -13,7 +13,7 @@ import {GoogleMap, GoogleMapsEvent, GoogleMapsMarker, GoogleMapsLatLng, GoogleMa
     selector: 'native-map',
     templateUrl: 'build/components/native-map/map.html'
 })
-export class NativeMap implements OnDestroy {
+export class NativeMap implements OnDestroy, AfterViewInit {
     private map;
     private mapElement;
     private logger: Logger;
@@ -23,11 +23,15 @@ export class NativeMap implements OnDestroy {
         this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'MapComponent', this.config.misc.log_pretty_print);
     }
 
+    ngAfterViewInit() {
+        this.render();
+    }
+
     render() {
         // Generate pseudorandom ID of the div, as the Ionic native plugin does not accept the element object,
         // but just the div id.
         this.mapElementId = 'map' + new Date().getTime();
-        this.mapElement = this.element.nativeElement.children[0];
+        this.mapElement = this.element.nativeElement; // .children[0];
         this.mapElement.setAttribute('id', this.mapElementId);
         let map = new GoogleMap(this.mapElementId);
         this.map = map;
@@ -46,6 +50,7 @@ export class NativeMap implements OnDestroy {
             },
         });
         this.centerCamera();
+        this.map.refreshLayout();
         console.log('successfully loaded map');
     }
 
@@ -55,11 +60,13 @@ export class NativeMap implements OnDestroy {
             let latitude = resp.coords.latitude;
             let longitude = resp.coords.longitude;
             this.map.animateCamera({
-                'target': new GoogleMapsLatLng(latitude.toString(), longitude.toString()),
+                'target': new GoogleMapsLatLng(latitude, longitude),
                 'tilt': 10,
                 'zoom': 18,
                 'bearing': 0
             });
+        }).catch((error) => {
+            this.logger.error('error occured while getting the location: ' + error);
         });
     }
 
@@ -83,7 +90,7 @@ export class NativeMap implements OnDestroy {
      * @param busX current x-coord of the bus
      * @param busY current y-ccord of the bus
     */
-    showBus(busX, busY ) {
+    showBus(busX, busY) {
         let busLatLng = new GoogleMapsLatLng(busX, busY);
         this.map.addMarker({
             'position': busLatLng,

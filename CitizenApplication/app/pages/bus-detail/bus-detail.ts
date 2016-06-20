@@ -38,13 +38,13 @@ export class BusDetailPage {
   }
   set busViewType(data: string) {
     this._busViewType = data;
-    if (data === 'position') {
+    if (data === 'position') {/*
       // HACK! Quick n' dirty
       setTimeout(() => {
         this.map.render();
         let latLng = new google.maps.LatLng(this.realTimeData.position.coordinates[0], this.realTimeData.position.coordinates[1]);
         // this.map.addBusMarker(latLng, this.bus.numberPlate);
-      }, 1000);
+      }, 1000);*/
     }
   }
 

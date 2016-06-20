@@ -23,6 +23,8 @@ import * as moment from 'moment/moment';
   providers: [CitizenDataService],
 })
 export class StopListPage {
+  // Hides the view after it leaves.
+  public display: boolean = true;
   // private searchText: String;
   private stops: Array<ViewStop> = new Array<ViewStop>();
   private logger: Logger;
@@ -73,5 +75,13 @@ export class StopListPage {
       });
     });
     return observable;
+  }
+
+  ionViewWillEnter() {
+    this.display = true;
+  }
+
+  ionViewDidLeave() {
+    this.display = false;
   }
 }
