@@ -18,6 +18,7 @@ export class NativeMap implements OnDestroy, AfterViewInit {
     private mapElement;
     private logger: Logger;
     private mapElementId;
+    private markers: { [key: string]: GoogleMapsMarker } = {};
 
     constructor(private element: ElementRef, private config: ConfigurationService) {
         this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'MapComponent', this.config.misc.log_pretty_print);
@@ -60,14 +61,51 @@ export class NativeMap implements OnDestroy, AfterViewInit {
             let latitude = resp.coords.latitude;
             let longitude = resp.coords.longitude;
             this.map.animateCamera({
-                'target': new google.maps.LatLng(latitude, longitude), // Somehow the GoogleMapsLatLng() does not pass the build.
+                'target': new GoogleMapsLatLng(latitude.toString(), longitude.toString()), // Somehow the GoogleMapsLatLng() does not pass the build.
                 'tilt': 10,
                 'zoom': 18,
                 'bearing': 0
             });
+            this.addMarker('tester', 49.1, 8.2);
+            // this.moveMarker('tester', 20.2, 20.2)
         }).catch((error) => {
             this.logger.error('error occured while getting the location: ' + error);
         });
+    }
+
+    /**
+     * @param name name of the marker
+     * @param lat latitude
+     * @param lng longitude
+     */
+    addMarker(name, lat, lng) {
+        let pos = new GoogleMapsLatLng(lat.toString(), lng.toString());
+        let marker = new GoogleMapsMarker({
+                'position': pos,
+                'title': 'test'
+            });
+        this.markers[name] = marker;
+        this.map.addMarker(marker);
+        console.log('new marker added to markers' + this.markers );
+    }
+
+    /**
+     * @param markername String name of the marker to be deleted
+     */
+    deleteMarker(markername) {
+        let marker = this.markers[markername];
+        marker.remove();
+        console.log('removed marker ' + markername);
+    }
+
+    /**
+     * @param markername to be moved
+     * @param moveToX new X Destination
+     * @param moveToY new Y Destination
+     */
+    moveMarker(markername, moveToX, moveToY) {
+        console.log(markername + ' will be moved');
+        this.markers[markername].setPosition(new GoogleMapsLatLng(moveToX.toString(), moveToY.toString()));
     }
 
     /**
@@ -75,6 +113,7 @@ export class NativeMap implements OnDestroy, AfterViewInit {
      * @param linestopscoordinates list of coordinates of the linetops
      * @param linestopsnames list of the names of the linetops
      */
+    /*
     loadStops(linestopscoordinates, linestopsnames) {
         for (let index = 0; index < linestopscoordinates.length; index++) {
             let stopLatLng = new GoogleMapsLatLng(linestopscoordinates[index][1].toString(), linestopscoordinates[index][0].toString());
@@ -84,12 +123,15 @@ export class NativeMap implements OnDestroy, AfterViewInit {
             });
         };
     }
+    */
 
     /**
      * shows the bus position
      * @param busX current x-coord of the bus
      * @param busY current y-ccord of the bus
     */
+
+    /*
     showBus(busX, busY) {
         let busLatLng = new GoogleMapsLatLng(busX, busY);
         this.map.addMarker({
@@ -99,6 +141,7 @@ export class NativeMap implements OnDestroy, AfterViewInit {
             marker.showInfoWindow();
         });
     }
+    */
 
     ngOnDestroy() {
         this.logger.debug('Removing the map element along with all the children.');
