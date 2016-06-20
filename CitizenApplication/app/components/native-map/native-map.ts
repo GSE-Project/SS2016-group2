@@ -60,7 +60,7 @@ export class NativeMap implements OnDestroy, AfterViewInit {
             let latitude = resp.coords.latitude;
             let longitude = resp.coords.longitude;
             this.map.animateCamera({
-                'target': new GoogleMapsLatLng(latitude, longitude),
+                'target': new GoogleMapsLatLng(latitude + 0, longitude + 0),
                 'tilt': 10,
                 'zoom': 18,
                 'bearing': 0
