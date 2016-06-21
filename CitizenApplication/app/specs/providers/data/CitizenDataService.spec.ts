@@ -342,6 +342,41 @@ describe('CitizenDataService specifications', function () {
             });
         });
 
+        it('Get current stops from storage', done => {
+            // Corresponds to #91
+            let dgos_expectedStops = <IRestStops>{ timeStamp: 2, stops: [{ id: 1 }] };
+            let dgos_expectedUpdateData: IUpdateData = { busses: 1, lines: 1, routes: 1, stops: 2 };
+            let dgos_restApi = <RestApiProvider>{
+                getUpdateData(): Observable<IUpdateData> {
+                    return Observable.of(dgos_expectedUpdateData);
+                },
+                getStops(): Observable<IRestStops> {
+                    return Observable.of({ timeStamp: 2, stops: [] });
+                },
+                getLines(): Observable<IRestLines> {
+                    return Observable.of({ timeStamp: 1, lines: [] });
+                }
+            };
+            let dgos_storageApi = <PersistentDataProvider>{
+                getStops(): Observable<IRestStops> {
+                    return Observable.of(dgos_expectedStops);
+                },
+                putStops(data: IRestStops): void { },
+                getLines(): Observable<IRestLines> {
+                    return Observable.of({ timeStamp: 2, lines: [] });
+                }
+            };
+            let citizenDataService: CitizenDataService = new CitizenDataService(dgos_restApi, dgos_storageApi, config);
+            citizenDataService.updateTimeStamps().subscribe(time => {
+                Assert.equalJson(time.stops, 2);
+                citizenDataService.getStops().subscribe(data => {
+                    Assert.equalJson(data, dgos_expectedStops.stops);
+                    done();
+                });
+            });
+        });
+
+
         it('Handle null stops', (done) => {
             let updateData = <IUpdateData>{ busses: 2, lines: 2, routes: 2, stops: 0 };
             let expectedStops = <IRestStops>{ timeStamp: 1, stops: [] };
@@ -447,6 +482,9 @@ describe('CitizenDataService specifications', function () {
             });
         });
     });
+
+
+
 });
 
 function getTestSetup(rap: RestApiProvider, pdp: PersistentDataProvider): CitizenDataService {
