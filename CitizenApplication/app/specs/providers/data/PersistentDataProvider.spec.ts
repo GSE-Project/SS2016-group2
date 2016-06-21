@@ -29,7 +29,7 @@ const DEFAULT_CONFIG = {
         log_pretty_print: false
     },
     version: {
-        build_number: 'DEFAULT_CONFIG',
+        build_number: 'TEST_SNAPSHOT',
         commit: 'DEFAULT_CONFIG',
         release: false
     }
@@ -50,7 +50,16 @@ describe('PersistentDataProvider specifications', () => {
         storage = <IStorage>{
 
             get(key: string): Promise<string> {
-                return Promise.resolve(JSON.stringify(stops));
+                switch (key) {
+                    case 'app_version':
+                        return Promise.resolve('1');
+                    default:
+                        return Promise.resolve(JSON.stringify(stops));;
+                }
+
+            },
+            set(key: string, value: string) {
+                return undefined;
             },
             clear() { }
 
@@ -101,8 +110,13 @@ describe('PersistentDataProvider specifications', () => {
 
             set(key: string, value: string): Promise<any> {
                 console.log('@Storage Mock: called with ' + key + ':' + value);
-                setData = value;
-                return undefined;
+                switch (key) {
+                    case 'app_version':
+                        break;
+                    default:
+                        setData = value;
+                }
+                return Promise.resolve(undefined);
             },
             clear() {
                 console.log('@Storage Mock: cleared');
@@ -116,10 +130,9 @@ describe('PersistentDataProvider specifications', () => {
         };
 
         storageApi = new PersistentDataProvider(config, storage);
-        storageApi.putStops(new_stops);
-        setTimeout(() => {
+        storageApi.putStops(new_stops).subscribe(data => {
             Assert.equalJson(JSON.parse(setData), new_stops);
             done();
-        }, 100);
+        });
     });
 });
