@@ -54,7 +54,7 @@ describe('PersistentDataProvider specifications', () => {
                     case 'app_version':
                         return Promise.resolve('1');
                     default:
-                        return Promise.resolve(JSON.stringify(stops));;
+                        return Promise.resolve(JSON.stringify(stops));
                 }
 
             },
