@@ -51,7 +51,8 @@ describe('PersistentDataProvider specifications', () => {
 
             get(key: string): Promise<string> {
                 return Promise.resolve(JSON.stringify(stops));
-            }
+            },
+            clear() { }
 
         };
 
@@ -93,12 +94,18 @@ describe('PersistentDataProvider specifications', () => {
                         return Promise.resolve(JSON.stringify(routes));
                     case 'S':
                         return Promise.resolve(JSON.stringify(stops));
+                    case 'app_version':
+                        return Promise.resolve('1');
                 }
             },
 
             set(key: string, value: string): Promise<any> {
+                console.log('@Storage Mock: called with ' + key + ':' + value);
                 setData = value;
-                return Promise.resolve(stops);
+                return undefined;
+            },
+            clear() {
+                console.log('@Storage Mock: cleared');
             }
 
         };

@@ -19,20 +19,21 @@ export class PersistentDataProvider {
     private logger: Logger;
 
     constructor(private config: ConfigurationService, private storage: IStorage) {
-        this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'PersistentDataProvider', config.misc.log_pretty_print);
+        this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'PersistentDataProvider', config.misc.log_pretty_print);
         Observable.from(this.storage.get(VERSION)).subscribe(storage_version => {
-            if (!config.version.release || config.version.build_number !== storage_version) {
-                if (!config.version.release) {
+            if (!this.config.version.release || this.config.version.build_number !== storage_version) {
+                if (!this.config.version.release) {
                     this.logger.info('LocalStorage cleared, developmentMode found');
                 }
                 else {
-                    this.logger.info('LocalStorage cleared, stored Version: ' + localStorage.getItem('app_version') + ', configVersion: ' + config.version.build_number);
+                    this.logger.info('LocalStorage cleared, stored Version: ' + storage_version + ', configVersion: ' + this.config.version.build_number);
                 }
-                storage.clear();
+                this.storage.clear();
             }
             // @sholzer removed elseif since storage.set was called in both 'if' and 'elseif' eventually
             this.logger.debug('Set app Version to: ' + config.version.build_number);
-            storage.set(VERSION, config.version.build_number);
+            debugger;
+            this.storage.set(VERSION, this.config.version.build_number);
         });
     }
 

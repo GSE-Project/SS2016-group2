@@ -78,7 +78,8 @@ export class MockFactory {
                         resolve(key + value);
                     }, storage_conf.delay);
                 });
-            }
+            },
+            clear() { }
         };
     }
 
@@ -126,6 +127,9 @@ export class MockFactory {
             },
             get misc() {
                 return config.misc;
+            },
+            get version() {
+                return config.version;
             },
             getUrl(type: CitizenDataObjects): string {
                 let url = this.restApi.host_url + '/';
