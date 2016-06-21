@@ -11,13 +11,30 @@ import {Observable} from 'rxjs/Observable';
 import {ConfigurationService} from '../config';
 import {Logger, LoggerFactory} from '../logger';
 
+const VERSION = 'app_version';
+
 @Injectable()
 export class PersistentDataProvider {
 
     private logger: Logger;
 
     constructor(private config: ConfigurationService, private storage: IStorage) {
-        this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'PersistentDataProvider', config.misc.log_pretty_print);
+        this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'PersistentDataProvider', config.misc.log_pretty_print);
+        Observable.from(this.storage.get(VERSION)).subscribe(storage_version => {
+            if (!config.version.release || this.config.version.build_number !== storage_version) {
+                if (!config.version.release) {
+                    this.logger.info('LocalStorage cleared, developmentMode found');
+                }
+                else {
+                    this.logger.info('LocalStorage cleared, stored Version: ' + storage_version + ', configVersion: ' + this.config.version.build_number);
+                }
+                storage.clear();
+            }
+            // @sholzer removed elseif since storage.set was called in both 'if' and 'elseif' eventually
+            this.logger.debug('Set app Version to: ' + config.version.build_number);
+            debugger;
+            storage.set(VERSION, config.version.build_number);
+        });
     }
 
     /**
@@ -37,8 +54,8 @@ export class PersistentDataProvider {
         );
     }
 
-    putData<T extends IRestDataObject>(key: string, data: T): void {
-        this.storage.set(key, JSON.stringify(data));
+    putData<T extends IRestDataObject>(key: string, data: T): Observable<any> {
+        return Observable.from(this.storage.set(key, JSON.stringify(data)));
     }
 
     /**
@@ -54,7 +71,7 @@ export class PersistentDataProvider {
      * @param data Array of stops
      */
     putStops(data: IRestStops) {
-        this.putData<IRestStops>(this.config.storageApi.stops, data);
+        return this.putData<IRestStops>(this.config.storageApi.stops, data);
     }
 
     /**
@@ -71,7 +88,7 @@ export class PersistentDataProvider {
      * @param data Array of busses (IRestBusses)
      */
     putBusses(data: IRestBusses) {
-        this.putData<IRestBusses>(this.config.storageApi.busses, data);
+        return this.putData<IRestBusses>(this.config.storageApi.busses, data);
     }
 
     /**
@@ -87,7 +104,7 @@ export class PersistentDataProvider {
      * @param data Array of lines (IRestLines)
      */
     putLines(data: IRestLines) {
-        this.putData<IRestLines>(this.config.storageApi.lines, data);
+        return this.putData<IRestLines>(this.config.storageApi.lines, data);
     }
 
     /**
@@ -103,6 +120,6 @@ export class PersistentDataProvider {
      * @param data Array of routes (IRestRoutes)
      */
     putRoutes(data: IRestRoutes) {
-        this.putData<IRestRoutes>(this.config.storageApi.routes, data);
+        return this.putData<IRestRoutes>(this.config.storageApi.routes, data);
     }
 }
