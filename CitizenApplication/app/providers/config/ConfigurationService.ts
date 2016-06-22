@@ -116,8 +116,6 @@ export class ConfigurationService {
                 url += this.restApi.request;
             case CitizenDataObjects.PostRequest:
                 url += this.restApi.post_request;
-            default:
-                return null;
         }
         return url;
     }
