@@ -3,6 +3,7 @@ import {NavController, ViewController, Modal, NavParams, Popover} from 'ionic-an
 import {ViewRequest, DateTimeUtil, ViewLine} from '../models';
 import {Map} from '../../components/map/map';
 import {TransformationService} from '../../providers/transformation';
+import * as moment from 'moment/moment';
 
 /*
   Generated class for the RequestStopPage page.
@@ -18,18 +19,22 @@ export class RequestStopPage {
   public selectedLine: string = '';
   public linesList: ViewLine[] = [];
 
+  set pickUpTime(time: string) {
+    this.requestObj.pickUpTime = new Date(time);
+  }
+
+  get pickUpTime(): string {
+    return this.requestObj.pickUpTime.toISOString();
+  }
+
   constructor(public nav: NavController, public viewCtrl: ViewController, private model_access: TransformationService) {
     model_access.getLines().subscribe(res => {
       this.linesList = res;
     });
   }
 
-  selectLineChanged() {
-    if (this.selectedLine === '') {
-      return;
-    }
-    this.requestObj.lineId = Number(this.selectedLine.split(':')[0]);
-
+  selectLineChanged(selectedLine) {
+    this.requestObj.lineId = selectedLine.id;
   }
 
   showMap() {
