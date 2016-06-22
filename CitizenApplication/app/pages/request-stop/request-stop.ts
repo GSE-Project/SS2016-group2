@@ -1,8 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import {NavController, ViewController, Modal, NavParams, Popover} from 'ionic-angular';
-import {ViewRequest, DateTimeUtil} from '../models';
+import {ViewRequest, DateTimeUtil, ViewLine} from '../models';
 import {Map} from '../../components/map/map';
-import {CitizenDataService} from '../../providers/data/CitizenDataService';
+import {TransformationService} from '../../providers/transformation';
 
 /*
   Generated class for the RequestStopPage page.
@@ -15,8 +15,21 @@ import {CitizenDataService} from '../../providers/data/CitizenDataService';
 })
 export class RequestStopPage {
   public requestObj: ViewRequest = new ViewRequest();
+  public selectedLine: string = '';
+  public linesList: ViewLine[] = [];
 
-  constructor(public nav: NavController, public viewCtrl: ViewController, private cds: CitizenDataService) {
+  constructor(public nav: NavController, public viewCtrl: ViewController, private model_access: TransformationService) {
+    model_access.getLines().subscribe(res => {
+      this.linesList = res;
+    });
+  }
+
+  selectLineChanged() {
+    if (this.selectedLine === '') {
+      return;
+    }
+    this.requestObj.lineId = Number(this.selectedLine.split(':')[0]);
+
   }
 
   showMap() {
@@ -29,7 +42,7 @@ export class RequestStopPage {
 
   submit() {
     // TODO: validation - add method validate to the ViewRequest class.
-    this.cds.requestCustomStop(this.requestObj.toIRequest());
+    this.model_access.makeRequest(this.requestObj);
     this.dismiss();
   }
 

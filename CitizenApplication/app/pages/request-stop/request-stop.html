@@ -27,7 +27,9 @@
       <ion-note item-right>{{requestObj.location.toString()}}</ion-note>
     </ion-item>
     <ion-item>
-      <ion-input type="number" [(ngModel)]="requestObj.lineId"></ion-input>
+      <ion-select [(ngModel)]="selectedLine" interface="action-sheet" (ionChange)="selectLineChanged()">
+        <ion-option *ngFor="let line of linesList">{{line.id}}: {{line.name}}</ion-option>
+      </ion-select>
       <ion-label>
         {{"REQUEST_STOP_PAGE.Line" | translate}}
       </ion-label>

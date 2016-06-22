@@ -111,6 +111,10 @@ export class TransformationService {
         return this.cds.getCitizenData();
     }
 
+    makeRequest(vreq: VIEW.ViewRequest) {
+        this.cds.requestCustomStop(vreq.toIRequest());
+    }
+
 
     /**
      * Return the {D} objects as {V}[] from the data source
