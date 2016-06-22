@@ -7,3 +7,4 @@ export * from './ViewRealTimeData';
 export * from './ViewObject';
 export * from './ViewRequest';
 export * from './ViewRequestState';
+export * from './DateTimeUtils';
