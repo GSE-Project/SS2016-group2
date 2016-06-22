@@ -6,11 +6,12 @@
 import {ViewObject} from './ViewObject';
 import {IRequest, CitizenDataAssistance, Request} from '../../providers/model';
 import * as GeoJson from '../../providers/model/geojson';
+import {DateTimeUtil} from './DateTimeUtils';
 
 export class ViewRequest implements ViewObject {
     id: number; // This should be the one we get from server
     lineId: number;
-    pickUpTime: Date;
+    pickUpTime: string; // of the form 'HH:mm'
     location: GeoJson.Point;
     numberOfPersons: number;
     info: {
@@ -26,7 +27,7 @@ export class ViewRequest implements ViewObject {
     constructor() {
         this.id = -1;
         this.lineId = -1;
-        this.pickUpTime = new Date();
+        this.pickUpTime = DateTimeUtil.dateToIonicHourMinuteString(new Date(Date.now()));
         this.location = { type: 'Point', coordinates: [0, 0] };
         this.numberOfPersons = 1;
         this.info = {
@@ -48,7 +49,7 @@ export class ViewRequest implements ViewObject {
 
         req.lineId = this.lineId;
         req.deviceID = 'random';
-        req.pickUpTime = this.pickUpTime.getTime() / 1000;
+        req.pickUpTime = DateTimeUtil.ionicHourMinuteString2Date(this.pickUpTime).getTime();
         req.numberOfPersons = this.numberOfPersons;
         req.location = this.location;
         req.info.address = this.info.address;

@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {NavController, ViewController, Modal, NavParams, Popover} from 'ionic-angular';
-import {ViewRequest} from '../models/ViewRequest';
+import {ViewRequest, DateTimeUtil} from '../models';
 import {Map} from '../../components/map/map';
 import {CitizenDataService} from '../../providers/data/CitizenDataService';
 
