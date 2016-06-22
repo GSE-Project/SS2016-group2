@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {NavController, ViewController, Modal, NavParams, Popover} from 'ionic-angular';
-import {ViewRequest, DateTimeUtil, ViewLine} from '../models';
+import {ViewRequest, ViewLine} from '../models';
 import {Map} from '../../components/map/map';
 import {TransformationService} from '../../providers/transformation';
 import * as moment from 'moment/moment';
