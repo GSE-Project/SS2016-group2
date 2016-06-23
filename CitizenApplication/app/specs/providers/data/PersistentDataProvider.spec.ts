@@ -156,7 +156,7 @@ describe('PersistentDataProvider specifications', () => {
                     case config.storage_api.request:
                         return Promise.resolve(JSON.stringify(testReq));
                     default:
-                        break;
+                        return Promise.resolve(undefined);
                 }
             },
             set(key: string, value: string) {
@@ -167,7 +167,8 @@ describe('PersistentDataProvider specifications', () => {
                     default:
                         break;
                 }
-            }
+            },
+            clear() { }
         };
         let newReq = <Model.IRequestResponse>{ id: 2 };
         let testPDP = new PersistentDataProvider(MockFactory.buildConfig(config), storage);
