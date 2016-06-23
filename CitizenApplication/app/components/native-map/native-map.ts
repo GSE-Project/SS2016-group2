@@ -52,7 +52,6 @@ export class NativeMap implements OnDestroy, AfterViewInit {
         });
         this.centerCamera();
         this.map.refreshLayout();
-        console.log('successfully loaded map');
     }
 
     centerCamera() {
@@ -66,82 +65,51 @@ export class NativeMap implements OnDestroy, AfterViewInit {
                 'zoom': 18,
                 'bearing': 0
             });
-            this.addMarker('tester', 49.1, 8.2);
-            // this.moveMarker('tester', 20.2, 20.2)
         }).catch((error) => {
             this.logger.error('error occured while getting the location: ' + error);
         });
     }
 
     /**
+     * Adds a Marker
      * @param name name of the marker
+     * @param color e.g. 'blue' 
      * @param lat latitude
      * @param lng longitude
      */
-    addMarker(name, lat, lng) {
-        let pos = new GoogleMapsLatLng(lat.toString(), lng.toString());
-        let marker = new GoogleMapsMarker({
-                'position': pos,
-                'title': 'test'
-            });
-        this.markers[name] = marker;
-        this.map.addMarker(marker);
-        console.log('new marker added to markers' + this.markers );
+    addMarker(name, color, lat, lng) {
+        let pos = new GoogleMapsLatLng(lat, lng);
+        this.map.addMarker({
+            'position': pos,
+            'title': name,
+            'icon': color
+        }).then((marker) => {
+            this.markers[name] = marker;
+        });
     }
 
     /**
      * @param markername String name of the marker to be deleted
      */
     deleteMarker(markername) {
+        console.log('delete marker called');
         let marker = this.markers[markername];
         marker.remove();
-        console.log('removed marker ' + markername);
+        delete this.markers[markername];
+        console.log(this.markers);
     }
 
     /**
      * @param markername to be moved
+     * @param newColor new Color after being moved
      * @param moveToX new X Destination
      * @param moveToY new Y Destination
      */
-    moveMarker(markername, moveToX, moveToY) {
+    moveMarker(markername, newColor, moveToX, moveToY) {
         console.log(markername + ' will be moved');
-        this.markers[markername].setPosition(new GoogleMapsLatLng(moveToX.toString(), moveToY.toString()));
+        this.deleteMarker(markername);
+        this.addMarker(markername, newColor, moveToX, moveToY);
     }
-
-    /**
-     * loads the stops and shows them as a marker on the map
-     * @param linestopscoordinates list of coordinates of the linetops
-     * @param linestopsnames list of the names of the linetops
-     */
-    /*
-    loadStops(linestopscoordinates, linestopsnames) {
-        for (let index = 0; index < linestopscoordinates.length; index++) {
-            let stopLatLng = new GoogleMapsLatLng(linestopscoordinates[index][1].toString(), linestopscoordinates[index][0].toString());
-            this.map.addMarker({
-                'position': stopLatLng,
-                'title': linestopsnames[index]
-            });
-        };
-    }
-    */
-
-    /**
-     * shows the bus position
-     * @param busX current x-coord of the bus
-     * @param busY current y-ccord of the bus
-    */
-
-    /*
-    showBus(busX, busY) {
-        let busLatLng = new GoogleMapsLatLng(busX, busY);
-        this.map.addMarker({
-            'position': busLatLng,
-            'title': 'busposition'
-        }, function (marker) {
-            marker.showInfoWindow();
-        });
-    }
-    */
 
     ngOnDestroy() {
         this.logger.debug('Removing the map element along with all the children.');
