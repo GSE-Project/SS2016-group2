@@ -32,7 +32,6 @@ export class PersistentDataProvider {
             }
             // @sholzer removed elseif since storage.set was called in both 'if' and 'elseif' eventually
             this.logger.debug('Set app Version to: ' + config.version.build_number);
-            debugger;
             storage.set(VERSION, config.version.build_number);
         });
     }

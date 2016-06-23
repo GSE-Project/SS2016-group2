@@ -156,7 +156,7 @@ export class MockFactory {
                         return null;
                 }
                 return url;
-            },
+            }
         };
     }
 }

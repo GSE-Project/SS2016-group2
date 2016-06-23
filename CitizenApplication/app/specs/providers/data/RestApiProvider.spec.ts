@@ -20,11 +20,15 @@ const DEFAULT_CONFIG = {
         routes: 'routes',
         rt_data: 'busses/',
         stops: 'stops',
-        update: 'update'
+        update: 'update',
+        request: 'request',
+        post_request: 'request'
     },
     storage_api: {
         busses: 'B',
+        citizen_data: 'C',
         lines: 'L',
+        request: 'Q',
         routes: 'R',
         stops: 'S'
     },
@@ -51,7 +55,7 @@ describe('RestApiProvider specifications', () => {
         http = <Http>{
             get(url: string): Observable<Response> {
                 var response: Response = new Response(
-                    new ResponseOptions({ body: { timestamp: 1, stops: [] } })
+                    new ResponseOptions({ body: { timeStamp: 1, stops: [] } })
                 );
                 var answer: Observable<Response> = Observable.of(response);
                 return answer;
@@ -60,7 +64,7 @@ describe('RestApiProvider specifications', () => {
 
         let restApi: RestApiProvider = new RestApiProvider(http, config);
         restApi.getStops().subscribe(data => {
-            Assert.equalJson(data, { timestamp: 1, stops: [] });
+            Assert.equalJson(data, { timeStamp: 1, stops: [] });
             done();
         });
     });
@@ -97,7 +101,7 @@ describe('RestApiProvider specifications', () => {
             id: 1,
             delay: 1,
             position: { type: 'Point', coordinates: [1, 1] },
-            timestamp: 0,
+            timeStamp: 0,
             takenSeats: 7
         };
 

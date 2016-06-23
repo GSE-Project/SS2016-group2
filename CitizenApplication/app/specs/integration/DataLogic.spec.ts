@@ -22,11 +22,15 @@ const DEFAULT_CONFIG: CitizenApplicationConfig = {
         routes: 'routes',
         rt_data: 'busses/',
         stops: 'stops',
-        update: 'update'
+        update: 'update',
+        request: 'request',
+        post_request: 'request'
     },
     storage_api: {
         busses: 'B',
+        citizen_data: 'C',
         lines: 'L',
+        request: 'Q',
         routes: 'R',
         stops: 'S'
     },
@@ -61,19 +65,19 @@ function tests(storageDelay: number, restDelay: number): void {
         + '\nstorage delay of ' + storageDelay + ' ms', () => {
             let storageConf = <StorageConfig>{
                 delay: storageDelay,
-                busses: { timestamp: 1, busses: [] },
-                lines: { timestamp: 1, lines: [] },
-                routes: { timestamp: 1, routes: [] },
-                stops: { timestamp: 1, stops: [] }
+                busses: { timeStamp: 1, busses: [] },
+                lines: { timeStamp: 1, lines: [] },
+                routes: { timeStamp: 1, routes: [] },
+                stops: { timeStamp: 1, stops: [] }
             };
             let restConf = <RestConfig>{
                 delay: restDelay,
-                busses: { timestamp: 1, busses: [] },
-                lines: { timestamp: 2, lines: [] },
-                routes: { timestamp: 1, routes: [] },
-                stops: { timestamp: 2, stops: [] },
+                busses: { timeStamp: 1, busses: [] },
+                lines: { timeStamp: 2, lines: [] },
+                routes: { timeStamp: 1, routes: [] },
+                stops: { timeStamp: 2, stops: [] },
                 update: { busses: 1, lines: 2, routes: 1, stops: 2 },
-                rt: { id: 1, delay: 10, position: { type: 'Point', coordinates: [1, 1] }, timestamp: 0, takenSeats: 7 }
+                rt: { id: 1, delay: 10, position: { type: 'Point', coordinates: [1, 1] }, timeStamp: 0, takenSeats: 7 }
             };
 
             it('Get Stops from Server', (done) => {
@@ -82,7 +86,6 @@ function tests(storageDelay: number, restDelay: number): void {
                     MockFactory.buildRestApi(restConf, DEFAULT_CONFIG.rest_api),
                     MockFactory.buildStorageMock(storageConf, storagePuts, DEFAULT_CONFIG.storage_api)
                 );
-                debugger;
                 cds.updateTimeStamps().subscribe(time => {
                     cds.getStops().subscribe(stops => {
                         Assert.equalJson(stops, restConf.stops.stops);
