@@ -39,6 +39,7 @@ export interface AccessConfig {
     lines: string;
     routes: string;
     stops: string;
+    request: string;
 }
 
 /**
@@ -57,6 +58,10 @@ export interface RestApiConfig extends AccessConfig {
      * The url suffix to fetch the real time bus data from the backend. {host_url}/{rt_data}{id} is called to fetch the update data where id refers to the bus id
      */
     rt_data: string;
+    /**
+     * The url suffix to post the request to. 
+     */
+    post_request: string;
 }
 
 /**
@@ -64,6 +69,8 @@ export interface RestApiConfig extends AccessConfig {
  */
 export interface StorageApiConfig extends AccessConfig {
     // Room for additional storage configuration like storage types or so. 
+    citizen_data: string;
+
 }
 
 /**

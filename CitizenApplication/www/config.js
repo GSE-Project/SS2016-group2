@@ -12,13 +12,18 @@ window.citizenConfig = {
         routes: 'linemanagement/v1/routes',
         rt_data: 'linemanagement/v1/busses/',
         stops: 'linemanagement/v1/stops',
-        update: 'linemanagement/v1/update'
+        update: 'linemanagement/v1/update',
+        request: 'linemanagement/v1/CustomStop',
+        post_request: 'linemanagement/v1/CustomStop'
+
     },
     storage_api: {
         busses: 'B',
+        citizen_data: 'C',
         lines: 'L',
         routes: 'R',
-        stops: 'S'
+        stops: 'S',
+        request: 'Q'
     },
     misc: {
         language: 'de',

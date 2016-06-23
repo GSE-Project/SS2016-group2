@@ -24,13 +24,17 @@ const DEFAULT_CONFIG: CitizenApplicationConfig = {
         routes: 'routes',
         rt_data: 'busses/',
         stops: 'stops',
-        update: 'update'
+        update: 'update',
+        request: 'CustomStops',
+        post_request: 'CustomStops'
     },
     storage_api: {
         busses: 'B',
+        citizen_data: 'C',
         lines: 'L',
         routes: 'R',
-        stops: 'S'
+        stops: 'S',
+        request: 'Q'
     },
     misc: {
         language: 'de',
@@ -117,8 +121,10 @@ export class ConfigurationService {
             case CitizenDataObjects.UpdateData:
                 url += this.restApi.update;
                 break;
-            default:
-                return null;
+            case CitizenDataObjects.GetRequest:
+                url += this.restApi.request;
+            case CitizenDataObjects.PostRequest:
+                url += this.restApi.post_request;
         }
         return url;
     }

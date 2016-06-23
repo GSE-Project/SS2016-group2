@@ -8,12 +8,19 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Device} from 'ionic-native';
+import {Http, Headers, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {CitizenDataObjects, IUpdateData, IBus, ILine, IRoute, IStop, IBusRealTimeData, IRestStops, IRestBusses, IRestLines, IRestRoutes, IRestDataObject} from '../model';
+import {CitizenDataObjects, IUpdateData, IBus, ILine, IRoute, IStop, IBusRealTimeData, IRestStops, IRestBusses, IRestLines, IRestRoutes, IRestDataObject, IRequest, IRequestState, IRequestResponse} from '../model';
 import 'rxjs/Rx';
 import {ConfigurationService} from '../config';
 import {Logger, LoggerFactory} from '../logger';
+
+/**
+ * Default Post options, marking the body of a post as json parsable
+ */
+const POST_OPTIONS = new RequestOptions({ headers: new Headers({ 'Content-Type': 'application/json' }) });
+
 
 /**
  * Provides access to the rest backend. 
@@ -42,11 +49,10 @@ export class RestApiProvider {
      * @return Observable<T>
      */
     getData<T>(data: CitizenDataObjects, urlSuffix?: string): Observable<T> {
-        this.logger.debug('Accessing ' + this.config.getUrl(data));
         urlSuffix = urlSuffix ? urlSuffix : '';
+        this.logger.debug('Accessing ' + this.config.getUrl(data) + urlSuffix);
         return this.http.get(this.config.getUrl(data) + urlSuffix).map(
             res => {
-                this.logger.debug('Fetched ' + JSON.stringify(res.json()));
                 return <T>res.json();
             }
         );
@@ -100,4 +106,22 @@ export class RestApiProvider {
     getRealTimeBusData(id: number): Observable<IBusRealTimeData> {
         return this.getData<IBusRealTimeData>(CitizenDataObjects.RealTimeData, String(id));
     };
+
+    /**
+     * @author sholzer
+     * @param id: the request id
+     * @return Observable<IRequestState> resolving to the current IRequestState
+     */
+    getRequestState(id: number): Observable<IRequestState> {
+        return this.getData<IRequestState>(CitizenDataObjects.GetRequest, '?id=' + id + 'deviceId=' + Device.device.uuid);
+    }
+
+    postRequest(req: IRequest): Observable<IRequestResponse> {
+        this.logger.debug('Request ' + JSON.stringify(req) + ' @ ' + this.config.getUrl(CitizenDataObjects.PostRequest));
+        return this.http.post(this.config.getUrl(CitizenDataObjects.PostRequest), JSON.stringify(req)).map<IRequestResponse>(
+            res => {
+                this.logger.debug('Server responds with: ' + res.json());
+                return <IRequestResponse>res.json();
+            }, this);
+    }
 }

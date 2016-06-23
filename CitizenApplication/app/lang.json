@@ -7,7 +7,8 @@
         "No": "No",
         "Search": "Search",
         "PullToRefresh": "Pull to refresh",
-        "Refreshing": "Refreshing"
+        "Refreshing": "Refreshing",
+        "Submit": "Submit"
     },
     "de": {
         "Cancel": "Abbrechen",
@@ -15,6 +16,7 @@
         "No": "No",
         "Search": "Suchen",
         "PullToRefresh": "Ziehen um zu aktualisieren",
-        "Refreshing": "Aktualisieren"
+        "Refreshing": "Aktualisieren",
+        "Submit": "Übernehmen"        
     }
 }

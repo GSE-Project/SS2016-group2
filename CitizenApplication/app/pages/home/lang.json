@@ -1,11 +1,13 @@
 {
     "prefix": "HOME_PAGE",
     "en": {
-        "SelectStop":"Select stop:",
-        "BusLocation":"Where is my bus?"
+        "SelectStop": "Select stop:",
+        "RequestStop": "Request stop",
+        "BusLocation": "Where is my bus?"
     },
     "de": {
-        "SelectStop":"Haltestelle wählen:",
-        "BusLocation":"Zeige mir meine Bus auf der Karte"
+        "SelectStop": "Haltestelle wählen:",
+        "RequestStop": "Haltewunsch äußern",
+        "BusLocation": "Zeige mir meine Bus auf der Karte"
     }
 }

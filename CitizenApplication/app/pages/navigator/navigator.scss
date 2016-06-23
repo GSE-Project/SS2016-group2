@@ -1,0 +1,62 @@
+.navigator {
+  .scroll {
+    height: 100%;
+  }
+}
+
+/*
+ * Created by skaldo on 5.5.2016, styles of the UI
+ */
+
+$lines: 4;
+@mixin line {
+    @for $i from 1 through $lines {
+        span.line#{$i} {
+            background-color: nth($lineColors, $i);
+            border-color: nth($lineColors, $i);
+        }
+        p.line#{$i} {
+            background-color: lighten(nth($lineColors, $i), 80%);
+            border-color: nth($lineColors, $i) !important;
+            span.filled {
+                background-color: nth($lineColors, $i);
+            }
+        }
+    }
+}
+
+.navigator {
+    span.line {
+        padding: 0 2px;
+        border: 2px solid;
+        border-radius: 5px;
+        margin-right: 2px;
+        color: white;
+        font-weight: bold;
+    }
+    p.line {
+        border: 1px solid;
+        border-radius: 2px;
+        padding-right: 2px;
+        color: black;
+        line-height: 14px;
+        padding-top: 1px;        
+        span.filled {
+            padding: 0 3px;
+            margin-right: 2px;
+            float: left;
+            color: #fff;
+            font-weight: bold;
+            padding-top: 1px;
+            margin-top: -1px;
+        }
+    }
+    @include line;
+    ion-label {
+        margin-bottom: 10px;
+    }
+    p.lines {
+        height: 17px;
+        margin-top: 5px;
+    }
+}

@@ -1,4 +1,4 @@
-import {Component, ElementRef, AfterViewInit, OnDestroy} from '@angular/core';
+import {Component, ElementRef, AfterViewInit, OnDestroy, EventEmitter, Output} from '@angular/core';
 import {Geolocation} from 'ionic-native';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
@@ -13,6 +13,8 @@ import {ConfigurationService} from '../../providers/config';
   templateUrl: 'build/components/map/map.html'
 })
 export class Map implements AfterViewInit, OnDestroy {
+  @Output() markerClicked = new EventEmitter<{name: string, marker: google.maps.Marker}>();
+  @Output() mapClicked = new EventEmitter<google.maps.LatLng>();
   private map: google.maps.Map;
   private markers: { [key: string]: google.maps.Marker; } = {};
   private mapElement;
@@ -43,7 +45,7 @@ export class Map implements AfterViewInit, OnDestroy {
     this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'MapComponent', this.config.misc.log_pretty_print);
   }
 
-  centerMap(center?: google.maps.LatLng) {
+  centerMap(center?: google.maps.LatLng, zoom?: number) {
     this.logger.debug('centering');
     if (!center) {
       this.logger.debug('getCurrentPosition');
@@ -59,12 +61,18 @@ export class Map implements AfterViewInit, OnDestroy {
       });
       return;
     }
+    if (zoom) {
+      this.map.setZoom(zoom);
+    }
     this.map.setCenter(center);
   }
 
   createMap() {
     this.mapElement = this.element.nativeElement.children[0];
     this.map = new google.maps.Map(this.mapElement, this.defaultMapOptions);
+    this.map.addListener('click', (event) => {
+      this.mapClicked.emit(event.latLng);
+    });
   }
 
   ngAfterViewInit() {
@@ -94,6 +102,7 @@ export class Map implements AfterViewInit, OnDestroy {
    * Adds a neutral marker
    * @param position new markers position
    * @param name new markers identify name
+   * @param clickHandler function that gets executed after the user clicks on the marker
   */
   addMarker(position: google.maps.LatLng, name) {
     let markerLatLong = position;
@@ -101,7 +110,10 @@ export class Map implements AfterViewInit, OnDestroy {
       position: markerLatLong,
       map: this.map,
       title: name
+    });
 
+    marker.addListener('click', () => {
+      this.markerClicked.emit({name: name, marker: marker});
     });
 
     this.markers[name] = marker;
@@ -148,6 +160,9 @@ export class Map implements AfterViewInit, OnDestroy {
    * @param markername Marker to be deleted
   */
   deleteMarker(markername) {
+    if (!this.markers[markername]) {
+      return;
+    }
     /*
     deletes one marker identified by its name, for example
      this.deleteMarker("Standort"); 

@@ -11,4 +11,28 @@
 @import "../pages/home/home";
 @import "../pages/stop-detail/stop-detail";
 @import "../pages/stop-list/stop-list";
-@import "../pages/map/map";
+@import "../pages/navigator/navigator";
+@import "../pages/request-stop/request-stop";
+
+@font-face {
+    font-family: JuraLight;
+    src: url(../fonts/Jura-Light.otf);
+}
+@font-face {
+    font-family: Jura;
+    src: url(../fonts/Jura-Regular.otf);
+}
+@font-face {
+    font-family: JuraMedium;
+    src: url(../fonts/Jura-Medium.otf);
+}
+@font-face {
+    font-family: JuraDemiBold;
+    src: url(../fonts/Jura-DemiBold.otf);
+}
+
+.ion-ios-digitaledoerfer,
+.ion-md-digitaledoerfer {
+  content: url(../../img/digitaledoerfer.svg);
+  height: 35px;
+}

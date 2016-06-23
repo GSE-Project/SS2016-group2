@@ -16,7 +16,7 @@ import * as Model from '../model';
 import {PersistentDataProvider} from './PersistentDataProvider';
 import {Observable} from 'rxjs/Observable';
 import {Logger, LoggerFactory} from '../logger/Logger';
-import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes, IRestDataObject} from '../model';
+import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes, IRestDataObject, IRequest, IRequestState, ICitizenData} from '../model';
 import {ConfigurationService} from '../config';
 
 @Injectable()
@@ -32,11 +32,12 @@ export class CitizenDataService {
         routes: -1,
         stops: -1
     };
-
     private logger: Logger;
 
     constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider, private config: ConfigurationService) {
         this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'CitizenDataService', config.misc.log_pretty_print);
+        // TODO: use config.
+        this.startUpdateTimer(10000);
     }
 
     /**
@@ -54,7 +55,7 @@ export class CitizenDataService {
         this.logger.debug('Getting data from storage');
         return storageRead().flatMap((data) => {
             this.logger.debug('Storage data fetched');
-            if (data && (serverTime < data.timestamp)) {
+            if (data && (serverTime <= data.timeStamp)) {
                 return Observable.of(data);
             }
             this.logger.debug('Getting data from server');
@@ -143,7 +144,11 @@ export class CitizenDataService {
      * @param timeInterval the time interval the server is checked for new data
      */
     public startUpdateTimer(timeInterval: number): void {
-        // To-be implemented.
+        this.updateTimeStamps().subscribe(() => {
+            setTimeout(() => {
+                this.updateTimeStamps();
+            }, timeInterval);
+        });
     }
 
     /**
@@ -154,4 +159,48 @@ export class CitizenDataService {
     public setHostUrl(host_address: string): void {
         this.restApi.baseUrl = host_address;
     }
+
+    /**
+     * Return asynchronously the state of an request
+     * @param req_id the identifier of the Request
+     * @return Observable<IRequestState>
+     */
+    public getRequestState(req_id: number): Observable<IRequestState> {
+        this.logger.debug('Fetching from server state of Request ' + req_id);
+        let observable = this.restApi.getRequestState(req_id);
+        observable.subscribe(res => {
+            this.logger.debug('Fetched state of Request ' + req_id + ': ' + res.state);
+            this.storageApi.updateRequest(res);
+        });
+        return observable;
+    }
+
+    /**
+     * Return asynchronously all open RequestStates known to the Client
+     * @return Observable<IRequestState[]>
+     */
+    public getOpenRequests(): Observable<IRequestState[]> {
+        this.logger.debug('Fetching requests from storage');
+        return this.storageApi.getRequests();
+    }
+
+    /**
+     * Requests a custom stops
+     * @param req IRequest
+     */
+    public requestCustomStop(req: IRequest) {
+        this.storageApi.putCitizenData(req.info);
+        this.restApi.postRequest(req).subscribe(res => {
+            this.logger.debug('Requested Stop from server:' + JSON.stringify(req));
+            this.storageApi.addRequest(res);
+        });
+    }
+
+    /**
+     * 
+     */
+    public getCitizenData(): Observable<ICitizenData> {
+        return this.storageApi.getCitizenData();
+    }
+
 }

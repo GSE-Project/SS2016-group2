@@ -7,5 +7,5 @@ import {ICitizenDataObject} from '../';
 export default IRestDataObject;
 
 export interface IRestDataObject {
-    timestamp: number;
+    timeStamp: number;
 }

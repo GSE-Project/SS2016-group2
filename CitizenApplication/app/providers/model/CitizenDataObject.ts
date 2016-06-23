@@ -7,7 +7,7 @@
 
 export interface ICitizenDataObject {
     id: number;
-    timestamp?: number;
+    timeStamp?: number;
 }
 
 export enum CitizenDataObjects {
@@ -16,5 +16,7 @@ export enum CitizenDataObjects {
     RealTimeData,
     Route,
     Stop,
-    UpdateData
+    UpdateData,
+    PostRequest,
+    GetRequest
 }

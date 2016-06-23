@@ -11,3 +11,5 @@ export * from './Stop';
 export * from './UpdateData';
 export * from './BusRealTimeData';
 export * from './CitizenDataObject';
+export * from './Request';
+export * from './RequestState';

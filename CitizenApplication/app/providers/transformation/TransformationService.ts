@@ -1,6 +1,7 @@
 /**
  * @author sholzer 1606081950
  * Reviewed by skaldo on the 14.06.2016 - looks good after #84
+ * Edited by skaldo on the 19.06.2016 - added param to the delegate method.
  */
 
 import * as VIEW from '../../pages/models';
@@ -29,9 +30,6 @@ export class TransformationService {
             filterValue,
             filterField
         );
-        /*return this.cds.getStops().map<VIEW.ViewStop[]>((modelIRStops) => {
-            return this.mapData<DATA.IStop, VIEW.ViewStop>(filterValue, filterField, modelIRStops.stops, TransformationService.mapStop);
-        }, this);*/
     }
 
     /**
@@ -88,10 +86,35 @@ export class TransformationService {
 
     /**
      * Delegate for CitizenDataService.updateTimeStamps()
+     * skaldo: do we need this delegate? This functionality should be encapsuled in the CDS.
      */
     updateTimeStamps(): Observable<{ busses: number, lines: number, routes: number, stops: number }> {
         return this.cds.updateTimeStamps();
     }
+
+    /**
+     * @return Observable<ViewRequestState[]> of not completed requests
+     */
+    getRequests(): Observable<VIEW.ViewRequestState[]> {
+        return this.getData<DATA.IRequestState, VIEW.ViewRequestState>(this.cds.getOpenRequests(), VIEW.ViewRequestState, '', 'id');
+    }
+
+    /**
+     * @param id: id of the request
+     * @return the state of a specified request
+     */
+    getRequestState(id: number): Observable<VIEW.ViewRequestState> {
+        return this.cds.getRequestState(id).map(res => { return new VIEW.ViewRequestState(res); });
+    }
+
+    getCitizenData(): Observable<{ name: string, address: string, assistance: number[] }> {
+        return this.cds.getCitizenData();
+    }
+
+    makeRequest(vreq: VIEW.ViewRequest) {
+        this.cds.requestCustomStop(vreq.toIRequest());
+    }
+
 
     /**
      * Return the {D} objects as {V}[] from the data source

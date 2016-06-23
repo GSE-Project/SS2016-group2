@@ -1,0 +1,23 @@
+<!--
+ Created by mmueller on 05.05.2016.
+ Template for the navigator page.
+-->
+<ion-navbar *navbar>
+  <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="getItems($event)" (ionCancel)="closeResultsOverlay($event)" (ionFocus)="showResultsOverlay($event)" placeholder="{{'C.Search' | translate}}">
+  </ion-searchbar>
+</ion-navbar>
+
+<ion-content class="navigator">
+  <map (markerClicked)=markerClicked($event) (mapClicked)=mapClicked($event)></map>
+</ion-content>
+
+<div class="navigator" [hidden]="!showingResults" style="background-color: white; width: 100%; height: 100%;">
+  <ion-list>
+    <ion-item *ngFor="let stop of stops" (click)="stopClicked(stop)">
+      <div class="line" item-right>
+        <p class="lines"><span *ngFor="let line of stop.lines" class="line line{{line.id}}">{{line.id}}</span></p>
+      </div>
+      <h2>{{stop.name}}</h2>
+    </ion-item>
+  </ion-list>
+</div>
