@@ -118,7 +118,7 @@ export class RestApiProvider {
 
     postRequest(req: IRequest): Observable<IRequestResponse> {
         this.logger.debug('Request ' + JSON.stringify(req) + ' @ ' + this.config.getUrl(CitizenDataObjects.PostRequest));
-        return this.http.post(this.config.getUrl(CitizenDataObjects.PostRequest), JSON.stringify(req)).map<IRequestResponse>(
+        return this.http.post(this.config.getUrl(CitizenDataObjects.PostRequest), JSON.stringify(req), POST_OPTIONS).map<IRequestResponse>(
             res => {
                 this.logger.debug('Server responds with: ' + res.json());
                 return <IRequestResponse>res.json();
