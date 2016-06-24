@@ -32,15 +32,15 @@ export interface IRequestResponse extends ICitizenDataObject {
 }
 
 export interface ICitizenData {
-    name: string;
-    address: string;
-    assistance: number[];
+    userName: string;
+    userAddress: string;
+    userAssistance: number[];
 }
 
-export class CitizenData {
-    name: string;
-    address: string;
-    assistance: number[];
+export class CitizenData implements ICitizenData {
+    userName: string;
+    userAddress: string;
+    userAssistance: number[];
 }
 
 export enum CitizenDataAssistance {

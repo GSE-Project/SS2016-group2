@@ -108,7 +108,13 @@ export class TransformationService {
     }
 
     getCitizenData(): Observable<{ name: string, address: string, assistance: number[] }> {
-        return this.cds.getCitizenData();
+        return this.cds.getCitizenData().map(res => {
+            return {
+                name: res.userName,
+                address: res.userAddress,
+                assistance: res.userAssistance
+            };
+        });
     }
 
     makeRequest(vreq: VIEW.ViewRequest) {
