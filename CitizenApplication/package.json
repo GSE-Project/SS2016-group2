@@ -65,7 +65,8 @@
     "cordova-plugin-transport-security",
     "cordova-plugin-whitelist",
     "cordova-plugin-whitelist",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    "cordova-plugin-crosswalk-webview"
   ],
   "cordovaPlatforms": [
     "ios",
