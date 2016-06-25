@@ -102,7 +102,6 @@ export class Map implements AfterViewInit, OnDestroy {
    * Adds a neutral marker
    * @param position new markers position
    * @param name new markers identify name
-   * @param clickHandler function that gets executed after the user clicks on the marker
   */
   addMarker(position: google.maps.LatLng, name) {
     let markerLatLong = position;

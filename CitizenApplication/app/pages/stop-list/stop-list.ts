@@ -2,7 +2,7 @@
  * Created by skaldo on 5.5.2016, added logic for the UI
  */
 
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {Page, NavController, Refresher} from 'ionic-angular';
 import {Point, IStop} from '../../providers/model';
 import {StopDetailPage} from '../stop-detail/stop-detail';
@@ -28,7 +28,7 @@ export class StopListPage {
   private stops: Array<ViewStop> = new Array<ViewStop>();
   private logger: Logger;
   private searchText: string = ''; // if we bind the search bar to 'searchText' we should also have a searchText field in our model
-  constructor(public nav: NavController, private dataAccess: TransformationService, private config: ConfigurationService) {
+  constructor(private element: ElementRef, public nav: NavController, private dataAccess: TransformationService, private config: ConfigurationService) {
     this.refreshStops();
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'StopListPage', config.misc.log_pretty_print);
   }
@@ -74,5 +74,13 @@ export class StopListPage {
       });
     });
     return observable;
+  }
+
+  ionViewWillEnter() {
+    this.element.nativeElement.removeAttribute('hidden');
+  }
+
+  ionViewDidLeave() {
+    this.element.nativeElement.setAttribute('hidden', '');
   }
 }

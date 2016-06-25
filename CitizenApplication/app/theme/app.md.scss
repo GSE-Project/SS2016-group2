@@ -42,6 +42,10 @@ ion-searchbar {
     }
 }
 
+ion-tabbar-section {
+    z-index: 9999; // Sometimes the tabbar was hidden.
+}
+
 tab-highlight {
     background: $tab-md-hihlight-custom-color;
 }

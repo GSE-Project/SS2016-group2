@@ -9,14 +9,14 @@ import {NavController, NavParams} from 'ionic-angular';
 import {ViewBus} from '../models';
 import {TransformationService} from '../../providers/transformation';
 import {Component, ViewChild} from  '@angular/core';
-import {Map} from '../../components/map/map';
+import {NativeMap} from '../../components/native-map/native-map';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
 import {ViewStop, ViewSchedule, ViewBusRealTimeData} from '../models';
 
 @Component({
   templateUrl: 'build/pages/bus-detail/bus-detail.html',
-  directives: [Map],
+  directives: [NativeMap],
 })
 export class BusDetailPage {
   public bus: ViewBus;
@@ -40,16 +40,17 @@ export class BusDetailPage {
   }
   set busViewType(data: string) {
     this._busViewType = data;
-    if (data === 'position') {
+    if (data === 'position') {/*
       // HACK! Quick n' dirty
       setTimeout(() => {
+        this.map.render();
         let latLng = new google.maps.LatLng(this.realTimeData.position.coordinates[0], this.realTimeData.position.coordinates[1]);
-        this.map.addBusMarker(latLng, this.bus.numberPlate);
-      }, 250);
+        // this.map.addBusMarker(latLng, this.bus.numberPlate);
+      }, 1000);*/
     }
   }
 
-  @ViewChild(Map) map: Map;
+  @ViewChild(NativeMap) map: NativeMap;
   constructor(public nav: NavController, private navParams: NavParams, private dataAccess: TransformationService, private config: ConfigurationService) {
     this.schedule = navParams.data;
     // Caution, change this to the bus ID in the next iteration.
