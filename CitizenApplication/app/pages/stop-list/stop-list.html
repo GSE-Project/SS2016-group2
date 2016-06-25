@@ -9,7 +9,7 @@
   <ion-title>StopList</ion-title>
 </ion-navbar>
 
-<ion-content class="stop-list" *ngIf="display">
+<ion-content class="stop-list">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingText="{{'C.PullToRefresh' | translate}}" refreshingText="{{'C.Refreshing' | translate}}">
     </ion-refresher-content>

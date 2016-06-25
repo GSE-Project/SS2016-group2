@@ -51,6 +51,6 @@ export class StopDetailPage {
   }
 
   ionViewDidLeave() {
-    this.element.nativeElement.setAttribute('hidden');
+    this.element.nativeElement.setAttribute('hidden', '');
   }
 }

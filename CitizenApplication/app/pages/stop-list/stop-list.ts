@@ -2,7 +2,7 @@
  * Created by skaldo on 5.5.2016, added logic for the UI
  */
 
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {Page, NavController, Refresher} from 'ionic-angular';
 import {Point, IStop} from '../../providers/model';
 import {StopDetailPage} from '../stop-detail/stop-detail';
@@ -23,12 +23,10 @@ import * as moment from 'moment/moment';
   providers: [CitizenDataService],
 })
 export class StopListPage {
-  // Hides the view after it leaves.
-  public display: boolean = true;
   // private searchText: String;
   private stops: Array<ViewStop> = new Array<ViewStop>();
   private logger: Logger;
-  constructor(public nav: NavController, private cDS: CitizenDataService, private config: ConfigurationService) {
+  constructor(private element: ElementRef, public nav: NavController, private cDS: CitizenDataService, private config: ConfigurationService) {
     this.refreshStops();
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'StopListPage', config.misc.log_pretty_print);
   }
@@ -78,10 +76,10 @@ export class StopListPage {
   }
 
   ionViewWillEnter() {
-    this.display = true;
+    this.element.nativeElement.removeAttribute('hidden');
   }
 
   ionViewDidLeave() {
-    this.display = false;
+    this.element.nativeElement.setAttribute('hidden', '');
   }
 }

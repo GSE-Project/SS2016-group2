@@ -62,7 +62,15 @@
     "cordova-plugin-transport-security",
     "cordova-plugin-whitelist",
     "cordova-plugin-whitelist",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    {
+      "variables": {
+        "API_KEY_FOR_ANDROID": "AIzaSyCTDvPOMux4GiwFYSM_WNBqaivyHD1_7G8",
+        "API_KEY_FOR_IOS": "AIzaSyCxD2jkTLp-2cE8YWtx8leLCFHojWhwzhw"
+      },
+      "locator": "https://github.com/phonegap-googlemaps-plugin/cordova-plugin-googlemaps",
+      "id": "cordova-plugin-googlemaps"
+    }
   ],
   "cordovaPlatforms": [
     "ios",

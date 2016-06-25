@@ -34,14 +34,18 @@ export class HomePage {
   // hide nav bar when we enter the page
   ionViewWillEnter() {
     var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
-    element.style.display = 'none';
+    if (element) {
+      element.style.display = 'none';
+    }
     this.element.nativeElement.removeAttribute('hidden');
   }
 
   // show nav bar when we leave the page
   ionViewDidLeave() {
     var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
-    element.style.display = 'block';
-    this.element.nativeElement.setAttribute('hidden');
+    if (element) {
+      element.style.display = 'block';
+    }
+    this.element.nativeElement.setAttribute('hidden', '');
   }
 }
