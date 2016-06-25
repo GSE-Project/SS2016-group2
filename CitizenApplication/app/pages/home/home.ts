@@ -26,7 +26,11 @@ export class HomePage {
 
   requestStop() {
     let requestStopModal = Modal.create(RequestStopPage);
+    this.element.nativeElement.setAttribute('hidden', '');
     this.nav.present(requestStopModal);
+    requestStopModal.onDismiss(() => {
+      this.element.nativeElement.removeAttribute('hidden');
+    });
   }
 
   goToBusDetail() {
@@ -35,19 +39,11 @@ export class HomePage {
 
   // hide nav bar when we enter the page
   ionViewWillEnter() {
-    var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
-    if (element) {
-      element.style.display = 'none';
-    }
     this.element.nativeElement.removeAttribute('hidden');
   }
 
   // show nav bar when we leave the page
   ionViewDidLeave() {
-    var element = <HTMLElement>document.getElementsByTagName('ion-navbar-section')[0];
-    if (element) {
-      element.style.display = 'block';
-    }
     this.element.nativeElement.setAttribute('hidden', '');
   }
 }

@@ -13,6 +13,7 @@ import {NativeMap} from '../../components/native-map/native-map';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
 import {ViewStop, ViewSchedule, ViewBusRealTimeData} from '../models';
+import {GoogleMapsLatLng} from 'ionic-native';
 
 @Component({
   templateUrl: 'build/pages/bus-detail/bus-detail.html',
@@ -25,6 +26,10 @@ export class BusDetailPage {
   private busId: number;
   private _realTimeData: ViewBusRealTimeData;
   private _busViewType = 'information';
+  private _updateInterval = 1000; // Update interval in ms.
+  private _updateIdentifier: NodeJS.Timer;
+  private _markerSet: boolean = false;
+  @ViewChild(NativeMap) map: NativeMap;
 
   get realTimeData(): ViewBusRealTimeData {
     return this._realTimeData;
@@ -50,7 +55,6 @@ export class BusDetailPage {
     }
   }
 
-  @ViewChild(NativeMap) map: NativeMap;
   constructor(public nav: NavController, private navParams: NavParams, private dataAccess: TransformationService, private config: ConfigurationService) {
     this.schedule = navParams.data;
     // Caution, change this to the bus ID in the next iteration.
@@ -71,7 +75,27 @@ export class BusDetailPage {
     this.dataAccess.getBusRealTimeData(id).subscribe(data => {
       this.realTimeData = data;
       this.logger.debug('BRTD Access done');
+      this._updateIdentifier = setTimeout(() => {
+        this.fetchBusRealTimeData(id);
+      }, this._updateInterval);
+      if (!this.map) {
+        return;
+      }
+      let pos = new GoogleMapsLatLng(data.position.coordinates[1], data.position.coordinates[0]);
+      this.map.setCenter(pos, 18);
+      if (!this._markerSet) {
+        this.map.addMarker('bus', 'red', pos);
+        return;
+      }
+      this.map.moveMarker('bus', 'red', pos);
     });
+  }
+
+  /**
+   * Make sure that nothing occurs when the user left the page.
+   */
+  ionViewDidLeave() {
+    clearTimeout(this._updateIdentifier);
   }
 
   /**

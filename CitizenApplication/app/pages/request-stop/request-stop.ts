@@ -1,7 +1,7 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import {NavController, ViewController, Modal, NavParams, Popover} from 'ionic-angular';
 import {ViewRequest, ViewLine} from '../models';
-import {Map} from '../../components/map/map';
+import {NativeMap, GoogleMapsLatLng} from '../../components/native-map/native-map';
 import {TransformationService} from '../../providers/transformation';
 import * as moment from 'moment/moment';
 
@@ -27,7 +27,16 @@ export class RequestStopPage {
     return this.requestObj.pickUpTime.toISOString();
   }
 
-  constructor(public nav: NavController, public viewCtrl: ViewController, private model_access: TransformationService) {
+  set position(pos: GoogleMapsLatLng) {
+    this.requestObj.location.coordinates[1] = pos.lat;
+    this.requestObj.location.coordinates[0] = pos.lng;
+  }
+
+  get position(): GoogleMapsLatLng {
+    return new GoogleMapsLatLng(this.requestObj.location.coordinates[0], this.requestObj.location.coordinates[1]);
+  }
+
+  constructor(private element: ElementRef, public nav: NavController, public viewCtrl: ViewController, private model_access: TransformationService) {
     model_access.getLines().subscribe(res => {
       this.linesList = res;
     });
@@ -38,10 +47,15 @@ export class RequestStopPage {
   }
 
   showMap() {
-    let customStopPopoverPage = Modal.create(CustomStopPopoverPage, { data: { location: this.requestObj.location } });
+    let customStopPopoverPage = Modal.create(CustomStopPopoverPage, { data: { location: this.position } });
     this.nav.present(customStopPopoverPage);
+    this.element.nativeElement.setAttribute('hidden', '');
+    // TODO: improve, it's a hack
+    document.getElementsByTagName('ion-navbar-section')[0].setAttribute('hidden', '');
     customStopPopoverPage.onDismiss((position) => {
-      this.requestObj.location = position;
+      this.element.nativeElement.removeAttribute('hidden');
+      document.getElementsByTagName('ion-navbar-section')[0].removeAttribute('hidden');
+      this.position = position;
     });
   }
 
@@ -58,28 +72,38 @@ export class RequestStopPage {
 
 @Component({
   templateUrl: 'build/pages/request-stop/request-stop-overlay.html',
-  directives: [Map]
+  directives: [NativeMap]
 })
 class CustomStopPopoverPage {
-  public position: google.maps.LatLng;
+  public position: GoogleMapsLatLng;
 
-  @ViewChild(Map) map: Map;
+  @ViewChild(NativeMap) map: NativeMap;
   constructor(private viewCtrl: ViewController, private navParams: NavParams) {
     this.position = this.navParams.data.location;
+    /*
     setTimeout(() => {
       this.map.createMap();
       this.map.centerMap(this.position);
     }, 250);
+    */
+  }
+
+  ngAfterViewInit() {
+    if (!this.position) {
+      this.map.centerCamera();
+      return;
+    }
+    this.map.setCenter(this.position, 18);
   }
 
   submit() {
     this.viewCtrl.dismiss(this.position);
   }
 
-  mapClicked(position: google.maps.LatLng) {
+  mapClicked(position: GoogleMapsLatLng) {
     this.map.deleteMarker('Custom Location');
-    this.map.addMarker(position, 'Custom Location');
-    this.map.centerMap(position, 18);
+    this.map.addMarker('Custom Location', 'yellow', position);
+    this.map.setCenter(position, 18);
     this.position = position;
   }
 }

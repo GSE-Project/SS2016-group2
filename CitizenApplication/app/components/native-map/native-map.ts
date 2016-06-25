@@ -1,8 +1,15 @@
-import {Component, ElementRef, AfterViewInit, OnDestroy} from '@angular/core';
+import {Component, ElementRef, AfterViewInit, OnDestroy, EventEmitter, Output} from '@angular/core';
 import {Geolocation} from 'ionic-native';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
 import {GoogleMap, GoogleMapsEvent, GoogleMapsMarker, GoogleMapsLatLng, GoogleMapsPolyline} from 'ionic-native';
+
+export {GoogleMapsLatLng} from 'ionic-native';
+
+export interface ViewNativeMarker {
+    name: string;
+    marker: GoogleMapsMarker;
+}
 
 /*
   Created by skaldo and mmueller on the 09.05.2016.
@@ -14,8 +21,10 @@ import {GoogleMap, GoogleMapsEvent, GoogleMapsMarker, GoogleMapsLatLng, GoogleMa
     templateUrl: 'build/components/native-map/map.html'
 })
 export class NativeMap implements OnDestroy, AfterViewInit {
-    private map;
-    private mapElement;
+    @Output() markerClicked = new EventEmitter<ViewNativeMarker>();
+    @Output() mapClicked = new EventEmitter<GoogleMapsLatLng>();
+    private map: GoogleMap;
+    private mapElement: HTMLElement;
     private logger: Logger;
     private mapElementId;
     private markers: { [key: string]: GoogleMapsMarker } = {};
@@ -50,8 +59,19 @@ export class NativeMap implements OnDestroy, AfterViewInit {
                 'zoom': true
             },
         });
-        this.centerCamera();
         this.map.refreshLayout();
+
+        this.map.on('click').subscribe((latLng: GoogleMapsLatLng) => {
+            console.debug('map clicked at:', latLng);
+            this.mapClicked.emit(latLng);
+        });
+    }
+
+    setCenter(center: GoogleMapsLatLng, zoom?: number) {
+        if (zoom) {
+            this.map.setZoom(zoom);
+        }
+        this.map.setCenter(center);
     }
 
     centerCamera() {
@@ -77,13 +97,16 @@ export class NativeMap implements OnDestroy, AfterViewInit {
      * @param lat latitude
      * @param lng longitude
      */
-    addMarker(name, color, lat, lng) {
-        let pos = new GoogleMapsLatLng(lat, lng);
+    addMarker(name: string, color: string, pos: GoogleMapsLatLng) {
         this.map.addMarker({
             'position': pos,
             'title': name,
             'icon': color
         }).then((marker) => {
+            marker.addEventListener('click').subscribe(() => {
+                this.logger.debug('marker clicked: ' + name);
+                this.markerClicked.emit(<ViewNativeMarker>{ name: name, marker: marker });
+            });
             this.markers[name] = marker;
         });
     }
@@ -94,6 +117,9 @@ export class NativeMap implements OnDestroy, AfterViewInit {
     deleteMarker(markername) {
         console.log('delete marker called');
         let marker = this.markers[markername];
+        if (!marker) {
+            return;
+        }
         marker.remove();
         delete this.markers[markername];
         console.log(this.markers);
@@ -102,13 +128,16 @@ export class NativeMap implements OnDestroy, AfterViewInit {
     /**
      * @param markername to be moved
      * @param newColor new Color after being moved
-     * @param moveToX new X Destination
-     * @param moveToY new Y Destination
+     * @param pos new Destination
      */
-    moveMarker(markername, newColor, moveToX, moveToY) {
+    moveMarker(markername: string, newColor: string, pos: GoogleMapsLatLng) {
         console.log(markername + ' will be moved');
         this.deleteMarker(markername);
-        this.addMarker(markername, newColor, moveToX, moveToY);
+        this.addMarker(markername, newColor, pos);
+    }
+
+    setClickable(clickable) {
+        this.map.setClickable(clickable);
     }
 
     ngOnDestroy() {
@@ -116,6 +145,7 @@ export class NativeMap implements OnDestroy, AfterViewInit {
         while (this.mapElement.firstChild) {
             this.mapElement.removeChild(this.mapElement.firstChild);
         }
+        this.map.refreshLayout();
     }
 
 }

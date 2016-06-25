@@ -6,15 +6,16 @@
  */
 import {Page, NavController, Popover, ViewController, NavParams} from 'ionic-angular';
 import {Component, ViewChild} from  '@angular/core';
-import {Map} from '../../components/map/map';
+import {NativeMap} from '../../components/native-map/native-map';
 import {TransformationService} from '../../providers/transformation';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
 import {ViewStop, ViewSchedule} from '../models';
+import {GoogleMapsLatLng} from 'ionic-native';
 
 @Component({
   templateUrl: 'build/pages/navigator/navigator.html',
-  directives: [Map]
+  directives: [NativeMap]
 })
 export class NavigatorPage {
   private logger: Logger;
@@ -22,17 +23,27 @@ export class NavigatorPage {
   private showingResults: boolean = false;
   public stops: Array<ViewStop>;
 
-  @ViewChild(Map) map: Map;
+  @ViewChild(NativeMap) map: NativeMap;
   constructor(public nav: NavController, private config: ConfigurationService, private dataAccess: TransformationService) {
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'NavigatorPage', config.misc.log_pretty_print);
     this.resetFiler();
   }
-  centerMap() {
-    this.map.centerMap();
+
+  ngAfterViewInit() {
+    if (!this.stops) {
+      return;
+    }
+    this.stops.forEach((stop) => {
+      this.map.addMarker(stop.name, 'blue', new GoogleMapsLatLng(stop.location.coordinates[1], stop.location.coordinates[0]));
+    });
   }
 
-  addMarker(pos, name) {
-    this.map.addMarker(pos, name);
+  centerMap() {
+    this.map.centerCamera();
+  }
+
+  addMarker(name: string, color: string, pos: GoogleMapsLatLng) {
+    this.map.addMarker(name, color, pos);
   }
 
   closeResultsOverlay() {
@@ -48,7 +59,7 @@ export class NavigatorPage {
     this.dataAccess.getStops(this.searchQuery).subscribe((data) => {
       this.stops = data;
       data.forEach((stop) => {
-        this.map.addMarker(new google.maps.LatLng(stop.location.coordinates[1], stop.location.coordinates[0]), stop.name);
+        this.map.addMarker(stop.name, 'blue', new GoogleMapsLatLng(stop.location.coordinates[1], stop.location.coordinates[0]));
       });
     });
   }
@@ -64,32 +75,26 @@ export class NavigatorPage {
     this.stopClicked(stop);
   }
 
-  mapClicked(position: google.maps.LatLng) {
-    this.map.addMarker(position, 'Custom Location');
-    this.map.centerMap(position, 18);
-    let popover = Popover.create(StopPopoverPage, { location: location });
-    this.nav.present(popover, {
-      ev: {
-        target: {
-          // Little bit of faking
-          getBoundingClientRect: function () {
-            return { left: document.documentElement.clientWidth / 2, top: document.documentElement.clientHeight / 2 };
-          }
-        }
-      },
+  mapClicked(position: GoogleMapsLatLng) {
+    this.map.addMarker('Custom Location', 'yellow', position);
+    let mockStop = new ViewStop({
+      id: -1,
+      location: { type: 'Point', coordinates: [position.lng, position.lat] },
+      name: 'Custom Location',
+      schedule: [],
+      lines: []
     });
-    popover.onDismiss(() => {
-      this.map.deleteMarker('Custom Location');
-    });
+    this.stopClicked(mockStop);
   }
 
   stopClicked(stop: ViewStop) {
     this.closeResultsOverlay();
     // Fix of an Android bug, we have to hide keyboard before we create the popover.
     setTimeout(() => {
-      this.map.centerMap(new google.maps.LatLng(stop.location.coordinates[1], stop.location.coordinates[0]), 18);
-      this.map.addMarker(new google.maps.LatLng(stop.location.coordinates[1], stop.location.coordinates[0]), stop.name);
+      let pos = new GoogleMapsLatLng(stop.location.coordinates[1], stop.location.coordinates[0]);
+      this.map.setCenter(pos, 18);
       let popover = Popover.create(StopPopoverPage, { stop: stop });
+      this.map.setClickable(false);
       this.nav.present(popover, {
         ev: {
           target: {
@@ -99,6 +104,12 @@ export class NavigatorPage {
             }
           }
         },
+      });
+      popover.onDismiss(() => {
+        this.map.setClickable(true);
+        if (stop.id === -1) {
+          this.map.deleteMarker(stop.name);
+        }
       });
     }, 200);
     this.resetFiler();

@@ -24,6 +24,8 @@ export class StopDetailPage {
   }
 
   infoClicked(schedule) {
+    this.nav.push(BusDetailPage, schedule);
+    /* We might use this later.
     let actionSheet = ActionSheet.create({
       buttons: [
         {
@@ -44,6 +46,7 @@ export class StopDetailPage {
       ]
     });
     this.nav.present(actionSheet);
+    */
   }
 
   ionViewWillEnter() {
