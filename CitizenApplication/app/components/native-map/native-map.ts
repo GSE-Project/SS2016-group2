@@ -28,6 +28,7 @@ export class NativeMap implements OnDestroy, AfterViewInit {
     private logger: Logger;
     private mapElementId;
     private markers: { [key: string]: GoogleMapsMarker } = {};
+    private isSuspended: boolean;
 
     constructor(private element: ElementRef, private config: ConfigurationService) {
         this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'MapComponent', this.config.misc.log_pretty_print);
@@ -62,6 +63,9 @@ export class NativeMap implements OnDestroy, AfterViewInit {
         this.map.refreshLayout();
 
         this.map.on('click').subscribe((latLng: GoogleMapsLatLng) => {
+            if (this.isSuspended) {
+                return;
+            }
             console.debug('map clicked at:', latLng);
             this.mapClicked.emit(latLng);
         });
@@ -104,6 +108,9 @@ export class NativeMap implements OnDestroy, AfterViewInit {
             'icon': color
         }).then((marker) => {
             marker.addEventListener('click').subscribe(() => {
+                if (this.isSuspended) {
+                    return;
+                }
                 this.logger.debug('marker clicked: ' + name);
                 this.markerClicked.emit(<ViewNativeMarker>{ name: name, marker: marker });
             });
@@ -148,5 +155,31 @@ export class NativeMap implements OnDestroy, AfterViewInit {
         this.map.refreshLayout();
     }
 
+    /**
+     * Destroy the map
+     */
+    // ionViewWillLeave() {
+    suspend(suspend) {
+        if (suspend) {
+            console.info('suspending map');
+            this.isSuspended = true;
+            this.mapElement.setAttribute('hidden', '');
+        }
+        else {
+            console.info('resuming map');
+            this.isSuspended = false;
+            this.mapElement.removeAttribute('hidden');
+        }
+        this.map.refreshLayout();
+    }
+
+    /**
+     * Re-create the map
+     */
+    ionViewDidEnter() {
+        console.info('restoring map');
+        this.mapElement.removeAttribute('hidden');
+        this.map.refreshLayout();
+    }
 }
 

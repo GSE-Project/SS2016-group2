@@ -30,16 +30,13 @@ export class NavigatorPage {
   }
 
   ngAfterViewInit() {
+    this.map.centerCamera();
     if (!this.stops) {
       return;
     }
     this.stops.forEach((stop) => {
       this.map.addMarker(stop.name, 'blue', new GoogleMapsLatLng(stop.location.coordinates[1], stop.location.coordinates[0]));
     });
-  }
-
-  centerMap() {
-    this.map.centerCamera();
   }
 
   addMarker(name: string, color: string, pos: GoogleMapsLatLng) {
@@ -113,6 +110,16 @@ export class NavigatorPage {
       });
     }, 200);
     this.resetFiler();
+  }
+
+  ionViewDidLeave() {
+    // Disable map.
+    this.map.suspend(true);
+  }
+
+  ionViewDidEnter() {
+    // Enable map.
+    this.map.suspend(false);
   }
 }
 

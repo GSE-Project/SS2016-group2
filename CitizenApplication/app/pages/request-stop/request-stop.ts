@@ -106,4 +106,15 @@ class CustomStopPopoverPage {
     this.map.setCenter(position, 18);
     this.position = position;
   }
+
+  ionViewDidLeave() {
+    // Disable map.
+    this.map.suspend(true);
+  }
+
+  ionViewDidEnter() {
+    // Enable map.
+    this.map.suspend(false);
+  }
+
 }

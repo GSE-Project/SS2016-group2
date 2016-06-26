@@ -94,8 +94,27 @@ export class BusDetailPage {
   /**
    * Make sure that nothing occurs when the user left the page.
    */
-  ionViewDidLeave() {
+  ionViewWillLeave() {
+    // Disable map.
+    if (this.map) {
+      this.map.suspend(true);
+    }
+    let tabs = document.getElementsByTagName('ion-tabbar-section');
+    if (tabs[0]) {
+      tabs[0].removeAttribute('hidden');
+    }
     clearTimeout(this._updateIdentifier);
+  }
+
+  ionViewWillEnter() {
+    // Enable map.
+    if (this.map) {
+      this.map.suspend(false);
+    }
+    let tabs = document.getElementsByTagName('ion-tabbar-section');
+    if (tabs[0]) {
+      tabs[0].setAttribute('hidden', '');
+    }
   }
 
   /**
