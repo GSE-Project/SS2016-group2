@@ -120,7 +120,7 @@ export class RestApiProvider {
         this.logger.debug('Request ' + JSON.stringify(req) + ' @ ' + this.config.getUrl(CitizenDataObjects.PostRequest));
         return this.http.post(this.config.getUrl(CitizenDataObjects.PostRequest), JSON.stringify(req), POST_OPTIONS).map<IRequestResponse>(
             res => {
-                this.logger.debug('Server responds with: ' + res.json());
+                this.logger.debug('Server responds with: ' + JSON.stringify(res.json()));
                 return <IRequestResponse>res.json();
             }, this);
     }

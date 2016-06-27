@@ -123,6 +123,7 @@ export class PersistentDataProvider {
     }
 
     addRequest(req: IRequestResponse): Observable<IRequestState[]> {
+        this.logger.debug('Adding request ' + req.id);
         let observable = this.getRequests();
         observable.subscribe(res => {
             let newRequest: IRequestState = {
@@ -130,6 +131,7 @@ export class PersistentDataProvider {
                 state: RequestStates.Pending
             };
             res.push(newRequest);
+            this.logger.debug('Adding request: added request ' + req.id + ' to list of requests');
             this.storage.set(this.config.storageApi.request, JSON.stringify(res));
         });
         return observable;
@@ -148,6 +150,11 @@ export class PersistentDataProvider {
 
     getRequests(): Observable<IRequestState[]> {
         return Observable.from(this.storage.get(this.config.storageApi.request)).map<IRequestState[]>(res => {
+            this.logger.debug('Fetched RequestStates from storage');
+            let requests = JSON.parse(res);
+            if (requests === null) {
+                return [];
+            }
             return (<IRequestState[]>JSON.parse(res)).filter(this.request_filter);
         }, this);
     }
