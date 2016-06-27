@@ -27,7 +27,7 @@ export class ViewRequest implements ViewObject {
         this.id = -1;
         this.lineId = -1;
         this.pickUpTime = new Date(), // DateTimeUtil.dateToIonicHourMinuteString(new Date(Date.now()));
-            this.location = { type: 'Point', coordinates: [0, 0] };
+            this.location = { type: 'Point', coordinates: [7.769214212894444, 49.447401102458256] };
         this.numberOfPersons = 1;
         this.info = {
             name: 'Max Mustermann',
@@ -74,11 +74,11 @@ export class ViewRequest implements ViewObject {
         let this_location = location;
         for (let i: number = 0; i < 2; i++) {
             let stringPos = this_location.coordinates[i].toString();
-            let regex = new RegExp('\d+\.\d+'); // Should a decimal number
+            let regex = new RegExp('[0-9]+\.[0-9]+'); // Should be a decimal number
             if (!regex.test(stringPos)) {
                 stringPos = stringPos + '.00001';
+                this_location.coordinates[i] = Number(stringPos);
             }
-            this_location.coordinates[i] = Number(stringPos);
         }
         return this_location;
     }
