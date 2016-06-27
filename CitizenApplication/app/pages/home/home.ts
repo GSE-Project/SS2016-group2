@@ -1,7 +1,7 @@
 import {Component, ElementRef} from '@angular/core';
 import {Page, NavController, Toast, Modal} from 'ionic-angular';
 import {StopListPage} from '../stop-list/stop-list';
-import {BusDetailPage} from '../bus-detail/bus-detail';
+import {RequestsPage} from '../requests/requests';
 import {RequestStopPage} from '../request-stop/request-stop';
 import {ConfigurationService} from '../../providers/config';
 import {Logger, LoggerFactory} from '../../providers/logger';
@@ -33,16 +33,14 @@ export class HomePage {
     });
   }
 
-  goToBusDetail() {
-    this.nav.push(BusDetailPage, { lineId: 1, time: new Date() });
+  goToRequests() {
+    this.nav.push(RequestsPage);
   }
 
-  // hide nav bar when we enter the page
   ionViewWillEnter() {
     this.element.nativeElement.removeAttribute('hidden');
   }
 
-  // show nav bar when we leave the page
   ionViewDidLeave() {
     this.element.nativeElement.setAttribute('hidden', '');
   }

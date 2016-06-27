@@ -1,0 +1,13 @@
+{
+    "prefix": "REQUESTS_PAGE",
+    "en": {
+        "Title": "Requests",
+        "State": "State",
+        "NoRequests": "No requests available"
+    },
+    "de": {
+        "Title": "Haltewünsche",
+        "State": "Status",
+        "NoRequests": "Keine Haltewünsche verfügbar"
+    }
+}
