@@ -43,6 +43,11 @@ export class RequestStopPage {
   constructor(private element: ElementRef, public nav: NavController, public viewCtrl: ViewController, private model_access: TransformationService, private config: ConfigurationService) {
     model_access.getLines().subscribe(res => {
       this.linesList = res;
+      if (res && res.length > 0) {
+        let firstEntry = res[0];
+        this.selectedLine = String(firstEntry.id) + ': ' + String(firstEntry.name); // for reasons unknown this isn't shown..
+        this.requestObj.lineId = res[0].id;
+      }
     });
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'RequestStopPage', config.misc.log_pretty_print);
   }

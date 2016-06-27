@@ -23,12 +23,14 @@ export class PersistentDataProvider {
         Observable.from(this.storage.get(VERSION)).subscribe(storage_version => {
             if (!config.version.release || this.config.version.build_number !== storage_version) {
                 if (!config.version.release) {
-                    this.logger.info('LocalStorage cleared, developmentMode found');
+                    this.logger.info('Storage cleared, developmentMode found');
                 }
                 else {
-                    this.logger.info('LocalStorage cleared, stored Version: ' + storage_version + ', configVersion: ' + this.config.version.build_number);
+                    this.logger.info('Storage cleared, stored Version: ' + storage_version + ', configVersion: ' + this.config.version.build_number);
                 }
-                storage.clear();
+                Observable.from(storage.clear()).subscribe(res => {
+                    this.logger.info('Storage cleared');
+                });
             }
             // @sholzer removed elseif since storage.set was called in both 'if' and 'elseif' eventually
             this.logger.debug('Set app Version to: ' + config.version.build_number);
