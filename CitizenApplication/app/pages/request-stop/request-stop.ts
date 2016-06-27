@@ -67,6 +67,7 @@ export class RequestStopPage {
 
   submit() {
     // TODO: validation - add method validate to the ViewRequest class.
+    this.logger.debug('Passing request ' + JSON.stringify(this.requestObj));
     this.model_access.makeRequest(this.requestObj);
     this.dismiss();
   }
