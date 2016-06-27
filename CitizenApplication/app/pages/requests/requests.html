@@ -13,13 +13,25 @@
     <ion-refresher-content pullingText="{{'C.PullToRefresh' | translate}}" refreshingText="{{'C.Refreshing' | translate}}">
     </ion-refresher-content>
   </ion-refresher>
-  <div *ngIf="empty" id="noRequests">{{ 'REQUESTS_PAGE.NoRequests' | translate }}<p>{{'C.PullToRefresh' | translate}}</p></div>
-  <ion-card *ngFor="let request of requests">
+  <div *ngIf="empty" id="noRequests">{{ 'REQUESTS_PAGE.NoRequests' | translate }}
+    <p>{{'C.PullToRefresh' | translate}}</p>
+  </div>
+  <ion-card *ngFor="let request of requests" [ngSwitch]="request.state">
     <ion-card-header>
-      ID: {{request.is}}
+      ID: {{request.id}}
     </ion-card-header>
-    <ion-card-content>
-      {{ 'REQUESTS_PAGE.State' | translate }}: {{request.state}}
+    <ion-card-content *ngSwitchCase="0">
+      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StatePending' | translate }}
     </ion-card-content>
+    <ion-card-content *ngSwitchCase="1">
+      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateAccepted' | translate }}
+    </ion-card-content>
+    <ion-card-content *ngSwitchCase="2">
+      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateRejected' | translate }}
+    </ion-card-content>
+    <ion-card-content *ngSwitchCase="3">
+      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateCompleted' | translate }}
+    </ion-card-content>
+    <ion-card-content *ngSwitchDefault></ion-card-content>
   </ion-card>
 </ion-content>
