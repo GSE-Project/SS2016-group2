@@ -51,17 +51,17 @@ export class ViewRequest implements ViewObject {
         req.pickUpTime = Math.floor(this.pickUpTime.getTime() / 1000);
         req.numberOfPersons = this.numberOfPersons;
         req.location = this.location;
-        req.info.userAddress = this.info.address;
-        req.info.userName = this.info.name;
+        req.info.address = this.info.address;
+        req.info.name = this.info.name;
 
         if (this.info.assistance.wheelchair) {
-            req.info.userAssistance.push(CitizenDataAssistance.Wheelchair);
+            req.info.assistance.push(CitizenDataAssistance.Wheelchair);
         }
         if (this.info.assistance.shopping) {
-            req.info.userAssistance.push(CitizenDataAssistance.Shopping);
+            req.info.assistance.push(CitizenDataAssistance.Shopping);
         }
         if (this.info.assistance.luggage) {
-            req.info.userAssistance.push(CitizenDataAssistance.Luggage);
+            req.info.assistance.push(CitizenDataAssistance.Luggage);
         }
 
         return req;
