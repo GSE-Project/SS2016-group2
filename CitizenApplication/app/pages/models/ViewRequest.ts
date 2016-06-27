@@ -27,7 +27,7 @@ export class ViewRequest implements ViewObject {
         this.id = -1;
         this.lineId = -1;
         this.pickUpTime = new Date(), // DateTimeUtil.dateToIonicHourMinuteString(new Date(Date.now()));
-        this.location = { type: 'Point', coordinates: [0, 0] };
+            this.location = { type: 'Point', coordinates: [0, 0] };
         this.numberOfPersons = 1;
         this.info = {
             name: 'Max Mustermann',
@@ -50,7 +50,7 @@ export class ViewRequest implements ViewObject {
         req.deviceID = 'random';
         req.pickUpTime = Math.floor(this.pickUpTime.getTime() / 1000);
         req.numberOfPersons = this.numberOfPersons;
-        req.location = this.location;
+        req.location = this.complyCoordinates(this.location);
         req.info.address = this.info.address;
         req.info.name = this.info.name;
 
@@ -65,5 +65,21 @@ export class ViewRequest implements ViewObject {
         }
 
         return req;
+    }
+
+    /**
+     * If the coordinates only contain integers this method makes them to decimals
+     */
+    complyCoordinates(location: GeoJson.Point): GeoJson.Point {
+        let this_location = location;
+        for (let i: number = 0; i < 2; i++) {
+            let stringPos = this_location.coordinates[i].toString();
+            let regex = new RegExp('\d+\.\d+'); // Should a decimal number
+            if (!regex.test(stringPos)) {
+                stringPos = stringPos + '.00001';
+            }
+            this_location.coordinates[i] = Number(stringPos);
+        }
+        return this_location;
     }
 }
