@@ -4,6 +4,8 @@ import {ViewRequest, ViewLine} from '../models';
 import {NativeMap, GoogleMapsLatLng} from '../../components/native-map/native-map';
 import {TransformationService} from '../../providers/transformation';
 import * as moment from 'moment/moment';
+import {LoggerFactory, Logger} from '../../providers/logger';
+import {ConfigurationService} from '../../providers/config';
 
 /*
   Generated class for the RequestStopPage page.
@@ -18,6 +20,7 @@ export class RequestStopPage {
   public requestObj: ViewRequest = new ViewRequest();
   public selectedLine: string = '';
   public linesList: ViewLine[] = [];
+  public logger: Logger;
 
   set pickUpTime(time: string) {
     this.requestObj.pickUpTime = new Date(time);
@@ -30,16 +33,18 @@ export class RequestStopPage {
   set position(pos: GoogleMapsLatLng) {
     this.requestObj.location.coordinates[1] = pos.lat;
     this.requestObj.location.coordinates[0] = pos.lng;
+    this.logger.debug('Location is now ' + JSON.stringify(this.requestObj.location));
   }
 
   get position(): GoogleMapsLatLng {
     return new GoogleMapsLatLng(this.requestObj.location.coordinates[0], this.requestObj.location.coordinates[1]);
   }
 
-  constructor(private element: ElementRef, public nav: NavController, public viewCtrl: ViewController, private model_access: TransformationService) {
+  constructor(private element: ElementRef, public nav: NavController, public viewCtrl: ViewController, private model_access: TransformationService, private config: ConfigurationService) {
     model_access.getLines().subscribe(res => {
       this.linesList = res;
     });
+    this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'RequestStopPage', config.misc.log_pretty_print);
   }
 
   selectLineChanged(selectedLine) {
@@ -53,6 +58,7 @@ export class RequestStopPage {
     // TODO: improve, it's a hack
     document.getElementsByTagName('ion-navbar-section')[0].setAttribute('hidden', '');
     customStopPopoverPage.onDismiss((position) => {
+      this.logger.debug('Got ' + JSON.stringify(position) + ' from map');
       this.element.nativeElement.removeAttribute('hidden');
       document.getElementsByTagName('ion-navbar-section')[0].removeAttribute('hidden');
       this.position = position;
