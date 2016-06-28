@@ -5,30 +5,56 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Page, Storage, LocalStorage, Toast, NavController} from 'ionic-angular';
-import {IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData} from '../model';
+import {IStorage} from '../storage';
+import {IRestDataObject, IRestStops, IRestBusses, IRestLines, IRestRoutes, IUpdateData, IRequestState, IRequestResponse, RequestStates, ICitizenData} from '../model';
 import {Observable} from 'rxjs/Observable';
 import {ConfigurationService} from '../config';
 import {Logger, LoggerFactory} from '../logger';
 
+const VERSION = 'app_version';
+
 @Injectable()
 export class PersistentDataProvider {
-    public storage: Storage;
+
     private logger: Logger;
 
-    constructor(private config: ConfigurationService) {
-        // Currently we use LocalStorage. Maybe in a later implementation switch to SqlStorage
-        this.storage = new Storage(LocalStorage);
-        this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'PersistentDataProvider', config.misc.log_pretty_print);
+    constructor(private config: ConfigurationService, private storage: IStorage) {
+        this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'PersistentDataProvider', config.misc.log_pretty_print);
+        Observable.from(this.storage.get(VERSION)).subscribe(storage_version => {
+            if (!config.version.release || this.config.version.build_number !== storage_version) {
+                if (!config.version.release) {
+                    this.logger.info('Storage cleared, developmentMode found');
+                }
+                else {
+                    this.logger.info('Storage cleared, stored Version: ' + storage_version + ', configVersion: ' + this.config.version.build_number);
+                }
+                storage.clear();
+            }
+            // @sholzer removed elseif since storage.set was called in both 'if' and 'elseif' eventually
+            this.logger.debug('Set app Version to: ' + config.version.build_number);
+            storage.set(VERSION, config.version.build_number);
+        });
     }
 
     /**
      * Sets the used Storage api. Mainly for testing purposes
      * @author sholzer 160516
      * @param storage Object implementing the Storage interface
+     * @deprecated
      */
     setStorage(storage: Storage): void {
-        this.storage = storage;
+    }
+
+    getData<T extends IRestDataObject>(key: string): Observable<T> {
+        return Observable.fromPromise(<Promise<string>>this.storage.get(key)).map(
+            data => {
+                return <T>JSON.parse(data);
+            }
+        );
+    }
+
+    putData<T extends IRestDataObject>(key: string, data: T): Observable<any> {
+        return Observable.from(this.storage.set(key, JSON.stringify(data)));
     }
 
     /**
@@ -36,10 +62,7 @@ export class PersistentDataProvider {
      * @returns Observable<IRestStops>
      */
     getStops(): Observable<IRestStops> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(this.config.storageApi.stops)).map(
-            data => {
-                return <IRestStops>JSON.parse(data);
-            });
+        return this.getData<IRestStops>(this.config.storageApi.stops);
     }
 
     /**
@@ -47,7 +70,7 @@ export class PersistentDataProvider {
      * @param data Array of stops
      */
     putStops(data: IRestStops) {
-        this.storage.set(this.config.storageApi.stops, JSON.stringify(data));
+        return this.putData<IRestStops>(this.config.storageApi.stops, data);
     }
 
     /**
@@ -55,10 +78,8 @@ export class PersistentDataProvider {
      * @returns Observable<IRestBusses>
      */
     getBusses(): Observable<IRestBusses> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(this.config.storageApi.busses)).map(
-            data => {
-                return <IRestBusses>JSON.parse(data);
-            });
+        return this.getData<IRestBusses>(this.config.storageApi.busses);
+
     }
 
     /**
@@ -66,7 +87,7 @@ export class PersistentDataProvider {
      * @param data Array of busses (IRestBusses)
      */
     putBusses(data: IRestBusses) {
-        this.storage.set(this.config.storageApi.busses, JSON.stringify(data));
+        return this.putData<IRestBusses>(this.config.storageApi.busses, data);
     }
 
     /**
@@ -74,10 +95,7 @@ export class PersistentDataProvider {
      * @returns Observable<IRestLines>
      */
     getLines(): Observable<IRestLines> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(this.config.storageApi.lines)).map(
-            data => {
-                return <IRestLines>JSON.parse(data);
-            });
+        return this.getData<IRestLines>(this.config.storageApi.lines);
     }
 
     /**
@@ -85,7 +103,7 @@ export class PersistentDataProvider {
      * @param data Array of lines (IRestLines)
      */
     putLines(data: IRestLines) {
-        this.storage.set(this.config.storageApi.lines, JSON.stringify(data));
+        return this.putData<IRestLines>(this.config.storageApi.lines, data);
     }
 
     /**
@@ -93,10 +111,7 @@ export class PersistentDataProvider {
      * @returns Observable<IRestRoutes>
      */
     getRoutes(): Observable<IRestRoutes> {
-        return Observable.fromPromise(<Promise<string>>this.storage.get(this.config.storageApi.routes)).map(
-            data => {
-                return <IRestRoutes>JSON.parse(data);
-            });
+        return this.getData<IRestRoutes>(this.config.storageApi.routes);
     }
 
     /**
@@ -104,6 +119,81 @@ export class PersistentDataProvider {
      * @param data Array of routes (IRestRoutes)
      */
     putRoutes(data: IRestRoutes) {
-        this.storage.set(this.config.storageApi.routes, JSON.stringify(data));
+        return this.putData<IRestRoutes>(this.config.storageApi.routes, data);
     }
+
+    addRequest(req: IRequestResponse): Observable<IRequestState[]> {
+        this.logger.debug('Adding request ' + req.id);
+        let observable = this.getRequests();
+        observable.subscribe(res => {
+            let newRequest: IRequestState = {
+                id: req.id,
+                state: RequestStates.Pending
+            };
+            res.push(newRequest);
+            this.logger.debug('Adding request: added request ' + req.id + ' to list of requests');
+            this.storage.set(this.config.storageApi.request, JSON.stringify(res));
+        });
+        return observable;
+    }
+
+    /**
+     * @param item :IRequestState
+     * @return true iff the item isn't Completed
+     */
+    private request_filter(item: IRequestState) {
+        if (item.state === RequestStates.Completed) {
+            return false;
+        }
+        return true;
+    }
+
+    getRequests(): Observable<IRequestState[]> {
+        return Observable.from(this.storage.get(this.config.storageApi.request)).map<IRequestState[]>(res => {
+            this.logger.debug('Fetched RequestStates from storage');
+            let requests = JSON.parse(res);
+            if (requests === null) {
+                return [];
+            }
+            return (<IRequestState[]>JSON.parse(res)).filter(this.request_filter);
+        }, this);
+    }
+
+    updateRequest(req: IRequestState): Observable<IRequestState[]> {
+        let observable = this.getRequests();
+        observable.subscribe(res => {
+            let sameIdItems = res.filter(item => (item.id === req.id ? true : false));
+            switch (sameIdItems.length) {
+                case 0:
+                    this.logger.warn('Did not found RequestStates with the specified id ' + req.id);
+                    break;
+                default:
+                    this.logger.warn('Inconsistent Database! Two request state items with the same ID found!');
+                case 1:
+                    res[res.indexOf(sameIdItems[0])].state = req.state;
+                    this.logger.debug('State of Request ' + req.id + ' set to ' + req.state);
+            }
+            this.storage.set(this.config.storageApi.request, JSON.stringify(res));
+        });
+        return observable;
+    }
+
+    /**
+     * Puts the CitizenData to the storage
+     */
+    putCitizenData(cd: ICitizenData) {
+        let cd_json = JSON.stringify(cd);
+        this.logger.debug('putting ' + cd_json);
+        this.storage.set(this.config.storageApi.citizen_data, cd_json);
+    }
+
+    /**
+     * Gets the CitizenData
+     */
+    getCitizenData(): Observable<ICitizenData> {
+        return Observable.from(this.storage.get(this.config.storageApi.citizen_data)).map<ICitizenData>(res => {
+            return JSON.parse(res);
+        });
+    }
+
 }

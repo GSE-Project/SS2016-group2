@@ -1,16 +1,22 @@
 /**
+ * Log:
  * Created by sholzer on the 3.5.2016
  * Reviewed by skaldo on the 6.5.2016
  * Updated by skaldo & sholzer on the 13.05.2016
  * Updated by skaldo on the 14.05.2016 - adjusted to match the tslint rules.
+ * Updated by sholzer on the 28.05.2016 - added generic method
+ * Reviewed by skaldo on the 28.05.2016 - OK
+ * Edited by sholzer on the 13.06.1026 - The access methods do return the arrays of the ICitizenDataObject
+ * Reviewed by skaldo on the 14.06.2016 - looks good after #84
  */
 
 import {Injectable} from '@angular/core';
 import {RestApiProvider} from './RestApiProvider';
+import * as Model from '../model';
 import {PersistentDataProvider} from './PersistentDataProvider';
 import {Observable} from 'rxjs/Observable';
 import {Logger, LoggerFactory} from '../logger/Logger';
-import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes} from '../model';
+import {IBusRealTimeData, IUpdateData, IRestStops, IRestBusses, IRestLines, IRestRoutes, IRestDataObject, IRequest, IRequestState, ICitizenData} from '../model';
 import {ConfigurationService} from '../config';
 
 @Injectable()
@@ -26,76 +32,89 @@ export class CitizenDataService {
         routes: -1,
         stops: -1
     };
-
     private logger: Logger;
 
     constructor(private restApi: RestApiProvider, private storageApi: PersistentDataProvider, private config: ConfigurationService) {
         this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'CitizenDataService', config.misc.log_pretty_print);
+        // TODO: use config.
+        this.startUpdateTimer(10000);
+    }
+
+    /**
+     * Generic getter for T extending IRestDataObject
+     * @param storageRead ()=>Observable<T> method to read T from the storage
+     * @param storageWrite (T)=>void method to write into storage
+     * @param serverTime : number, timestamp of the server
+     * @param serverRead ()=>Observable<T> method to read from the server
+     * @return Observable<T>
+     */
+    public getData<T extends IRestDataObject>(storageRead: () => Observable<T>,
+        storageWrite: (T) => void,
+        serverTime: number,
+        serverRead: () => Observable<T>): Observable<T> {
+        this.logger.debug('Getting data from storage');
+        return storageRead().flatMap((data) => {
+            this.logger.debug('Storage data fetched');
+            if (data && (serverTime <= data.timeStamp)) {
+                return Observable.of(data);
+            }
+            this.logger.debug('Getting data from server');
+            let restObservable: Observable<T> = serverRead();
+            restObservable.subscribe((data) => {
+                this.logger.debug('Passing data to storage');
+                storageWrite(data);
+            });
+            return restObservable;
+        });
     }
 
     /**
     * @return A list of Stop object
     */
-    public getStops(): Observable<IRestStops> {
+    public getStops(): Observable<Model.IStop[]> {
         this.logger.debug('Getting Stops');
-        return this.storageApi.getStops().flatMap(data => {
-            if (data && (this.serverTimeStamps.stops < data.timestamp)) {
-                return Observable.of(data);
-            }
-            let restObservable: Observable<IRestStops> = this.restApi.getStops();
-            restObservable.subscribe(server_data => {
-                this.storageApi.putStops(server_data);
-            });
-            return restObservable;
-        });
+        return this.getData<IRestStops>(
+            () => { return this.storageApi.getStops(); },
+            (data: IRestStops) => { this.storageApi.putStops(data); },
+            this.serverTimeStamps.stops,
+            () => { return this.restApi.getStops(); }
+        ).map<Model.IStop[]>((res) => { return res.stops; });
     }
 
     /**
     * @return A list of ILine objects
     */
-    public getLines(): Observable<IRestLines> {
-        return this.storageApi.getLines().flatMap(data => {
-            if (data && (this.serverTimeStamps.lines < data.timestamp)) {
-                return Observable.of(data);
-            }
-            let restObservable: Observable<IRestLines> = this.restApi.getLines();
-            restObservable.subscribe(server_data => {
-                this.storageApi.putLines(server_data);
-            });
-            return restObservable;
-        });
+    public getLines(): Observable<Model.ILine[]> {
+        return this.getData<IRestLines>(
+            () => { return this.storageApi.getLines(); },
+            (data: IRestLines) => { this.storageApi.putLines(data); },
+            this.serverTimeStamps.lines,
+            () => { return this.restApi.getLines(); }
+        ).map<Model.ILine[]>((res) => { return res.lines; });
     }
 
     /**
     * @return A list of Bus objects
     */
-    public getBusses(): Observable<IRestBusses> {
-        return this.storageApi.getBusses().flatMap(data => {
-            if (data && (this.serverTimeStamps.busses < data.timestamp)) {
-                return Observable.of(data);
-            }
-            let restObservable: Observable<IRestBusses> = this.restApi.getBusses();
-            restObservable.subscribe(server_data => {
-                this.storageApi.putBusses(server_data);
-            });
-            return restObservable;
-        });
+    public getBusses(): Observable<Model.IBus[]> {
+        return this.getData<IRestBusses>(
+            () => { return this.storageApi.getBusses(); },
+            (data: IRestBusses) => { this.storageApi.putBusses(data); },
+            this.serverTimeStamps.busses,
+            () => { return this.restApi.getBusses(); }
+        ).map<Model.IBus[]>((res) => { return res.busses; });
     }
 
     /**
     * @return A list of Route objects
     */
-    public getRoutes(): Observable<IRestRoutes> {
-        return this.storageApi.getRoutes().flatMap(data => {
-            if (data && (this.serverTimeStamps.routes < data.timestamp)) {
-                return Observable.of(data);
-            }
-            let restObservable: Observable<IRestRoutes> = this.restApi.getRoutes();
-            restObservable.subscribe(server_data => {
-                this.storageApi.putRoutes(server_data);
-            });
-            return restObservable;
-        });
+    public getRoutes(): Observable<Model.IRoute[]> {
+        return this.getData<IRestRoutes>(
+            () => { return this.storageApi.getRoutes(); },
+            (data: IRestRoutes) => { this.storageApi.putRoutes(data); },
+            this.serverTimeStamps.busses,
+            () => { return this.restApi.getRoutes(); }
+        ).map<Model.IRoute[]>((res) => { return res.routes; });
     }
 
     /**
@@ -103,6 +122,7 @@ export class CitizenDataService {
     * @return Object with properties (position:Point) and (delay:number)
     */
     public getBusRealTimeData(id: number): Observable<IBusRealTimeData> {
+        this.logger.debug('Fetching RealTimeData for bus ' + id);
         return this.restApi.getRealTimeBusData(id);
     }
 
@@ -124,14 +144,63 @@ export class CitizenDataService {
      * @param timeInterval the time interval the server is checked for new data
      */
     public startUpdateTimer(timeInterval: number): void {
-        // To-be implemented.
+        this.updateTimeStamps().subscribe(() => {
+            setTimeout(() => {
+                this.updateTimeStamps();
+            }, timeInterval);
+        });
     }
 
     /**
      * Specifies the server to be used
      * @param host_address : host url as string
+     * @deprecated
      */
     public setHostUrl(host_address: string): void {
         this.restApi.baseUrl = host_address;
     }
+
+    /**
+     * Return asynchronously the state of an request
+     * @param req_id the identifier of the Request
+     * @return Observable<IRequestState>
+     */
+    public getRequestState(req_id: number): Observable<IRequestState> {
+        this.logger.debug('Fetching from server state of Request ' + req_id);
+        let observable = this.restApi.getRequestState(req_id);
+        observable.subscribe(res => {
+            this.logger.debug('Fetched state of Request ' + req_id + ': ' + res.state);
+            this.storageApi.updateRequest(res);
+        });
+        return observable;
+    }
+
+    /**
+     * Return asynchronously all open RequestStates known to the Client
+     * @return Observable<IRequestState[]>
+     */
+    public getOpenRequests(): Observable<IRequestState[]> {
+        this.logger.debug('Fetching requests from storage');
+        return this.storageApi.getRequests();
+    }
+
+    /**
+     * Requests a custom stops
+     * @param req IRequest
+     */
+    public requestCustomStop(req: IRequest) {
+        this.storageApi.putCitizenData(req.info);
+        this.restApi.postRequest(req).subscribe(res => {
+            this.logger.debug('Requested Stop from server:' + JSON.stringify(req));
+            this.storageApi.addRequest(res);
+        });
+    }
+
+    /**
+     * 
+     */
+    public getCitizenData(): Observable<ICitizenData> {
+        return this.storageApi.getCitizenData();
+    }
+
 }

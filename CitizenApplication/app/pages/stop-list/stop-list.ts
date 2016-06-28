@@ -2,54 +2,15 @@
  * Created by skaldo on 5.5.2016, added logic for the UI
  */
 
+import {Component, ElementRef} from '@angular/core';
 import {Page, NavController, Refresher} from 'ionic-angular';
 import {Point, IStop} from '../../providers/model';
 import {StopDetailPage} from '../stop-detail/stop-detail';
-import {CitizenDataService} from '../../providers/data';
+import {TransformationService} from '../../providers/transformation';
 import {Logger, LoggerFactory} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
-
-class ViewStop implements IStop {
-  public name: string;
-  public location: Point;
-  public schedule: { lineId: number; time: Date }[];
-  public id: number;
-  private lines: Array<number>;
-
-  constructor(stop: IStop) {
-    this.id = stop.id;
-    this.location = stop.location;
-    this.name = stop.name;
-    this.schedule = stop.schedule;
-    this.lines = Array<number>();
-    let linesHelper = [];
-
-    // Do the sorting & get the lines of the stop.
-    this.schedule.sort((a, b) => {
-      linesHelper[a.lineId] = true;
-      linesHelper[b.lineId] = true;
-      return a.time.getTime() - b.time.getTime();
-    });
-
-    linesHelper.forEach((value, index) => {
-      if (value) {
-        this.lines.push(index);
-      }
-    });
-
-    this.lines.sort((a, b) => {
-      return b - a;
-    });
-  }
-
-  public getSchedules(first: number) {
-    return this.schedule.slice(0, first);
-  }
-
-  public getLines() {
-    return this.lines;
-  }
-}
+import {ViewStop, ViewSchedule} from '../models';
+import * as moment from 'moment/moment';
 
 /*
   Generated class for the StopListPage page.
@@ -57,24 +18,27 @@ class ViewStop implements IStop {
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-@Page({
+@Component({
   templateUrl: 'build/pages/stop-list/stop-list.html',
-  providers: [CitizenDataService],
+  providers: [TransformationService],
 })
 export class StopListPage {
   // private searchText: String;
+  private allStops: Array<ViewStop> = new Array<ViewStop>();
   private stops: Array<ViewStop> = new Array<ViewStop>();
   private logger: Logger;
-  constructor(public nav: NavController, private cDS: CitizenDataService, private config: ConfigurationService) {
+  private searchText: string = ''; // if we bind the search bar to 'searchText' we should also have a searchText field in our model
+  constructor(private element: ElementRef, public nav: NavController, private dataAccess: TransformationService, private config: ConfigurationService) {
     this.refreshStops();
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'StopListPage', config.misc.log_pretty_print);
   }
 
   public onSearch(event) {
-    // To-be implemented
+    this.logger.debug('Filtering list for ' + this.searchText);
+    this.stops = this.allStops.filter(this.dataAccess.getFilter<ViewStop>(this.searchText));
   };
   public onSearchCancel(event) {
-    // To-be implemented
+    this.stops = this.allStops;
   };
 
   public doRefresh(refresher: Refresher) {
@@ -95,24 +59,28 @@ export class StopListPage {
     return Math.floor(Math.random() * (3 + 1)) + 1;
   }
 
-  public goToStopDetail(stop: IStop) {
+  public goToStopDetail(stop: ViewStop) {
     this.nav.push(StopDetailPage, stop);
   }
 
   private refreshStops() {
-    let observable = this.cDS.getStops();
-    this.stops = new Array<ViewStop>();
-    observable.subscribe(data => {
-      this.logger.debug('Stops recieved');
-      data.stops.forEach(stop => {
-        this.logger.debug('UI: got stop' + stop.name);
-        // faking time in order to prevent errors:
-        stop.schedule.forEach(item => {
-          item.time = this.getRandomTime();
-        });
-        this.stops.push(new ViewStop(stop));
+    let observable = this.dataAccess.getStops();
+    observable.subscribe((data) => {
+      this.logger.debug('Fetched stops');
+      this.allStops = data;
+      this.stops = data;
+      data.forEach((item) => {
+        this.logger.debug('Fetched Stop ' + item.id + ':' + item.name);
       });
     });
     return observable;
+  }
+
+  ionViewWillEnter() {
+    this.element.nativeElement.removeAttribute('hidden');
+  }
+
+  ionViewDidLeave() {
+    this.element.nativeElement.setAttribute('hidden', '');
   }
 }

@@ -1,5 +1,5 @@
-import {CitizenDataObjects, IUpdateData, IRestStops, IRestRoutes, IRestLines, IRestBusses, IBusRealTimeData, GeoJsonObjectTypes} from '../providers/model';
-import {Storage} from 'ionic-angular';
+import {IStorage} from '../providers/storage';
+import {CitizenDataObjects, IUpdateData, IRestStops, IRestRoutes, IRestLines, IRestBusses, IBusRealTimeData} from '../providers/model';
 import {Http, Response, ResponseOptions} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {CitizenApplicationConfig, RestApiConfig, StorageApiConfig, ConfigurationService} from '../providers/config';
@@ -45,8 +45,8 @@ export class MockFactory {
      * @param putInto: DataConfig a container to store data into 
      * @return {Storage}
      */
-    static buildStorageMock(storage_conf: StorageConfig, putInto: DataConfig, global_conf: StorageApiConfig): Storage {
-        return <Storage>{
+    static buildStorageMock(storage_conf: StorageConfig, putInto: DataConfig, global_conf: StorageApiConfig): IStorage {
+        return <IStorage>{
             get(key: string): Promise<string> {
                 let value: string = '';
                 switch (key) {
@@ -78,7 +78,8 @@ export class MockFactory {
                         resolve(key + value);
                     }, storage_conf.delay);
                 });
-            }
+            },
+            clear() { }
         };
     }
 
@@ -127,6 +128,9 @@ export class MockFactory {
             get misc() {
                 return config.misc;
             },
+            get version() {
+                return config.version;
+            },
             getUrl(type: CitizenDataObjects): string {
                 let url = this.restApi.host_url + '/';
                 switch (type) {
@@ -165,14 +169,10 @@ export interface DataConfig {
 }
 
 export interface StorageConfig extends DataConfig {
-
     delay: number;
-
 }
 
 export interface RestConfig extends StorageConfig {
-
     update: IUpdateData;
     rt: IBusRealTimeData;
-
 }

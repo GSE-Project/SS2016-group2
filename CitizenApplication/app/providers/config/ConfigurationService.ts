@@ -6,7 +6,7 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {CitizenApplicationConfig, MiscellaneousConfig, StorageApiConfig, RestApiConfig, RESTAPI_FIELD, STORAGEAPI_FIELD, MISC_FIELD} from './';
+import {CitizenApplicationConfig, MiscellaneousConfig, VersionConfig, StorageApiConfig, RestApiConfig, RESTAPI_FIELD, STORAGEAPI_FIELD, MISC_FIELD, VERSION_FIELD} from './';
 import {CitizenDataObjects} from '../model';
 import {Logger, LoggerFactory} from '../logger';
 
@@ -24,18 +24,27 @@ const DEFAULT_CONFIG: CitizenApplicationConfig = {
         routes: 'routes',
         rt_data: 'busses/',
         stops: 'stops',
-        update: 'update'
+        update: 'update',
+        request: 'CustomStops',
+        post_request: 'CustomStops'
     },
     storage_api: {
         busses: 'B',
+        citizen_data: 'C',
         lines: 'L',
         routes: 'R',
-        stops: 'S'
+        stops: 'S',
+        request: 'Q'
     },
     misc: {
         language: 'de',
         log_level: 'debug',
         log_pretty_print: false
+    },
+    version: {
+        build_number: 'DEFAULT_CONFIG',
+        commit: 'DEFAULT_CONFIG',
+        release: false
     }
 };
 
@@ -84,6 +93,10 @@ export class ConfigurationService {
         return this.get<MiscellaneousConfig>(MISC_FIELD);
     }
 
+    get version(): VersionConfig {
+        return this.get<VersionConfig>(VERSION_FIELD);
+    }
+
     /**
      * Access a copy of the url configuration
      */
@@ -108,8 +121,10 @@ export class ConfigurationService {
             case CitizenDataObjects.UpdateData:
                 url += this.restApi.update;
                 break;
-            default:
-                return null;
+            case CitizenDataObjects.GetRequest:
+                url += this.restApi.request;
+            case CitizenDataObjects.PostRequest:
+                url += this.restApi.post_request;
         }
         return url;
     }

@@ -1,0 +1,21 @@
+{
+    "prefix": "REQUESTS_PAGE",
+    "en": {
+        "Title": "Requests",
+        "State": "State",
+        "StatePending": "Pending",
+        "StateAccapted": "Accepted",
+        "StateRejected": "Rejected",
+        "StateCompleted": "Completed",
+        "NoRequests": "No requests available"
+    },
+    "de": {
+        "Title": "Haltewünsche",
+        "State": "Status",
+        "StatePending": "Wartend",
+        "StateAccapted": "Angenommen",
+        "StateRejected": "Abgelehnt",
+        "StateCompleted": "Erfüllt",
+        "NoRequests": "Keine Haltewünsche verfügbar"
+    }
+}

@@ -7,6 +7,7 @@ export default CitizenApplicationConfig;
 export const RESTAPI_FIELD: string = 'rest_api';
 export const STORAGEAPI_FIELD: string = 'storage_api';
 export const MISC_FIELD: string = 'misc';
+export const VERSION_FIELD = 'version';
 
 /**
  * JSON parsable interface for the CitizenApplication configuration
@@ -24,6 +25,10 @@ export interface CitizenApplicationConfig {
      * Other non-data related configuration
      */
     misc: MiscellaneousConfig;
+    /**
+     * The version related information
+     */
+    version: VersionConfig;
 }
 
 /**
@@ -34,6 +39,7 @@ export interface AccessConfig {
     lines: string;
     routes: string;
     stops: string;
+    request: string;
 }
 
 /**
@@ -52,6 +58,10 @@ export interface RestApiConfig extends AccessConfig {
      * The url suffix to fetch the real time bus data from the backend. {host_url}/{rt_data}{id} is called to fetch the update data where id refers to the bus id
      */
     rt_data: string;
+    /**
+     * The url suffix to post the request to. 
+     */
+    post_request: string;
 }
 
 /**
@@ -59,6 +69,8 @@ export interface RestApiConfig extends AccessConfig {
  */
 export interface StorageApiConfig extends AccessConfig {
     // Room for additional storage configuration like storage types or so. 
+    citizen_data: string;
+
 }
 
 /**
@@ -80,4 +92,19 @@ export interface MiscellaneousConfig {
      * Specifies if the log should be pretty and colofull or basic and PhantomJS compatible
      */
     log_pretty_print: boolean;
+}
+
+export interface VersionConfig {
+    /**
+     * The Travis build number
+     */
+    build_number: string;
+    /**
+     * The commit that triggered the build
+     */
+    commit: string;
+    /**
+     * Defines if the app is release or debug
+     */
+    release: boolean;
 }

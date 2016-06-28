@@ -1,0 +1,19 @@
+{
+    "prefix": "STOP_DETAIL_PAGE",
+    "en": {
+        "RequestStop": "Request Stop",
+        "FreeSeats": "Free Seats: ",
+        "EstimatedArrival": "Estimated arrival",
+        "Line": "Line ",
+        "Towards": "Towards",
+        "ShowBusInfo": "Show bus information"
+    },
+    "de": {
+        "RequestStop": "Haltewunsch äußern",
+        "FreeSeats": "Freie Plätze: ",
+        "EstimatedArrival": "Erwartete Ankunft",
+        "Line": "Linie ",
+        "Towards": "In Richtung",
+        "ShowBusInfo": "Bus informationen zeigen"
+    }
+}

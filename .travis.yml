@@ -1,5 +1,5 @@
 language: node_js
-node_js: 4.0
+node_js: 6.0.0
 env:
   global:
     - CXX=g++-4.8 # node.js v > 4 requirements
@@ -18,7 +18,6 @@ cache:
   - CitizenApplication/node_modules
   - CitizenApplication/platforms
   - CitizenApplication/plugins
-before_install: if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
 install:
 - cd CitizenApplication
 - npm install -g gulp

@@ -1,5 +1,6 @@
 /**
  * @author sholzer 160524
+ * Reviewed by skaldo on the 05.06.2016 - added use of the usual console functions.
  */
 
 export default LoggerFactory;
@@ -42,6 +43,7 @@ class LoggerImpl implements Logger {
     constructor(log_lvl: string, identifier: string, pretty_print: boolean) {
         this._identifier = identifier;
         this._logLevel = this.stringToLogLevel(log_lvl);
+        this._pretty_print = pretty_print;
     }
 
     debug(msg: string): void {
@@ -66,7 +68,13 @@ class LoggerImpl implements Logger {
             if (this._pretty_print) {
                 console.log('%c[%s]@%s: %s', color_css, lvl_string, this._identifier, msg);
             } else {
-                console.log('[' + lvl_string + ']@' + this._identifier + ': ' + msg);
+                //  If there's standard console function for that level, use it.
+                if (console[lvl_string]) {
+                    console[lvl_string]('@' + this._identifier + ': ' + msg);
+                }
+                else {
+                    console.log('[' + lvl_string + ']@' + this._identifier + ': ' + msg);
+                }
             }
         }
     }
@@ -96,15 +104,9 @@ class LoggerImpl implements Logger {
     }
 }
 
-
-
-
-
 enum LogLevel {
-
     DEBUG = 0,
     INFO = 1,
     WARN = 2,
     ERROR = 3
-
 }

@@ -1,13 +1,35 @@
+ion-navbar.home {
+    font-family: JuraDemiBold;
+    color: $icon_text_color;
+    ion-icon {
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+    .text {
+        vertical-align: middle;
+    }
+}
+
 .home {
+    scroll-content {
+        display: flex;
+        flex-direction: column;
+    }
     .btn {
         width: 100%;
-        margin-top: 14px;
-        height: calc((100vh - 118px - 47vw)/2);
+        margin: 7px 0;
+        // height: calc((100vh - 118px - 47vw)/2);
+        flex: 1 1 auto;
+        justify-content: center;
+        //background-color: $dd_green;
+        color: $icon_text_color;
     }
     .logo {
         background-image: url("../../img/logo_digitalDoerfer.svg");
         background-repeat: no-repeat;
         background-size: contain;
-        height: 47vw;
+        max-height: 47vw;
+        flex: 1 1 auto;
+        justify-content: center;
     }
 }

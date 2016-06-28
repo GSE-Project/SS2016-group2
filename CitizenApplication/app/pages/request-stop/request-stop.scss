@@ -1,0 +1,51 @@
+.request-stop {
+    ion-navbar {
+        button {
+            margin-right: 50px;
+        }
+    }
+    .item-input {
+        ion-label {
+            color: #000;
+        }
+        input {
+            text-align: right;
+        }
+    }
+    button.submit {
+        width: 100%;
+        height: 50px;
+    }
+}
+
+.request-stop-overlay {
+    width: 100vw;
+    height: 100vh;
+    display: inherit;
+    background-color: rgba(255,255,255,0.9);
+    // TODO: improve this part, it's bit hacky.
+    .container {
+        width: 100vw;
+        height: 100vh;
+        margin: auto;
+        //border: 1px solid rgba(0, 0, 0, 0.4);
+        box-shadow: rgba(0,0,0,0.4) 0px 0px 5px;
+        /*display: flex;
+        flex-direction: column;*/
+        .confirm {
+            background-color: $dd_green;
+            width: 100%;
+            height: 70px;
+            text-align: center;
+            line-height: 70px;
+            font-size: $button-font-size;
+            color: $icon_text_color;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);            
+        }
+        native-map {
+            height: calc(100vh - 70px);
+            display: block;
+            /*flex: 1 0 auto;*/
+        }
+    }
+}

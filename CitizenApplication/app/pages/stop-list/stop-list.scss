@@ -1,58 +1,55 @@
 /*
  * Created by skaldo on 5.5.2016, styles of the UI
  */
+
+$lines: 4;
+@mixin line {
+    @for $i from 1 through $lines {
+        span.line#{$i} {
+            background-color: nth($lineColors, $i);
+            border-color: nth($lineColors, $i);
+        }
+        p.line#{$i} {
+            background-color: lighten(nth($lineColors, $i), 80%);
+            border-color: nth($lineColors, $i) !important;
+            span.filled {
+                background-color: nth($lineColors, $i);
+            }
+        }
+    }
+}
+
 .stop-list {
     span.line {
         padding: 0 2px;
-        border: 2px solid;
-        border-radius: 5px;
+        border: 1px solid;
+        border-radius: 2px;
         margin-right: 2px;
         color: white;
         font-weight: bold;
     }
-    span.line1 {
-        background-color: nth($lineColors, 1);
-        border-color: nth($lineColors, 1);
-    }
-    span.line2 {
-        background-color: nth($lineColors, 2);
-        border-color: nth($lineColors, 2);
-    }
-    span.line3 {
-        background-color: nth($lineColors, 3);
-        border-color: nth($lineColors, 3);
-    }
-    span.line4 {
-        background-color: nth($lineColors, 4);
-        border-color: nth($lineColors, 4);
-    }
-    p.line1 {
-        background-color: lighten(nth($lineColors, 1), 40%);
-        border-color: nth($lineColors, 1) !important;
-    }
-    p.line2 {
-        background-color: lighten(nth($lineColors, 2), 40%);
-        border-color: nth($lineColors, 2) !important;
-    }
-    p.line3 {
-        background-color: lighten(nth($lineColors, 3), 40%);
-        border-color: nth($lineColors, 3) !important;
-    }
-    p.line4 {
-        background-color: lighten(nth($lineColors, 4), 40%);
-        border-color: nth($lineColors, 4) !important;
-    }
     p.line {
-        //border: 1px solid;
-        //border-radius: 4px;
-        padding: 0 2px;
+        border: 1px solid;
+        border-radius: 2px;
+        padding-right: 2px;
         color: black;
+        line-height: 14px;
+        padding-top: 1px;        
+        span.filled {
+            padding: 0 3px;
+            margin-right: 2px;
+            float: left;
+            color: #fff;
+            font-weight: bold;
+            padding-top: 1px;
+            margin-top: -1px;
+        }
     }
+    @include line;
     ion-label {
         margin-bottom: 10px;
     }
     p.lines {
         height: 17px;
-        margin-top: 5px;
     }
 }

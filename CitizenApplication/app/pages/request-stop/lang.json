@@ -1,0 +1,31 @@
+{
+    "prefix": "REQUEST_STOP_PAGE",
+    "en": {
+        "Journey": "Journey",
+        "From": "From",
+        "Line": "Line",
+        "Time": "Time",
+        "Persons": "Persons",
+        "PersonalInformation": "Personal information",
+        "Name": "Name",
+        "Address": "Address",
+        "RequiredAssistance": "Required assistance",
+        "Luggage": "Luggage",
+        "Wheelchair": "Wheelchair",
+        "ShoppingAssistance": "Shopping assistance"
+    },
+    "de": {
+        "Journey": "Fahrt",
+        "From": "Von",
+        "Line": "Linie",
+        "Time": "Uhrzeit",
+        "Persons": "Personen",
+        "PersonalInformation": "Persönliche Angaben",
+        "Name": "Name",
+        "Address": "Adresse",
+        "RequiredAssistance": "Benötigte Unterstützung",
+        "Luggage": "Gepäck",
+        "Wheelchair": "Rollstuhl",
+        "ShoppingAssistance": "Unterstützung beim Einkauf"
+    }
+}

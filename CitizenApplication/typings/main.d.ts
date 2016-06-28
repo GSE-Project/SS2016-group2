@@ -4,3 +4,4 @@
 /// <reference path="main/ambient/jasmine/index.d.ts" />
 /// <reference path="main/ambient/node/index.d.ts" />
 /// <reference path="main/ambient/selenium-webdriver/index.d.ts" />
+/// <reference path="main/definitions/moment/index.d.ts" />

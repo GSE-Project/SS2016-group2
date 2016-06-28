@@ -20,22 +20,42 @@
 
   <div [ngSwitch]="busViewType" class="container">
     <div class="info" *ngSwitchWhen="'information'">
+      <ion-item detail-none>
+        {{'BUS_DETAIL_PAGE.Line' | translate}}
+        <ion-note item-right>{{bus?.lineId}}</ion-note>
+      </ion-item>
+      <ion-item detail-none>
+        {{'BUS_DETAIL_PAGE.Color' | translate}}
+        <ion-note item-right>{{bus?.color}}</ion-note>
+      </ion-item>
+      <ion-item detail-none>
+        {{'BUS_DETAIL_PAGE.NumberPlate' | translate}}
+        <ion-note item-right>{{bus?.numberPlate}}</ion-note>
+      </ion-item>
+      <ion-item detail-none>
+        {{'BUS_DETAIL_PAGE.TotalSeats' | translate}}
+        <ion-note item-right>{{bus?.totalSeats}}</ion-note>
+      </ion-item>
+      <ion-item detail-none>
+        {{'BUS_DETAIL_PAGE.FreeSeats' | translate}}
+        <ion-note item-right>{{(bus?.totalSeats || 0) - (realTimeData?.takenSeats || 0)}}</ion-note>
+      </ion-item>
       <div class="picture">
         <!-- fix for iOS -->
-        <!--<div style="background-image: url({{bus.picture}});">-->
-          <img src="{{bus.picture}}">
+        <!--<div style="background-image: url({{bus?.picture}});">-->
+        <img src="{{bus?.picture}}">
         <!--</div>-->
         <figcaption></figcaption>
       </div>
     </div>
 
-    <div class="map">
-      <div class="estimation" *ngSwitchWhen="'position'">
-        {{getArrival().plannedArrival | date:'mmss'}}
-        <span class="delay">+{{getArrival().delay}}</span>
+    <div class="map" *ngSwitchWhen="'position'">
+      <div class="estimation">
+        {{schedule?.arrivingTime?.toDate() | date:'Hms'}}
+        <span *ngIf="realTimeData.delay" class="delay">+{{realTimeData.delay}}</span>
       </div>
-      <map *ngSwitchWhen="'position'">
-      </map>
+      <native-map style="width: 100%; height: 100%; flex: 1 1 auto; display: flex;">
+      </native-map>
     </div>
 
   </div>

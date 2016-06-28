@@ -2,10 +2,12 @@
  * Created by steff on 13.05.2016.
  * Reviewed by skaldo on 13.05.2016
  * Reviewed and updated by skaldo on 22.05.2016
+ * Reviewed by skaldo on 04.06.2016 - OK
  */
 
 export interface ICitizenDataObject {
     id: number;
+    timeStamp?: number;
 }
 
 export enum CitizenDataObjects {
@@ -14,5 +16,7 @@ export enum CitizenDataObjects {
     RealTimeData,
     Route,
     Stop,
-    UpdateData
+    UpdateData,
+    PostRequest,
+    GetRequest
 }

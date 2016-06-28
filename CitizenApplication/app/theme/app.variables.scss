@@ -26,7 +26,7 @@
 // are different per mode.
 
 $colors: (
-  primary:    #1F82C0, // Use for: Navigation Bar, Action Buttons, Main Navigation
+  primary:    #fff, // Use for: Navigation Bar, Action Buttons, Main Navigation
   primary2:   #66BFAC, // Use for: Secondary highlighting
   green:      #009374, // Use for: Item declarations (e.g. ideas)
   blue:       #33B8CA, // Use for: Item declarations (e.g. ideas)
@@ -34,8 +34,52 @@ $colors: (
   red:        #C31D1D  // Use for: Alerts, critical actions
 );
 
+$dd_primary:    #1F82C0; // Use for: Navigation Bar, Action Buttons, Main Navigation
+$dd_primary2:   #66BFAC; // Use for: Secondary highlighting
+$dd_green:      #009374; // Use for: Item declarations (e.g. ideas)
+$dd_blue:       #33B8CA; // Use for: Item declarations (e.g. ideas)
+$dd_yellow:     #B1C800;    // Use for: Item declarations (e.g. ideas)
+$dd_red:        #C31D1D; // Use for: Alerts, critical actions
+$dd_background1:#F4F4F4;
+$dd_background2:#C7CACC;
+
 
 $lineColors: red, #0000FF, purple, green;
+
+$icon_text_color: #fff;
+$background-color: $dd_background1;
+$button-font-size: 20px;
+
+$toolbar-background: $dd_primary;
+$toolbar-inactive-color: $icon_text_color;
+
+$inputs-color: #fff;
+$ion-navbar-search-text-color: $inputs-color;
+
+$searchbar-ios-min-height: 0;
+$searchbar-ios-input-text-color: $icon_text_color;
+$searchbar-ios-input-search-icon-color: $icon_text_color;
+$searchbar-ios-input-placeholder-color: $icon_text_color;
+$toggle-ios-background-color-on: $dd_primary2;
+$picker-ios-button-text-color: $dd_primary2;
+$button-ios-color: $dd_green;
+
+/*
+$searchbar-md-input-background-color: inherit;
+$searchbar-md-input-box-shadow: none;
+$searchbar-md-input-text-color: $icon_text_color;*/
+$picker-md-option-selected-color: $dd_primary2;
+$picker-md-button-text-color: $dd_primary2;
+$searchbar-md-input-search-icon-color: $icon_text_color;
+$searchbar-md-input-placeholder-color: $icon_text_color;
+$toggle-md-track-background-color-on: $dd_primary2;
+$button-md-color: $dd_green;
+$tab-md-hihlight-custom-color: $icon_text_color;
+
+$toolbar-md-text-color: #fff;
+$list-md-background-color: #fff;
+$segment-button-md-text-color-activated: $dd_green;
+$segment-button-md-border-color-activated: $dd_green;
 
 /*
  * Edited by skaldo on the 5.5.2016 - added the Ui colors of the DD

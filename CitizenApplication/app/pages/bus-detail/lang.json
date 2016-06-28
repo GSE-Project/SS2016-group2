@@ -1,0 +1,17 @@
+{
+    "prefix": "BUS_DETAIL_PAGE",
+    "en": {
+        "Line": "Line",
+        "Color": "Color",
+        "NumberPlate": "Number plate",
+        "FreeSeats" : "Free seats",
+        "TotalSeats" : "Total seats"
+    },
+    "de": {
+        "Line": "Linie",
+        "Color": "Farbe",
+        "NumberPlate": "Kennzeichen",
+        "FreeSeats" : "Freie Plätze",
+        "TotalSeats" : "Plätze gesamt"        
+    }
+}
