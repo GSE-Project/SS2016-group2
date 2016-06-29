@@ -10,10 +10,12 @@ export interface IRequestState extends ICitizenDataObject {
 }
 
 export enum RequestStates {
+    NotSend,
     Pending,
     Accepted,
     Rejected,
-    Completed
+    Completed,
+    NotShown
 }
 
 // export const RequestStatesMap: RequestStates[] = [

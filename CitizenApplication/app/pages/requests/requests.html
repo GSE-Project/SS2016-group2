@@ -20,16 +20,16 @@
     <ion-card-header>
       ID: {{request.id}}
     </ion-card-header>
-    <ion-card-content *ngSwitchCase="0">
+    <ion-card-content *ngSwitchCase="1">
       {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StatePending' | translate }}
     </ion-card-content>
-    <ion-card-content *ngSwitchCase="1">
+    <ion-card-content *ngSwitchCase="2">
       {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateAccepted' | translate }}
     </ion-card-content>
-    <ion-card-content *ngSwitchCase="2">
+    <ion-card-content *ngSwitchCase="3">
       {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateRejected' | translate }}
     </ion-card-content>
-    <ion-card-content *ngSwitchCase="3">
+    <ion-card-content *ngSwitchCase="4">
       {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateCompleted' | translate }}
     </ion-card-content>
     <ion-card-content *ngSwitchDefault></ion-card-content>
