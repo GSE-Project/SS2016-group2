@@ -113,7 +113,7 @@ export class RestApiProvider {
      * @return Observable<IRequestState> resolving to the current IRequestState
      */
     getRequestState(id: number): Observable<IRequestState> {
-        return this.getData<IRequestState>(CitizenDataObjects.GetRequest, '?id=' + id + '&deviceId=' + this.getUUID());
+        return this.getData<IRequestState>(CitizenDataObjects.GetRequest, '?requestId=' + id + '&deviceId=' + this.getUUID());
     }
 
     postRequest(req: IRequest): Observable<IRequestResponse> {
