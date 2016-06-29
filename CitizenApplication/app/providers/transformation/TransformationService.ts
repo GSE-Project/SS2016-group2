@@ -109,11 +109,15 @@ export class TransformationService {
 
     getCitizenData(): Observable<{ name: string, address: string, assistance: number[] }> {
         return this.cds.getCitizenData().map(res => {
-            return {
-                name: res.name,
-                address: res.address,
-                assistance: res.assistance
-            };
+            if (res) {
+                return {
+                    name: res.name,
+                    address: res.address,
+                    assistance: res.assistance
+                };
+            } else {
+                return null;
+            }
         });
     }
 

@@ -49,6 +49,12 @@ export class RequestStopPage {
         this.requestObj.lineId = res[0].id;
       }
     });
+    model_access.getCitizenData().subscribe(res => {
+      if (res) {
+        this.requestObj.info.name = res.name;
+        this.requestObj.info.address = res.address;
+      }
+    });
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'RequestStopPage', config.misc.log_pretty_print);
   }
 
