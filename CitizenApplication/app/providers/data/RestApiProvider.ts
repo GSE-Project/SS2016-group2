@@ -113,18 +113,29 @@ export class RestApiProvider {
      * @return Observable<IRequestState> resolving to the current IRequestState
      */
     getRequestState(id: number): Observable<IRequestState> {
-        return this.getData<IRequestState>(CitizenDataObjects.GetRequest, '?id=' + id + 'deviceId=' + Device.device.uuid);
+        return this.getData<IRequestState>(CitizenDataObjects.GetRequest, '?id=' + id + '&deviceId=' + this.getUUID());
     }
 
     postRequest(req: IRequest): Observable<IRequestResponse> {
+        req.deviceID = this.getUUID();
         this.logger.debug('Request ' + JSON.stringify(req) + ' @ ' + this.config.getUrl(CitizenDataObjects.PostRequest));
-        if (Device && Device.device && Device.device.uuid) {
-            req.deviceID = Device.device.uuid;
-        }
         return this.http.post(this.config.getUrl(CitizenDataObjects.PostRequest), JSON.stringify(req), POST_OPTIONS).map<IRequestResponse>(
             res => {
                 this.logger.debug('Server responds with: ' + JSON.stringify(res.json()));
                 return <IRequestResponse>res.json();
             }, this);
+    }
+
+    /**
+     * @author sholzer
+     * @return iff executed on a device the uuid is returned. Otherwise just 'somePC'
+     */
+    private getUUID(): string {
+        let result = 'somePC';
+        if (Device && Device.device && Device.device.uuid) {
+            result = Device.device.uuid;
+            this.logger.debug('This device has the ID ' + result);
+        }
+        return result;
     }
 }
