@@ -26,7 +26,12 @@ export class RequestsPage {
       if (reqs.length === 0) {
         this.empty = true;
       }
-      this.requests = reqs;
+      this.requests = reqs.filter(item => { // We don't care for already completed requests
+        if (item.state > 3) {
+          return false;
+        }
+        return true;
+      });
       if (refresher) {
         refresher.complete();
       }
