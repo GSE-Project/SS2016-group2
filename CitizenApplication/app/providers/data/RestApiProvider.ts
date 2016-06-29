@@ -112,8 +112,12 @@ export class RestApiProvider {
      * @param id: the request id
      * @return Observable<IRequestState> resolving to the current IRequestState
      */
-    getRequestState(id: number): Observable<IRequestState> {
-        return this.getData<IRequestState>(CitizenDataObjects.GetRequest, '?requestId=' + id + '&deviceId=' + this.getUUID());
+    getRequestStates(): Observable<IRequestState[]> {
+        let url: string = this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.getUUID();
+        this.logger.debug('Accessing ' + url);
+        return this.http.get(this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.getUUID()).map<IRequestState[]>(res => {
+            return res.json();
+        });
     }
 
     postRequest(req: IRequest): Observable<IRequestResponse> {

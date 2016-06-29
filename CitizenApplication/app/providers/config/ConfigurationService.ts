@@ -123,6 +123,7 @@ export class ConfigurationService {
                 break;
             case CitizenDataObjects.GetRequest:
                 url += this.restApi.request;
+                break;
             case CitizenDataObjects.PostRequest:
                 url += this.restApi.post_request;
         }

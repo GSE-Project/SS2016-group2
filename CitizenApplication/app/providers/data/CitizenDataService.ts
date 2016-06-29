@@ -165,23 +165,13 @@ export class CitizenDataService {
      * @param req_id the identifier of the Request
      * @return Observable<IRequestState>
      */
-    public getRequestState(req_id: number): Observable<IRequestState> {
-        this.logger.debug('Fetching from server state of Request ' + req_id);
-        let observable = this.restApi.getRequestState(req_id);
+    public getRequestStates(): Observable<IRequestState[]> {
+        this.logger.debug('Fetching from server request states ');
+        let observable = this.restApi.getRequestStates();
         observable.subscribe(res => {
-            this.logger.debug('Fetched state of Request ' + req_id + ': ' + res.state);
-            this.storageApi.updateRequest(res);
+            this.logger.debug('Fetched request states');
         });
         return observable;
-    }
-
-    /**
-     * Return asynchronously all open RequestStates known to the Client
-     * @return Observable<IRequestState[]>
-     */
-    public getOpenRequests(): Observable<IRequestState[]> {
-        this.logger.debug('Fetching requests from storage');
-        return this.storageApi.getRequests();
     }
 
     /**
@@ -192,7 +182,6 @@ export class CitizenDataService {
         this.storageApi.putCitizenData(req.info);
         this.restApi.postRequest(req).subscribe(res => {
             this.logger.debug('Requested Stop from server:' + JSON.stringify(req));
-            this.storageApi.addRequest(res);
         });
     }
 
