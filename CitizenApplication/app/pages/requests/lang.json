@@ -4,7 +4,7 @@
         "Title": "Requests",
         "State": "State",
         "StatePending": "Pending",
-        "StateAccapted": "Accepted",
+        "StateAccepted": "Accepted",
         "StateRejected": "Rejected",
         "StateCompleted": "Completed",
         "NoRequests": "No requests available"
@@ -13,7 +13,7 @@
         "Title": "Haltewünsche",
         "State": "Status",
         "StatePending": "Wartend",
-        "StateAccapted": "Angenommen",
+        "StateAccepted": "Angenommen",
         "StateRejected": "Abgelehnt",
         "StateCompleted": "Erfüllt",
         "NoRequests": "Keine Haltewünsche verfügbar"
