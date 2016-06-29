@@ -118,6 +118,10 @@ export class TransformationService {
         this.cds.requestCustomStop(vreq.toIRequest());
     }
 
+    changeRequestState(reqId: number, state: number) {
+        this.cds.changeRequestState(reqId, state);
+    }
+
 
     /**
      * Return the {D} objects as {V}[] from the data source

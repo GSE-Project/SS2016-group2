@@ -174,6 +174,11 @@ export class CitizenDataService {
         return observable;
     }
 
+    public changeRequestState(reqId: number, state: Model.RequestStates) {
+        this.logger.debug('Changing state of request ' + reqId + ' to ' + state);
+        this.restApi.changeRequestState(reqId, state);
+    }
+
     /**
      * Requests a custom stops
      * @param req IRequest

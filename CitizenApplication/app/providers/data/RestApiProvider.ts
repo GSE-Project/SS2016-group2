@@ -130,6 +130,16 @@ export class RestApiProvider {
             }, this);
     }
 
+    changeRequestState(regId: number, state: number) {
+        let url = this.config.getUrl(CitizenDataObjects.PostRequest) + '/' + regId;
+        this.logger.debug('Calling ' + url + ' to change state of request ' + regId + ' to ' + state);
+        let observable = this.http.post(url, JSON.stringify({ status: state }), POST_OPTIONS);
+        observable.subscribe(res => {
+            this.logger.debug('Server responds with ' + JSON.stringify(res.json));
+        });
+        return observable;
+    }
+
     /**
      * @author sholzer
      * @return iff executed on a device the uuid is returned. Otherwise just 'somePC'
