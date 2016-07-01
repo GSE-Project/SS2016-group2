@@ -7,7 +7,10 @@
         "StateAccepted": "Accepted",
         "StateRejected": "Rejected",
         "StateCompleted": "Completed",
-        "NoRequests": "No requests available"
+        "NoRequests": "No requests available",
+        "ASTitle": "Options",
+        "ASCancelRequest": "Cancel Request",
+        "ASBack": "Back"
     },
     "de": {
         "Title": "Haltewünsche",
@@ -16,6 +19,9 @@
         "StateAccepted": "Angenommen",
         "StateRejected": "Abgelehnt",
         "StateCompleted": "Erfüllt",
-        "NoRequests": "Keine Haltewünsche verfügbar"
+        "NoRequests": "Keine Haltewünsche verfügbar",
+        "ASTitle": "Optionen",
+        "ASCancelRequest": "Anfrage widerrufen",
+        "ASBack": "Zurück"
     }
 }
