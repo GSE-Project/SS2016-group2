@@ -16,7 +16,7 @@
   <div *ngIf="empty" id="noRequests">{{ 'REQUESTS_PAGE.NoRequests' | translate }}
     <p>{{'C.PullToRefresh' | translate}}</p>
   </div>
-  <ion-card *ngFor="let request of requests" [ngSwitch]="request.state">
+  <ion-card *ngFor="let request of requests" [ngSwitch]="request.state" (click)="ionRequestActionSheet(request)">
     <ion-card-header>
       ID: {{request.id}}
     </ion-card-header>
