@@ -122,6 +122,10 @@ export class TransformationService {
         this.cds.changeRequestState(reqId, state);
     }
 
+    cancelRequest(reqId: number) {
+        this.cds.changeRequestState(reqId, 6);
+    }
+
 
     /**
      * Return the {D} objects as {V}[] from the data source
