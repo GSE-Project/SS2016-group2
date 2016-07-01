@@ -135,7 +135,7 @@ export class RestApiProvider {
         this.logger.debug('Calling ' + url + ' to change state of request ' + regId + ' to ' + state);
         let observable = this.http.post(url, JSON.stringify({ status: state }), POST_OPTIONS);
         observable.subscribe(res => {
-            this.logger.debug('Server responds with ' + JSON.stringify(res.json));
+            this.logger.debug('Send Request Change');
         });
         return observable;
     }
