@@ -29,10 +29,12 @@ const POST_OPTIONS = new RequestOptions({ headers: new Headers({ 'Content-Type':
 export class RestApiProvider {
 
     private logger: Logger;
+    private UUID: string;
 
     constructor(private http: Http, private config: ConfigurationService) {
         this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'RestApiProvider', config.misc.log_pretty_print);
         this.logger.info('using server at ' + config.restApi.host_url);
+        this.UUID = this.getUUID();
     }
 
     /**
@@ -113,9 +115,9 @@ export class RestApiProvider {
      * @return Observable<IRequestState> resolving to the current IRequestState
      */
     getRequestStates(): Observable<IRequestState[]> {
-        let url: string = this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.getUUID();
+        let url: string = this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.UUID;
         this.logger.debug('Accessing ' + url);
-        return this.http.get(this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.getUUID()).map<IRequestState[]>(res => {
+        return this.http.get(this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.UUID).map<IRequestState[]>(res => {
             return res.json();
         });
     }
