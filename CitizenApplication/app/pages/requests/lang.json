@@ -8,6 +8,9 @@
         "StateRejected": "Rejected",
         "StateCompleted": "Completed",
         "NoRequests": "No requests available",
+        "Line": "Line",
+        "Bus": "Bus",
+        "Time": "approximated pick up time",
         "ASTitle": "Options",
         "ASCancelRequest": "Cancel Request",
         "ASBack": "Back"
@@ -20,6 +23,9 @@
         "StateRejected": "Abgelehnt",
         "StateCompleted": "Erfüllt",
         "NoRequests": "Keine Haltewünsche verfügbar",
+        "Line": "Linie",
+        "Bus": "Bus",
+        "Time": "Erwartete Ankunft",
         "ASTitle": "Optionen",
         "ASCancelRequest": "Anfrage widerrufen",
         "ASBack": "Zurück"

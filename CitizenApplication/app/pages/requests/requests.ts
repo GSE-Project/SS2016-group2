@@ -17,6 +17,8 @@ export class RequestsPage {
   private requests: Array<ViewRequestState>;
   // The length or ! check does not work in the template :/
   private empty: boolean;
+  private update: boolean = true;
+  public timeout: number = 10000;
   constructor(private element: ElementRef, private nav: NavController, private dataAccess: TransformationService, private translate: TranslateService) {
     this.doRefresh();
   }
@@ -65,10 +67,24 @@ export class RequestsPage {
   }
 
   ionViewWillEnter() {
+    this.update = true;
+    this.updateStates();
     this.element.nativeElement.removeAttribute('hidden');
   }
 
   ionViewDidLeave() {
+    this.update = false;
     this.element.nativeElement.setAttribute('hidden', '');
+  }
+
+  updateStates() {
+    this.dataAccess.getRequests().subscribe(res => {
+      this.requests = res;
+      if (this.update) {
+        setTimeout(() => {
+          this.updateStates();
+        }, this.timeout);
+      }
+    });
   }
 }
