@@ -3,16 +3,10 @@ import {NavController, ViewController, Modal, NavParams, Popover} from 'ionic-an
 import {ViewRequest, ViewLine} from '../models';
 import {NativeMap, GoogleMapsLatLng} from '../../components/native-map/native-map';
 import {TransformationService} from '../../providers/transformation';
-import * as moment from 'moment/moment';
 import {LoggerFactory, Logger} from '../../providers/logger';
 import {ConfigurationService} from '../../providers/config';
+import * as moment from 'moment/moment';
 
-/*
-  Generated class for the RequestStopPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   templateUrl: 'build/pages/request-stop/request-stop.html'
 })
@@ -49,11 +43,13 @@ export class RequestStopPage {
         this.requestObj.lineId = res[0].id;
       }
     });
+
     model_access.getCitizenData().subscribe(res => {
-      if (res) {
-        this.requestObj.info.name = res.name;
-        this.requestObj.info.address = res.address;
+      if (!res) {
+        return;
       }
+      this.requestObj.info.name = res.name;
+      this.requestObj.info.address = res.address;
     });
     this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'RequestStopPage', config.misc.log_pretty_print);
   }
@@ -88,6 +84,7 @@ export class RequestStopPage {
   }
 }
 
+// TODO (future development): move the request-stop-overlay to a separate file. 
 @Component({
   templateUrl: 'build/pages/request-stop/request-stop-overlay.html',
   directives: [NativeMap]
@@ -134,5 +131,4 @@ class CustomStopPopoverPage {
     // Enable map.
     this.map.suspend(false);
   }
-
 }

@@ -4,12 +4,6 @@ import {ViewRequestState} from '../models';
 import {TransformationService} from '../../providers/transformation';
 import {TranslateService} from 'ng2-translate';
 
-/*
-  Generated class for the RequestsPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   templateUrl: 'build/pages/requests/requests.html',
 })
