@@ -29,10 +29,12 @@ const POST_OPTIONS = new RequestOptions({ headers: new Headers({ 'Content-Type':
 export class RestApiProvider {
 
     private logger: Logger;
+    private UUID: string;
 
     constructor(private http: Http, private config: ConfigurationService) {
         this.logger = new LoggerFactory().getLogger(config.misc.log_level, 'RestApiProvider', config.misc.log_pretty_print);
         this.logger.info('using server at ' + config.restApi.host_url);
+        this.UUID = this.getUUID();
     }
 
     /**
@@ -112,8 +114,12 @@ export class RestApiProvider {
      * @param id: the request id
      * @return Observable<IRequestState> resolving to the current IRequestState
      */
-    getRequestState(id: number): Observable<IRequestState> {
-        return this.getData<IRequestState>(CitizenDataObjects.GetRequest, '?requestId=' + id + '&deviceId=' + this.getUUID());
+    getRequestStates(): Observable<IRequestState[]> {
+        let url: string = this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.UUID;
+        this.logger.debug('Accessing ' + url);
+        return this.http.get(this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.UUID).map<IRequestState[]>(res => {
+            return res.json();
+        });
     }
 
     postRequest(req: IRequest): Observable<IRequestResponse> {
@@ -124,6 +130,16 @@ export class RestApiProvider {
                 this.logger.debug('Server responds with: ' + JSON.stringify(res.json()));
                 return <IRequestResponse>res.json();
             }, this);
+    }
+
+    changeRequestState(regId: number, state: number) {
+        let url = this.config.getUrl(CitizenDataObjects.PostRequest) + '/' + regId;
+        this.logger.debug('Calling ' + url + ' to change state of request ' + regId + ' to ' + state);
+        let observable = this.http.post(url, JSON.stringify({ status: state }), POST_OPTIONS);
+        observable.subscribe(res => {
+            this.logger.debug('Send Request Change');
+        });
+        return observable;
     }
 
     /**

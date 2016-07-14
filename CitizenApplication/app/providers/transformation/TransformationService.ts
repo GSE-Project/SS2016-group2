@@ -96,29 +96,34 @@ export class TransformationService {
      * @return Observable<ViewRequestState[]> of not completed requests
      */
     getRequests(): Observable<VIEW.ViewRequestState[]> {
-        return this.getData<DATA.IRequestState, VIEW.ViewRequestState>(this.cds.getOpenRequests(), VIEW.ViewRequestState, '', 'id');
+        return this.getData<DATA.IRequestState, VIEW.ViewRequestState>(this.cds.getRequestStates(), VIEW.ViewRequestState, '', 'id');
     }
 
-    /**
-     * @param id: id of the request
-     * @return the state of a specified request
-     */
-    getRequestState(id: number): Observable<VIEW.ViewRequestState> {
-        return this.cds.getRequestState(id).map(res => { return new VIEW.ViewRequestState(res); });
-    }
 
     getCitizenData(): Observable<{ name: string, address: string, assistance: number[] }> {
         return this.cds.getCitizenData().map(res => {
-            return {
-                name: res.name,
-                address: res.address,
-                assistance: res.assistance
-            };
+            if (res) {
+                return {
+                    name: res.name,
+                    address: res.address,
+                    assistance: res.assistance
+                };
+            } else {
+                return null;
+            }
         });
     }
 
     makeRequest(vreq: VIEW.ViewRequest) {
         this.cds.requestCustomStop(vreq.toIRequest());
+    }
+
+    changeRequestState(reqId: number, state: number) {
+        this.cds.changeRequestState(reqId, state);
+    }
+
+    cancelRequest(reqId: number) {
+        this.cds.changeRequestState(reqId, 6);
     }
 
 

@@ -5,20 +5,18 @@
 import {ICitizenDataObject} from './CitizenDataObject';
 
 export interface IRequestState extends ICitizenDataObject {
-    deviceId?: string;
-    state: number;
+    deviceID?: string;
+    status: number;
+    lineId: number;
+    budId: number;
+    pickUpTime: number;
 }
 
 export enum RequestStates {
+    NotSend,
     Pending,
     Accepted,
     Rejected,
-    Completed
+    Completed,
+    NotShown
 }
-
-// export const RequestStatesMap: RequestStates[] = [
-//     RequestStates.Pending,
-//     RequestStates.Accepted,
-//     RequestStates.Rejected,
-//     RequestStates.Completed
-// ];

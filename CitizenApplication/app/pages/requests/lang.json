@@ -4,18 +4,30 @@
         "Title": "Requests",
         "State": "State",
         "StatePending": "Pending",
-        "StateAccapted": "Accepted",
+        "StateAccepted": "Accepted",
         "StateRejected": "Rejected",
         "StateCompleted": "Completed",
-        "NoRequests": "No requests available"
+        "NoRequests": "No requests available",
+        "Line": "Line",
+        "Bus": "Bus",
+        "Time": "approximated pick up time",
+        "ASTitle": "Options",
+        "ASCancelRequest": "Cancel Request",
+        "ASBack": "Back"
     },
     "de": {
         "Title": "Haltewünsche",
         "State": "Status",
         "StatePending": "Wartend",
-        "StateAccapted": "Angenommen",
+        "StateAccepted": "Angenommen",
         "StateRejected": "Abgelehnt",
         "StateCompleted": "Erfüllt",
-        "NoRequests": "Keine Haltewünsche verfügbar"
+        "NoRequests": "Keine Haltewünsche verfügbar",
+        "Line": "Linie",
+        "Bus": "Bus",
+        "Time": "Erwartete Ankunft",
+        "ASTitle": "Optionen",
+        "ASCancelRequest": "Anfrage widerrufen",
+        "ASBack": "Zurück"
     }
 }

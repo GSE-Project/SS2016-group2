@@ -16,22 +16,22 @@
   <div *ngIf="empty" id="noRequests">{{ 'REQUESTS_PAGE.NoRequests' | translate }}
     <p>{{'C.PullToRefresh' | translate}}</p>
   </div>
-  <ion-card *ngFor="let request of requests" [ngSwitch]="request.state">
+  <ion-card *ngFor="let request of requests" [ngSwitch]="request.state" (click)="ionRequestActionSheet(request)">
     <ion-card-header>
-      ID: {{request.id}}
+      ID: {{request.id}} 
     </ion-card-header>
-    <ion-card-content *ngSwitchCase="0">
-      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StatePending' | translate }}
+    <ion-card-content >
+      <table>
+        <tr><td>{{'REQUESTS_PAGE.Line' | translate}}: </td><td>{{request.lineId}}</td></tr>
+        <tr><td>{{'REQUESTS_PAGE.Bus' | translate}}: </td><td>{{request.busId}}</td></tr>
+        <tr><td>{{'REQUESTS_PAGE.Time' | translate}}: </td><td>{{request.pickUpTime.toDate() | date:'HH:mm'}}</td></tr>
+        <tr *ngSwitchCase="1"><td>{{ 'REQUESTS_PAGE.State' | translate }}:</td><td>{{ 'REQUESTS_PAGE.StatePending' | translate }}</td></tr>
+        <tr *ngSwitchCase="2"><td>{{ 'REQUESTS_PAGE.State' | translate }}:</td><td>{{ 'REQUESTS_PAGE.StateAccepting' | translate }}</td></tr>
+        <tr *ngSwitchCase="3"><td>{{ 'REQUESTS_PAGE.State' | translate }}:</td><td>{{ 'REQUESTS_PAGE.StateRejected' | translate }}</td></tr>
+        <tr *ngSwitchCase="4"><td>{{ 'REQUESTS_PAGE.State' | translate }}:</td><td>{{ 'REQUESTS_PAGE.StateCompleted' | translate }}</td></tr>
+      <div *ngSwitchDefault></div>
+      </table>
+      
     </ion-card-content>
-    <ion-card-content *ngSwitchCase="1">
-      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateAccepted' | translate }}
-    </ion-card-content>
-    <ion-card-content *ngSwitchCase="2">
-      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateRejected' | translate }}
-    </ion-card-content>
-    <ion-card-content *ngSwitchCase="3">
-      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateCompleted' | translate }}
-    </ion-card-content>
-    <ion-card-content *ngSwitchDefault></ion-card-content>
   </ion-card>
 </ion-content>
