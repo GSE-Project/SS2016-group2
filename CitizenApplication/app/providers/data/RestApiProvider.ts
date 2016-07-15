@@ -118,12 +118,13 @@ export class RestApiProvider {
         let url: string = this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.UUID;
         this.logger.debug('Accessing ' + url);
         return this.http.get(this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.UUID).map<IRequestState[]>(res => {
-            return res.json();
+            let hackedText = res.text().split('{"code":"TechnicalError","message":"An unexpected error has occurred! We apologize any inconvenience. Please try again later."').shift();
+            return JSON.parse(hackedText); // res.json();
         });
     }
 
     postRequest(req: IRequest): Observable<IRequestResponse> {
-        req.deviceID = this.getUUID();
+        req.deviceId = this.getUUID();
         this.logger.debug('Request ' + JSON.stringify(req) + ' @ ' + this.config.getUrl(CitizenDataObjects.PostRequest));
         return this.http.post(this.config.getUrl(CitizenDataObjects.PostRequest), JSON.stringify(req), POST_OPTIONS).map<IRequestResponse>(
             res => {

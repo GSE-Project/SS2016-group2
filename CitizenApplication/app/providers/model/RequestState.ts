@@ -5,7 +5,7 @@
 import {ICitizenDataObject} from './CitizenDataObject';
 
 export interface IRequestState extends ICitizenDataObject {
-    deviceID?: string;
+    deviceId?: string;
     status: number;
     lineId: number;
     budId: number;
