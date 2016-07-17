@@ -1,6 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
 import { NavController, Refresher, ActionSheet } from 'ionic-angular';
-import {ViewRequestState} from '../models';
+import {ViewRequestState, ViewRequestStates} from '../models';
 import {TransformationService} from '../../providers/transformation';
 import {TranslateService} from 'ng2-translate';
 
@@ -19,14 +19,7 @@ export class RequestsPage {
 
   public doRefresh(refresher?: Refresher) {
     this.dataAccess.getRequests().subscribe((reqs: Array<ViewRequestState>) => {
-      this.empty = false;
-      this.requests = reqs.filter(item => { // We don't care for already completed requests
-        if (item.state > 3) {
-          return false;
-        }
-        return true;
-      });
-      this.empty = this.requests.length === 0;
+      this.requestsReceived(reqs);
       if (refresher) {
         refresher.complete();
       }
@@ -71,9 +64,20 @@ export class RequestsPage {
     this.element.nativeElement.setAttribute('hidden', '');
   }
 
+  requestsReceived(reqs: Array<ViewRequestState>) {
+    this.empty = true;
+    this.requests = reqs.filter(item => { // We don't care for already completed requests
+      if (ViewRequestStates[item.state] > 3) {
+        return false;
+      }
+      this.empty = false;
+      return true;
+    });
+  }
+
   updateStates() {
-    this.dataAccess.getRequests().subscribe(res => {
-      this.requests = res;
+    this.dataAccess.getRequests().subscribe((reqs: Array<ViewRequestState>) => {
+      this.requestsReceived(reqs);
       if (this.update) {
         setTimeout(() => {
           this.updateStates();

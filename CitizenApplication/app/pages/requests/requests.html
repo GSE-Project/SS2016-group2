@@ -8,7 +8,7 @@
   <ion-title>{{ 'REQUESTS_PAGE.Title' | translate }}</ion-title>
 </ion-navbar>
 
-<ion-content padding class="requests">
+<ion-content class="requests">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingText="{{'C.PullToRefresh' | translate}}" refreshingText="{{'C.Refreshing' | translate}}">
     </ion-refresher-content>
@@ -17,21 +17,36 @@
     <p>{{'C.PullToRefresh' | translate}}</p>
   </div>
   <ion-card *ngFor="let request of requests" [ngSwitch]="request.state" (click)="ionRequestActionSheet(request)">
-    <ion-card-header>
-      ID: {{request.id}} 
+    <ion-card-header class="{{request.state}}">
+      ID: {{request.id}}
     </ion-card-header>
-    <ion-card-content >
-      <table>
-        <tr><td>{{'REQUESTS_PAGE.Line' | translate}}: </td><td>{{request.lineId}}</td></tr>
-        <tr><td>{{'REQUESTS_PAGE.Bus' | translate}}: </td><td>{{request.busId}}</td></tr>
-        <tr><td>{{'REQUESTS_PAGE.Time' | translate}}: </td><td>{{request.pickUpTime.toDate() | date:'HH:mm'}}</td></tr>
-        <tr *ngSwitchCase="1"><td>{{ 'REQUESTS_PAGE.State' | translate }}:</td><td>{{ 'REQUESTS_PAGE.StatePending' | translate }}</td></tr>
-        <tr *ngSwitchCase="2"><td>{{ 'REQUESTS_PAGE.State' | translate }}:</td><td>{{ 'REQUESTS_PAGE.StateAccepting' | translate }}</td></tr>
-        <tr *ngSwitchCase="3"><td>{{ 'REQUESTS_PAGE.State' | translate }}:</td><td>{{ 'REQUESTS_PAGE.StateRejected' | translate }}</td></tr>
-        <tr *ngSwitchCase="4"><td>{{ 'REQUESTS_PAGE.State' | translate }}:</td><td>{{ 'REQUESTS_PAGE.StateCompleted' | translate }}</td></tr>
-      <div *ngSwitchDefault></div>
-      </table>
-      
+    <ion-card-content>
+      <ion-list no-lines>
+        <ion-item>
+          {{'REQUESTS_PAGE.Line' | translate}}
+          <span item-right>
+          {{request.lineId}}
+        </span>
+        </ion-item>
+        <ion-item>
+          {{'REQUESTS_PAGE.Bus' | translate}}
+          <span item-right>
+          {{request.busId}} {{request.state}}
+        </span>
+        </ion-item>
+        <ion-item>
+          {{'REQUESTS_PAGE.Time' | translate}}
+          <span item-right>
+          {{request.pickUpTime.toDate() | date:'HH:mm'}}
+        </span>
+        </ion-item>
+        <ion-item>
+          {{'REQUESTS_PAGE.State' | translate}}
+          <span item-right>
+          {{'REQUESTS_PAGE.'+request.state | translate}}
+        </span>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 </ion-content>
