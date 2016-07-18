@@ -118,8 +118,7 @@ export class RestApiProvider {
         let url: string = this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.UUID;
         this.logger.debug('Accessing ' + url);
         return this.http.get(this.config.getUrl(CitizenDataObjects.GetRequest) + '?deviceId=' + this.UUID).map<IRequestState[]>(res => {
-            let hackedText = res.text().split('{"code":"TechnicalError","message":"An unexpected error has occurred! We apologize any inconvenience. Please try again later."').shift();
-            return JSON.parse(hackedText); // res.json();
+            return res.json();
         });
     }
 
