@@ -180,6 +180,7 @@ export class NativeMap implements OnDestroy, AfterViewInit {
         }
         else {
             console.info('resuming map');
+            this.map = new GoogleMap(this.mapElementId);
             this.markersCache.forEach(marker => {
                 this.addMarker(marker.title, marker.icon, marker.position);
             });
