@@ -17,11 +17,11 @@ export class RequestStopPage {
   public logger: Logger;
 
   set pickUpTime(time: string) {
-    this.requestObj.pickUpTime = new Date(time);
+    this.requestObj.pickUpTime = moment(time, 'YYYY-MM-DDTHH:mm:ssZ').toDate();
   }
 
   get pickUpTime(): string {
-    return this.requestObj.pickUpTime.toISOString();
+    return moment(this.requestObj.pickUpTime).format('YYYY-MM-DDTHH:mm:ssZ');
   }
 
   set position(pos: GoogleMapsLatLng) {
