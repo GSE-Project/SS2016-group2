@@ -67,7 +67,7 @@ export class RequestsPage {
   requestsReceived(reqs: Array<ViewRequestState>) {
     this.empty = true;
     this.requests = reqs.filter(item => { // We don't care for already completed requests
-      if (ViewRequestStates[item.state] > 3) {
+      if (ViewRequestStates[item.state] > ViewRequestStates.Rejected) {
         return false;
       }
       this.empty = false;

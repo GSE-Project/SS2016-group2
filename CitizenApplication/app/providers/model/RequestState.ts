@@ -8,7 +8,7 @@ export interface IRequestState extends ICitizenDataObject {
     deviceId?: string;
     status: number;
     lineId: number;
-    budId: number;
+    acceptingBus: number;
     pickUpTime: number;
 }
 
