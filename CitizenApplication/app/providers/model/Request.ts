@@ -10,7 +10,7 @@ export interface IRequest {
     pickUpTime: number;
     location: GeoJson.Point;
     numberOfPersons: number;
-    deviceID: string;
+    deviceId: string;
     info: ICitizenData;
 }
 
@@ -19,7 +19,7 @@ export class Request implements IRequest {
     pickUpTime: number;
     location: GeoJson.Point;
     numberOfPersons: number;
-    deviceID: string;
+    deviceId: string;
     info: ICitizenData;
 
     constructor() {

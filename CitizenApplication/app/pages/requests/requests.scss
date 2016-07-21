@@ -7,4 +7,37 @@
             margin-top: 10px;
         }
     }
+    ion-card {
+        background-color: #fff;
+        .item {
+            background-color: #fff !important;
+            padding: 0;
+            min-height: 2.4rem;
+        }
+        ion-label {
+            margin: 6px 4px 6px 0;
+        }
+        span[item-right] {
+            margin: 0;
+        }
+        ion-list {
+            margin-top: 0;
+        }
+        ion-card-header {
+            padding-bottom: 8px;
+            border-bottom: none;
+        }
+        ion-card-header.StatePending {
+            background-color: #FDC90C;;
+        }
+        ion-card-header.StateAccepting {
+            background-color: #159038;
+        }
+        ion-card-header.StateRejected {
+            background-color: #C31d1d;
+        }
+        ion-card-header.StateCompleted {
+            background-color: lightgrey;
+        }
+    }
 }

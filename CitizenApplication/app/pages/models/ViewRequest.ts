@@ -47,7 +47,7 @@ export class ViewRequest implements ViewObject {
         let req: IRequest = new Request();
 
         req.lineId = this.lineId;
-        req.deviceID = 'random';
+        req.deviceId = 'random';
         req.pickUpTime = Math.floor(this.pickUpTime.getTime() / 1000);
         req.numberOfPersons = this.numberOfPersons;
         req.location = this.complyCoordinates(this.location);

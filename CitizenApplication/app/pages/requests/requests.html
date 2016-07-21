@@ -8,7 +8,7 @@
   <ion-title>{{ 'REQUESTS_PAGE.Title' | translate }}</ion-title>
 </ion-navbar>
 
-<ion-content padding class="requests">
+<ion-content class="requests">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingText="{{'C.PullToRefresh' | translate}}" refreshingText="{{'C.Refreshing' | translate}}">
     </ion-refresher-content>
@@ -16,22 +16,37 @@
   <div *ngIf="empty" id="noRequests">{{ 'REQUESTS_PAGE.NoRequests' | translate }}
     <p>{{'C.PullToRefresh' | translate}}</p>
   </div>
-  <ion-card *ngFor="let request of requests" [ngSwitch]="request.state">
-    <ion-card-header>
+  <ion-card *ngFor="let request of requests" [ngSwitch]="request.state" (click)="ionRequestActionSheet(request)">
+    <ion-card-header class="State{{request.state}}">
       ID: {{request.id}}
     </ion-card-header>
-    <ion-card-content *ngSwitchCase="0">
-      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StatePending' | translate }}
+    <ion-card-content>
+      <ion-list no-lines>
+        <ion-item>
+          {{'REQUESTS_PAGE.Line' | translate}}
+          <span item-right>
+          {{request.lineId}}
+        </span>
+        </ion-item>
+        <ion-item *ngIf="request.acceptingBus">
+          {{'REQUESTS_PAGE.Bus' | translate}}
+          <span item-right>
+          {{request.acceptingBus}}
+        </span>
+        </ion-item>
+        <ion-item>
+          {{'REQUESTS_PAGE.Time' | translate}}
+          <span item-right>
+          {{request.pickUpTime.toDate() | date:'HH:mm'}}
+        </span>
+        </ion-item>
+        <ion-item>
+          {{'REQUESTS_PAGE.State' | translate}}
+          <span item-right>
+          {{'REQUESTS_PAGE.State'+request.state | translate}}
+        </span>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
-    <ion-card-content *ngSwitchCase="1">
-      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateAccepted' | translate }}
-    </ion-card-content>
-    <ion-card-content *ngSwitchCase="2">
-      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateRejected' | translate }}
-    </ion-card-content>
-    <ion-card-content *ngSwitchCase="3">
-      {{ 'REQUESTS_PAGE.State' | translate }}: {{ 'REQUESTS_PAGE.StateCompleted' | translate }}
-    </ion-card-content>
-    <ion-card-content *ngSwitchDefault></ion-card-content>
   </ion-card>
 </ion-content>

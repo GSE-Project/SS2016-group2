@@ -11,6 +11,12 @@ export interface ViewNativeMarker {
     marker: GoogleMapsMarker;
 }
 
+interface Marker {
+    position: GoogleMapsLatLng;
+    title: string;
+    icon: string;
+}
+
 /*
   Created by skaldo and mmueller on the 09.05.2016.
   
@@ -29,6 +35,7 @@ export class NativeMap implements OnDestroy, AfterViewInit {
     private mapElementId;
     private markers: { [key: string]: GoogleMapsMarker } = {};
     private isSuspended: boolean;
+    private markersCache: Array<Marker> = new Array<Marker>();
 
     constructor(private element: ElementRef, private config: ConfigurationService) {
         this.logger = new LoggerFactory().getLogger(this.config.misc.log_level, 'MapComponent', this.config.misc.log_pretty_print);
@@ -115,6 +122,11 @@ export class NativeMap implements OnDestroy, AfterViewInit {
                 this.markerClicked.emit(<ViewNativeMarker>{ name: name, marker: marker });
             });
             this.markers[name] = marker;
+            this.markersCache.push({
+                position: pos,
+                title: name,
+                icon: color
+            });
         });
     }
 
@@ -129,7 +141,6 @@ export class NativeMap implements OnDestroy, AfterViewInit {
         }
         marker.remove();
         delete this.markers[markername];
-        console.log(this.markers);
     }
 
     /**
@@ -162,11 +173,17 @@ export class NativeMap implements OnDestroy, AfterViewInit {
     suspend(suspend) {
         if (suspend) {
             console.info('suspending map');
+            this.map.clear();
+            this.markers = {};
             this.isSuspended = true;
             this.mapElement.setAttribute('hidden', '');
         }
         else {
             console.info('resuming map');
+            this.map = new GoogleMap(this.mapElementId);
+            this.markersCache.forEach(marker => {
+                this.addMarker(marker.title, marker.icon, marker.position);
+            });
             this.isSuspended = false;
             this.mapElement.removeAttribute('hidden');
         }

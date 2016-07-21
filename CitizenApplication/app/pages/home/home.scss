@@ -17,7 +17,7 @@ ion-navbar.home {
     }
     .btn {
         width: 100%;
-        margin: 7px 0;
+        margin: 14px 0 0 0;
         // height: calc((100vh - 118px - 47vw)/2);
         flex: 1 1 auto;
         justify-content: center;
@@ -31,5 +31,8 @@ ion-navbar.home {
         max-height: 47vw;
         flex: 1 1 auto;
         justify-content: center;
+    }
+    .placeholder {
+        flex: 0.75 1 auto;
     }
 }
